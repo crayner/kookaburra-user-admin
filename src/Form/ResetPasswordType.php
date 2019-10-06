@@ -13,14 +13,14 @@
 namespace Kookaburra\UserAdmin\Form;
 
 use App\Entity\Setting;
-use Kookaburra\UserAdmin\Form\Entity\ResetPassword;
 use App\Form\Type\HeaderType;
 use App\Form\Type\ParagraphType;
 use App\Form\Type\PasswordGeneratorType;
 use App\Form\Type\ReactFormType;
 use App\Provider\ProviderFactory;
-use App\Validator\CurrentPassword;
 use App\Validator\Password;
+use Kookaburra\SystemAdmin\Validator\CurrentPassword;
+use Kookaburra\UserAdmin\Form\Entity\ResetPassword;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
