@@ -1,2 +1,3 @@
-# kookaburra-user-admin
-Kookaburra User Administration
+# Kookaburra User Administration
+
+User Administration Bundle for Kookaburra

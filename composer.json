@@ -1,0 +1,39 @@
+{
+    "name": "kookaburra/user-admin",
+    "type": "symfony-bundle",
+    "description": "Kookaburra User Administration",
+    "keywords": [
+        "doctrine"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Craig Rayner",
+            "email": "craig@craigrayner.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3"
+    },
+    "require-dev": {
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Kookaburra\\UserAdmin\\": "/src/"
+        },
+        "exclude-from-classmap": [
+            "/tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kookaburra\\UserAdmin\\Tests\\": "tests/"
+        }
+    }
+}
