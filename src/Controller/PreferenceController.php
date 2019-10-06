@@ -16,7 +16,7 @@ use App\Container\Container;
 use App\Container\ContainerManager;
 use App\Container\Panel;
 use Kookaburra\UserAdmin\Form\Entity\ResetPassword;
-use App\Util\SecurityHelper;
+use Kookaburra\UserAdmin\Util\SecurityHelper;
 use Kookaburra\UserAdmin\Form\PreferenceSettingsType;
 use Kookaburra\UserAdmin\Form\ResetPasswordType;
 use Kookaburra\UserAdmin\Manager\PasswordManager;

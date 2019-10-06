@@ -22,7 +22,7 @@ use App\Form\Type\ReactFileType;
 use App\Form\Type\ReactFormType;
 use App\Form\Type\ToggleType;
 use App\Provider\ProviderFactory;
-use App\Util\UserHelper;
+use Kookaburra\UserAdmin\Util\UserHelper;
 use App\Validator\ReactImage;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
