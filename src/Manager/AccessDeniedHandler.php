@@ -39,10 +39,16 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
         $this->translator = $translator;
     }
 
+    /**
+     * handle
+     * @param Request $request
+     * @param AccessDeniedException $accessDeniedException
+     * @return JsonResponse|RedirectResponse|\Symfony\Component\HttpFoundation\Response|null
+     */
     public function handle(Request $request, AccessDeniedException $accessDeniedException)
     {
         // If Route is api_*
-        if (strpos($request->get('_route'), 'api_') === 0){
+        if ($request->getContentType() === 'json'){
             return new JsonResponse(
                 [
                     'error' => $this->translator->trans('Your request failed because you do not have access to this action.'),
@@ -50,7 +56,7 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
                 200);
         }
 
-        $request->getSession()->getFlashBag()->add('notice', 'Your request failed because you do not have access to this action.');
-        return new RedirectResponse('/' . $request->get('_locale') . '/');
+        $request->getSession()->getFlashBag()->add('warning', 'Your request failed because you do not have access to this action.');
+        return new RedirectResponse('/');
     }
 }
