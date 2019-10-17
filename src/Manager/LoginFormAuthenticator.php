@@ -14,7 +14,7 @@ namespace Kookaburra\UserAdmin\Manager;
 
 use App\Entity\I18n;
 use App\Entity\Person;
-use App\Entity\Role;
+use Kookaburra\SystemAdmin\Entity\Role;
 use App\Entity\SchoolYear;
 use App\Manager\GibbonManager;
 use App\Provider\LogProvider;

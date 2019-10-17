@@ -14,7 +14,7 @@
 namespace Kookaburra\UserAdmin\Manager;
 
 use App\Entity\Person;
-use App\Entity\Role;
+use Kookaburra\SystemAdmin\Entity\Role;
 use App\Entity\Setting;
 use App\Exception\MissingClassException;
 use App\Provider\ProviderFactory;
@@ -115,7 +115,7 @@ class SecurityUser implements UserInterface, EncoderAwareInterface, EquatableInt
 
     /**
      * @var Role|null
-     * @ORM\ManyToOne(targetEntity="Role")
+     * @ORM\ManyToOne(targetEntity="Kookaburra\SystemAdmin\Entity\Role")
      * @ORM\JoinColumn(name="gibbonRoleIDPrimary", referencedColumnName="gibbonRoleID", nullable=false)
      */
     private $primaryRole;

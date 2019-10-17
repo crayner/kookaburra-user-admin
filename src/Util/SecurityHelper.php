@@ -12,13 +12,13 @@
  */
 namespace Kookaburra\UserAdmin\Util;
 
-use App\Entity\Action;
-use App\Entity\Module;
+use Kookaburra\SystemAdmin\Entity\Action;
+use Kookaburra\SystemAdmin\Entity\Module;
 use App\Entity\Person;
 use App\Entity\Setting;
 use App\Exception\RouteConfigurationException;
-use App\Provider\ActionProvider;
-use App\Provider\ModuleProvider;
+use Kookaburra\SystemAdmin\Provider\ActionProvider ;
+use Kookaburra\SystemAdmin\Provider\ModuleProvider ;
 use App\Provider\ProviderFactory;
 use Kookaburra\UserAdmin\Manager\MD5PasswordEncoder;
 use Kookaburra\UserAdmin\Manager\SecurityUser;
