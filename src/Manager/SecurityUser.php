@@ -161,7 +161,7 @@ class SecurityUser implements UserInterface, EncoderAwareInterface, EquatableInt
     /**
      * @var string 
      */
-    private $encoderName = 'sha256';
+    private $encoderName = 'native';
 
     /**
      * setUserPassword
@@ -172,13 +172,9 @@ class SecurityUser implements UserInterface, EncoderAwareInterface, EquatableInt
     {
         if (! $this->isUser($user))
             return $this->setPassword(null);
-        if (! empty($user->getMD5Password())) {
-            $x = $user->getMD5Password();
-            $this->setEncoderName('md5');
-        } else {
-            $x = empty($user->getPasswordStrong()) ? null : $user->getPasswordStrong();
-            $this->setEncoderName('sha256');
-        }
+
+        $x = empty($user->getPasswordStrong()) ? null : $user->getPasswordStrong();
+
         return $this->setPassword($x);
     }
 
@@ -205,7 +201,7 @@ class SecurityUser implements UserInterface, EncoderAwareInterface, EquatableInt
      */
     public function getEncoderName(): string
     {
-        return $this->encoderName ?: 'sha256';
+        return $this->encoderName;
     }
 
     /**
