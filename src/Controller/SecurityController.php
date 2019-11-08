@@ -23,15 +23,14 @@ class SecurityController extends AbstractController
      * login
      * @param LoginManager $manager
      * @param AuthenticationUtils $authenticationUtils
-     * @param ProviderFactory $repository
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/login/", name="login", methods={"GET", "POST"})
      */
-    public function login(LoginManager $manager, AuthenticationUtils $authenticationUtils, ProviderFactory $repository)
+    public function login(LoginManager $manager, AuthenticationUtils $authenticationUtils)
     {
-        $repository = $repository->getProvider(Person::class);
+        $provider = ProviderFactory::create(Person::class);
         if ($this->getUser() instanceof UserInterface && !$this->isGranted('ROLE_USER'))
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute($this->generateUrl('home'));
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -39,11 +38,11 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        $user = $repository->getRepository(Person::class)->loadUserByUsernameOrEmail($lastUsername) ?: new Person();
+        $user = $provider->getRepository()->loadUserByUsernameOrEmail($lastUsername) ?: new Person();
         $user->setUsername($lastUsername);
         new SecurityUser($user);
 
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute($this->generateUrl('home'));
     }
 
     /**
