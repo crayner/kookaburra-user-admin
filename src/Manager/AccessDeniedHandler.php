@@ -56,7 +56,7 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
                 200);
         }
 
-        $request->getSession()->getFlashBag()->add('warning', 'Your request failed because you do not have access to this action.');
+        $request->getSession()->getFlashBag()->add('warning', 'return.error.0');
         return new RedirectResponse('/');
     }
 }
