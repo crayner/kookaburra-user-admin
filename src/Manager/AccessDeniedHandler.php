@@ -51,7 +51,7 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
         if ($request->getContentType() === 'json'){
             return new JsonResponse(
                 [
-                    'error' => $this->translator->trans('Your request failed because you do not have access to this action.'),
+                    'error' => $this->translator->trans('return.error.0'),
                 ],
                 200);
         }

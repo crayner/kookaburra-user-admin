@@ -5,10 +5,7 @@ namespace Kookaburra\UserAdmin\Controller;
 use App\Entity\Person;
 use App\Provider\ProviderFactory;
 use Kookaburra\UserAdmin\Manager\SecurityUser;
-use Kookaburra\UserAdmin\Form\AuthenticateType;
-use Kookaburra\UserAdmin\Manager\LoginManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -27,6 +24,7 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
+        $this->addFlash('warning', 'return.error.0');
         $provider = ProviderFactory::create(Person::class);
         if ($this->getUser() instanceof UserInterface && !$this->isGranted('ROLE_USER'))
             return $this->redirectToRoute('home');
