@@ -61,7 +61,6 @@ class UserHelper
     /**
      * getCurrentUser
      * @return Person|null
-     * @throws \Exception
      */
     public static function getCurrentUser(): ?Person
     {
