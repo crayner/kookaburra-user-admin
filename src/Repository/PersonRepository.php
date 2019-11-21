@@ -16,8 +16,8 @@
 namespace Kookaburra\UserAdmin\Repository;
 
 use Kookaburra\UserAdmin\Entity\Person;
-use Kookaburra\UserAdmin\Entity\RollGroup;
-use Kookaburra\UserAdmin\Entity\SchoolYear;
+use App\Entity\RollGroup;
+use App\Entity\SchoolYear;
 use App\Util\SchoolYearHelper;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Connection;
