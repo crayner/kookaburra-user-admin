@@ -1,7 +1,7 @@
 <?php
 namespace Kookaburra\UserAdmin\Manager;
 
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use App\Manager\GibbonManager;
 use App\Manager\MessageManager;
 use App\Provider\LogProvider;

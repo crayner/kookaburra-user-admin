@@ -15,7 +15,7 @@
  */
 namespace Kookaburra\UserAdmin\Util;
 
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\Staff;
 use App\Provider\EntityProviderInterface;
 use App\Provider\ProviderFactory;

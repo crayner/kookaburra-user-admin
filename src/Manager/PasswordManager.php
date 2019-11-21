@@ -12,7 +12,7 @@
 
 namespace Kookaburra\UserAdmin\Manager;
 
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\SchoolYear;
 use App\Provider\ProviderFactory;
 use Symfony\Component\HttpFoundation\Request;

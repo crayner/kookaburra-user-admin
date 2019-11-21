@@ -12,8 +12,8 @@
  */
 namespace Kookaburra\UserAdmin\Manager;
 
-use App\Entity\Person;
-use App\Repository\PersonRepository;
+use Kookaburra\UserAdmin\Entity\Person;
+use Kookaburra\UserAdmin\Repository\PersonRepository;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;

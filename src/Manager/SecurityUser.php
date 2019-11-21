@@ -13,7 +13,7 @@
 
 namespace Kookaburra\UserAdmin\Manager;
 
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use Kookaburra\SystemAdmin\Entity\Role;
 use App\Entity\Setting;
 use App\Exception\MissingClassException;

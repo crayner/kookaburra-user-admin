@@ -2,7 +2,7 @@
 
 namespace Kookaburra\UserAdmin\Controller;
 
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use App\Provider\ProviderFactory;
 use Kookaburra\UserAdmin\Manager\SecurityUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

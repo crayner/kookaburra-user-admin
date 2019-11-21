@@ -13,7 +13,7 @@
 namespace Kookaburra\UserAdmin\Manager;
 
 use App\Entity\I18n;
-use App\Entity\Person;
+use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\SchoolYear;
 use App\Entity\Staff;
 use App\Entity\Theme;
