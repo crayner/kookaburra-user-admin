@@ -556,13 +556,13 @@ class Person implements EntityInterface
     }
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="date_immutable", nullable=true)
      */
     private $dob;
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
     public function getDob(): ?\DateTime
     {
@@ -573,7 +573,7 @@ class Person implements EntityInterface
      * @param \DateTime|null $dob
      * @return Person
      */
-    public function setDob(?\DateTime $dob): Person
+    public function setDob(?\DateTimeImmutable $dob): Person
     {
         $this->dob = $dob;
         return $this;

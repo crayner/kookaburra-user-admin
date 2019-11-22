@@ -70,8 +70,8 @@ class ManagePagination extends ReactPaginationManager
             ->setAClass('')
             ->setColumnClass('column p-2 sm:p-3')
             ->setSpanClass('fas fa-edit fa-fw fa-1-5x text-gray-700')
-            ->setRoute('user_admin__manage')
-            ->setRouteParams(['item' => 'id']);
+            ->setRoute('user_admin__edit')
+            ->setRouteParams(['person' => 'id']);
         $row->addAction($action);
 
         $this->setRow($row);

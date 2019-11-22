@@ -1,0 +1,57 @@
+Basic Information: Basic Information
+Title: Title
+person:
+    title:
+        ms: Ms
+        miss: Miss
+        mr: Mr
+        mrs: Mrs
+        dr: Dr
+    gender:
+        f: Female
+        m: Male
+        other: Other
+        unspecified: Unspecified
+    status:
+        full: Full
+        expected: Expected
+        left: Left
+        pending approval: Pending Approval
+Surname: Surname
+Family name as shown in ID documents.: Family name as shown in ID documents.
+Given Names: Given Names
+Given names as shown in ID documents.: Given names as shown in ID documents.
+Preferred Name: Preferred Name
+Most common name, alias, nickname, etc.: Most common name, alias, nickname, etc.
+Official Name: Official Name
+Full name as shown in ID documents.: Full name as shown in ID documents.
+Name In Characters: Name In Characters
+Chinese or other character-based name.: Chinese or other character-based name.
+Gender: Gender
+Date of Birth: Date of Birth
+Personal Photo: Personal Photo
+"Displayed at 240px by 320px.\nAccepts images up to 360px by 480px.\nAccepts aspect ratio between 1:1.2 and 1:1.4.": "Displayed at 240px by 320px.
+    Accepts images up to 360px by 480px.
+    Accepts aspect ratio between 1:1.2 and 1:1.4."
+System Access: System Access
+Contact Information: Contact Information
+Actions: Actions
+Add: Add
+Delete: Delete
+Close Message: Close Message
+There are no records to display.: There are no records to display.
+Basic: Basic
+System: System
+Contact: Contact
+UserAdmin: User Admin
+People Admin: People Admin
+Manage People: Manage People
+Edit Person: Edit Person
+Primary Role: Primary Role
+Controls what a user can do and see.: Controls what a user can do and see.
+All Roles: All Roles
+Controls what a user can do and see. Use Control, Command and/or Shift to select multiple.: Controls what a user can do and see. Use Control, Command and/or Shift to select multiple.
+Username: Username
+System login name.: System login name.
+Status: Status
+This determines visibility within the system.: This determines visibility within the system.
