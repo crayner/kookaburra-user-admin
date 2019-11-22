@@ -23,6 +23,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -312,6 +313,68 @@ class PersonRepository extends ServiceEntityRepository
             ->orderBy('p.surname', 'ASC')
             ->addOrderBy('p.preferredName', 'ASC')
             ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * findBySearch
+     * @param ManageSearch $search
+     * @return array
+     */
+    public function findBySearch(ManageSearch $search): array
+    {
+        $query = $this->createQueryBuilder('p')
+            ->select(['p','fa','fc','fama','famc','s'])
+            ->leftJoin('p.adults', 'fa')
+            ->leftJoin('p.children', 'fc')
+            ->leftJoin('fa.family', 'fama')
+            ->leftJoin('fc.family', 'famc')
+            ->leftJoin('p.staff', 's')
+            ->leftJoin('p.studentEnrolments', 'se')
+            ->where('p.vehicleRegistration LIKE :search OR p.phone1 LIKE :search OR p.phone2 LIKE :search OR p.phone3 LIKE :search OR p.phone4 LIKE :search OR p.email LIKE :search OR p.emailAlternate LIKE :search OR p.studentID LIKE :search OR p.username LIKE :search OR p.surname LIKE :search OR p.preferredName LIKE :search')
+            ->setParameter('search', '%'.$search->getSearch().'%')
+            ->orderBy('p.surname')
+            ->addOrderBy('p.preferredName')
+        ;
+        switch ($search->getFilter()) {
+            case '':
+                break;
+            case 'role:student':
+                $query->andWhere('se IS NOT NULL');
+                break;
+            case 'role:parent':
+                $query->andWhere('fa IS NOT NULL')
+                    ->andWhere('fa.contactPriority <= 2');
+                break;
+            case 'role:staff':
+                $query->andWhere('s IS NOT NULL');
+                break;
+            case 'status:full':
+                $query->andWhere('p.status = :status')
+                    ->setParameter('status', 'Full');
+                break;
+            case 'status:left':
+                $query->andWhere('p.status = :status')
+                    ->setParameter('status', 'Left');
+                break;
+            case 'status:expected':
+                $query->andWhere('p.status = :status')
+                    ->setParameter('status', 'Expected');
+                break;
+            case 'date:starting':
+                $query->andWhere('p.dateStart > :today')
+                    ->setParameter('today', new \DateTimeImmutable());
+                break;
+            case 'date:ended':
+                $query->andWhere('p.dateEnd < :today')
+                    ->setParameter('today', new \DateTimeImmutable());
+                break;
+            default:
+                dd($search);
+        }
+
+dump($query->getQuery()->getSQL());
+        return $query->getQuery()
             ->getResult();
     }
 }

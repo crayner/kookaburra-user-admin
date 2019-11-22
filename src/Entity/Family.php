@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Family
  * @package Kookaburra\UserAdmin\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\UserAdmin\Repository\FamilyRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="Kookaburra\UserAdmin\Entity\Family", uniqueConstraints={@ORM\UniqueConstraint(name="name",columns={"name"})})
+ * @ORM\Table(options={"auto_increment": 1}, name="Family", uniqueConstraints={@ORM\UniqueConstraint(name="name",columns={"name"})})
  */
 class Family
 {

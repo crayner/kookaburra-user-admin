@@ -25,6 +25,8 @@ use App\Entity\Theme;
 use App\Manager\EntityInterface;
 use App\Manager\Traits\BooleanList;
 use App\Util\Format;
+use App\Util\ImageHelper;
+use App\Util\TranslationsHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -2958,5 +2960,39 @@ class Person implements EntityInterface
                 return $this->getUsername();
 
         return str_pad($this->getId(), 10, '0', STR_PAD_LEFT);
+    }
+
+    /**
+     * toArray
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'fullName' => $this->formatName(['informal' => true, 'reverse' => true]),
+            'photo' => ImageHelper::getAbsoluteImageURL('File', $this->getImage240()),
+            'status' => TranslationsHelper::translate($this->getStatus()),
+            'family' => $this->getFamilyName(),
+            'username' => $this->getUsername(),
+        ];
+    }
+
+    /**
+     * getFamilyName
+     * @return string
+     */
+    public function getFamilyName(): string
+    {
+        if ($this->getAdults()->count() > 0) {
+            $adult = $this->getAdults()->first();
+            if ($adult->getFamily() instanceof Family)
+                return $adult->getFamily()->getName();
+        }
+        if ($this->getChildren()->count() > 0) {
+            $adult = $this->getChildren()->first();
+            if ($adult->getFamily() instanceof Family)
+                return $adult->getFamily()->getName();
+        }
+        return '';
     }
 }
