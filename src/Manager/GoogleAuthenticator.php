@@ -1,6 +1,7 @@
 <?php
 namespace Kookaburra\UserAdmin\Manager;
 
+use Kookaburra\SystemAdmin\Manager\UsernamePasswordToken;
 use Kookaburra\UserAdmin\Entity\Person;
 use App\Manager\GibbonManager;
 use App\Manager\MessageManager;
@@ -15,7 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -261,12 +261,12 @@ class GoogleAuthenticator implements AuthenticatorInterface
 		return new RedirectResponse($this->router->generate('login'));
 	}
 
-	/**
-	 * @param UserInterface $user
-	 * @param string        $providerKey
-	 *
-	 * @return UsernamePasswordToken|\Symfony\Component\Security\Guard\Token\GuardTokenInterface
-	 */
+    /**
+     * createAuthenticatedToken
+     * @param UserInterface $user
+     * @param string $providerKey
+     * @return UsernamePasswordToken|\Symfony\Component\Security\Guard\Token\GuardTokenInterface
+     */
 	public function createAuthenticatedToken(UserInterface $user, $providerKey)
 	{
 		return new UsernamePasswordToken(
