@@ -39,16 +39,32 @@ use Symfony\Component\Intl\Languages;
  * Class GibbonPerson
  * @package Kookaburra\UserAdmin\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\UserAdmin\Repository\PersonRepository")
- * @ASSERT\UniqueEntity(
- *     fields={"username"},
- *     errorPath="username",
- * )
- * @ORM\Table(options={"auto_increment": 1}, name="Person", options={"auto_increment": 1}, uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"})}, indexes={@ORM\Index(name="username_2", columns={"username", "email"})})
+ * @ORM\Table(
+ *     options={"auto_increment": 1},
+ *     name="Person",
+ *     options={"auto_increment": 1},
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"})},
+ *     indexes={@ORM\Index(name="username_2", columns={"username", "email"}),
+ *     @ORM\Index(name="phone_code_1",columns={"phone1CountryCode"}),
+ *     @ORM\Index(name="phone_code_2",columns={"phone2CountryCode"}),
+ *     @ORM\Index(name="phone_code_3",columns={"phone3CountryCode"}),
+ *     @ORM\Index(name="phone_code_4",columns={"phone4CountryCode"}),
+ *     @ORM\Index(name="house",columns={"gibbonHouseID"}),
+ *     @ORM\Index(name="school_year_class_of",columns={"gibbonSchoolYearIDClassOf"}),
+ *     @ORM\Index(name="application_form",columns={"gibbonApplicationFormID"}),
+ *     @ORM\Index(name="theme",columns={"gibbonThemeIDPersonal"}),
+ *     @ORM\Index(name="primary_role",columns={"gibbonRoleIDPrimary"}),
+ *     @ORM\Index(name="i18n",columns={"gibboni18nIDPersonal"})
+ * }
+ *     )
  */
 class Person implements EntityInterface
 {
     use BooleanList;
 
+    /**
+     * Person constructor.
+     */
     public function __construct()
     {
         $this->adults = new ArrayCollection();
@@ -312,7 +328,7 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=20)
+     * @ORM\Column(length=20,unique=true)
      */
     private $username;
 
@@ -535,13 +551,15 @@ class Person implements EntityInterface
      * @var array
      * @ORM\Column(name="gibbonRoleIDAll", type="simple_array", nullable=true)
      */
-    private $allRoles = '';
+    private $allRoles = [];
 
     /**
      * @return array
      */
     public function getAllRoles(): array
     {
+        if ($this->getPrimaryRole() instanceof Role && ! in_array($this->getPrimaryRole()->getId(), $this->allRoles ?: []))
+            $this->allRoles[] = $this->getPrimaryRole()->getId();
         return $this->allRoles = $this->allRoles ?: [];
     }
 
@@ -551,7 +569,15 @@ class Person implements EntityInterface
      */
     public function setAllRoles(?array $allRoles): Person
     {
-        $this->allRoles = $allRoles;
+        if (null === $allRoles)
+            $allRoles = [];
+        foreach($allRoles as $q=>$w)
+            if ($w instanceof Role)
+                $allRoles[$q] = $w->getId();
+        if ($this->getPrimaryRole() instanceof Role && ! in_array($this->getPrimaryRole()->getId(), $allRoles)) {
+            $allRoles[] = $this->getPrimaryRole()->getId();
+        }
+        $this->allRoles = array_unique($allRoles ?: []);
         return $this;
     }
 
@@ -971,26 +997,28 @@ class Person implements EntityInterface
     }
 
     /**
-     * @var string|null
-     * @ORM\Column(length=7, name="phone1CountryCode")
+     * @var Country|null
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Country")
+     * @ORM\JoinColumn(nullable=true, name="phone1CountryCode", referencedColumnName="id")
      */
     private $phone1CountryCode = '';
 
     /**
-     * @return null|string
+     * @return null|Country
      */
-    public function getPhone1CountryCode(): ?string
+    public function getPhone1CountryCode(): ?Country
     {
         return $this->phone1CountryCode;
     }
 
     /**
-     * @param null|string $phone1CountryCode
+     * setPhone1CountryCode
+     * @param Country|null $phone1CountryCode
      * @return Person
      */
-    public function setPhone1CountryCode(?string $phone1CountryCode): Person
+    public function setPhone1CountryCode(?Country $phone1CountryCode): Person
     {
-        $this->phone1CountryCode = mb_substr($phone1CountryCode, 0, 7);
+        $this->phone1CountryCode = $phone1CountryCode;
         return $this;
     }
 
@@ -1043,26 +1071,28 @@ class Person implements EntityInterface
     }
 
     /**
-     * @var string|null
-     * @ORM\Column(length=7, name="phone2CountryCode")
+     * @var Country|null
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Country")
+     * @ORM\JoinColumn(nullable=true, name="phone2CountryCode", referencedColumnName="id")
      */
     private $phone2CountryCode = '';
 
     /**
-     * @return null|string
+     * @return null|Country
      */
-    public function getPhone2CountryCode(): ?string
+    public function getPhone2CountryCode(): ?Country
     {
         return $this->phone2CountryCode;
     }
 
     /**
-     * @param null|string $phone2CountryCode
+     * setPhone2CountryCode
+     * @param Country|null $phone2CountryCode
      * @return Person
      */
-    public function setPhone2CountryCode(?string $phone2CountryCode): Person
+    public function setPhone2CountryCode(?Country $phone2CountryCode): Person
     {
-        $this->phone2CountryCode = mb_substr($phone2CountryCode, 0, 7);
+        $this->phone2CountryCode = $phone2CountryCode;
         return $this;
     }
 
@@ -1115,26 +1145,28 @@ class Person implements EntityInterface
     }
 
     /**
-     * @var string|null
-     * @ORM\Column(length=7, name="phone3CountryCode")
+     * @var Country|null
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Country")
+     * @ORM\JoinColumn(nullable=true, name="phone3CountryCode", referencedColumnName="id")
      */
     private $phone3CountryCode = '';
 
     /**
-     * @return null|string
+     * @return null|Country
      */
-    public function getPhone3CountryCode(): ?string
+    public function getPhone3CountryCode(): ?Country
     {
         return $this->phone3CountryCode;
     }
 
     /**
-     * @param null|string $phone3CountryCode
+     * setPhone3CountryCode
+     * @param Country|null $phone3CountryCode
      * @return Person
      */
-    public function setPhone3CountryCode(?string $phone3CountryCode): Person
+    public function setPhone3CountryCode(?Country $phone3CountryCode): Person
     {
-        $this->phone3CountryCode = mb_substr($phone3CountryCode, 0, 7);
+        $this->phone3CountryCode = $phone3CountryCode;
         return $this;
     }
 
@@ -1187,26 +1219,28 @@ class Person implements EntityInterface
     }
 
     /**
-     * @var string|null
-     * @ORM\Column(length=7, name="phone4CountryCode")
+     * @var Country
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Country")
+     * @ORM\JoinColumn(nullable=true, name="phone4CountryCode", referencedColumnName="id")
      */
     private $phone4CountryCode = '';
 
     /**
-     * @return null|string
+     * @return null|Country
      */
-    public function getPhone4CountryCode(): ?string
+    public function getPhone4CountryCode(): ?Country
     {
         return $this->phone4CountryCode;
     }
 
     /**
-     * @param null|string $phone4CountryCode
+     * setPhone4CountryCode
+     * @param Country|null $phone4CountryCode
      * @return Person
      */
-    public function setPhone4CountryCode(?string $phone4CountryCode): Person
+    public function setPhone4CountryCode(?Country $phone4CountryCode): Person
     {
-        $this->phone4CountryCode = mb_substr($phone4CountryCode, 0, 7);
+        $this->phone4CountryCode = $phone4CountryCode;
         return $this;
     }
 

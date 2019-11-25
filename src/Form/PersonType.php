@@ -12,20 +12,25 @@
 
 namespace Kookaburra\UserAdmin\Form;
 
-use App\Form\Transform\ReactDateTransformer;
+use App\Form\Transform\EntityToStringTransformer;
 use App\Form\Type\EntityType;
 use App\Form\Type\EnumType;
 use App\Form\Type\FilePathType;
 use App\Form\Type\HeaderType;
+use App\Form\Type\ParagraphType;
 use App\Form\Type\ReactDateType;
 use App\Form\Type\ReactFormType;
 use App\Form\Type\ToggleType;
+use App\Provider\ProviderFactory;
 use Kookaburra\SystemAdmin\Entity\Role;
 use Kookaburra\UserAdmin\Entity\Person;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -169,6 +174,7 @@ class PersonType extends AbstractType
                     'label' => 'Primary Role',
                     'class' => Role::class,
                     'choice_label' => 'name',
+                    'data' => $options['data']->getPrimaryRole()->getId(),
                     'help' => 'Controls what a user can do and see.',
                     'panel' => 'System',
                 ]
@@ -178,7 +184,8 @@ class PersonType extends AbstractType
                     'label' => 'All Roles',
                     'class' => Role::class,
                     'choice_label' => 'name',
-                    'help' => "Controls what a user can do and see.\nUse Control, Command and/or Shift to select multiple.",
+                    'data' => $options['data']->getAllRoles(),
+                    'help' => "Controls what a user can do and see. Use Control, Command and/or Shift to select multiple.",
                     'panel' => 'System',
                     'multiple' => true,
                 ]
@@ -218,6 +225,7 @@ class PersonType extends AbstractType
                 ]
             )
         ;
+        $builder->get('primaryRole')->addModelTransformer(new EntityToStringTransformer(ProviderFactory::getEntityManager(),['class' => Role::class]));
     }
 
     /**
@@ -232,6 +240,141 @@ class PersonType extends AbstractType
                 [
                     'label' => 'Contact Information',
                     'panel' => 'Contact',
+                ]
+            )
+            ->add('email', EmailType::class,
+                [
+                    'label' => 'Email',
+                    'panel' => 'Contact',
+                    'required' => false,
+                ]
+            )
+            ->add('emailAlternate', EmailType::class,
+                [
+                    'label' => 'Alternate Email',
+                    'panel' => 'Contact',
+                    'required' => false,
+                ]
+            )
+            ->add('addressParagraph', ParagraphType::class,
+                [
+                    'help' => 'person.address.warning',
+                    'panel' => 'Contact',
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0',
+                ]
+            )
+            ->add('enterPersonalAddress', ToggleType::class,
+                [
+                    'label' => 'Enter Personal Address',
+                    'panel' => 'Contact',
+                    'mapped' => false,
+                    'visibleByClass' => 'address_info',
+                ]
+            )
+            ->add('address1', TextareaType::class,
+                [
+                    'label' => 'Address 1',
+                    'help' => 'Unit, Building, Street',
+                    'panel' => 'Contact',
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 address_info',
+                    'attr' => [
+                        'rows' => 2,
+                    ]
+                ]
+            )
+            ->add('address1District', TextType::class,
+                [
+                    'label' => 'Address 1 Locality',
+                    'help' => 'City, Suburb or Town, State, Postcode (ZIP)',
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 address_info',
+                    'panel' => 'Contact',
+                ]
+            )
+            ->add('address1Country', CountryType::class,
+                [
+                    'label' => 'Address 1 Country',
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 address_info',
+                    'panel' => 'Contact',
+                    'placeholder' => ' '
+                ]
+            )
+            ->add('address2', TextareaType::class,
+                [
+                    'label' => 'Address 2',
+                    'help' => 'Unit, Building, Street',
+                    'panel' => 'Contact',
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 address_info',
+                    'attr' => [
+                        'rows' => 2,
+                    ]
+                ]
+            )
+            ->add('address2District', TextType::class,
+                [
+                    'label' => 'Address 2 Locality',
+                    'help' => 'City, Suburb or Town, State, Postcode (ZIP)',
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 address_info',
+                    'panel' => 'Contact',
+                ]
+            )
+            ->add('address2Country', CountryType::class,
+                [
+                    'label' => 'Address 2 Country',
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 address_info',
+                    'panel' => 'Contact',
+                    'placeholder' => ' '
+                ]
+            )
+            ->add('phonea', PhoneType::class,
+                [
+                    'label' => 'Phone 1',
+                    'help' => 'Type, country code, number.',
+                    'data' => $options['data'],
+                    'panel' => 'Contact',
+                    'mapped' => false,
+                ]
+            )
+            ->add('phoneb', PhoneType::class,
+                [
+                    'label' => 'Phone 2',
+                    'help' => 'Type, country code, number.',
+                    'data' => $options['data'],
+                    'phone_position' => 2,
+                    'panel' => 'Contact',
+                    'mapped' => false,
+                ]
+            )
+            ->add('phonec', PhoneType::class,
+                [
+                    'label' => 'Phone 3',
+                    'help' => 'Type, country code, number.',
+                    'data' => $options['data'],
+                    'phone_position' => 3,
+                    'panel' => 'Contact',
+                    'mapped' => false,
+                ]
+            )
+            ->add('phoned', PhoneType::class,
+                [
+                    'label' => 'Phone 4',
+                    'help' => 'Type, country code, number.',
+                    'data' => $options['data'],
+                    'phone_position' => 4,
+                    'panel' => 'Contact',
+                    'mapped' => false,
+                ]
+            )
+            ->add('website', UrlType::class,
+                [
+                    'label' => 'Website',
+                    'panel' => 'Contact',
+                ]
+            )
+            ->add('submitContact', SubmitType::class,
+                [
+                    'label' => 'Submit',
+                    'panel' => 'Contact',
+                    'translation_domain' => 'messages',
                 ]
             )
         ;

@@ -17,6 +17,16 @@ person:
         expected: Expected
         left: Left
         pending approval: Pending Approval
+    address:
+        warning: '<div class="warning">Address information for an individual only needs to be set under the following conditions:</div><ol><li>If the person is not in a family.</li><li>If the person`s family does not have a home address set.</li><li>If the person needs an address in addition to their family`s home address.</li></ol>'
+    phonetypelist:
+        '': ''
+        mobile: Mobile
+        home: Home
+        work: Work
+        fax: Facsimile
+        pager: Pager
+        other: Other
 Surname: Surname
 Family name as shown in ID documents.: Family name as shown in ID documents.
 Given Names: Given Names

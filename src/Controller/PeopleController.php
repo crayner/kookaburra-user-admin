@@ -93,18 +93,21 @@ class PeopleController extends AbstractController
         $container->setTarget('formContent')->setSelectedPanel($tabName);
         TranslationsHelper::setDomain('UserAdmin');
 
-        $form = $this->createForm(PersonType::class, $person, ['action' => $this->generateUrl('user_admin__edit', ['person' => intval($person->getID()), 'tabName' => $tabName])]);
+        $form = $this->createForm(PersonType::class, $person,
+            ['action' => $this->generateUrl('user_admin__edit', ['person' => intval($person->getID()), 'tabName' => $tabName])]
+        );
 
         if ($request->getContentType() === 'json') {
             $content = json_decode($request->getContent(), true);
-            dump($content);
             $errors = [];
             $status = 'success';
             $form->submit($content);
-
             if ($form->isValid())
             {
                 dump($person);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($person);
+                $em->flush();
                 $errors[] = ['class' => 'success', 'message' => TranslationsHelper::translate('return.success.0', [], 'messages')];
             }
 
