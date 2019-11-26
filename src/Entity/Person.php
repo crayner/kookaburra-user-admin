@@ -1992,48 +1992,48 @@ class Person implements EntityInterface
     }
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="date", name="dateStart", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="date_immutable", name="dateStart", nullable=true)
      */
     private $dateStart;
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
-    public function getDateStart(): ?\DateTime
+    public function getDateStart(): ?\DateTimeImmutable
     {
         return $this->dateStart;
     }
 
     /**
-     * @param \DateTime|null $dateStart
+     * @param \DateTimeImmutable|null $dateStart
      * @return Person
      */
-    public function setDateStart(?\DateTime $dateStart): Person
+    public function setDateStart(?\DateTimeImmutable $dateStart): Person
     {
         $this->dateStart = $dateStart;
         return $this;
     }
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="date", name="dateEnd", nullable=true)
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(type="date_immutable", name="dateEnd", nullable=true)
      */
     private $dateEnd;
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
-    public function getDateEnd(): ?\DateTime
+    public function getDateEnd(): ?\DateTimeImmutable
     {
         return $this->dateEnd;
     }
 
     /**
-     * @param \DateTime|null $dateEnd
+     * @param \DateTimeImmutable|null $dateEnd
      * @return Person
      */
-    public function setDateEnd(?\DateTime $dateEnd): Person
+    public function setDateEnd(?\DateTimeImmutable $dateEnd): Person
     {
         $this->dateEnd = $dateEnd;
         return $this;

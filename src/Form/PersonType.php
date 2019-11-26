@@ -26,6 +26,7 @@ use Kookaburra\SystemAdmin\Entity\Role;
 use Kookaburra\UserAdmin\Entity\Person;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -130,6 +131,7 @@ class PersonType extends AbstractType
 
         $this->buildSystem($builder, $options);
         $this->buildContact($builder, $options);
+        $this->buildSchool($builder, $options);
     }
 
     /**
@@ -165,7 +167,8 @@ class PersonType extends AbstractType
         $builder
             ->add('systemHeader', HeaderType::class,
                 [
-                    'label' => 'System Access',
+                    'label' => 'System Access: {name}',
+                    'label_translation_parameters' => ['{name}' => $options['data']->getId() > 0 ? $options['data']->formatName(['reverse' => true]) : ''],
                     'panel' => 'System',
                 ]
             )
@@ -238,7 +241,8 @@ class PersonType extends AbstractType
         $builder
             ->add('contactHeader', HeaderType::class,
                 [
-                    'label' => 'Contact Information',
+                    'label' => 'Contact Information: {name}',
+                    'label_translation_parameters' => ['{name}' => $options['data']->getId() > 0 ? $options['data']->formatName(['reverse' => true]) : ''],
                     'panel' => 'Contact',
                 ]
             )
@@ -374,6 +378,53 @@ class PersonType extends AbstractType
                 [
                     'label' => 'Submit',
                     'panel' => 'Contact',
+                    'translation_domain' => 'messages',
+                ]
+            )
+        ;
+    }
+
+    /**
+     * buildSchool
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    private function buildSchool(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('schoolHeader', HeaderType::class,
+                [
+                    'label' => 'School Information: {name}',
+                    'label_translation_parameters' => ['{name}' => $options['data']->getId() > 0 ? $options['data']->formatName(['reverse' => true]) : ''],
+                    'panel' => 'School',
+                ]
+            )
+            ->add('dateStart', DateType::class,
+                [
+                    'label' => 'Start Date',
+                    'help' => 'The first day at school for this person.',
+                    'panel' => 'School',
+                    'required' => false,
+                    'widget' => 'single_text',
+                    'input' => 'datetime_immutable',
+                    'years' => range(intval(date('Y'))- 25, intval(date('Y')))
+                ]
+            )
+            ->add('dateEnd', DateType::class,
+                [
+                    'label' => 'End Date',
+                    'help' => 'The last day at school for this person.',
+                    'panel' => 'School',
+                    'required' => false,
+                    'widget' => 'single_text',
+                    'input' => 'datetime_immutable',
+                    'years' => range(intval(date('Y'))- 25, intval(date('Y')))
+                ]
+            )
+            ->add('submitSchool', SubmitType::class,
+                [
+                    'label' => 'Submit',
+                    'panel' => 'School',
                     'translation_domain' => 'messages',
                 ]
             )

@@ -120,6 +120,9 @@ class PeopleController extends AbstractController
             $panel = new Panel('Contact', 'UserAdmin');
             $container->addPanel($panel);
 
+            $panel = new Panel('School', 'UserAdmin');
+            $container->addPanel($panel);
+
             $manager->addContainer($container)->buildContainers();
 
             return new JsonResponse(
@@ -137,7 +140,10 @@ class PeopleController extends AbstractController
         $panel = new Panel('System', 'UserAdmin');
         $container->addPanel($panel);
 
-        $panel = new Panel('Contact', 'userAdmin');
+        $panel = new Panel('Contact', 'UserAdmin');
+        $container->addPanel($panel);
+
+        $panel = new Panel('School', 'UserAdmin');
         $container->addPanel($panel);
 
         $manager->addContainer($container)->buildContainers();
