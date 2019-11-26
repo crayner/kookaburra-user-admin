@@ -12,6 +12,7 @@
 
 namespace Kookaburra\UserAdmin\Form;
 
+use App\Entity\Setting;
 use App\Form\Transform\EntityToStringTransformer;
 use App\Form\Type\EntityType;
 use App\Form\Type\EnumType;
@@ -22,18 +23,22 @@ use App\Form\Type\ReactDateType;
 use App\Form\Type\ReactFormType;
 use App\Form\Type\ToggleType;
 use App\Provider\ProviderFactory;
+use App\Util\GlobalHelper;
+use App\Util\LocaleHelper;
 use Kookaburra\SystemAdmin\Entity\Role;
 use Kookaburra\UserAdmin\Entity\Person;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class PersonType
@@ -41,6 +46,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PersonType extends AbstractType
 {
+    /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
+     * PersonType constructor.
+     * @param RouterInterface $router
+     */
+    public function __construct(RouterInterface $router)
+    {
+        $this->router = $router;
+    }
+
     /**
      * buildForm
      * @param FormBuilderInterface $builder
@@ -132,6 +151,7 @@ class PersonType extends AbstractType
         $this->buildSystem($builder, $options);
         $this->buildContact($builder, $options);
         $this->buildSchool($builder, $options);
+        $this->buildBackground($builder, $options);
     }
 
     /**
@@ -431,4 +451,169 @@ class PersonType extends AbstractType
         ;
     }
 
+    /**
+     * buildSchool
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    private function buildBackground(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('backgroundHeader', HeaderType::class,
+                [
+                    'label' => 'Background Information: {name}',
+                    'label_translation_parameters' => ['{name}' => $options['data']->getId() > 0 ? $options['data']->formatName(['reverse' => true]) : ''],
+                    'panel' => 'Background',
+                ]
+            )
+            ->add('languageFirst', LanguageType::class,
+                [
+                    'label' => 'First Language',
+                    'panel' => 'Background',
+                    'required' => false,
+                    'placeholder' => ' ',
+                ]
+            )
+            ->add('languageSecond', LanguageType::class,
+                [
+                    'label' => 'Second Language',
+                    'panel' => 'Background',
+                    'required' => false,
+                    'placeholder' => ' ',
+                ]
+            )
+            ->add('languageThird', LanguageType::class,
+                [
+                    'label' => 'Third Language',
+                    'panel' => 'Background',
+                    'required' => false,
+                    'placeholder' => ' ',
+                ]
+            )
+            ->add('countryOfBirth', CountryType::class,
+                [
+                    'label' => 'Country of Birth',
+                    'panel' => 'Background',
+                    'required' => false,
+                    'placeholder' => ' ',
+                ]
+            )
+            ->add('birthCertificateScan', FilePathType::class,
+                [
+                    'label' => 'Birth Certificate Scan',
+                    'panel' => 'Background',
+                    'help' => 'Less than 1M,  Accepts PDF and image files only.',
+                    'required' => false,
+                    'file_prefix' => 'birth_cert_',
+                ]
+            )
+            ->add('ethnicity', EnumType::class,
+                [
+                    'label' => 'Ethnicity',
+                    'panel' => 'Background',
+                    'choice_list_prefix' => false,
+                    'required' => false,
+                    'help' => 'Ethnicity selection can be altered at {anchor}People Settings{endAnchor}',
+                    'help_translation_parameters' => ['{anchor}' => '<a href="'.$this->router->generate('legacy', ['q' => '/modules/User Admin/userSettings.php', '_fragment' => 'ethnicity']).'">', '{endAnchor}' => '</a>'],
+                    'choice_translation_domain' => false,
+                    'placeholder' => ' ',
+                ]
+            )
+            ->add('religion', EnumType::class,
+                [
+                    'label' => 'Religion',
+                    'panel' => 'Background',
+                    'choice_list_prefix' => false,
+                    'required' => false,
+                    'help' => 'Religion selection can be altered at {anchor}People Settings{endAnchor}',
+                    'help_translation_parameters' => ['{anchor}' => '<a class="" href="'.$this->router->generate('legacy', ['q' => '/modules/User Admin/userSettings.php', '_fragment' => 'religions']).'">', '{endAnchor}' => "</a>"],
+                    'choice_translation_domain' => false,
+                    'placeholder' => ' ',
+                ]
+            )
+            ->add('citizenship1', CountryType::class,
+                [
+                    'label' => 'Citizenship 1',
+                    'panel' => 'Background',
+                    'required' => false,
+                    'placeholder' => ' ',
+                ]
+            )
+            ->add('citizenship1Passport', TextType::class,
+                [
+                    'label' => 'Citizenship 1 Passport Number',
+                    'panel' => 'Background',
+                    'required' => false,
+                ]
+            )
+            ->add('citizenship1PassportScan', FilePathType::class,
+                [
+                    'label' => 'Citizenship 1 Passport Scan',
+                    'panel' => 'Background',
+                    'help' => 'Less than 1M,  Accepts PDF and image files only.',
+                    'required' => false,
+                    'file_prefix' => 'passport_',
+                ]
+            )
+            ->add('citizenship2', CountryType::class,
+                [
+                    'label' => 'Citizenship 2',
+                    'panel' => 'Background',
+                    'required' => false,
+                    'placeholder' => ' ',
+                ]
+            )
+            ->add('citizenship2Passport', TextType::class,
+                [
+                    'label' => 'Citizenship 2 Passport Number',
+                    'panel' => 'Background',
+                    'required' => false,
+                ]
+            )
+            ->add('nationalIDCardNumber', TextType::class,
+                [
+                    'label' => '{name} ID Card Number',
+                    'label_translation_parameters' => ['{name}' => LocaleHelper::getCountryName(ProviderFactory::create(Setting::class)->getSettingByScopeAsString('System', 'country'))],
+                    'panel' => 'Background',
+                    'required' => false,
+                ]
+            )
+            ->add('nationalIDCardScan', FilePathType::class,
+                [
+                    'label' => '{name} ID Card Scan',
+                    'label_translation_parameters' => ['{name}' => LocaleHelper::getCountryName(ProviderFactory::create(Setting::class)->getSettingByScopeAsString('System', 'country'))],
+                    'panel' => 'Background',
+                    'help' => 'Less than 1M,  Accepts PDF and image files only.',
+                    'required' => false,
+                    'file_prefix' => 'national_card_',
+                ]
+            )
+            ->add('residencyStatus', TextType::class,
+                [
+                    'label' => '{name} Residency/Visa Type',
+                    'label_translation_parameters' => ['{name}' => LocaleHelper::getCountryName(ProviderFactory::create(Setting::class)->getSettingByScopeAsString('System', 'country'))],
+                    'panel' => 'Background',
+                    'required' => false,
+                ]
+            )
+            ->add('visaExpiryDate', DateType::class,
+                [
+                    'label' => '{name} Visa Expiry Date',
+                    'label_translation_parameters' => ['{name}' => LocaleHelper::getCountryName(ProviderFactory::create(Setting::class)->getSettingByScopeAsString('System', 'country'))],
+                    'help' => 'If relevant',
+                    'panel' => 'Background',
+                    'widget' => 'single_text',
+                    'input' => 'datetime_immutable',
+                    'required' => false,
+                ]
+            )
+            ->add('submitBackground', SubmitType::class,
+                [
+                    'label' => 'Submit',
+                    'panel' => 'Background',
+                    'translation_domain' => 'messages',
+                ]
+            )
+        ;
+    }
 }

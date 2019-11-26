@@ -19,11 +19,13 @@ use App\Entity\ApplicationForm;
 use App\Entity\House;
 use App\Entity\I18n;
 use App\Entity\SchoolYear;
+use App\Entity\Setting;
 use App\Entity\Staff;
 use App\Entity\StudentEnrolment;
 use App\Entity\Theme;
 use App\Manager\EntityInterface;
 use App\Manager\Traits\BooleanList;
+use App\Provider\ProviderFactory;
 use App\Util\Format;
 use App\Util\ImageHelper;
 use App\Util\TranslationsHelper;
@@ -32,7 +34,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 use Kookaburra\SystemAdmin\Entity\Role;
-use Symfony\Bridge\Doctrine\Validator\Constraints as ASSERT;
+use Symfony\Component\Validator\Constraints as ASSERT;
 use Symfony\Component\Intl\Languages;
 
 /**
@@ -1391,6 +1393,10 @@ class Person implements EntityInterface
     /**
      * @var string|null
      * @ORM\Column(length=255, name="birthCertificateScan")
+     * @ASSERT\File(
+     *     maxSize = "1024k",
+     *     mimeTypes = {"image/*","application/pdf","application/x-pdf"}
+     * )
      */
     private $birthCertificateScan = '';
 
@@ -1417,6 +1423,52 @@ class Person implements EntityInterface
      * @ORM\Column(length=255)
      */
     private $ethnicity = '';
+
+    /**
+     * @var array
+     */
+    private static $ethnicityList = [
+        'Australian Peoples',
+        'New Zealand Peoples',
+        'Melanesian and Papuan',
+        'Micronesian',
+        'Polynesian',
+        'British',
+        'Irish',
+        'Western European',
+        'Northern European',
+        'Southern European',
+        'South Eastern European',
+        'Eastern European',
+        'Arab',
+        'Jewish',
+        'Peoples of the Sudan',
+        'Other North African and Middle Eastern',
+        'Mainland South-East Asian',
+        'Maritime South-East Asian',
+        'Chinese Asian',
+        'Other North-East Asian',
+        'Southern Asian',
+        'Central Asian',
+        'North American',
+        'South American',
+        'Central American',
+        'Caribbean Islander',
+        'Central and West African',
+        'Southern and East African'
+    ];
+
+    /**
+     * getEthnicityList
+     * @return array
+     */
+    public static function getEthnicityList(): array
+    {
+        if (($x = ProviderFactory::create(Setting::class)->getSettingByScopeAsArray('User Admin', 'ethnicity')) !== []) {
+            return $x;
+        }
+        return self::$ethnicityList;
+    }
 
     /**
      * @return null|string
@@ -1489,6 +1541,10 @@ class Person implements EntityInterface
     /**
      * @var string|null
      * @ORM\Column(length=255, name="citizenship1PassportScan")
+     * @ASSERT\File(
+     *     maxSize = "1024k",
+     *     mimeTypes = {"image/*","application/pdf","application/x-pdf"}
+     * )
      */
     private $citizenship1PassportScan = '';
 
@@ -1583,6 +1639,15 @@ class Person implements EntityInterface
     }
 
     /**
+     * getReligionList
+     * @return array
+     */
+    public static function getReligionList(): array
+    {
+        return ProviderFactory::create(Setting::class)->getSettingByScopeAsArray('User Admin', 'religions');
+    }
+
+    /**
      * @var string|null
      * @ORM\Column(length=30, name="nationalIDCardNumber")
      */
@@ -1655,24 +1720,26 @@ class Person implements EntityInterface
     }
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(nullable=true, type="date", name="visaExpiryDate")
+     * @var \DateTimeImmutable|null
+     * @ORM\Column(nullable=true, type="date_immutable", name="visaExpiryDate")
      */
     private $visaExpiryDate;
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
-    public function getVisaExpiryDate(): ?\DateTime
+    public function getVisaExpiryDate(): ?\DateTimeImmutable
     {
         return $this->visaExpiryDate;
     }
 
     /**
-     * @param \DateTime|null $visaExpiryDate
+     * VisaExpiryDate.
+     *
+     * @param \DateTimeImmutable|null $visaExpiryDate
      * @return Person
      */
-    public function setVisaExpiryDate(?\DateTime $visaExpiryDate): Person
+    public function setVisaExpiryDate(?\DateTimeImmutable $visaExpiryDate): Person
     {
         $this->visaExpiryDate = $visaExpiryDate;
         return $this;
