@@ -1394,7 +1394,7 @@ class Person implements EntityInterface
      * @var string|null
      * @ORM\Column(length=255, name="birthCertificateScan")
      * @ASSERT\File(
-     *     maxSize = "1024k",
+     *     maxSize = "2048k",
      *     mimeTypes = {"image/*","application/pdf","application/x-pdf"}
      * )
      */
@@ -1542,7 +1542,7 @@ class Person implements EntityInterface
      * @var string|null
      * @ORM\Column(length=255, name="citizenship1PassportScan")
      * @ASSERT\File(
-     *     maxSize = "1024k",
+     *     maxSize = "2048k",
      *     mimeTypes = {"image/*","application/pdf","application/x-pdf"}
      * )
      */
@@ -3075,6 +3075,7 @@ class Person implements EntityInterface
             'status' => TranslationsHelper::translate($this->getStatus()),
             'family' => $this->getFamilyName(),
             'username' => $this->getUsername(),
+            'role' => $this->getPrimaryRole() ? $this->getPrimaryRole()->getName() : '',
         ];
     }
 

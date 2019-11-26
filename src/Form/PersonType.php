@@ -12,6 +12,7 @@
 
 namespace Kookaburra\UserAdmin\Form;
 
+use App\Entity\SchoolYear;
 use App\Entity\Setting;
 use App\Form\Transform\EntityToStringTransformer;
 use App\Form\Type\EntityType;
@@ -23,10 +24,11 @@ use App\Form\Type\ReactDateType;
 use App\Form\Type\ReactFormType;
 use App\Form\Type\ToggleType;
 use App\Provider\ProviderFactory;
-use App\Util\GlobalHelper;
 use App\Util\LocaleHelper;
+use Doctrine\ORM\EntityRepository;
 use Kookaburra\SystemAdmin\Entity\Role;
 use Kookaburra\UserAdmin\Entity\Person;
+use Kookaburra\UserAdmin\Util\UserHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -419,6 +421,19 @@ class PersonType extends AbstractType
                     'panel' => 'School',
                 ]
             )
+        ;
+        if (UserHelper::isStudent($options['data'])) {
+            $builder
+                ->add('lastSchool', TextType::class,
+                    [
+                        'label' => 'Last School',
+                        'required' => false,
+                        'panel' => 'School',
+                    ]
+                )
+            ;
+        }
+        $builder
             ->add('dateStart', DateType::class,
                 [
                     'label' => 'Start Date',
@@ -441,6 +456,42 @@ class PersonType extends AbstractType
                     'years' => range(intval(date('Y'))- 25, intval(date('Y')))
                 ]
             )
+        ;
+        if (UserHelper::isStudent($options['data'])) {
+            $builder
+                ->add('schoolYearClassOf', EntityType::class,
+                    [
+                        'label' => 'Class of',
+                        'class' => SchoolYear::class,
+                        'choice_label' => 'name',
+                        'query_builder' => function(EntityRepository $er) {
+                            return $er->createQueryBuilder('sy')
+                                ->orderBy('sy.firstDay', 'ASC')
+                            ;
+                        },
+                        'required' => false,
+                        'help' => 'When is the student expected to graduate?',
+                        'panel' => 'School',
+                        'placeholder' => ' ',
+                    ]
+                )
+                ->add('nextSchool', TextType::class,
+                    [
+                        'label' => 'Next School',
+                        'required' => false,
+                        'panel' => 'School',
+                    ]
+                )
+                ->add('departureReason', TextType::class,
+                    [
+                        'label' => 'Departure Reason',
+                        'required' => false,
+                        'panel' => 'School',
+                    ]
+                )
+            ;
+        }
+        $builder
             ->add('submitSchool', SubmitType::class,
                 [
                     'label' => 'Submit',
@@ -502,7 +553,7 @@ class PersonType extends AbstractType
                 [
                     'label' => 'Birth Certificate Scan',
                     'panel' => 'Background',
-                    'help' => 'Less than 1M,  Accepts PDF and image files only.',
+                    'help' => 'Less than 2M,  Accepts PDF and image files only.',
                     'required' => false,
                     'file_prefix' => 'birth_cert_',
                 ]
@@ -550,7 +601,7 @@ class PersonType extends AbstractType
                 [
                     'label' => 'Citizenship 1 Passport Scan',
                     'panel' => 'Background',
-                    'help' => 'Less than 1M,  Accepts PDF and image files only.',
+                    'help' => 'Less than 2M,  Accepts PDF and image files only.',
                     'required' => false,
                     'file_prefix' => 'passport_',
                 ]
@@ -583,7 +634,7 @@ class PersonType extends AbstractType
                     'label' => '{name} ID Card Scan',
                     'label_translation_parameters' => ['{name}' => LocaleHelper::getCountryName(ProviderFactory::create(Setting::class)->getSettingByScopeAsString('System', 'country'))],
                     'panel' => 'Background',
-                    'help' => 'Less than 1M,  Accepts PDF and image files only.',
+                    'help' => 'Less than 2M,  Accepts PDF and image files only.',
                     'required' => false,
                     'file_prefix' => 'national_card_',
                 ]

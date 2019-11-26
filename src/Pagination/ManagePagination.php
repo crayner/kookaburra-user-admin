@@ -45,6 +45,13 @@ class ManagePagination extends ReactPaginationManager
         $row->addColumn($column);
 
         $column = new PaginationColumn();
+        $column->setLabel('Primary Role')
+            ->setContentKey(['role'])
+            ->setSort(false)
+            ->setClass('column relative pr-4 cursor-pointer widthAuto');
+        $row->addColumn($column);
+
+        $column = new PaginationColumn();
         $column->setLabel('Status')
             ->setContentKey(['status'])
             ->setSort(false)
