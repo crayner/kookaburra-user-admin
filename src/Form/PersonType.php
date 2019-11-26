@@ -154,6 +154,8 @@ class PersonType extends AbstractType
         $this->buildContact($builder, $options);
         $this->buildSchool($builder, $options);
         $this->buildBackground($builder, $options);
+        if (UserHelper::isParent($options['data']))
+            $this->buildEmployment($builder, $options);
     }
 
     /**
@@ -662,6 +664,49 @@ class PersonType extends AbstractType
                 [
                     'label' => 'Submit',
                     'panel' => 'Background',
+                    'translation_domain' => 'messages',
+                ]
+            )
+        ;
+    }
+
+    /**
+     * buildSchool
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    private function buildEmployment(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('employmentHeader', HeaderType::class,
+                [
+                    'label' => 'Employment Details: {name}',
+                    'label_translation_parameters' => ['{name}' => $options['data']->getId() > 0 ? $options['data']->formatName(['reverse' => true]) : ''],
+                    'panel' => 'Employment',
+                ]
+            )
+            ->add('profession', TextType::class,
+                [
+                    'label' => 'Profession',
+                    'panel' => 'Employment',
+                ]
+            )
+            ->add('employer', TextType::class,
+                [
+                    'label' => 'Employer',
+                    'panel' => 'Employment',
+                ]
+            )
+            ->add('jobTitle', TextType::class,
+                [
+                    'label' => 'Job Title',
+                    'panel' => 'Employment',
+                ]
+            )
+            ->add('employmentBackground', SubmitType::class,
+                [
+                    'label' => 'Submit',
+                    'panel' => 'Employment',
                     'translation_domain' => 'messages',
                 ]
             )

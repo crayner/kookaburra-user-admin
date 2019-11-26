@@ -341,4 +341,20 @@ class PersonProvider implements EntityProviderInterface, UserLoaderInterface
         }
         return $w;
     }
+
+    /**
+     * isParent
+     * @param Person|null $person
+     * @return bool
+     */
+    public function isParent(?Person $person = null): bool
+    {
+        if (null === $person)
+            $person = $this->getEntity();
+
+        if ($person->getPrimaryRole() === 'Parent')
+            return true;
+
+        return $person->hasRole('Parent');
+    }
 }

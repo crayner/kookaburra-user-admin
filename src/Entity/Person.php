@@ -3097,4 +3097,14 @@ class Person implements EntityInterface
         }
         return '';
     }
+
+    /**
+     * hasRole
+     * @param string $role
+     * @return bool
+     */
+    public function hasRole(string $role): bool
+    {
+        return ProviderFactory::create(Role::class)->hasRole($role, $this->getAllRoles());
+    }
 }

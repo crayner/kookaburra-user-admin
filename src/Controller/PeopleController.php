@@ -24,6 +24,7 @@ use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
 use Kookaburra\UserAdmin\Form\ManageSearchType;
 use Kookaburra\UserAdmin\Form\PersonType;
 use Kookaburra\UserAdmin\Pagination\ManagePagination;
+use Kookaburra\UserAdmin\Util\UserHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -126,6 +127,12 @@ class PeopleController extends AbstractController
             $panel = new Panel('Background', 'UserAdmin');
             $container->addPanel($panel);
 
+            if (UserHelper::isParent($person)) {
+                $panel = new Panel('Employment', 'UserAdmin');
+                $container->addPanel($panel);
+
+            }
+
             $manager->addContainer($container)->buildContainers();
 
             return new JsonResponse(
@@ -151,6 +158,12 @@ class PeopleController extends AbstractController
 
         $panel = new Panel('Background', 'UserAdmin');
         $container->addPanel($panel);
+
+        if (UserHelper::isParent($person)) {
+            $panel = new Panel('Employment', 'UserAdmin');
+            $container->addPanel($panel);
+
+        }
 
         $manager->addContainer($container)->buildContainers();
 
