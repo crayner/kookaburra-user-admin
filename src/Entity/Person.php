@@ -34,6 +34,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 use Kookaburra\SystemAdmin\Entity\Role;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as ASSERT;
 use Symfony\Component\Intl\Languages;
 
@@ -59,6 +60,10 @@ use Symfony\Component\Intl\Languages;
  *     @ORM\Index(name="i18n",columns={"gibboni18nIDPersonal"})
  * }
  *     )
+ * @UniqueEntity(
+ *     fields={"studentID"},
+ *     ignoreNull=true
+ * )
  */
 class Person implements EntityInterface
 {
@@ -2036,9 +2041,9 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=10, name="studentID")
+     * @ORM\Column(length=10, name="studentID",nullable=true)
      */
-    private $studentID = '';
+    private $studentID;
 
     /**
      * @return null|string
@@ -2054,7 +2059,7 @@ class Person implements EntityInterface
      */
     public function setStudentID(?string $studentID): Person
     {
-        $this->studentID = mb_substr($studentID, 0, 10);
+        $this->studentID = mb_substr($studentID, 0, 10) ?: null;
         return $this;
     }
 

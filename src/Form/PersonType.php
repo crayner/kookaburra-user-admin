@@ -28,6 +28,7 @@ use App\Provider\ProviderFactory;
 use App\Util\LocaleHelper;
 use Doctrine\ORM\EntityRepository;
 use Kookaburra\SystemAdmin\Entity\Role;
+use Kookaburra\UserAdmin\Entity\FamilyRelationship;
 use Kookaburra\UserAdmin\Entity\Person;
 use Kookaburra\UserAdmin\Util\UserHelper;
 use Symfony\Component\Form\AbstractType;
@@ -82,6 +83,7 @@ class PersonType extends AbstractType
                     'label' => 'Title',
                     'required' => true,
                     'panel' => 'Basic',
+                    'placeholder' => ' ',
                 ]
             )
             ->add('surname', TextType::class,
@@ -157,6 +159,8 @@ class PersonType extends AbstractType
         $this->buildBackground($builder, $options);
         if (UserHelper::isParent($options['data']))
             $this->buildEmployment($builder, $options);
+        if (UserHelper::isStudent($options['data']) || UserHelper::isStaff($options['data']))
+            $this->buildEmergency($builder, $options);
         $this->buildMiscellaneous($builder, $options);
     }
 
@@ -426,7 +430,7 @@ class PersonType extends AbstractType
                 ]
             )
         ;
-        if (UserHelper::isStudent($options['data'])) {
+        if (UserHelper::isStudent($options['data']) || UserHelper::isStaff($options['data'])) {
             $builder
                 ->add('lastSchool', TextType::class,
                     [
@@ -468,10 +472,9 @@ class PersonType extends AbstractType
                         'label' => 'Class of',
                         'class' => SchoolYear::class,
                         'choice_label' => 'name',
-                        'query_builder' => function(EntityRepository $er) {
+                        'query_builder' => function (EntityRepository $er) {
                             return $er->createQueryBuilder('sy')
-                                ->orderBy('sy.firstDay', 'ASC')
-                            ;
+                                ->orderBy('sy.firstDay', 'ASC');
                         },
                         'required' => false,
                         'help' => 'When is the student expected to graduate?',
@@ -479,6 +482,10 @@ class PersonType extends AbstractType
                         'placeholder' => ' ',
                     ]
                 )
+            ;
+        }
+        if (UserHelper::isStudent($options['data']) || UserHelper::isStaff($options['data'])) {
+            $builder
                 ->add('nextSchool', TextType::class,
                     [
                         'label' => 'Next School',
@@ -716,6 +723,95 @@ class PersonType extends AbstractType
     }
 
     /**
+     * buildEmergency
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    private function buildEmergency(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('emergencyHeader', HeaderType::class,
+                [
+                    'label' => 'Emergency Contacts: {name}',
+                    'label_translation_parameters' => ['{name}' => $options['data']->getId() > 0 ? $options['data']->formatName(['reverse' => true]) : ''],
+                    'help' => 'These details are used when immediate family members (e.g. parent, spouse) cannot be reached first. Please try to avoid listing immediate family members.',
+                    'panel' => 'Emergency',
+                ]
+            )
+            ->add('emergency1Name', TextType::class,
+                [
+                    'label' => 'Contact 1 Name',
+                    'required' => false,
+                    'panel' => 'Emergency',
+                ]
+            )
+            ->add('emergency1Relationship', EnumType::class,
+                [
+                    'label' => 'Contact 1 Relationship',
+                    'choice_list_method' => 'getRelationshipList',
+                    'choice_list_prefix' => 'family.relationship',
+                    'choice_list_class' => FamilyRelationship::class,
+                    'required' => false,
+                    'panel' => 'Emergency',
+                    'placeholder' => ' ',
+                ]
+            )
+            ->add('emergency1Number1', TextType::class,
+                [
+                    'label' => 'Contact 1 Number 1',
+                    'required' => false,
+                    'panel' => 'Emergency',
+                ]
+            )
+            ->add('emergency1Number2', TextType::class,
+                [
+                    'label' => 'Contact 1 Number 2',
+                    'required' => false,
+                    'panel' => 'Emergency',
+                ]
+            )
+            ->add('emergency2Name', TextType::class,
+                [
+                    'label' => 'Contact 2 Name',
+                    'required' => false,
+                    'panel' => 'Emergency',
+                ]
+            )
+            ->add('emergency2Relationship', EnumType::class,
+                [
+                    'label' => 'Contact 2 Relationship',
+                    'choice_list_method' => 'getRelationshipList',
+                    'choice_list_class' => FamilyRelationship::class,
+                    'required' => false,
+                    'panel' => 'Emergency',
+                    'choice_list_prefix' => 'family.relationship',
+                    'placeholder' => ' ',
+                ]
+            )
+            ->add('emergency2Number1', TextType::class,
+                [
+                    'label' => 'Contact 2 Number 1',
+                    'required' => false,
+                    'panel' => 'Emergency',
+                ]
+            )
+            ->add('emergency2Number2', TextType::class,
+                [
+                    'label' => 'Contact 2 Number 2',
+                    'required' => false,
+                    'panel' => 'Emergency',
+                ]
+            )
+            ->add('emergencyBackground', SubmitType::class,
+                [
+                    'label' => 'Submit',
+                    'panel' => 'Emergency',
+                ]
+            )
+        ;
+    }
+
+    /**
      * buildMiscellaneous
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -723,7 +819,7 @@ class PersonType extends AbstractType
     private function buildMiscellaneous(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('meiscellaneousHeader', HeaderType::class,
+            ->add('miscellaneousHeader', HeaderType::class,
                 [
                     'label' => 'Miscellaneous: {name}',
                     'label_translation_parameters' => ['{name}' => $options['data']->getId() > 0 ? $options['data']->formatName(['reverse' => true]) : ''],
@@ -741,10 +837,52 @@ class PersonType extends AbstractType
                             ;
                     },
                     'required' => false,
+                    'data' => $options['data']->getHouse() ? $options['data']->getHouse()->getId() : null,
                     'panel' => 'Miscellaneous',
                     'placeholder' => ' ',
                 ]
             )
+        ;
+        if (UserHelper::isStudent($options['data'])) {
+            $builder
+                ->add('studentID', TextType::class,
+                    [
+                        'label' => 'Student Identifier',
+                        'help' => 'Must be unique if set.',
+                        'required' => false,
+                        'panel' => 'Miscellaneous',
+                    ]
+                );
+        }
+        if (UserHelper::isStudent($options['data']) || UserHelper::isStaff($options['data'])) {
+            $builder
+                ->add('transport', TextType::class,
+                    [
+                        'label' => 'Transport',
+                        'required' => false,
+                        'panel' => 'Miscellaneous',
+                    ]
+                )
+                ->add('transportNotes', TextareaType::class,
+                    [
+                        'label' => 'Transport Notes',
+                        'required' => false,
+                        'panel' => 'Miscellaneous',
+                        'attr' => [
+                            'rows' => 4,
+                        ],
+                    ]
+                )
+                ->add('lockerNumber', TextType::class,
+                    [
+                        'label' => 'Locker Number',
+                        'required' => false,
+                        'panel' => 'Miscellaneous',
+                    ]
+                )
+            ;
+        }
+        $builder
             ->add('vehicleRegistration', TextType::class,
                 [
                     'label' => 'Vehicle Registration',

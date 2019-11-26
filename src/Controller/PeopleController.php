@@ -130,8 +130,13 @@ class PeopleController extends AbstractController
             if (UserHelper::isParent($person)) {
                 $panel = new Panel('Employment', 'UserAdmin');
                 $container->addPanel($panel);
-
             }
+
+            if (UserHelper::isStudent($person) || UserHelper::isStaff($person)) {
+                $panel = new Panel('Emergency', 'UserAdmin');
+                $container->addPanel($panel);
+            }
+
 
             $panel = new Panel('Miscellaneous', 'UserAdmin');
             $container->addPanel($panel);
@@ -164,6 +169,11 @@ class PeopleController extends AbstractController
 
         if (UserHelper::isParent($person)) {
             $panel = new Panel('Employment', 'UserAdmin');
+            $container->addPanel($panel);
+        }
+
+        if (UserHelper::isStudent($person) || UserHelper::isStaff($person)) {
+            $panel = new Panel('Emergency', 'UserAdmin');
             $container->addPanel($panel);
         }
 

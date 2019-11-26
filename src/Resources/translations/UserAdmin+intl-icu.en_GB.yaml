@@ -65,3 +65,111 @@ Username: Username
 System login name.: System login name.
 Status: Status
 This determines visibility within the system.: This determines visibility within the system.
+family:
+    relationship:
+        mother: Mother
+        father: Father
+        step-mother: Step Mother
+        step-father: Step Father
+        adoptive parent: Adoptive Parent
+        guardian: Guardian
+        grandmother: Grandmother
+        grandfather: Grandfather
+        aunt: Aunt
+        uncle: Uncle
+        nanny/helper: Nanny/Helper
+        other: Other
+'System Access: {name}': 'System Access: {name}'
+Can Login?: Can Login?
+Force Password Reset: Force Password Reset
+User will be prompted on next login.: User will be prompted on next login.
+'Contact Information: {name}': 'Contact Information: {name}'
+Email: Email
+Alternate Email: Alternate Email
+Enter Personal Address: Enter Personal Address
+Address 1: Address 1
+Unit, Building, Street: Unit, Building, Street
+Address 1 Locality: Address 1 Locality
+City, Suburb or Town, State, Postcode (ZIP): City, Suburb or Town, State, Postcode (ZIP)
+Address 1 Country: Address 1 Country
+Address 2: Address 2
+Address 2 Locality: Address 2 Locality
+Address 2 Country: Address 2 Country
+Phone 1: Phone 1
+Type, country code, number.: Type, country code, number.
+' ': ' '
+Mobile: Mobile
+Home: Home
+Work: Work
+Facsimile: Facsimile
+Pager: Pager
+Other: Other
+Phone 2: Phone 2
+Phone 3: Phone 3
+Phone 4: Phone 4
+Website: Website
+'School Information: {name}': 'School Information: {name}'
+Last School: Last School
+Start Date: Start Date
+The first day at school for this person.: The first day at school for this person.
+End Date: End Date
+The last day at school for this person.: The last day at school for this person.
+Class of: Class of
+When is the student expected to graduate?: When is the student expected to graduate?
+Next School: Next School
+Departure Reason: Departure Reason
+'Background Information: {name}': 'Background Information: {name}'
+First Language: First Language
+Second Language: Second Language
+Third Language: Third Language
+Country of Birth: Country of Birth
+Birth Certificate Scan: Birth Certificate Scan
+Less than 2M,  Accepts PDF and image files only.: Less than 2M,  Accepts PDF and image files only.
+Ethnicity: Ethnicity
+Ethnicity selection can be altered at {anchor}People Settings{endAnchor}: Ethnicity selection can be altered at {anchor}People Settings{endAnchor}
+Religion: Religion
+Religion selection can be altered at {anchor}People Settings{endAnchor}: Religion selection can be altered at {anchor}People Settings{endAnchor}
+Citizenship 1: Citizenship 1
+Citizenship 1 Passport Number: Citizenship 1 Passport Number
+Citizenship 1 Passport Scan: Citizenship 1 Passport Scan
+Citizenship 2: Citizenship 2
+Citizenship 2 Passport Number: Citizenship 2 Passport Number
+'{name} ID Card Number': '{name} ID Card Number'
+'{name} ID Card Scan': '{name} ID Card Scan'
+'{name} Residency/Visa Type': '{name} Residency/Visa Type'
+'{name} Visa Expiry Date': '{name} Visa Expiry Date'
+If relevant: If relevant
+'Emergency Contacts: {name}': 'Emergency Contacts: {name}'
+These details are used when immediate family members (e.g. parent, spouse) cannot be reached first. Please try to avoid listing immediate family members.: These details are used when immediate family members (e.g. parent, spouse) cannot be reached first. Please try to avoid listing immediate family members.
+Contact 1 Name: Contact 1 Name
+Contact 1 Relationship: Contact 1 Relationship
+Contact 1 Number 1: Contact 1 Number 1
+Contact 1 Number 2: Contact 1 Number 2
+Contact 2 Name: Contact 2 Name
+Contact 2 Relationship: Contact 2 Relationship
+Mother: Mother
+Father: Father
+Step Mother: Step Mother
+Step Father: Step Father
+Adoptive Parent: Adoptive Parent
+Guardian: Guardian
+Grandmother: Grandmother
+Grandfather: Grandfather
+Aunt: Aunt
+Uncle: Uncle
+Nanny/Helper: Nanny/Helper
+Contact 2 Number 1: Contact 2 Number 1
+Contact 2 Number 2: Contact 2 Number 2
+Submit: Submit
+'Miscellaneous: {name}': 'Miscellaneous: {name}'
+House: House
+Student Identifier: Student Identifier
+Must be unique if set.: Must be unique if set.
+Transport: Transport
+Transport Notes: Transport Notes
+Locker Number: Locker Number
+Vehicle Registration: Vehicle Registration
+School: School
+Background: Background
+Emergency: Emergency
+Miscellaneous: Miscellaneous
