@@ -133,6 +133,9 @@ class PeopleController extends AbstractController
 
             }
 
+            $panel = new Panel('Miscellaneous', 'UserAdmin');
+            $container->addPanel($panel);
+
             $manager->addContainer($container)->buildContainers();
 
             return new JsonResponse(
@@ -162,8 +165,11 @@ class PeopleController extends AbstractController
         if (UserHelper::isParent($person)) {
             $panel = new Panel('Employment', 'UserAdmin');
             $container->addPanel($panel);
-
         }
+
+        $panel = new Panel('Miscellaneous', 'UserAdmin');
+        $container->addPanel($panel);
+
 
         $manager->addContainer($container)->buildContainers();
 

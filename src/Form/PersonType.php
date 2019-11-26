@@ -12,6 +12,7 @@
 
 namespace Kookaburra\UserAdmin\Form;
 
+use App\Entity\House;
 use App\Entity\SchoolYear;
 use App\Entity\Setting;
 use App\Form\Transform\EntityToStringTransformer;
@@ -156,6 +157,7 @@ class PersonType extends AbstractType
         $this->buildBackground($builder, $options);
         if (UserHelper::isParent($options['data']))
             $this->buildEmployment($builder, $options);
+        $this->buildMiscellaneous($builder, $options);
     }
 
     /**
@@ -671,7 +673,7 @@ class PersonType extends AbstractType
     }
 
     /**
-     * buildSchool
+     * buildEmployment
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -708,6 +710,52 @@ class PersonType extends AbstractType
                     'label' => 'Submit',
                     'panel' => 'Employment',
                     'translation_domain' => 'messages',
+                ]
+            )
+        ;
+    }
+
+    /**
+     * buildMiscellaneous
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    private function buildMiscellaneous(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('meiscellaneousHeader', HeaderType::class,
+                [
+                    'label' => 'Miscellaneous: {name}',
+                    'label_translation_parameters' => ['{name}' => $options['data']->getId() > 0 ? $options['data']->formatName(['reverse' => true]) : ''],
+                    'panel' => 'Miscellaneous',
+                ]
+            )
+            ->add('house', EntityType::class,
+                [
+                    'label' => 'House',
+                    'class' => House::class,
+                    'choice_label' => 'name',
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('h')
+                            ->orderBy('h.name')
+                            ;
+                    },
+                    'required' => false,
+                    'panel' => 'Miscellaneous',
+                    'placeholder' => ' ',
+                ]
+            )
+            ->add('vehicleRegistration', TextType::class,
+                [
+                    'label' => 'Vehicle Registration',
+                    'required' => false,
+                    'panel' => 'Miscellaneous',
+                ]
+            )
+            ->add('miscellaneousBackground', SubmitType::class,
+                [
+                    'label' => 'Submit',
+                    'panel' => 'Miscellaneous',
                 ]
             )
         ;
