@@ -3102,6 +3102,7 @@ class Person implements EntityInterface
             'family' => $this->getFamilyName(),
             'username' => $this->getUsername(),
             'role' => $this->getPrimaryRole() ? $this->getPrimaryRole()->getName() : '',
+            'canDelete' => $this->canDelete(),
         ];
     }
 
@@ -3132,5 +3133,24 @@ class Person implements EntityInterface
     public function hasRole(string $role): bool
     {
         return ProviderFactory::create(Role::class)->hasRole($role, $this->getAllRoles());
+    }
+
+    /**
+     * canDelete
+     * @return bool
+     */
+    public function canDelete(): bool
+    {
+        if ($this->getStatus() === 'Full')
+            return false;
+        if ($this->getStudentEnrolments()->count() > 0)
+            return false;
+        if ($this->getStaff() instanceof Staff)
+            return false;
+        if ($this->getChildren()->count() > 0)
+            return false;
+        if ($this->getAdults()->count() > 0)
+            return false;
+        return true;
     }
 }

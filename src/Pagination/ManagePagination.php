@@ -83,6 +83,26 @@ class ManagePagination extends ReactPaginationManager
             ->setRouteParams(['person' => 'id']);
         $row->addAction($action);
 
+        $action = new PaginationAction();
+        $action->setTitle('Delete Person')
+            ->setAClass('')
+            ->setColumnClass('column p-2 sm:p-3')
+            ->setSpanClass('far fa-trash-alt fa-fw fa-1-5x text-gray-700')
+            ->setRoute('user_admin__delete')
+            ->setDisplayWhen('canDelete')
+            ->setOnClick('areYouSure')
+            ->setRouteParams(['person' => 'id']);
+        $row->addAction($action);
+
+        $action = new PaginationAction();
+        $action->setTitle('Reset Password')
+            ->setAClass('')
+            ->setColumnClass('column p-2 sm:p-3')
+            ->setSpanClass('fas fa-user-lock fa-fw fa-1-5x text-gray-700')
+            ->setRoute('user_admin__reset_password')
+            ->setRouteParams(['person' => 'id']);
+        $row->addAction($action);
+
         $this->setRow($row);
         return $this;
     }

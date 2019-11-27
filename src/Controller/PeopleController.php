@@ -19,6 +19,7 @@ use App\Provider\ProviderFactory;
 use App\Twig\Sidebar\Photo;
 use App\Twig\SidebarContent;
 use App\Util\TranslationsHelper;
+use Doctrine\DBAL\Driver\PDOException;
 use Kookaburra\UserAdmin\Entity\Person;
 use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
 use Kookaburra\UserAdmin\Form\ManageSearchType;
@@ -30,6 +31,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -50,7 +52,7 @@ class PeopleController extends AbstractController
      */
     public function manage(ManagePagination $pagination, Request $request)
     {
-        $search = new ManageSearch();
+        $search = $request->getSession()->has('people_manage_search') ? $request->getSession()->get('people_manage_search') : new ManageSearch();
         $form = $this->createForm(ManageSearchType::class, $search, ['action' => $this->generateUrl('user_admin__manage')]);
 
         $form->handleRequest($request);
@@ -64,6 +66,8 @@ class PeopleController extends AbstractController
         $content = $repository->findBySearch($search);
         $pagination->setContent($content)->setPageMax(25)
             ->setPaginationScript();
+
+        $request->getSession()->set('people_manage_search', $search);
 
         return $this->render('@KookaburraUserAdmin/manage.html.twig',
             [
@@ -194,5 +198,28 @@ class PeopleController extends AbstractController
         $manager->addContainer($container)->buildContainers();
 
         return $this->render('@KookaburraUserAdmin/edit.html.twig');
+    }
+
+    /**
+     * delete
+     * @param Person $person
+     * @Route("/{person}/delete/",name="delete")
+     * @IsGranted("ROLE_ROUTE")
+     */
+    public function delete(Person $person, FlashBagInterface $flashBag)
+    {
+        if ($person->canDelete()) {
+            try {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($person);
+                $em->flush();
+                $flashBag->add('success', ['{name} has been deleted.', ['{name}' => $person->formatName(['informal' => true])], 'UserAdmin']);
+            } catch (PDOException $e) {
+                $flashBag->add('error', ['{name} has not been deleted. A database error was encountered. {message}', ['{name}' => $person->formatName(['informal' => true]), '{message}' => $this->getParameter('kernel.environment') === 'prod' ? '' : $e->getMessage()], 'UserAdmin']);
+            }
+        } else {
+            $flashBag->add('info', ['{name} is locked in the system and must not be deleted.', ['{name}' => $person->formatName(['informal' => true])], 'UserAdmin']);
+        }
+        return $this->forward(PeopleController::class.'::manage');
     }
 }
