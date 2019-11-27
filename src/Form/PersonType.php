@@ -210,6 +210,7 @@ class PersonType extends AbstractType
                     'data' => $options['data']->getPrimaryRole()->getId(),
                     'help' => 'Controls what a user can do and see.',
                     'panel' => 'System',
+                    'placeholder' => 'Please select...',
                 ]
             )
             ->add('allRoles', EntityType::class,

@@ -29,6 +29,8 @@
             </tbody>
         </table>
     {{ form_end(form) }}
-    <h3>{{ 'View'|trans }}</h3>
+    <h3>{{ 'View'|trans }}
+        <button style="float: right;" title="{{ 'Add Person'|trans }}" type="button" onclick="window.open('{{ path('user_admin__add') }}','_self')"><span class="fas fa-plus-circle fa-fw fa-1-5x text-gray-700"/></button>
+    </h3>
     <section id="paginationContent"></section>
 {% endblock content %}

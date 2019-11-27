@@ -84,8 +84,10 @@ class PeopleController extends AbstractController
      * @Route("/0/add/{tabName}", name="add")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function edit(Request $request, ContainerManager $manager, SidebarContent $sidebar, Person $person = null, string $tabName = 'Basic')
+    public function edit(Request $request, ContainerManager $manager, SidebarContent $sidebar, ?Person $person = null, string $tabName = 'Basic')
     {
+        if (is_null($person))
+            $person = new Person();
         $photo = new Photo($person, 'getImage240', '200', 'user max200');
         $photo->setTransDomain('UserAdmin')->setTitle($person->formatName(['informal' => true]));
         $sidebar->addContent($photo);
@@ -102,13 +104,20 @@ class PeopleController extends AbstractController
             $content = json_decode($request->getContent(), true);
             $errors = [];
             $status = 'success';
+            $redirect = '';
             $form->submit($content);
             if ($form->isValid())
             {
-                dump($person);
+                $id = $person->getId();
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($person);
                 $em->flush();
+                if ($id !== $person->getId())
+                {
+                    $status = 'redirect';
+                    $redirect = $this->generateUrl('user_admin__edit', ['person' => $person->getId(), 'tabName' => $tabName]);
+                    $this->addFlash('success', 'return.success.0');
+                }
                 $errors[] = ['class' => 'success', 'message' => TranslationsHelper::translate('return.success.0', [], 'messages')];
             }
 
@@ -148,6 +157,7 @@ class PeopleController extends AbstractController
                     'form' => $manager->getFormFromContainer('formContent', 'single'),
                     'errors' => $errors,
                     'status' => $status,
+                    'redirect' => $redirect,
                 ],
                 200);
         }

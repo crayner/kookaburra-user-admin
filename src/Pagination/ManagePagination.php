@@ -17,6 +17,7 @@ use App\Manager\Entity\PaginationColumn;
 use App\Manager\Entity\PaginationRow;
 use App\Manager\ReactPaginationInterface;
 use App\Manager\ReactPaginationManager;
+use App\Util\TranslationsHelper;
 
 /**
  * Class ManagePagination
@@ -26,6 +27,7 @@ class ManagePagination extends ReactPaginationManager
 {
     public function execute(): ReactPaginationInterface
     {
+        TranslationsHelper::setDomain('UserAdmin');
         $row = new PaginationRow();
 
         $column = new PaginationColumn();
@@ -73,7 +75,7 @@ class ManagePagination extends ReactPaginationManager
         $row->addColumn($column);
 
         $action = new PaginationAction();
-        $action->setTitle('Edit')
+        $action->setTitle('Edit Person')
             ->setAClass('')
             ->setColumnClass('column p-2 sm:p-3')
             ->setSpanClass('fas fa-edit fa-fw fa-1-5x text-gray-700')
@@ -84,5 +86,4 @@ class ManagePagination extends ReactPaginationManager
         $this->setRow($row);
         return $this;
     }
-
 }

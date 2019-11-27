@@ -324,8 +324,9 @@ class PersonRepository extends ServiceEntityRepository
     public function findBySearch(ManageSearch $search): array
     {
         $query = $this->createQueryBuilder('p')
-            ->select(['p','fa','fc','fama','famc','s'])
+            ->select(['p','fa','fc','fama','famc','s', 'r'])
             ->leftJoin('p.adults', 'fa')
+            ->leftJoin('p.primaryRole', 'r')
             ->leftJoin('p.children', 'fc')
             ->leftJoin('fa.family', 'fama')
             ->leftJoin('fc.family', 'famc')
@@ -369,11 +370,8 @@ class PersonRepository extends ServiceEntityRepository
                 $query->andWhere('p.dateEnd < :today')
                     ->setParameter('today', new \DateTimeImmutable());
                 break;
-            default:
-                dd($search);
         }
 
-dump($query->getQuery()->getSQL());
         return $query->getQuery()
             ->getResult();
     }

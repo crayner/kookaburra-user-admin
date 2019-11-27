@@ -116,6 +116,17 @@ class Person implements EntityInterface
     }
 
     /**
+     * getGenderAssert
+     * @return array
+     */
+    public static function getGenderAssert(): array
+    {
+        $x = self::$genderList;
+        unset($x['Unspecified']);
+        return $x;
+    }
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -174,6 +185,7 @@ class Person implements EntityInterface
     /**
      * @var string|null
      * @ORM\Column(length=60)
+     * @ASSERT\NotBlank()
      */
     private $surname;
 
@@ -198,6 +210,7 @@ class Person implements EntityInterface
     /**
      * @var string|null
      * @ORM\Column(length=60, name="firstName")
+     * @ASSERT\NotBlank()
      */
     private $firstName;
 
@@ -226,6 +239,7 @@ class Person implements EntityInterface
     /**
      * @var string|null
      * @ORM\Column(length=60, name="preferredName")
+     * @ASSERT\NotBlank()
      */
     private $preferredName;
 
@@ -254,6 +268,7 @@ class Person implements EntityInterface
     /**
      * @var string|null
      * @ORM\Column(length=150, name="officialName")
+     * @ASSERT\NotBlank()
      */
     private $officialName = '';
 
@@ -302,6 +317,7 @@ class Person implements EntityInterface
     /**
      * @var string|null
      * @ORM\Column(length=16, options={"default": "Unspecified"})
+     * @ASSERT\Choice(callback="getGenderAssert")
      */
     private $gender = 'Unspecified';
 
@@ -336,6 +352,7 @@ class Person implements EntityInterface
     /**
      * @var string|null
      * @ORM\Column(length=20,unique=true)
+     * @ASSERT\NotBlank()
      */
     private $username;
 
@@ -465,6 +482,7 @@ class Person implements EntityInterface
     /**
      * @var string|null
      * @ORM\Column(length=16, options={"default": "Full"})
+     * @ASSERT\Choice(callback="getStatusList")
      */
     private $status = 'Full';
 
@@ -533,6 +551,7 @@ class Person implements EntityInterface
      * @var Role|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\SystemAdmin\Entity\Role")
      * @ORM\JoinColumn(name="gibbonRoleIDPrimary", referencedColumnName="gibbonRoleID", nullable=false)
+     * @ASSERT\NotBlank()
      */
     private $primaryRole;
 
@@ -556,7 +575,7 @@ class Person implements EntityInterface
 
     /**
      * @var array
-     * @ORM\Column(name="gibbonRoleIDAll", type="simple_array", nullable=true)
+     * @ORM\Column(name="gibbonRoleIDAll",type="simple_array",nullable=true)
      */
     private $allRoles = [];
 
@@ -597,13 +616,15 @@ class Person implements EntityInterface
     /**
      * @return \DateTimeImmutable|null
      */
-    public function getDob(): ?\DateTime
+    public function getDob(): ?\DateTimeImmutable
     {
         return $this->dob;
     }
 
     /**
-     * @param \DateTime|null $dob
+     * Dob.
+     *
+     * @param \DateTimeImmutable|null $dob
      * @return Person
      */
     public function setDob(?\DateTimeImmutable $dob): Person
@@ -832,7 +853,7 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $address1 = '';
 
@@ -856,7 +877,7 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, name="address1District")
+     * @ORM\Column(length=255, name="address1District",nullable=true)
      */
     private $address1District = '';
 
@@ -880,7 +901,7 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, name="address1Country")
+     * @ORM\Column(length=255, name="address1Country",nullable=true)
      */
     private $address1Country = '';
 
@@ -904,7 +925,7 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text",nullable=true)
      */
     private $address2 = '';
 
@@ -928,7 +949,7 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, name="address2District")
+     * @ORM\Column(length=255, name="address2District",nullable=true)
      */
     private $address2District = '';
 
@@ -952,7 +973,7 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, name="address2Country")
+     * @ORM\Column(length=255, name="address2Country",nullable=true)
      */
     private $address2Country = '';
 
@@ -1006,9 +1027,9 @@ class Person implements EntityInterface
     /**
      * @var Country|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Country")
-     * @ORM\JoinColumn(nullable=true, name="phone1CountryCode", referencedColumnName="id")
+     * @ORM\JoinColumn(name="phone1CountryCode", referencedColumnName="id",nullable=true)
      */
-    private $phone1CountryCode = '';
+    private $phone1CountryCode;
 
     /**
      * @return null|Country
@@ -1080,9 +1101,9 @@ class Person implements EntityInterface
     /**
      * @var Country|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Country")
-     * @ORM\JoinColumn(nullable=true, name="phone2CountryCode", referencedColumnName="id")
+     * @ORM\JoinColumn(name="phone2CountryCode", referencedColumnName="id",nullable=true)
      */
-    private $phone2CountryCode = '';
+    private $phone2CountryCode;
 
     /**
      * @return null|Country
@@ -1154,9 +1175,9 @@ class Person implements EntityInterface
     /**
      * @var Country|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Country")
-     * @ORM\JoinColumn(nullable=true, name="phone3CountryCode", referencedColumnName="id")
+     * @ORM\JoinColumn(name="phone3CountryCode", referencedColumnName="id",nullable=true)
      */
-    private $phone3CountryCode = '';
+    private $phone3CountryCode;
 
     /**
      * @return null|Country
@@ -1228,9 +1249,9 @@ class Person implements EntityInterface
     /**
      * @var Country
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Country")
-     * @ORM\JoinColumn(nullable=true, name="phone4CountryCode", referencedColumnName="id")
+     * @ORM\JoinColumn(name="phone4CountryCode", referencedColumnName="id",nullable=true)
      */
-    private $phone4CountryCode = '';
+    private $phone4CountryCode;
 
     /**
      * @return null|Country

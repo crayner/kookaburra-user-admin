@@ -173,3 +173,34 @@ School: School
 Background: Background
 Emergency: Emergency
 Miscellaneous: Miscellaneous
+Full: Full
+Left: Left
+Photo: Photo
+Name: Name
+Family: Family
+Records {start}-{end} of {total}: Records {start}-{end} of {total}
+First Page: First Page
+Previous Page: Previous Page
+Next Page: Next Page
+Last Page: Last Page
+Are you sure you want to delete this record?: Are you sure you want to delete this record?
+This operation cannot be undone, and may lead to loss of vital data in your system. PROCEED WITH CAUTION!: This operation cannot be undone, and may lead to loss of vital data in your system. PROCEED WITH CAUTION!
+Close: Close
+Yes: Yes
+Search: Search
+Search for: Search for
+Preferred, surname, username, role, student ID, email, phone number, vehicle registration: Preferred, surname, username, role, student ID, email, phone number, vehicle registration
+Filter by: Filter by
+Preset filters with your search.: Preset filters with your search.
+Filters: Filters
+'Role: Student': 'Role: Student'
+'Role: Parent': 'Role: Parent'
+'Role: Staff': 'Role: Staff'
+'Status: Full': 'Status: Full'
+'Status: Left': 'Status: Left'
+'Status: Expected': 'Status: Expected'
+Before Start Date: Before Start Date
+After End Date: After End Date
+View: View
+Add Person: Add Person
+'': ''
