@@ -44,7 +44,7 @@ class PreferencesManager
         $gibboni18nIDPersonal = $request->request->get('gibboni18nIDPersonal', '');
         $receiveNotificationEmails = $request->request->get('receiveNotificationEmails', 'N');
 
-        $URL = $session->get('absoluteURL').'/preferences/';
+        $URL = $session->get('absoluteURL').'/user/admin/preferences/';
 
         $validated = true;
 

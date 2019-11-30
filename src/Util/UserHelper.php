@@ -21,6 +21,7 @@ use App\Provider\EntityProviderInterface;
 use App\Provider\ProviderFactory;
 use Kookaburra\UserAdmin\Manager\SecurityUser;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class UserHelper
@@ -39,13 +40,19 @@ class UserHelper
     private static $provider;
 
     /**
+     * @var UserPasswordEncoderInterface
+     */
+    private static $encoder;
+
+    /**
      * UserHelper constructor.
      * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct(TokenStorageInterface $tokenStorage, UserPasswordEncoderInterface $encoder)
     {
         self::$tokenStorage = $tokenStorage;
         self::$provider = ProviderFactory::create(Person::class);
+        self::$encoder = $encoder;
     }
 
     /**
@@ -419,5 +426,13 @@ class UserHelper
         foreach($x as $item)
             $result[] = $item->getId();
         return array_unique($result);
+    }
+
+    /**
+     * @return UserPasswordEncoderInterface
+     */
+    public static function getEncoder(): UserPasswordEncoderInterface
+    {
+        return self::$encoder;
     }
 }

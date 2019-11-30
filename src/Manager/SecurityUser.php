@@ -13,20 +13,18 @@
 
 namespace Kookaburra\UserAdmin\Manager;
 
+use Doctrine\DBAL\Driver\PDOException;
 use Kookaburra\UserAdmin\Entity\Person;
 use Kookaburra\SystemAdmin\Entity\Role;
 use App\Entity\Setting;
 use App\Exception\MissingClassException;
 use App\Provider\ProviderFactory;
 use App\Util\EntityHelper;
-use Kookaburra\UserAdmin\Util\SecurityHelper;
 use Kookaburra\UserAdmin\Util\UserHelper;
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
-use Symfony\Component\Security\Core\Encoder\EncoderFactory;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class SecurityUser implements UserInterface, EncoderAwareInterface, EquatableInterface, \Serializable
 {
@@ -41,7 +39,6 @@ class SecurityUser implements UserInterface, EncoderAwareInterface, EquatableInt
             $this->setId($user->getId());
             $this->setUserPassword($user);
             $this->setUsername($user->getUsername());
-            $this->setSalt($user->getPasswordStrongSalt());
             $this->setSystemAdmin($user->isSystemAdmin());
             $this->setAllRoles($user->getAllRoles());
             $this->setPrimaryRole($user->getPrimaryRole());
@@ -173,7 +170,7 @@ class SecurityUser implements UserInterface, EncoderAwareInterface, EquatableInt
         if (! $this->isUser($user))
             return $this->setPassword(null);
 
-        $x = empty($user->getPasswordStrong()) ? null : $user->getPasswordStrong();
+        $x = empty($user->getPassword()) ? null : $user->getPassword();
 
         return $this->setPassword($x);
     }
@@ -561,52 +558,44 @@ class SecurityUser implements UserInterface, EncoderAwareInterface, EquatableInt
     }
 
     /**
-     * getEncoder
-     * @return PasswordEncoderInterface
-     * @throws MissingClassException
-     */
-    private function getEncoder(): PasswordEncoderInterface
-    {
-        switch ($this->getEncoderName()) {
-            case 'md5':
-                return new MD5PasswordEncoder();
-                break;
-            case 'sha256':
-                return new SHA256PasswordEncoder();
-                break;
-            default:
-                throw new MissingClassException(sprintf('No encoder matches %s', $this->getEncoderName()));
-        }
-    }
-
-    /**
      * isPasswordValid
      * @param $raw
      * @return bool
      */
     public function isPasswordValid($raw): bool
     {
-        return $this->getEncoder()->isPasswordValid($this->getPassword(), $raw, $this->getSalt());
+        return $this->getEncoder()->isPasswordValid($this, $raw);
     }
 
     /**
      * changePassword
      * @param string $raw
-     * @throws MissingClassException
+     * @return bool
      */
-    public function changePassword(string $raw)
+    public function changePassword(string $raw): bool
     {
-        $salt = $this->createSalt();
-        $password = $this->getEncoder()->encodePassword($raw, $salt);
-        $person = $this->getPerson();
-        $em = ProviderFactory::create(Person::class)->getEntityManager();
-        $em->refresh($person);
-        $person->setPasswordStrongSalt($salt);
-        $person->setPasswordStrong($password);
-        $person->setMD5Password('');
-        $em->persist($person);
-        $em->flush();
-        $this->setSalt($salt);
-        $this->setPassword($password);
+        try {
+            $password = $this->getEncoder()->encodePassword($this, $raw);
+            $person = $this->getPerson();
+            $provider =  ProviderFactory::create(Person::class);
+            $provider->refresh($person);
+            $person->setPassword($password);
+            $person->setPasswordForceReset('N'); //  Always reset.
+            $provider->saveEntity();
+            $this->setPassword($password);
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
+
+    /**
+     * @return UserPasswordEncoderInterface
+     */
+    public function getEncoder(): UserPasswordEncoderInterface
+    {
+        return UserHelper::getEncoder();
     }
 }

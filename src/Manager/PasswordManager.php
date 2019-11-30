@@ -12,14 +12,22 @@
 
 namespace Kookaburra\UserAdmin\Manager;
 
+use App\Util\TranslationsHelper;
 use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\SchoolYear;
 use App\Provider\ProviderFactory;
-use Symfony\Component\HttpFoundation\Request;
+use Kookaburra\UserAdmin\Form\Entity\ResetPassword;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Class PasswordManager
+ * @package Kookaburra\UserAdmin\Manager
+ */
 class PasswordManager
 {
     /**
@@ -33,25 +41,42 @@ class PasswordManager
     private $tokenStorage;
 
     /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
+     * @var RouterInterface
+     */
+    private $stack;
+
+    /**
      * PasswordManager constructor.
      * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param TokenStorageInterface $tokenStorage
+     * @param RouterInterface $router
+     * @param RequestStack $stack
      */
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder, TokenStorageInterface $tokenStorage)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder, TokenStorageInterface $tokenStorage, RouterInterface $router, RequestStack $stack)
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->tokenStorage = $tokenStorage;
+        $this->router = $router;
+        $this->stack = $stack;
     }
 
     /**
      * changePassword
-     * @param Request $request
+     * @param ResetPassword $rp
      * @param UserInterface $user
-     * @return string
+     * @return array
      */
-    public function changePassword(Request $request, UserInterface $user): string
+    public function changePassword(ResetPassword $rp, UserInterface $user): array
     {
-        $session = $request->getSession();
+        $session = $this->getSession();
         $person = ProviderFactory::getRepository(Person::class)->find($user->getId());
+        $data = [];
+        $data['status'] = 'success';
 
         //Check to see if academic year id variables are set, if not set them
         if ($session->exists('gibbonAcademicYearID') || $session->exists('gibbonSchoolYearName')) {
@@ -59,88 +84,47 @@ class PasswordManager
         }
 
         //Check password address is not blank
-        $password = $request->request->get('password');
-        $passwordNew = $request->request->get('passwordNew');
-        $passwordConfirm = $request->request->get('passwordConfirm');
-        $forceReset = $session->get('passwordForceReset');
+        $password = $rp->getRaw();
+        $forceReset = $person->isPasswordForceReset();
 
-        if ($forceReset !== 'Y') {
-            $forceReset = 'N';
+        $ok = $user->changePassword($password);
+        TranslationsHelper::setDomain('UserAdmin');
+        if ($ok && $forceReset) {
+            $data['errors'][] = ['class' => 'success', 'message' => TranslationsHelper::translate('return.success.a')];
+            // Set Session
+            $token = $this->tokenStorage->getToken();
+            $session->set('_security_main', serialize($token));
+            $session->set('password', $person->getPassword());  // legacy
+            $session->set('passwordForceReset', 'N'); // Legacy
+            return $data;
         }
 
-        $URL = $session->get('absoluteURL')."/preferences/?forceReset=$forceReset";
-
-        //Check passwords are not blank
-        if ($password === '' || $passwordNew === '' || $passwordConfirm === '') {
-            $URL .= '&return=error1';
-            return $URL;
-            header("Location: {$URL}");
-            exit();
-        } else {
-            //Check that new password is not same as old password
-            if ($password === $passwordNew) {
-                $URL .= '&return=error7';
-                return $URL;
-            } else {
-                //Check strength of password
-                $passwordMatch = $user->doesPasswordMatchPolicy($passwordNew);
-
-                if ($passwordMatch === false) {
-                    $URL .= '&return=error6';
-                    return $URL;
-                } else {
-                    //Check new passwords match
-                    if ($passwordNew !== $passwordConfirm) {
-                        $URL .= '&return=error4';
-                        return $URL;
-                    } else {
-                        //Check current password
-                        if (! $this->passwordEncoder->isPasswordValid($user, $password)) {
-                            $URL .= '&return=error3';
-                            return $URL;
-                        } else {
-                            //If answer insert fails...
-                            $salt = $user->createSalt();
-                            $user->setSalt($salt);
-                            $passwordStrong = $this->passwordEncoder->encodePassword($user, $passwordNew);
-                            $person->setPasswordStrong($passwordStrong)->setPasswordStrongSalt($salt);
-                            $user->setPassword($passwordStrong);
-                            try {
-                                ProviderFactory::create(Person::class)->setEntity($person)->saveEntity();
-                                $token = $this->tokenStorage->getToken();
-                                $session->set('_security_main', serialize($token));
-                            } catch (\Exception $e) {
-                                $URL .= '&return=error2';
-                                return $URL;
-                            }
-
-                            //Check for forceReset and take action
-                            if ($forceReset == 'Y') {
-                                //Update passwordForceReset field
-                                try {
-                                    $person->setPasswordForceReset('N');
-                                    ProviderFactory::create(Person::class)->setEntity($person)->saveEntity();
-                                } catch (\Exception $e) {
-                                    $URL .= '&return=errora';
-                                    return $URL;
-                                }
-                                $session->set('passwordForceReset', 'N');
-                                $session->get('passwordStrongSalt', $salt);
-                                $session->get('passwordStrong', $passwordStrong);
-                                $session->get('pageLoads', null);
-                                $URL .= '&return=successa';
-                                return $URL;
-                            }
-
-                            $session->set('passwordStrongSalt', $salt);
-                            $session->set('passwordStrong', $passwordStrong);
-                            $session->set('pageLoads', null);
-                            $URL .= '&return=success0';
-                            return $URL;
-                        }
-                    }
-                }
-            }
+        if ($ok) {
+            $data['errors'][] = ['class' => 'success', 'message' => TranslationsHelper::translate('return.success.0', [], 'messages')];
+            // Set Session
+            $token = $this->tokenStorage->getToken();
+            $session->set('_security_main', serialize($token));
+            $session->set('password', $person->getPassword());  // legacy
+            $session->set('passwordForceReset', 'N'); // Legacy
+            return $data;
         }
+
+        // Failed to change password.
+        $data['status'] = 'error';
+        if ($forceReset)
+            $data['errors'][] = ['class' => 'error', 'message' => TranslationsHelper::translate('return.error.a')];
+        else
+            $data['errors'][] = ['class' => 'error', 'message' => TranslationsHelper::translate('return.error.2', [], 'messages')];
+
+        return $data;
+    }
+
+    /**
+     * getSession
+     * @return SessionInterface
+     */
+    private function getSession(): SessionInterface
+    {
+        return $this->stack->getCurrentRequest()->getSession();
     }
 }

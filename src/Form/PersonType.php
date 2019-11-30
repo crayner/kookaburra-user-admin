@@ -147,7 +147,7 @@ class PersonType extends AbstractType
             ->add('submitBasic', SubmitType::class,
                 [
                     'label' => 'Submit',
-                    'translation_domain' => 'messages',
+                    'translation_domain' => 'UserAdmin',
                     'panel' => 'Basic',
                 ]
             )
@@ -255,7 +255,7 @@ class PersonType extends AbstractType
                 [
                     'label' => 'Submit',
                     'panel' => 'System',
-                    'translation_domain' => 'messages',
+                    'translation_domain' => 'UserAdmin',
                 ]
             )
         ;
@@ -409,7 +409,7 @@ class PersonType extends AbstractType
                 [
                     'label' => 'Submit',
                     'panel' => 'Contact',
-                    'translation_domain' => 'messages',
+                    'translation_domain' => 'UserAdmin',
                 ]
             )
         ;
@@ -508,7 +508,7 @@ class PersonType extends AbstractType
                 [
                     'label' => 'Submit',
                     'panel' => 'School',
-                    'translation_domain' => 'messages',
+                    'translation_domain' => 'UserAdmin',
                 ]
             )
         ;
@@ -674,7 +674,7 @@ class PersonType extends AbstractType
                 [
                     'label' => 'Submit',
                     'panel' => 'Background',
-                    'translation_domain' => 'messages',
+                    'translation_domain' => 'UserAdmin',
                 ]
             )
         ;
@@ -717,7 +717,7 @@ class PersonType extends AbstractType
                 [
                     'label' => 'Submit',
                     'panel' => 'Employment',
-                    'translation_domain' => 'messages',
+                    'translation_domain' => 'UserAdmin',
                 ]
             )
         ;

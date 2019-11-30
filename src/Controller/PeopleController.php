@@ -21,10 +21,14 @@ use App\Twig\SidebarContent;
 use App\Util\TranslationsHelper;
 use Doctrine\DBAL\Driver\PDOException;
 use Kookaburra\UserAdmin\Entity\Person;
+use Kookaburra\UserAdmin\Form\ChangePasswordType;
 use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
 use Kookaburra\UserAdmin\Form\ManageSearchType;
 use Kookaburra\UserAdmin\Form\PersonType;
+use Kookaburra\UserAdmin\Form\ResetPasswordType;
+use Kookaburra\UserAdmin\Manager\SecurityUser;
 use Kookaburra\UserAdmin\Pagination\ManagePagination;
+use Kookaburra\UserAdmin\Util\SecurityHelper;
 use Kookaburra\UserAdmin\Util\UserHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -33,6 +37,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class PeopleController
@@ -221,5 +228,61 @@ class PeopleController extends AbstractController
             $flashBag->add('info', ['{name} is locked in the system and must not be deleted.', ['{name}' => $person->formatName(['informal' => true])], 'UserAdmin']);
         }
         return $this->forward(PeopleController::class.'::manage');
+    }
+
+    /**
+     * resetPassword
+     * @param Person $person
+     * @param FlashBagInterface $flashBag
+     * @param ContainerManager $manager
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \App\Exception\MissingClassException
+     * @Route("/password/{person}/reset/",name="reset_password")
+     * @IsGranted("ROLE_ROUTE")
+     */
+    public function resetPassword(Person $person, FlashBagInterface $flashBag, ContainerManager $manager, Request $request)
+    {
+
+        if ($this->getUser()->getPerson()->isEqualto($person)) {
+            $flashBag->add('info', ['Use the {anchor}preferences{endAnchor} details to change your own password.', ['{endAnchor}' => '</a>', '{anchor}' => '<a href="'.$this->generateUrl('user_admin__preferences', ['tabName' => 'Reset Password']).'">'], 'UserAdmin']);
+            return $this->redirectToRoute('user_admin__manage');
+        }
+
+        $form = $this->createForm(ChangePasswordType::class, $person,
+            [
+                'action' => $this->generateUrl('user_admin__reset_password', ['person' => $person->getId()]),
+                'policy' => $this->renderView('components/password_policy.html.twig', ['passwordPolicy' => SecurityHelper::getPasswordPolicy()])
+            ]
+        );
+
+        if ($request->getContentType() === 'json')
+        {
+            $content = json_decode($request->getContent(), true);
+            $form->submit($content);
+            $data = [];
+            if ($form->isValid()) {
+                $user = new SecurityUser($person);
+                $user->changePassword($content['raw']['first']);
+                $data['errors'][] = ['class' => 'success', 'message' => TranslationsHelper::translate('Your account has been successfully updated. You can now continue to use the system as per normal.')];
+                $manager->singlePanel($form->createView());
+                $person->setPasswordForceReset($content['passwordForceReset']);
+                $this->getDoctrine()->getManager()->persist($person);
+                $this->getDoctrine()->getManager()->flush();
+                $data['form'] = $manager->getFormFromContainer('formContent', 'single');
+                $data['status'] = 'success';
+                return new JsonResponse($data, 200);
+            } else {
+                $manager->singlePanel($form->createView());
+                $data['errors'][] = ['class' => 'error', 'message' => TranslationsHelper::translate('return.error.1', [], 'messages')];
+                $data['form'] = $manager->getFormFromContainer('formContent', 'single');
+                $data['status'] = 'error';
+                return new JsonResponse($data, 200);
+            }
+
+        }
+
+        $manager->singlePanel($form->createView());
+        return $this->render('@KookaburraUserAdmin/reset_password.html.twig');
     }
 }

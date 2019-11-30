@@ -29,6 +29,7 @@ use Symfony\Component\Yaml\Yaml;
 class GoogleAuthenticator implements AuthenticatorInterface
 {
     use TargetPathTrait;
+    use AuthenticatorTrait;
 
 	/**
 	 * @var EntityManagerInterface
@@ -171,7 +172,7 @@ class GoogleAuthenticator implements AuthenticatorInterface
 		$this->logger->notice("Google Authentication Failure: ".  $exception->getMessage());
         LogProvider::setLog($request->getSession()->get('gibbonSchoolYearIDCurrent'), null, null, 'Google Login - Failed', ['username' => $this->google_user, 'message' => $exception->getMessage()], $request->server->get('REMOTE_ADDR'));
 
-        LoginFormAuthenticator::authenticationFailure($request->query->all());
+        $this->authenticationFailure($request->query->all());
 
         if ($targetPath = $this->getTargetPath($request, 'main'))
             return new RedirectResponse($targetPath);
@@ -224,8 +225,8 @@ class GoogleAuthenticator implements AuthenticatorInterface
             return new RedirectResponse($targetPath);
         }
 
-        $user = LoginFormAuthenticator::createUserSession($user, $request->getSession());
-        LoginFormAuthenticator::setSchoolYear($request->getSession(), 0);
+        $user = $this->createUserSession($user, $request->getSession());
+        $this->setSchoolYear($request->getSession(), 0);
 
         $q = null;
         if ($request->getSession()->has('google_state')) {
@@ -234,10 +235,10 @@ class GoogleAuthenticator implements AuthenticatorInterface
             if ($q === 'false')
                 $q = null;
             $request->getSession()->forget('google_state');
-            if (($response = LoginFormAuthenticator::checkSchoolYear($user, $request->getSession(), intval($schoolYearID))) instanceof Response)
+            if (($response = $this->checkSchoolYear($user, $request->getSession(), intval($schoolYearID))) instanceof Response)
                 return $response;
 
-            LoginFormAuthenticator::setLanguage($request, $i18nID);
+            $this->setLanguage($request, $i18nID);
             if (null !== $q)
                 if (strpos($q, '.php') === false) {
                     return new RedirectResponse($q);

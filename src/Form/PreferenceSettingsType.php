@@ -140,7 +140,7 @@ class PreferenceSettingsType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Person::class,
-                'translation_domain' => 'messages',
+                'translation_domain' => 'UserAdmin',
                 'attr' => [
                     'className' => 'smallIntBorder fullWidth standardForm',
                     'autoComplete' => 'on',

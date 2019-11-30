@@ -12,11 +12,10 @@
  */
 namespace Kookaburra\UserAdmin\Repository;
 
+use App\Entity\SchoolYear;
 use Kookaburra\UserAdmin\Entity\FamilyAdult;
 use Kookaburra\UserAdmin\Entity\Person;
-use Kookaburra\UserAdmin\Entity\SchoolYear;
 use App\Provider\ProviderFactory;
-use Kookaburra\UserAdmin\Util\UserHelper;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 

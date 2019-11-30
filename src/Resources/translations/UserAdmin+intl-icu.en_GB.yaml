@@ -204,3 +204,10 @@ After End Date: After End Date
 View: View
 Add Person: Add Person
 '': ''
+return:
+    fail:
+        1: Incorrect username or password.
+        2: You do not have sufficient privileges to login.
+        9: Your primary role does not support the ability to log into the specified year.
+    success:
+        a: Your account has been successfully updated. You can now continue to use the system as per normal.

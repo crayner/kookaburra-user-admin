@@ -35,6 +35,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 use Kookaburra\SystemAdmin\Entity\Role;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as ASSERT;
 use Symfony\Component\Intl\Languages;
 
@@ -376,73 +377,25 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, name="password")
+     * @ORM\Column(length=191, name="password",nullable=true)
      */
-    private $MD5Password = '';
-
-    /**
-     * @return string|null
-     */
-    public function getMD5Password(): ?string
-    {
-        return $this->MD5Password;
-    }
-
-    /**
-     * @param string|null $MD5Password
-     * @return Person
-     */
-    public function setMD5Password(?string $MD5Password): Person
-    {
-        $this->MD5Password = $MD5Password;
-        return $this;
-    }
-
-    /**
-     * @var string|null
-     * @ORM\Column(length=255, name="passwordStrong")
-     */
-    private $passwordStrong = '';
+    private $password;
 
     /**
      * @return null|string
      */
-    public function getPasswordStrong(): ?string
+    public function getPassword(): ?string
     {
-        return $this->passwordStrong;
+        return $this->password;
     }
 
     /**
-     * @param null|string $passwordStrong
+     * @param null|string $password
      * @return Person
      */
-    public function setPasswordStrong(?string $passwordStrong): Person
+    public function setPassword(?string $password): Person
     {
-        $this->passwordStrong = mb_substr($passwordStrong, 0, 255);
-        return $this;
-    }
-
-    /**
-     * @var string|null
-     * @ORM\Column(length=255, name="passwordStrongSalt")
-     */
-    private $passwordStrongSalt = '';
-
-    /**
-     * @return null|string
-     */
-    public function getPasswordStrongSalt(): ?string
-    {
-        return $this->passwordStrongSalt;
-    }
-
-    /**
-     * @param null|string $passwordStrongSalt
-     * @return Person
-     */
-    public function setPasswordStrongSalt(?string $passwordStrongSalt): Person
-    {
-        $this->passwordStrongSalt = mb_substr($passwordStrongSalt, 0, 255);
+        $this->password = mb_substr($password, 0, 191);
         return $this;
     }
 
@@ -458,7 +411,7 @@ class Person implements EntityInterface
      */
     public function isPasswordForceReset(): bool
     {
-        return $this->getPasswordForceReset() === 'Y' ? true : false;
+        return $this->getPasswordForceReset() === 'Y';
     }
 
     /**
@@ -3150,6 +3103,26 @@ class Person implements EntityInterface
         if ($this->getChildren()->count() > 0)
             return false;
         if ($this->getAdults()->count() > 0)
+            return false;
+        return true;
+    }
+
+    /**
+     * isEqualTo
+     * @param Person $user
+     * @return bool
+     */
+    public function isEqualTo(Person $person): bool
+    {
+        if ($person->getId() !== $this->getId())
+            return false;
+        if ($person->getUsername() !== $this->getUsername())
+            return false;
+        if ($person->getEmail() !== $this->getEmail())
+            return false;
+        if ($person->getPassword() !== $this->getPassword())
+            return false;
+        if ($person->getStudentID() !== $this->getStudentID())
             return false;
         return true;
     }

@@ -363,38 +363,10 @@ class SecurityHelper
      */
     public static function encodeAndSetPassword(SecurityUser $user, string $raw)
     {
-        switch ($user->getEncoderName()) {
-            case 'md5':
-                $encoder = new MD5PasswordEncoder();
-                $salt = '';
-                break;
-            case 'sha256':
-                $encoder = new SHA256PasswordEncoder();
-                if (($salt = $user->getSalt()) === '')
-                    $salt = $user->createSalt();
-                break;
-            default:
-                throw new \InvalidArgumentException(sprintf('The type of password encoder "(%s)" is not supported!', $user->getEncoderName()));
-        }
-
-        $password = $encoder->encodePassword($raw, $salt);
+        $password = UserHelper::getEncoder()->encodePassword($user, $raw);
 
         $person = $user->getPerson();
 
-        switch ($user->getEncoderName()) {
-            case 'md5':
-                $person->setMD5Password($password);
-                $person->setPasswordStrong('');
-                $person->setPasswordStrongSalt('');
-                break;
-            case 'sha256':
-                $person->setMD5Password('');
-                $person->setPasswordStrong($password);
-                $person->setPasswordStrongSalt($salt);
-                break;
-            default:
-                throw new \InvalidArgumentException(sprintf('The type of password encoder "(%s)" is not supported!', $user->getEncoderName()));
-        }
-
+        $person->setPassword($password);
     }
 }

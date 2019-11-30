@@ -28,6 +28,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
@@ -44,6 +45,7 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
+    use AuthenticatorTrait;
 
     /**
      * @var RouterInterface
@@ -77,7 +79,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         $this->router = $router;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
-        self::$instance = $this;
+        static::$instance = $this;
     }
 
     /**
@@ -137,11 +139,13 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             throw new InvalidCsrfTokenException();
         }
 
-        $user = ProviderFactory::create(Person::class)->loadUserByUsername($credentials['email']);
+        $provider = ProviderFactory::create(Person::class);
+        $user = $provider->loadUserByUsername($credentials['email']);
+        $provider->refresh($user->getPerson());
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('Email/username could not be found.');
         }
 
         return $user;
@@ -155,6 +159,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function checkCredentials($credentials, UserInterface $user): bool
     {
+//        dd($this,$user,$credentials);
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
@@ -170,29 +175,16 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     {
         //store the token blah blah blah
         $session = $request->getSession();
-        $person = self::createUserSession($token->getUsername(), $session);
+        $person = $this->createUserSession($token->getUsername(), $session);
 
         if (! $person->isCanLogin())
-            return static::authenticationFailure(['loginReturn' => 'fail2']);
-
-        if ($token->getUser()->getEncoderName() === 'md5')
-        {
-            $salt = $token->getUser()->createSalt();
-            $person->setPasswordStrongSalt($salt);
-            $token->getUser()->setSalt($salt);
-            $person->setMD5Password('');
-            $token->getUser()->setEncoderName('sha256');
-            $password = $this->passwordEncoder->encodePassword($token->getUser(), $this->getCredentials($request)['password']);
-            $person->setPasswordStrong($password);
-            $token->getUser()->setPassword($password);
-            ProviderFactory::create(Person::class)->setEntity($person)->saveEntity();
-        }
+            return $this->authenticationFailure('return.fail.2');
 
         if ($request->request->has('gibbonSchoolYearID'))
-            if (($response = static::checkSchoolYear($person, $session, $request->request->get('gibbonSchoolYearID'))) instanceof Response)
+            if (($response = $this->checkSchoolYear($person, $session, $request->request->get('gibbonSchoolYearID'))) instanceof Response)
                 return $response;
 
-        static::setLanguage($request);
+        $this->setLanguage($request);
 
         $session->save();
         $ip = GlobalHelper::getIPAddress();
@@ -220,162 +212,32 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     }
 
     /**
-     * createUserSession
-     * @param string|Person $username
-     * @param $session
-     * @return Person
-     */
-    public static function createUserSession($username, SessionInterface $session) {
-
-        if ($username instanceof Person)
-            $userData = $username;
-        elseif ($username instanceof SecurityUser)
-            $userData = ProviderFactory::getRepository(Person::class)->find($username->getId());
-        else
-            $userData = ProviderFactory::getRepository(Person::class)->loadUserByUsernameOrEmail($username);
-
-        $session->set('username', $username);
-        $session->set('passwordStrong', $userData->getPasswordStrong());
-        $session->set('passwordStrongSalt', $userData->getPasswordStrongSalt());
-        $session->set('passwordForceReset', $userData->getPasswordForceReset());
-        $session->set('gibbonPersonID', $userData->getId());
-        $session->set('surname', $userData->getSurname());
-        $session->set('firstName', $userData->getFirstName());
-        $session->set('preferredName', $userData->getPreferredName());
-        $session->set('officialName', $userData->getOfficialName());
-        $session->set('email', $userData->getEmail());
-        $session->set('emailAlternate', $userData->getEmailAlternate());
-        $session->set('website', $userData->getWebsite());
-        $session->set('gender', $userData->getGender());
-        $session->set('status', $userData->getstatus());
-        $primaryRole = $userData->getPrimaryRole();
-        $session->set('gibbonRoleIDPrimary', $primaryRole ? $primaryRole->getId() : null);
-        $session->set('gibbonRoleIDCurrent', $primaryRole ? $primaryRole->getId() : null);
-        $session->set('gibbonRoleIDCurrentCategory', $primaryRole ? $primaryRole->getCategory() : null);
-        $session->set('gibbonRoleIDAll', ProviderFactory::create(Role::class)->getRoleList($userData->getAllRoles()) );
-        $session->set('image_240', $userData->getImage240());
-        $session->set('lastTimestamp', $userData->getLastTimestamp());
-        $session->set('calendarFeedPersonal', $userData->getcalendarFeedPersonal());
-        $session->set('viewCalendarSchool', $userData->getviewCalendarSchool());
-        $session->set('viewCalendarPersonal', $userData->getviewCalendarPersonal());
-        $session->set('viewCalendarSpaceBooking', $userData->getviewCalendarSpaceBooking());
-        $session->set('dateStart', $userData->getdateStart());
-        $session->set('personalBackground', $userData->getpersonalBackground());
-        $session->set('messengerLastBubble', $userData->getmessengerLastBubble());
-        $session->set('gibboni18nIDPersonal', $userData->getI18nPersonal() ? $userData->getI18nPersonal()->getId() : null);
-        $session->set('googleAPIRefreshToken', $userData->getgoogleAPIRefreshToken());
-        $session->set('receiveNotificationEmails', $userData->getreceiveNotificationEmails());
-        $session->set('gibbonHouseID', $userData->getHouse() ? $userData->getHouse()->getId() : null);
-
-        //Deal with themes
-        $session->set('gibbonThemeIDPersonal', $userData->getTheme() ? $userData->getTheme()->getId() : null);
-
-        // Cache FF actions on login
-        $session->cacheFastFinderActions($primaryRole);
-
-        return $userData;
-    }
-
-    /**
-     * checkSchoolYear
-     * @param Person $person
-     * @param SessionInterface $session
-     * @param int $schoolYear
-     * @return bool|RedirectResponse|Response
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     */
-    public static function checkSchoolYear(Person $person, SessionInterface $session, int $schoolYear = 0)
-    {
-        if (0 === $schoolYear || $schoolYear === intval($session->get('gibbonSchoolYearID')))
-            return self::setSchoolYear($session, $schoolYear);
-
-        if (!$person->getPrimaryRole() instanceof Role)
-            return static::authenticationFailure(['loginReturn' => 'fail9']);
-
-        $role = $person->getPrimaryRole();
-
-        if (! $role->isFutureYearsLogin() && ! $role->isPastYearsLogin()) {
-            LogProvider::setLog($schoolYear, null, $person, 'Login - Failed', ['username' => $person->getUsername(), 'reason' => 'Not permitted to access non-current school year'], null);
-            return static::authenticationFailure(['loginReturn' => 'fail9']);
-        }
-        $schoolYear = ProviderFactory::create(SchoolYear::class)->find($schoolYear);
-
-        if (!$schoolYear instanceof SchoolYear)
-            return ErrorHelper::ErrorResponse('Configuration Error: there is a problem accessing the current Academic Year from the database.',[], self::$instance);
-
-        if (!$role->isPastYearsLogin() && $session->get('gibbonSchoolYearSequenceNumber') > $schoolYear->getSequenceNumber()) {
-            LogProvider::setLog($schoolYear, null, $person, 'Login - Failed', ['username' => $person->getUsername(), 'reason' => 'Not permitted to access non-current school year'], null);
-            return static::authenticationFailure(['loginReturn' => 'fail9']);
-        }
-
-        $session->set('gibbonSchoolYearID', $schoolYear->getId());
-        $session->set('gibbonSchoolYearName', $schoolYear->getName());
-        $session->set('gibbonSchoolYearSequenceNumber', $schoolYear->getSequenceNumber());
-        $session->set('schoolYear', $schoolYear);
-        return true;
-    }
-
-    /**
-     * setSchoolYear
-     * @param SessionInterface $session
-     * @param int $schoolYear
-     * @return bool
-     */
-    public static function setSchoolYear(SessionInterface $session, int $schoolYear)
-    {
-        $schoolYear = $schoolYear === 0 ? ProviderFactory::getRepository(SchoolYear::class)->findOneByStatus('Current') : ProviderFactory::getRepository(SchoolYear::class)->find($schoolYear);
-
-        if ($schoolYear instanceof SchoolYear) {
-            $session->set('gibbonSchoolYearID', $schoolYear->getId());
-            $session->set('gibbonSchoolYearName', $schoolYear->getName());
-            $session->set('gibbonSchoolYearSequenceNumber', $schoolYear->getSequenceNumber());
-            $session->set('schoolYear', $schoolYear);
-        } else {
-            $session->forget('gibbonSchoolYearID');
-            $session->forget('gibbonSchoolYearName');
-            $session->forget('gibbonSchoolYearSequenceNumber');
-            $session->forget('schoolYear');
-        }
-
-        return true;
-    }
-
-    /**
      * authenticationFailure
      * @param array $query
      * @return RedirectResponse
      */
-    public static function authenticationFailure(array $query)
+    public function authenticationFailure(string $message)
     {
         GibbonManager::getSession()->clear();
-        GibbonManager::getSession()->invalidate();
-        $route = '';
-        foreach($query as $q=>$w)
-        {
-            $route .= $q . '=' . $w;
-        }
-        if ('' === $route)
-            $route = '/';
-        else
-            $route = '/?' . $route;
-
-        return new RedirectResponse($route);
+        GibbonManager::getSession()->getBag('flashes')->add('error', [$message, [], 'UserAdmin']);
+        
+        return new RedirectResponse($this->getLoginUrl());
     }
 
     /**
-     * setLanguage
-     * @param Request $request
+     * Override to change what happens after a bad username/password is submitted.
+     *
+     * @return RedirectResponse
      */
-    public static function setLanguage(Request $request, int $i18nID = null)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        $session = $request->getSession();
-        if (null !== $i18nID && intval($i18nID) !== intval($session->get(['i18n', 'gibboni18nID'])))
-            ProviderFactory::create(I18n::class)->setLanguageSession($session,  ['id' => $i18nID], false);
-        elseif ($request->request->has('gibboni18nID') && intval($request->request->get('gibboni18nID')) !== intval($session->get(['i18n', 'gibboni18nID'])))
-            ProviderFactory::create(I18n::class)->setLanguageSession($session,  ['id' => $request->request->get('gibboni18nID')], false);
-        elseif ($session->has('gibboni18nIDPersonal') && intval($session->get('gibboni18nIDPersonal')) > 0)
-            ProviderFactory::create(I18n::class)->setLanguageSession($session,  ['id' => $session->get('gibboni18nIDPersonal'), 'active' => 'Y'], false);
+        if ($request->hasSession()) {
+            $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+            $request->getSession()->getBag('flashes')->add('warning', ['return.fail.1', [], 'UserAdmin']);
+        }
+
+        $url = $this->getLoginUrl();
+
+        return new RedirectResponse($url);
     }
 }

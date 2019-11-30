@@ -6,8 +6,8 @@
  * (c) 2019 Craig Rayner <craig@craigrayner.com>
  *
  * User: craig
- * Date: 19/08/2019
- * Time: 17:44
+ * Date: 27/11/2019
+ * Time: 16:39
  */
 
 namespace Kookaburra\UserAdmin\Form;
@@ -17,22 +17,21 @@ use App\Form\Type\HeaderType;
 use App\Form\Type\ParagraphType;
 use App\Form\Type\PasswordGeneratorType;
 use App\Form\Type\ReactFormType;
+use App\Form\Type\ToggleType;
 use App\Provider\ProviderFactory;
 use App\Validator\Password;
-use Kookaburra\SystemAdmin\Validator\CurrentPassword;
-use Kookaburra\UserAdmin\Form\Entity\ResetPassword;
+use Kookaburra\UserAdmin\Entity\Person;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ResetPasswordType
- * @package App\Form\Security
+ * Class ChangePasswordType
+ * @package Kookaburra\UserAdmin\Form
  */
-class ResetPasswordType extends AbstractType
+class ChangePasswordType extends AbstractType
 {
     /**
      * buildForm
@@ -54,22 +53,17 @@ class ResetPasswordType extends AbstractType
                     'wrapper_class' => 'warning',
                 ]
             )
-            ->add('current', PasswordType::class,
-                [
-                    'label' => 'Current Password',
-                    'constraints' => [
-                        new CurrentPassword()
-                    ],
-                ]
-            )
             ->add('raw', RepeatedType::class,
                 [
                     'type' => PasswordGeneratorType::class,
+                    'mapped' => false,
                     'first_options' => [
                         'label' => 'New Password',
+                        'required' => true,
                     ],
                     'second_options' => [
                         'label' => 'Confirm New Password',
+                        'required' => true,
                     ],
                     'constraints' => [
                         new Password(),
@@ -78,8 +72,13 @@ class ResetPasswordType extends AbstractType
                     'invalid_message' => 'Your request failed due to non-matching passwords.',
                 ]
             )
+            ->add('passwordForceReset', ToggleType::class,
+                [
+                    'label' => 'Force Reset Password?',
+                    'help' => 'The person will need to change their password at the next attempt to sign in.',
+                ]
+            )
             ->add('submit', SubmitType::class)
-            ->setAction($options['action'])
         ;
     }
 
@@ -97,7 +96,7 @@ class ResetPasswordType extends AbstractType
         );
         $resolver->setDefaults(
             [
-                'data_class' => ResetPassword::class,
+                'data_class' => Person::class,
                 'translation_domain' => 'UserAdmin',
                 'default'
             ]
