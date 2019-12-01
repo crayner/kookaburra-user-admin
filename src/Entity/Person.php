@@ -34,6 +34,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 use Kookaburra\SystemAdmin\Entity\Role;
+use Kookaburra\UserAdmin\Manager\PersonNameManager;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as ASSERT;
@@ -2771,20 +2772,24 @@ class Person implements EntityInterface
      * @param bool $initial
      * @return string
      */
-    public function formatName($preferredName = true, bool $reverse = false, bool $informal = false, bool $initial = false, bool $title = false)
+    public function formatName($options = true, bool $reverse = false, bool $informal = false, bool $initial = false, bool $title = false): string
     {
-        if (is_array($preferredName))
-        {
-            $format = $preferredName;
-            $preferredName = isset($format['preferredName']) ? (bool) $format['preferredName'] : true;
-            $reverse = isset($format['reverse']) ? (bool) $format['reverse'] : false;
-            $informal = isset($format['informal']) ? (bool) $format['informal'] : false;
-            $initial = isset($format['initial']) ? (bool) $format['initial'] : false;
-            $title = isset($format['title']) ? (bool) $format['title'] : false;
+        $options = [];
+        $options['style'] = 'long';
+
+        if (is_array($options)) {
+            return PersonNameManager::formatName($this, $options);
         }
-        $name = $preferredName ? $this->getPreferredName() : $this->getFirstName();
-        $name = $initial ? substr($name, 0, 1).'.' : $name;
-        return Format::name($title ? $this->getTitle() : '', $name, $this->getSurname(),$this->getPrimaryRole() ? $this->getPrimaryRole()->getCategory() : 'Staff', $reverse, $informal);
+
+        trigger_error('Use of discrete settings for format name is deprecated since 1/Dec 2019.  Use the options configuration.', E_USER_DEPRECATED);
+        $format = [];
+        $format['preferredName'] = $options;
+        $format['reverse'] = $reverse;
+        $format['informal'] = $informal;
+        $format['initial'] = $initial;
+        $format['title'] = $title;
+
+        return PersonNameManager::formatName($this, $format);
     }
 
     /**
@@ -3125,5 +3130,22 @@ class Person implements EntityInterface
         if ($person->getStudentID() !== $this->getStudentID())
             return false;
         return true;
+    }
+
+    /**
+     * getPersonType
+     * @return string
+     */
+    public function getPersonType(): string
+    {
+        if ($this->getStaff() instanceof Staff)
+            return 'Staff';
+        if ($this->getAdults()->count() > 0)
+            return 'Parent';
+        if ($this->getPrimaryRole() instanceof Role)
+            return $this->getPrimaryRole()->getCategory();
+        if ($this->getStudentEnrolments()->count() > 0)
+            return 'Student';
+        return 'Other';
     }
 }

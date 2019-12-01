@@ -1,0 +1,66 @@
+kookaburra_user_admin:
+    name_formats:
+        staff:
+            first:
+                short:
+                    reversed: 'surname, initial'
+                    normal: 'initial surname'
+                long:
+                    reversed: 'surname, first'
+                    normal: 'first surname'
+            preferred:
+                short:
+                    reversed: 'surname, initial'
+                    normal: 'initial surname'
+                long:
+                    reversed: 'surname, first'
+                    normal: 'first surname'
+            formal: 'title first surname'
+        parent:
+            first:
+                short:
+                    reversed: 'surname, initial'
+                    normal: 'initial surname'
+                long:
+                    reversed: 'surname, first'
+                    normal: 'first surname'
+            preferred:
+                short:
+                    reversed: 'surname, initial'
+                    normal: 'initial surname'
+                long:
+                    reversed: 'surname, preferred'
+                    normal: 'preferred surname'
+            formal: 'title first surname'
+        other:
+            first:
+                short:
+                    reversed: 'surname, initial'
+                    normal: 'initial surname'
+                long:
+                    reversed: 'surname, first'
+                    normal: 'first surname'
+            preferred:
+                short:
+                    reversed: 'surname, initial'
+                    normal: 'initial surname'
+                long:
+                    reversed: 'surname, preferred'
+                    normal: 'preferred surname'
+            formal: 'title first surname'
+        student:
+            first:
+                short:
+                    reversed: 'surname, initial'
+                    normal: 'initial surname'
+                long:
+                    reversed: 'surname, first'
+                    normal: 'first surname'
+            preferred:
+                short:
+                    reversed: 'surname, initial'
+                    normal: 'initial surname'
+                long:
+                    reversed: 'surname, preferred'
+                    normal: 'preferred surname'
+            formal: 'first surname'

@@ -35,5 +35,10 @@
         "psr-4": {
             "Kookaburra\\UserAdmin\\Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "php -r \"copy('vendor/kookaburra/user-admin/src/Resources/config/dist/user_admin.yaml', 'config/packages/kookaburra_user_admin.yaml');\""
+        ]
     }
 }
