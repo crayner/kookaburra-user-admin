@@ -40,6 +40,53 @@ class PersonNameManager
      */
     public static function setFormats(array $formats = []): void
     {
+        $resolver = new OptionsResolver();
+
+        $resolver->setDefaults(
+            [
+                'staff' => [],
+                'student' => [],
+                'parent' => [],
+                'other' => [],
+            ]
+        );
+
+        $formats = $resolver->resolve($formats);
+
+        foreach($formats as $q=>$w) {
+            $resolver->clear();
+            $resolver->setDefaults(
+                [
+                    'first' => [],
+                    'preferred' => [],
+                    'formal' => 'title first surname',
+                ]
+            );
+            $formats[$q] = $resolver->resolve($w);
+            foreach($formats[$q] as $e=>$r) {
+                if ($e === 'formal')
+                    continue;
+                $resolver->clear();
+                $resolver->setDefaults(
+                    [
+                        'short' => [],
+                        'long' => [],
+                    ]
+                );
+                $formats[$q][$e] = $resolver->resolve($r);
+                foreach($formats[$q][$e] as $t=>$y) {
+                    $resolver->clear();
+                    $resolver->setDefaults(
+                        [
+                            'reversed' => 'surname, given',
+                            'normal' => 'given surname',
+                        ]
+                    );
+                    $formats[$q][$e][$t] = $resolver->resolve($y);
+                }
+            }
+        }
+
         self::$formats = $formats;
     }
 
@@ -68,24 +115,24 @@ class PersonNameManager
 
         $personType = $person->getPersonType();
 
-        $template = 'title firstName surname';
+        $template = 'title first surname';
 
         if ($options['style'] === null)
         {
             if ($options['reverse'])
-                $template = 'surname, firstName';
+                $template = 'surname, first';
 
             if (!$options['title'])
                 $template = str_replace('title ', '', $template);
 
             if ($options['informal'] || $options['preferredName'])
-                $template = str_replace('firstName', 'preferredName', $template);
+                $template = str_replace('first', 'preferred', $template);
 
             if ($options['informal'] )
                 $template = str_replace('title', '', $template);
 
             if ($options['initial'])
-                $template = str_replace(['firstName', 'preferredName'], 'initial', $template);
+                $template = str_replace(['first', 'preferred', 'given'], 'initial', $template);
         } else {
             $styles = self::getFormatByPersonType($personType);
             $template = 'formal';
@@ -106,6 +153,10 @@ class PersonNameManager
                 $template = $styles['formal'];
             else
                 $template = $styles[$template][$length][$direction];
+
+            $template = str_replace('given', 'first', $template);
+            if ($options['informal'] || $options['preferredName'])
+                $template = str_replace('first', 'preferred', $template);
         }
 
         $template = trim($template);
@@ -113,7 +164,8 @@ class PersonNameManager
         $name = trim(str_replace(
             ['first','surname','preferred','title','initial'],
             [$person->getFirstName(),$person->getSurname(), $person->getPreferredName(),$person->getTitle(),substr($person->getFirstName(), 0,1)],
-            $template));
+            $template)
+        );
         return $name;
     }
 

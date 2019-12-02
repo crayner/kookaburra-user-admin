@@ -2774,9 +2774,6 @@ class Person implements EntityInterface
      */
     public function formatName($options = true, bool $reverse = false, bool $informal = false, bool $initial = false, bool $title = false): string
     {
-        $options = [];
-        $options['style'] = 'long';
-
         if (is_array($options)) {
             return PersonNameManager::formatName($this, $options);
         }
@@ -3054,7 +3051,7 @@ class Person implements EntityInterface
     public function toArray(): array
     {
         return [
-            'fullName' => $this->formatName(['informal' => true, 'reverse' => true]),
+            'fullName' => $this->formatName(['informal' => true, 'reverse' => true, 'style' => 'long']),
             'photo' => ImageHelper::getAbsoluteImageURL('File', $this->getImage240()),
             'status' => TranslationsHelper::translate($this->getStatus()),
             'family' => $this->getFamilyName(),
