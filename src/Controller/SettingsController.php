@@ -14,10 +14,13 @@ namespace Kookaburra\UserAdmin\Controller;
 
 use App\Container\ContainerManager;
 use App\Entity\Setting;
+use Kookaburra\UserAdmin\Entity\StaffAbsenceType;
 use Kookaburra\UserAdmin\Entity\StudentNoteCategory;
 use App\Provider\ProviderFactory;
 use Kookaburra\UserAdmin\Form\PeopleSettingsType;
+use Kookaburra\UserAdmin\Form\StaffSettingsType;
 use Kookaburra\UserAdmin\Form\StudentSettingsType;
+use Kookaburra\UserAdmin\Pagination\StaffAbsenceTypePagination;
 use Kookaburra\UserAdmin\Pagination\StudentNoteCategoryPagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -109,5 +112,47 @@ class SettingsController extends AbstractController
         $manager->singlePanel($form->createView());
 
         return $this->render('@KookaburraUserAdmin/settings/students.html.twig');
+    }
+
+    /**
+     * Staff Settings
+     * @Route("/staff/settings/",name="staff_settings")
+     * @IsGranted("ROLE_ROUTE")
+     * @param Request $request
+     * @param ContainerManager $manager
+     * @param TranslatorInterface $translator
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function staffSettings(Request $request, ContainerManager $manager, TranslatorInterface $translator, StaffAbsenceTypePagination $pagination)
+    {
+        $settingProvider = ProviderFactory::create(Setting::class);
+
+        // System Settings
+        $form = $this->createForm(StaffSettingsType::class, null, ['action' => $this->generateUrl('user_admin__staff_settings')]);
+
+        if ($request->getContentType() === 'json') {
+            $data = [];
+            try {
+                $data['errors'] = $settingProvider->handleSettingsForm($form, $request, $translator);
+                $form = $this->createForm(StaffSettingsType::class, null, ['action' => $this->generateUrl('user_admin__staff_settings')]);
+            } catch (\Exception $e) {
+                $data['errors'][] = ['class' => 'error', 'message' => $translator->trans('return.error.2', [], 'messages')];
+            }
+
+            $manager->singlePanel($form->createView());
+            $data['form'] = $manager->getFormFromContainer('formContent', 'single');
+
+            return new JsonResponse($data, 200);
+
+        }
+
+        $repository = ProviderFactory::getRepository(StaffAbsenceType::class);
+        $content = $repository->findBy([], ['sequenceNumber' => 'ASC']);
+        $pagination->setContent($content)->setPageMax(25)
+            ->setPaginationScript();
+
+        $manager->singlePanel($form->createView());
+
+        return $this->render('@KookaburraUserAdmin/settings/staff.html.twig');
     }
 }

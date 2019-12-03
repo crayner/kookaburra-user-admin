@@ -1,0 +1,12 @@
+{% trans_default_domain 'UserAdmin' %}
+
+{% extends 'kookaburra.html.twig' %}
+
+{% set module = {'baseURL': 'user_admin', 'crumbs': [{uri: 'user_admin__manage', name: 'People Admin'},{uri: 'user_admin__staff_settings', name: 'Manage Staff Settings'}], title: 'Absence Type', domain: 'UserAdmin'} %}
+{% set breadcrumbs = 'new' %}
+{% set moduleName = 'UserAdmin' %}
+
+
+{% block content %}
+    <div id="formContent"></div>
+{% endblock content %}
