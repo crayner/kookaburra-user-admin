@@ -51,6 +51,7 @@ class ResetPasswordType extends AbstractType
             ->add('policy', ParagraphType::class,
                 [
                     'help' => $options['policy'],
+                    'translation_domain' => false,
                     'wrapper_class' => 'warning',
                 ]
             )

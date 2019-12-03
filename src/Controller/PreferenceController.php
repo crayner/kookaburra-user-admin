@@ -53,7 +53,7 @@ class PreferenceController extends AbstractController
         $passwordForm = $this->createForm(ResetPasswordType::class, $rp,
             [
                 'action' => $this->generateUrl('user_admin__preferences', ['tabName' => 'Reset Password']),
-                'policy' => $this->renderView('components/password_policy.html.twig', ['passwordPolicy' => SecurityHelper::getPasswordPolicy()])
+                'policy' => $this->renderView('@KookaburraUserAdmin/components/password_policy.html.twig', ['passwordPolicy' => SecurityHelper::getPasswordPolicy()])
             ]
         );
 
@@ -65,7 +65,7 @@ class PreferenceController extends AbstractController
                 $passwordForm = $this->createForm(ResetPasswordType::class, $rp,
                     [
                         'action' => $this->generateUrl('user_admin__preferences', ['tabName' => 'Reset Password']),
-                        'policy' => $this->renderView('components/password_policy.html.twig', ['passwordPolicy' => SecurityHelper::getPasswordPolicy()])
+                        'policy' => $this->renderView('@KookaburraUserAdmin/components/password_policy.html.twig', ['passwordPolicy' => SecurityHelper::getPasswordPolicy()])
                     ]
                 );
                 $manager->singlePanel($passwordForm->createView());

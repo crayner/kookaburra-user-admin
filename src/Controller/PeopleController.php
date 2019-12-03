@@ -252,7 +252,7 @@ class PeopleController extends AbstractController
         $form = $this->createForm(ChangePasswordType::class, $person,
             [
                 'action' => $this->generateUrl('user_admin__reset_password', ['person' => $person->getId()]),
-                'policy' => $this->renderView('components/password_policy.html.twig', ['passwordPolicy' => SecurityHelper::getPasswordPolicy()])
+                'policy' => $this->renderView('@KookaburraUserAdmin/components/password_policy.html.twig', ['passwordPolicy' => SecurityHelper::getPasswordPolicy()])
             ]
         );
 

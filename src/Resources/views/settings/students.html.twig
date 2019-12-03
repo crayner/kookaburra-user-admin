@@ -1,0 +1,16 @@
+{% trans_default_domain 'UserAdmin' %}
+
+{% extends 'kookaburra.html.twig' %}
+
+{% set module = {'baseURL': 'user_admin', 'crumbs': [{uri: 'user_admin__manage', name: 'People Admin'}], title: 'Manage Student Settings', domain: 'UserAdmin'} %}
+{% set breadcrumbs = 'new' %}
+{% set moduleName = 'UserAdmin' %}
+
+
+{% block content %}
+    <h3>{{ 'Student Note Categories'|trans }}<button style="float: right;" title="{{ 'Add'|trans({}, 'messages') }}" type="button" onclick="window.open('{{ path('user_admin__student_note_category_add') }}','_self')"><span class="fas fa-plus-circle fa-fw fa-1-5x text-gray-700"/></button></h3>
+    <p>{{ 'This section allows you to manage the categories which can be associated with student notes. Categories can be given templates, which will pre-populate the student note on selection.'|trans }}</p>
+    <section id="paginationContent"></section>
+    <h3>{{ 'Settings'|trans }}</h3>
+    <div id="formContent"></div>
+{% endblock content %}

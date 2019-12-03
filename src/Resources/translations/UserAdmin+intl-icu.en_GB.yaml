@@ -211,3 +211,82 @@ return:
         9: Your primary role does not support the ability to log into the specified year.
     success:
         a: Your account has been successfully updated. You can now continue to use the system as per normal.
+Active: Active
+Alerts: Alerts
+Manage Student Settings: Manage Student Settings
+Settings: Settings
+Student Note Categories: Student Note Categories
+Student Notes: Student Notes
+This section allows you to manage the categories which can be associated with student notes. Categories can be given templates, which will pre-populate the student note on selection.: This section allows you to manage the categories which can be associated with student notes. Categories can be given templates, which will pre-populate the student note on selection.
+Edit: Edit
+Day-Type Options: Day-Type Options
+Field Values: Field Values
+Manage People Settings: Manage People Settings
+PRIVACY OPTIONS: PRIVACY OPTIONS
+People Data Options: People Data Options
+Must be unique: Must be unique
+Template: Template
+HTML code to be inserted into blank note.: HTML code to be inserted into blank note.
+Edit Note Category: Edit Note Category
+student:
+    note_notification:
+        tutors:	Tutors
+        tutors and teachers: Tutors & Teachers
+Enable Student Notes: Enable Student Notes
+Extended Brief Profile: Extended Brief Profile
+High Academic Alert Threshold: High Academic Alert Threshold
+High Behaviour Alert Threshold: High Behaviour Alert Threshold
+Low Academic Alert Threshold: Low Academic Alert Threshold
+Low Behaviour Alert Threshold: Low Behaviour Alert Threshold
+Medium Academic Alert Threshold: Medium Academic Alert Threshold
+Medium Behaviour Alert Threshold: Medium Behaviour Alert Threshold
+Note Creation Notification: Note Creation Notification
+Should student notes be turned on?: Should student notes be turned on?
+Student Agreement Options: Student Agreement Options
+The extended version of the brief student profile includes contact information of parents.: The extended version of the brief student profile includes contact information of parents.
+The number of Behaviour concerns needed in the past 60 days to raise a high level alert on a student.: The number of Behaviour concerns needed in the past 60 days to raise a high level alert on a student.
+The number of Behaviour concerns needed in the past 60 days to raise a low level alert on a student.: The number of Behaviour concerns needed in the past 60 days to raise a low level alert on a student.
+The number of Behaviour concerns needed in the past 60 days to raise a medium level alert on a student.: The number of Behaviour concerns needed in the past 60 days to raise a medium level alert on a student.
+The number of Markbook concerns needed in the past 60 days to raise a high level academic alert on a student.: The number of Markbook concerns needed in the past 60 days to raise a high level academic alert on a student.
+The number of Markbook concerns needed in the past 60 days to raise a low level academic alert on a student.: The number of Markbook concerns needed in the past 60 days to raise a low level academic alert on a student.
+The number of Markbook concerns needed in the past 60 days to raise a medium level academic alert on a student.: The number of Markbook concerns needed in the past 60 days to raise a medium level academic alert on a student.
+Determines who to notify when a new student note is created.: Determines who to notify when a new student note is created.
+Comma-separated list of agreements that students might be asked to sign in school (e.g. ICT Policy).: Comma-separated list of agreements that students might be asked to sign in school (e.g. ICT Policy).
+Nationality: Nationality
+Privacy: Privacy
+Privacy Blurb: Privacy Blurb
+Privacy Options: Privacy Options
+Religions: Religions
+Should privacy options be turned on across the system?: Should privacy options be turned on across the system?
+Should users be allowed to set their own personal backgrounds?: Should users be allowed to set their own personal backgrounds?
+Unique Email Address: Unique Email Address
+Comma-separated list of ethnicities available in system: Comma-separated list of ethnicities available in system
+Comma-separated list of nationalities available in system. If blank, system will default to list of countries: Comma-separated list of nationalities available in system. If blank, system will default to list of countries
+Comma-separated list of options to make available (e.g. half-day, full-day). If blank, this field will not show up in the application form.: Comma-separated list of options to make available (e.g. half-day, full-day). If blank, this field will not show up in the application form.
+Comma-separated list of reasons for departure from school. If blank, user can enter any text.: Comma-separated list of reasons for departure from school. If blank, user can enter any text.
+Comma-separated list of residency status available in system. If blank, system will allow text input: Comma-separated list of residency status available in system. If blank, system will allow text input
+Day-Type Text: Day-Type Text
+Departure Reasons: Departure Reasons
+Descriptive text to accompany image privacy option when shown to users.: Descriptive text to accompany image privacy option when shown to users.
+Explanatory text to include with Day-Type Options.: Explanatory text to include with Day-Type Options.
+Residency Status: Residency Status
+Are primary email addresses required to be unique?: Are primary email addresses required to be unique?
+Comma-separated list of choices to make available if privacy options are turned on. If blank, privacy fields will not be displayed.: Comma-separated list of choices to make available if privacy options are turned on. If blank, privacy fields will not be displayed.
+Personal Background: Personal Background
+Delete Person: Delete Person
+Reset Password: Reset Password
+Please select...: Please select...
+'Employment Details: {name}': 'Employment Details: {name}'
+Profession: Profession
+Employer: Employer
+Job Title: Job Title
+Employment: Employment
+New Password: New Password
+Confirm New Password: Confirm New Password
+Force Reset Password?: Force Reset Password?
+The person will need to change their password at the next attempt to sign in.: The person will need to change their password at the next attempt to sign in.
+'The password policy stipulates that passwords must:': 'The password policy stipulates that passwords must:'
+Contain at least one lowercase letter, and one uppercase letter.: Contain at least one lowercase letter, and one uppercase letter.
+Contain at least one number.: Contain at least one number.
+Must be at least {oneString} characters in length.: Must be at least {oneString} characters in length.
+Contain at least one non-alphanumeric character (e.g. a punctuation mark or space).: Contain at least one non-alphanumeric character (e.g. a punctuation mark or space).
