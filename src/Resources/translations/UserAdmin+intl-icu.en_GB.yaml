@@ -290,3 +290,43 @@ Contain at least one lowercase letter, and one uppercase letter.: Contain at lea
 Contain at least one number.: Contain at least one number.
 Must be at least {oneString} characters in length.: Must be at least {oneString} characters in length.
 Contain at least one non-alphanumeric character (e.g. a punctuation mark or space).: Contain at least one non-alphanumeric character (e.g. a punctuation mark or space).
+Required Updates?: Required Updates?
+Should the data updater highlight updates that are required?: Should the data updater highlight updates that are required?
+Required Update Types: Required Update Types
+Which type of data updates should be required.: Which type of data updates should be required.
+updater:
+    bytype:
+        family: Family
+        personal: Personal
+        medical: Medical
+        finance: Finance
+Cutoff Date: Cutoff Date
+Earliest acceptable date when checking if data updates are required.: Earliest acceptable date when checking if data updates are required.
+Data Updater Redirect: Data Updater Redirect
+Which types of users should be redirected to the Data Updater if updates are required.: Which types of users should be redirected to the Data Updater if updates are required.
+Parent: Parent
+Staff: Staff
+Student: Student
+Updater Settings: Updater Settings
+REQUIRED FIELDS FOR PERSONAL UPDATES: REQUIRED FIELDS FOR PERSONAL UPDATES
+These required field settings apply to all users, except those who hold the ability to submit a data update request for all users in the system (generally just admins).: These required field settings apply to all users, except those who hold the ability to submit a data update request for all users in the system (generally just admins).
+Field: Field
+Required: Required
+Read Only: Read Only
+Hidden: Hidden
+First Name: First Name
+This field cannot be required: This field cannot be required
+Address 1 District: Address 1 District
+Address 2 District: Address 2 District
+Citizenship 1 Passport: Citizenship 1 Passport
+Citizenship 2 Passport: Citizenship 2 Passport
+National ID Card Number: National ID Card Number
+Visa Expiry Date: Visa Expiry Date
+Emergency 1 Name: Emergency 1 Name
+Emergency 1 Number 1: Emergency 1 Number 1
+Emergency 1 Number 2: Emergency 1 Number 2
+Emergency 1 Relationship: Emergency 1 Relationship
+Emergency 2 Name: Emergency 2 Name
+Emergency 2 Number 1: Emergency 2 Number 1
+Emergency 2 Number 2: Emergency 2 Number 2
+Emergency 2 Relationship: Emergency 2 Relationship

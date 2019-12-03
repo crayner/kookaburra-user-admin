@@ -1,0 +1,13 @@
+{% trans_default_domain 'UserAdmin' %}
+
+{% set value = value[name] %}
+
+<td class=" px-2 border-b-0 sm:border-b border-t-0 w-24 float-none">
+    <div class="flex-1 relative">
+        <select id="updater_{{ type }}_{{ name }}" name="updater[{{ type }}][{{ name }}]" class="w-24 float-none">
+            {% for optName, optValue in required.options %}
+                <option value="{{ optValue }}"{{ value is same as(optValue) ? ' selected' : '' }}>{{ optName|trans }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</td>

@@ -20,12 +20,15 @@ use App\Provider\ProviderFactory;
 use Kookaburra\UserAdmin\Form\PeopleSettingsType;
 use Kookaburra\UserAdmin\Form\StaffSettingsType;
 use Kookaburra\UserAdmin\Form\StudentSettingsType;
+use Kookaburra\UserAdmin\Form\UpdaterSettingsType;
+use Kookaburra\UserAdmin\Manager\RequiredUpdates;
 use Kookaburra\UserAdmin\Pagination\StaffAbsenceTypePagination;
 use Kookaburra\UserAdmin\Pagination\StudentNoteCategoryPagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -154,5 +157,48 @@ class SettingsController extends AbstractController
         $manager->singlePanel($form->createView());
 
         return $this->render('@KookaburraUserAdmin/settings/staff.html.twig');
+    }
+
+    /**
+     * updaterSettings
+     * @param Request $request
+     * @param ContainerManager $manager
+     * @param TranslatorInterface $translator
+     * @Route("/updater/settings", name="updater_settings")
+     * @IsGranted("ROLE_ROUTE")
+     */
+    public function updaterSettings(Request $request, ContainerManager $manager, TranslatorInterface $translator, FlashBagInterface $flashBag)
+    {
+        $form = $this->createForm(UpdaterSettingsType::class, null, ['action' => $this->generateUrl('user_admin__updater_settings')]);
+
+        if ($request->getContentType() === 'json') {
+            $settingProvider = ProviderFactory::create(Setting::class);
+            $data = [];
+            try {
+                $data['errors'] = $settingProvider->handleSettingsForm($form, $request, $translator);
+                $form = $this->createForm(UpdaterSettingsType::class, null, ['action' => $this->generateUrl('user_admin__updater_settings')]);
+            } catch (\Exception $e) {
+                $data['errors'][] = ['class' => 'error', 'message' => $translator->trans('return.error.2', [], 'messages')];
+            }
+
+            $manager->singlePanel($form->createView());
+            $data['form'] = $manager->getFormFromContainer('formContent', 'single');
+
+            return new JsonResponse($data, 200);
+        }
+
+        $required = new RequiredUpdates();
+        if ($request->isMethod('POST')) {
+            $required->handleRequest($request->request->get('updater'), $flashBag);
+            $flashBag->add('success', 'return.success.0');
+        }
+
+        $manager->singlePanel($form->createView());
+
+        return $this->render('@KookaburraUserAdmin/settings/updater.html.twig',
+            [
+                'required' => $required,
+            ]
+        );
     }
 }

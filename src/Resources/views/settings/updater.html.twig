@@ -1,0 +1,57 @@
+{% trans_default_domain 'UserAdmin' %}
+
+{% extends 'kookaburra.html.twig' %}
+
+{% set module = {'baseURL': 'user_admin', 'crumbs': [{uri: 'user_admin__manage', name: 'People Admin'}], title: 'Updater Settings', domain: 'UserAdmin'} %}
+{% set breadcrumbs = 'new' %}
+{% set moduleName = 'UserAdmin' %}
+
+
+{% block content %}
+    <h3>{{ 'Settings'|trans }}</h3>
+    <div id="formContent"></div>
+
+    <h3>{{ 'REQUIRED FIELDS FOR PERSONAL UPDATES'|trans }}</h3>
+    <p>{{ 'These required field settings apply to all users, except those who hold the ability to submit a data update request for all users in the system (generally just admins).'|trans }}</p>
+
+    <form id="updater" action="{{ path('user_admin__updater_settings') }}" method="post">
+        <table class="fullWidth striped relative">
+            <thead >
+                <tr class="break heading">
+                    <td class=" px-2 border-b-0 sm:border-b border-t-0 " style="width: 30%">{{'Field'|trans}}</td>
+                    <td class=" px-2 border-b-0 sm:border-b border-t-0 " style="width: 15%">{{'Staff'|trans}}</td>
+                    <td class=" px-2 border-b-0 sm:border-b border-t-0 " style="width: 15%">{{'Student'|trans}}</td>
+                    <td class=" px-2 border-b-0 sm:border-b border-t-0 " style="width: 15%">{{'Parent'|trans}}</td>
+                    <td class=" px-2 border-b-0 sm:border-b border-t-0 " style="width: 15%">{{'Other'|trans}}</td>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for name, item in required.settingDefaults %}
+                    <tr>
+                        <td class="px-2 border-b-0 sm:border-b border-t-0">
+                            <label for="{{ name }}" class="inline-block mt-4 sm:my-1 sm:max-w-xs font-bold text-sm sm:text-xs">{{ item.label|trans }}</label>
+                        </td>
+                        {% if item.default is same as('fixed') %}
+                            <td class="px-2 border-b-0 sm:border-b border-t-0" colspan="4">
+                                <em>{{ 'This field cannot be required'|trans }}.</em>
+                            </td>
+                        {% else %}
+                            {% for type,value in required.settings %}
+                                {% include '@KookaburraUserAdmin/settings/updater_required_select.html.twig' %}
+                            {% endfor %}
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td class="flex-grow justify-center px-2 border-b-0 sm:border-b border-t-0" colspan="5">
+                        <div class="flex-1 relative">
+                            <span class="emphasis small">{{ '* denotes a required field'|trans({}, 'messages') }}</span>
+                            <button class="btn-gibbon" id="submit" name="submit" type="submit" style="float: right;">{{ 'Submit'|trans }}</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+{% endblock content %}
