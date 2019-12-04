@@ -16,6 +16,7 @@ use App\Container\ContainerManager;
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
 use Doctrine\DBAL\Driver\PDOException;
+use Kookaburra\SystemAdmin\Entity\Permission;
 use Kookaburra\SystemAdmin\Entity\Role;
 use Kookaburra\UserAdmin\Entity\StudentNoteCategory;
 use Kookaburra\UserAdmin\Form\NoteCategoryType;
@@ -118,11 +119,11 @@ class RoleController extends AbstractController
      */
     public function roleDuplicate(Request $request, ContainerManager $manager, Role $role)
     {
-        $role = clone $role;
-        $id = $role->getId();
+        $parent = $role;
+        $role = clone $parent;
         $role->setId(null)->setName('')->setNameShort('')->setDescription('')->setType('Additional');
 
-        $action = $this->generateUrl('user_admin__role_duplicate', ['role' => $id]);
+        $action = $this->generateUrl('user_admin__role_duplicate', ['role' => $parent->getId()]);
 
         $form = $this->createForm(RoleDuplicateType::class, $role, ['action' => $action]);
 
@@ -135,6 +136,8 @@ class RoleController extends AbstractController
                 $id = $role->getId();
                 $provider = ProviderFactory::create(Role::class);
                 $data = $provider->persistFlush($role, $data);
+                $provider = ProviderFactory::create(Permission::class);
+                $data = $provider->duplicatePermissions($parent, $role, $data);
                 if ($id !== $role->getId() && $data['status'] === 'success') {
                     $data['status'] = 'redirect';
                     $data['redirect'] = $this->generateUrl('user_admin__role_edit', ['role' => $role->getId()]);

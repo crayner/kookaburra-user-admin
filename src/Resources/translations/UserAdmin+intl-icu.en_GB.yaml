@@ -360,3 +360,576 @@ Current/future years only: Current/future years only
 Duplicate: Duplicate
 Short Name: Short Name
 Login Years: Login Years
+Manage Permissions: Manage Permissions
+Filter: Filter
+Module: Module
+Role: Role
+Clear Search: Clear Search
+Action Permissions: Action Permissions
+Administrator: Administrator
+Librarian: Librarian
+Support Staff: Support Staff
+Teacher: Teacher
+Record student attendance for activities.: Record student attendance for activities.
+Activity Attendance by Date: Activity Attendance by Date
+Toggle Permission: Toggle Permission
+View all student activity choices in the current year for a given roll group.: View all student activity choices in the current year for a given roll group.
+Activity Choices by Roll Group: Activity Choices by Roll Group
+View all student activity choices in the current year for a given student: View all student activity choices in the current year for a given student
+Activity Choices by Student: Activity Choices by Student
+View summary enrolment information for all activities in the current year.: View summary enrolment information for all activities in the current year.
+Activity Enrolment Summary: Activity Enrolment Summary
+View spread of enrolment over terms and days by roll group: View spread of enrolment over terms and days by roll group
+Activity Spread by Roll Group: Activity Spread by Roll Group
+Print roll group lists showing count of various activity types: Print roll group lists showing count of various activity types
+Activity Type by Roll Group: Activity Type by Roll Group
+Summarises gender, age and school year: Summarises gender, age and school year
+Age & Gender Summary: Age & Gender Summary
+Allows users, with or without an account, to apply for student place.: Allows users, with or without an account, to apply for student place.
+Application Form: Application Form
+Allows prospective staff to apply for job openings.: Allows prospective staff to apply for job openings.
+Allows admins to control the application form: Allows admins to control the application form
+Application Form Settings: Application Form Settings
+Allows users to approve or decline staff absences.: Allows users to approve or decline staff absences.
+Approve Staff Absences: Approve Staff Absences
+Allows for current records to be archived for viewing in the future.: Allows for current records to be archived for viewing in the future.
+Archive Records: Archive Records
+Allows users to assess each other's work: Allows users to assess each other's work
+Assess: Assess
+Take attendance, one class at a time: Take attendance, one class at a time
+Attendance By Class: Attendance By Class
+Take attendance, one person at a time: Take attendance, one person at a time
+Attendance By Person: Attendance By Person
+Take attendance, one roll group at a time: Take attendance, one roll group at a time
+Attendance By Roll Group_all: Attendance By Roll Group_all
+Take attendance for a teacher's own roll groups: Take attendance for a teacher's own roll groups
+Attendance By Roll Group_myGroups: Attendance By Roll Group_myGroups
+Print attendance lists: Print attendance lists
+Attendance History by Activity: Attendance History by Activity
+Print a report of student attendace in a given date range: Print a report of student attendace in a given date range
+Attendance Summary by Date: Attendance Summary by Date
+Display a graph of student attendance types over time: Display a graph of student attendance types over time
+Attendance Trends: Attendance Trends
+View items borrowed by an individual.: View items borrowed by an individual.
+Borrowing Record: Borrowing Record
+Search and view all borrowable items maintained by the library.: Search and view all borrowable items maintained by the library.
+Browse The Library: Browse The Library
+Search and view all borrowable items maintained by the library: Search and view all borrowable items maintained by the library
+Allows for the creation of message templates.: Allows for the creation of message templates.
+Canned Response: Canned Response
+Shows the number of classes students are enroled in, organised by roll group: Shows the number of classes students are enroled in, organised by roll group
+Class Enrolment by Roll Group: Class Enrolment by Roll Group
+Print a report of classes who have not been registered on a given day: Print a report of classes who have not been registered on a given day
+Classes Not Registered: Classes Not Registered
+Allows users to browse and explore concepts and keywords, based on the Unit Planner.: Allows users to browse and explore concepts and keywords, based on the Unit Planner.
+Concept Explorer: Concept Explorer
+Course Enrolment by Class: Course Enrolment by Class
+Manage course enrolment for a single user: Manage course enrolment for a single user
+Course Enrolment by Person: Course Enrolment by Person
+Allows privileged users to move enrolments from the current year to the next year.: Allows privileged users to move enrolments from the current year to the next year.
+Course Enrolment Rollover: Course Enrolment Rollover
+Allows a user to export certain key assessment data points to a spreadsheet.: Allows a user to export certain key assessment data points to a spreadsheet.
+Data Points: Data Points
+Allows administrators to configure the system display settings.: Allows administrators to configure the system display settings.
+Display Settings: Display Settings
+Allows editing of any column in any class.: Allows editing of any column in any class.
+Edit Markbook_everything: Edit Markbook_everything
+Edit columns and grades for a single class belonging to the user, or multiple classes across the whole school.: Edit columns and grades for a single class belonging to the user, or multiple classes across the whole school.
+Edit Markbook_multipleClassesAcrossSchool: Edit Markbook_multipleClassesAcrossSchool
+Edit columns and grades for a single class belonging to the user, or multiple classes within departments.: Edit columns and grades for a single class belonging to the user, or multiple classes within departments.
+Edit Markbook_multipleClassesInDepartment: Edit Markbook_multipleClassesInDepartment
+Edit columns and grades for a single class at a time.: Edit columns and grades for a single class at a time.
+Edit Markbook_singleClass: Edit Markbook_singleClass
+Allows users to show a summary of emergency contact data for a group of students.: Allows users to show a summary of emergency contact data for a group of students.
+Emergency Data Summary: Emergency Data Summary
+Show SMS emergency details by transport route: Show SMS emergency details by transport route
+Emergency SMS by Transport: Emergency SMS by Transport
+'Output all parental first mobile numbers by year group: if there are no details, then show emergency details.': 'Output all parental first mobile numbers by year group: If there are no details, then show emergency details.'
+Emergency SMS by Year Group: Emergency SMS by Year Group
+Enter Activity Attendance: Enter Activity Attendance
+Record student attendance for activities you organise, coach or assist in.: Record student attendance for activities you organise, coach or assist in.
+Enter Activity Attendance_leader: Enter Activity Attendance_leader
+Allows users to manage external assessment data: Allows users to manage external assessment data
+External Assessment Data_manage: External Assessment Data_manage
+Allow users to view assessment data for all students: Allow users to view assessment data for all students
+External Assessment Data_view: External Assessment Data_view
+View family addresses by student: View family addresses by student
+Family Address by Student: Family Address by Student
+Allows users to check, for active families, how recently they have been updated.: Allows users to check, for active families, how recently they have been updated.
+Family Data Updater History: Family Data Updater History
+Manage requests for updates to family data.: Manage requests for updates to family data.
+Family Data Updates: Family Data Updates
+Manage requests for updates to finance data.: Manage requests for updates to finance data.
+Finance Data Updates: Finance Data Updates
+Allows user to spot students who are repeat or regular offenders.: Allows user to spot students who are repeat or regular offenders.
+Find Behaviour Patterns: Find Behaviour Patterns
+Allows user to record first aid visits and actions.: Allows user to record first aid visits and actions.
+First Aid Record: First Aid Record
+Configure External Assessment module options: Configure External Assessment module options
+Formal Assessment Settings: Formal Assessment Settings
+Print payment list: Print payment list
+Generate Invoices: Generate Invoices
+Allows a user to see progress tracking graphs for all students in school.: Allows a user to see progress tracking graphs for all students in school.
+Graphing_all: Graphing_all
+Allows a user to view and run available imports.: Allows a user to view and run available imports.
+Import From File: Import From File
+Allows bulk import of user photos based on a ZIP file.: Allows bulk import of user photos based on a ZIP file.
+Import User Photos: Import User Photos
+Provides a visual graph of individual needs school-wide.: Provides a visual graph of individual needs school-wide.
+Individual Needs Overview: Individual Needs Overview
+Allows user to view IN records for all students: Allows user to view IN records for all students
+Individual Needs Records_view: Individual Needs Records_view
+Allows users to contribute teaching strategies to IN records for all students: Allows users to contribute teaching strategies to IN records for all students
+Individual Needs Records_viewContribute: Individual Needs Records_viewContribute
+Allows users to edit IN records for all students: Allows users to edit IN records for all students
+Individual Needs Records_viewEdit: Individual Needs Records_viewEdit
+Allows user to see a flexible summary of IN data.: Allows user to see a flexible summary of IN data.
+Individual Needs Summary: Individual Needs Summary
+Allows for the creation of job openings, which can be used in the job application form.: Allows for the creation of job openings, which can be used in the job application form.
+Job Openings: Job Openings
+A report showing all the students who have left within a specified date range.: A report showing all the students who have left within a specified date range.
+Left Students: Left Students
+Manage lending, returns, reservations, repairs, decommissioning, etc.: Manage lending, returns, reservations, repairs, decommissioning, etc.
+Lending & Activity Log: Lending & Activity Log
+View all planner information and edit all planner information for classes user is in: View all planner information and edit all planner information for classes user is in
+Lesson Planner_viewAllEditMyClasses: Lesson Planner_viewAllEditMyClasses
+View and edit all planner information for all classes: View and edit all planner information for all classes
+Lesson Planner_viewEditAllClasses: Lesson Planner_viewEditAllClasses
+Allows parents to view their children's classes: Allows parents to view their children's classes
+Lesson Planner_viewMyChildrensClasses: Lesson Planner_viewMyChildrensClasses
+View all planner information for classes user is in: View all planner information for classes user is in
+Lesson Planner_viewMyClasses: Lesson Planner_viewMyClasses
+Show students in roll group, less those with an older sibling, so that letters can be carried home by oldest in family.: Show students in roll group, less those with an older sibling, so that letters can be carried home by oldest in family.
+Letters Home by Roll Group: Letters Home by Roll Group
+Change the core settings of a library.: Change the core settings of a library.
+Library Settings: Library Settings
+Lend and return items using a bar-code scanner.: Lend and return items using a bar-code scanner.
+Loan / Return Manager: Loan / Return Manager
+Allows managers to build activity program: Allows managers to build activity program
+Manage Activities: Manage Activities
+Control activity settings: Control activity settings
+Manage Activity Settings: Manage Activity Settings
+Manage the alert levels which are used throughout the school to flag problems.: Manage the alert levels which are used throughout the school to flag problems.
+Manage Alert Levels: Manage Alert Levels
+Allows administrators to view and action staff applications.: Allows administrators to view and action staff applications.
+Manage Applications: Manage Applications
+Allows admins to view and action applications, but not to delete them: Allows admins to view and action applications, but not to delete them
+Manage Applications_edit: Manage Applications_edit
+Allows admins to view and action applications: Allows admins to view and action applications
+Manage Applications_editDelete: Manage Applications_editDelete
+Edit student attendance logs.: Edit student attendance logs.
+Manage Attendance Logs: Manage Attendance Logs
+Allows administrators to configure the attendance module.: Allows administrators to configure the attendance module.
+Manage Attendance Settings: Manage Attendance Settings
+Manage all behaviour records: Manage all behaviour records
+Manage Behaviour Records_all: Manage Behaviour Records_all
+Manage behaviour records create by the user: Manage behaviour records create by the user
+Manage Behaviour Records_my: Manage Behaviour Records_my
+Manage settings for the Behaviour module: Manage settings for the Behaviour module
+Manage Behaviour Settings: Manage Behaviour Settings
+Allows users to create, view and edit billing windows.: Allows users to create, view and edit billing windows.
+Manage Billing Schedule: Manage Billing Schedule
+Allows a sufficiently priviledged user to create and manage budget cycles.: Allows a sufficiently priviledged user to create and manage budget cycles.
+Manage Budget Cycles: Manage Budget Cycles
+Allows users to create, edit and delete budgets.: Allows users to create, edit and delete budgets.
+Manage Budgets: Manage Budgets
+Control all items in the school library catalog: Control all items in the school library catalog
+Manage Catalog: Manage Catalog
+Control all items in the school library catalogue: Control all items in the school library catalogue
+Manage Catalogue: Manage Catalogue
+Allow admins to manage timetable columns: Allow admins to manage timetable columns
+Manage Columns: Manage Columns
+Manage Courses & Classes: Manage Courses & Classes
+Allows a user to create, edit and delete custom fields for users.: Allows a user to create, edit and delete custom fields for users.
+Manage Custom Fields: Manage Custom Fields
+Manage settings that control Staff, Student and Parent dashboards.: Manage settings that control Staff, Student and Parent dashboards.
+Manage Dashboard Settings: Manage Dashboard Settings
+Manage Days of the Week: Manage Days of the Week
+Allows admins to create learning areas and administrative groups.: Allows admins to create learning areas and administrative groups.
+Manage Departments: Manage Departments
+Manage a list of districts for address autocomplete.: Manage a list of districts for address autocomplete.
+Manage Districts: Manage Districts
+Determines who can approve expense requests, in accordance to the Expense Approval Type setting in School Admin.: Determines who can approve expense requests, in accordance to the Expense Approval Type setting in School Admin.
+Manage Expense Approvers: Manage Expense Approvers
+Gives access to full control all expenses across all budgets.: Gives access to full control all expenses across all budgets.
+Manage Expenses_all: Manage Expenses_all
+Gives access to control expenses, according to budget-level access rights.: Gives access to control expenses, according to budget-level access rights.
+Manage Expenses_myBudgets: Manage Expenses_myBudgets
+Add, edit and delete external assessments.: Add, edit and delete external assessments.
+Manage External Assessments: Manage External Assessments
+Allows users to create a list of spaces and rooms in the school: Allows users to create a list of spaces and rooms in the school
+Manage Facilities: Manage Facilities
+Allows a user to book a room for on-off use, and manage bookings made by all other users.: Allows a user to book a room for on-off use, and manage bookings made by all other users.
+Manage Facility Bookings_allBookings: Manage Facility Bookings_allBookings
+Allows a user to book a room for on-off use, and manage their own bookings.: Allows a user to book a room for on-off use, and manage their own bookings.
+Manage Facility Bookings_myBookings: Manage Facility Bookings_myBookings
+Allows a user to create and manage one-off location changes for all classes within the timetable.: Allows a user to create and manage one-off location changes for all classes within the timetable.
+Manage Facility Changes_allClasses: Manage Facility Changes_allClasses
+Allows a user to create and manage one-off location changes for their own classes within the timetable.: Allows a user to create and manage one-off location changes for their own classes within the timetable.
+Manage Facility Changes_myClasses: Manage Facility Changes_myClasses
+Allows a department coordinator to manage changes for all classes in their department.: Allows a department coordinator to manage changes for all classes in their department.
+Manage Facility Changes_myDepartment: Manage Facility Changes_myDepartment
+Allows privileged users to manage settings for spaces.: Allows privileged users to manage settings for spaces.
+Manage Facility Settings: Manage Facility Settings
+Manage Families: Manage Families
+Allows users to create, edit and delete fee categories.: Allows users to create, edit and delete fee categories.
+Manage Fee Categories: Manage Fee Categories
+Allows users to create, view and edit fees.: Allows users to create, view and edit fees.
+Manage Fees: Manage Fees
+Manage file extensions allowed across the system: Manage file extensions allowed across the system
+Manage File Extensions: Manage File Extensions
+Allows users to edit the text that appears in invoices and receipts.: Allows users to edit the text that appears in invoices and receipts.
+Manage Finance Settings: Manage Finance Settings
+Manage all aspects of grade scales, which are used throughout ARR to control grade input.: Manage all aspects of grade scales, which are used throughout ARR to control grade input.
+Manage Grade Scales: Manage Grade Scales
+Allows management of custom groups for message targetting: Allows management of custom groups for message targetting
+Manage Groups_all: Manage Groups_all
+Manage Groups_my: Manage Groups_my
+Manage Houses: Manage Houses
+Allows admins to control the descriptors available for use in the Individual Needs module.: Allows admins to control the descriptors available for use in the Individual Needs module.
+Manage IN Settings: Manage IN Settings
+Allows privileged users to create and manage Internal Assessment columns.: Allows privileged users to create and manage Internal Assessment columns.
+Manage Internal Assessments: Manage Internal Assessments
+Allows users to view and edit invoice recipients.: Allows users to view and edit invoice recipients.
+Manage Invoicees: Manage Invoicees
+Allows users to generate, view, delete and edit invoices.: Allows users to generate, view, delete and edit invoices.
+Manage Invoices: Manage Invoices
+Allows administrators to control system-wide language and localisation settings.: Allows administrators to control system-wide language and localisation settings.
+Manage Languages: Manage Languages
+Manage medical form information for users: Manage medical form information for users
+Manage Medical Forms: Manage Medical Forms
+Edit all messages: Edit all messages
+Manage Messages_all: Manage Messages_all
+Edit all messages created by the user: Edit all messages created by the user
+Manage Messages_my: Manage Messages_my
+Manage gateway settings for outgoing SMS messages.: Manage gateway settings for outgoing SMS messages.
+Manage Messenger Settings: Manage Messenger Settings
+Manage Modules: Manage Modules
+View all outcomes in the school: View all outcomes in the school
+Manage Outcomes_viewAll: Manage Outcomes_viewAll
+View all outcomes in the school, edit any from Learning Areas where you are Coordinator or Teacher (Curriculum): View all outcomes in the school, edit any from Learning Areas where you are Coordinator or Teacher (Curriculum)
+Manage Outcomes_viewAllEditLearningArea: Manage Outcomes_viewAllEditLearningArea
+Manage all outcomes in the school: Manage all outcomes in the school
+Manage Outcomes_viewEditAll: Manage Outcomes_viewEditAll
+Configure settings relating to people management.: Configure settings relating to people management.
+Allows admin to edit any user within the system, but not to delete them.: Allows admin to edit any user within the system, but not to delete them.
+Manage People_edit: Manage People_edit
+Edit any user within the system: Edit any user within the system
+Manage People_editDelete: Manage People_editDelete
+Edit settings for the planner: Edit settings for the planner
+Manage Planner Settings: Manage Planner Settings
+Manage settings for the resources module: Manage settings for the resources module
+Manage Resource Settings: Manage Resource Settings
+Manage all resources: Manage all resources
+Manage Resources_all: Manage Resources_all
+Manage resources created by the user: Manage resources created by the user
+Manage Resources_my: Manage Resources_my
+Manage Roll Groups: Manage Roll Groups
+View all rubrics in the school, edit any from Learning Areas where you are Coordinator or Teacher (Curriculum): View all rubrics in the school, edit any from Learning Areas where you are Coordinator or Teacher (Curriculum)
+Manage Rubrics_viewAllEditLearningArea: Manage Rubrics_viewAllEditLearningArea
+Manage all rubrics in the school: Manage all rubrics in the school
+Manage Rubrics_viewEditAll: Manage Rubrics_viewEditAll
+Allows user to control the definition of academic years within the system: Allows user to control the definition of academic years within the system
+Manage School Years: Manage School Years
+Manage Special Days: Manage Special Days
+Allows administrators to edit and delete staff absences.: Allows administrators to edit and delete staff absences.
+Manage Staff Absences: Manage Staff Absences
+Allows administrators to manage coverage requests.: Allows administrators to manage coverage requests.
+Manage Staff Coverage: Manage Staff Coverage
+Controls settings for users with role category Staff.: Controls settings for users with role category Staff.
+Manage Staff Settings: Manage Staff Settings
+Edit general and confidential information on members of staff.: Edit general and confidential information on members of staff.
+Manage Staff_confidential: Manage Staff_confidential
+Edit general information on members of staff.: Edit general information on members of staff.
+Manage Staff_general: Manage Staff_general
+Allows a departmental Coordinator or Assistant Coordinator to manage student enrolment within their department.: Allows a departmental Coordinator or Assistant Coordinator to manage student enrolment within their department.
+Manage Student Enrolment: Manage Student Enrolment
+Manage settings for the Student module: Manage settings for the Student module
+Manage Students Settings: Manage Students Settings
+Edit information for users who can provide staff coverage.: Edit information for users who can provide staff coverage.
+Manage Substitutes: Manage Substitutes
+Manage Terms: Manage Terms
+Allow admins to create and manage timetables: Allow admins to create and manage timetables
+Manage Timetables: Manage Timetables
+Manage markbook weightings for any class.: Manage markbook weightings for any class.
+Manage Weightings_everything: Manage Weightings_everything
+Manage markbook weightings for a single class at a time.: Manage markbook weightings for a single class at a time.
+Manage Weightings_singleClass: Manage Weightings_singleClass
+Manage Year Groups: Manage Year Groups
+Configure options for the Markbook module: Configure options for the Markbook module
+Markbook Settings: Markbook Settings
+Allows users to show a summary of medical data for a group of students.: Allows users to show a summary of medical data for a group of students.
+Medical Data Summary: Medical Data Summary
+Allows admins to process data update requests for medical data: Allows admins to process data update requests for medical data
+Medical Form Updates: Medical Form Updates
+Allows a user to view the activities they are involved in: Allows a user to view the activities they are involved in
+My Activities: My Activities
+Allows an activity organizer to manage enrolment for their activities.: Allows an activity organizer to manage enrolment for their activities.
+My Activities_viewEditEnrolment: My Activities_viewEditEnrolment
+Provides an overview of coverage for staff absences.: Provides an overview of coverage for staff absences.
+My Coverage: My Coverage
+Provides an overview of any required data updates for a user, including family data if applicable.: Provides an overview of any required data updates for a user, including family data if applicable.
+My Data Updates: My Data Updates
+Allows a user to request expenses from budgets they have access to.: Allows a user to request expenses from budgets they have access to.
+My Expense Requests: My Expense Requests
+Submit staff absences for any user.: Submit staff absences for any user.
+New Absence_any: New Absence_any
+Allows a user to submit their own staff absences.: Allows a user to submit their own staff absences.
+New Absence_mine: New Absence_mine
+Bulk email to any activity: Bulk email to any activity
+New Message_activities_any: New Message_activities_any
+Bulk email to any of my activities: Bulk email to any of my activities
+New Message_activities_my: New Message_activities_my
+Include parents in messages posted to activities: Include parents in messages posted to activities
+New Message_activities_parents: New Message_activities_parents
+Bulk email to applicants by intended school year of entry: Bulk email to applicants by intended school year of entry
+New Message_applicants: New Message_applicants
+Bulk email by student attendance.: Bulk email by student attendance.
+New Message_attendance: New Message_attendance
+Send messages by email.: Send messages by email.
+New Message_byEmail: New Message_byEmail
+Send messages by message wall.: Send messages by message wall.
+New Message_byMessageWall: New Message_byMessageWall
+Send messages by SMS.: Send messages by SMS.
+New Message_bySMS: New Message_bySMS
+Allows user to use pre-defined Canned Responses.: Allows user to use pre-defined Canned Responses.
+New Message_cannedResponse: New Message_cannedResponse
+Bulk email to any class: Bulk email to any class
+New Message_classes_any: New Message_classes_any
+Bulk email to any of my classes: Bulk email to any of my classes
+New Message_classes_my: New Message_classes_my
+Include parents in messages posted to classes: Include parents in messages posted to classes
+New Message_classes_parents: New Message_classes_parents
+Bulk email to any courses: Bulk email to any courses
+New Message_courses_any: New Message_courses_any
+Bulk email to any of my courses: Bulk email to any of my courses
+New Message_courses_my: New Message_courses_my
+Include parents in messages posted to courses: Include parents in messages posted to courses
+New Message_courses_parents: New Message_courses_parents
+Bulk email from the school's email address: Bulk email from the school's email address
+New Message_fromSchool: New Message_fromSchool
+Bulk email to any group: Bulk email to any group
+New Message_groups_any: New Message_groups_any
+Bulk email to any group a user owns or is a member of: Bulk email to any group a user owns or is a member of
+New Message_groups_my: New Message_groups_my
+Include parents in messages posted to groups: Include parents in messages posted to groups
+New Message_groups_parents: New Message_groups_parents
+Bulk email to members of all houses: Bulk email to members of all houses
+New Message_houses_all: New Message_houses_all
+Bulk email to members of my house: Bulk email to members of my house
+New Message_houses_my: New Message_houses_my
+Bulk email to indvidual users: Bulk email to indvidual users
+New Message_individuals: New Message_individuals
+Allows users to include read receipts in emails.: Allows users to include read receipts in emails.
+New Message_readReceipts: New Message_readReceipts
+Bulk email to a particular role: Bulk email to a particular role
+New Message_role: New Message_role
+Bulk email to any roll group: Bulk email to any roll group
+New Message_rollGroups_any: New Message_rollGroups_any
+Bulk email to any of my roll groups: Bulk email to any of my roll groups
+New Message_rollGroups_my: New Message_rollGroups_my
+Include parents in messages posted to parents: Include parents in messages posted to parents
+New Message_rollGroups_parents: New Message_rollGroups_parents
+Send messages users by transport field.: Send messages users by transport field.
+New Message_transport_any: New Message_transport_any
+Send messages parents of users by transport field.: Send messages parents of users by transport field.
+New Message_transport_parents: New Message_transport_parents
+Bulk email to any year group: Bulk email to any year group
+New Message_yearGroups_any: New Message_yearGroups_any
+Include parents in messages posted to year group: Include parents in messages posted to year group
+New Message_yearGroups_parents: New Message_yearGroups_parents
+Allows for the quick posting of a Message Wall message to all users.: Allows for the quick posting of a Message Wall message to all users.
+New Quick Wall Message: New Quick Wall Message
+A report showing all new students in the current school year.: A report showing all new students in the current school year.
+New Students: New Students
+Manage settings for system notifications.: Manage settings for system notifications.
+Notification Settings: Notification Settings
+Users can view and accept any available coverage requests.: Users can view and accept any available coverage requests.
+Open Requests: Open Requests
+This view gives an overview of which whole school and learning area outcomes are covered by classes in a given course, allowing for curriculum mapping by outcome and course.: This view gives an overview of which whole school and learning area outcomes are covered by classes in a given course, allowing for curriculum mapping by outcome and course.
+Outcomes By Course: Outcomes By Course
+This report shows responses to the weekly summary email, organised by calendar week and role group.: This report shows responses to the weekly summary email, organised by calendar week and role group.
+Parent Weekly Email Summary: Parent Weekly Email Summary
+Print participant lists: Print participant lists
+Participants by Activity: Participants by Activity
+Allows admins to process data update requests for personal data: Allows admins to process data update requests for personal data
+Personal Data Updates: Personal Data Updates
+Allows you to set your own preferences for background, theme, et.al. Change your password.: Allows you to set your own preferences for background, theme, et.al. Change your password.
+Personal Preferences: Personal Preferences
+Generate a printable attendance sheet for activities.: Generate a printable attendance sheet for activities.
+Printable Attendance Sheet: Printable Attendance Sheet
+Shows privacy options selected, for those students with a selection made.: Shows privacy options selected, for those students with a selection made.
+Privacy Choices by Student: Privacy Choices by Student
+Gives access to enable and configure public registration.: Gives access to enable and configure public registration.
+Public Registration Settings: Public Registration Settings
+Allows a staff member to request coverage for their absences.: Allows a staff member to request coverage for their absences.
+Request Coverage: Request Coverage
+Summarises gender and number of students across all roll groups.: Summarises gender and number of students across all roll groups.
+Roll Group Summary: Roll Group Summary
+Print a report of roll groups who have not been registered on a given day: Print a report of roll groups who have not been registered on a given day
+Roll Groups Not Registered: Roll Groups Not Registered
+Allows admins to kick the school forward one year: Allows admins to kick the school forward one year
+Rollover: Rollover
+Allows users to generate scope and sequence documentation for individual courses, based on the Unit Planner.: Allows users to generate scope and sequence documentation for individual courses, based on the Unit Planner.
+Scope & Sequence: Scope & Sequence
+Set future absences one student at a time: Set future absences one student at a time
+Set Future Absence: Set Future Absence
+Provides an overview of staff absences for the school year.: Provides an overview of staff absences for the school year.
+Staff Absence Summary: Staff Absence Summary
+Allows admins to control the staff application form.: Allows admins to control the staff application form.
+Staff Application Form Settings: Staff Application Form Settings
+Allows for interface strings to be replaced with custom values.: Allows for interface strings to be replaced with custom values.
+String Replacement: String Replacement
+View items borrowed by an individual student.: View items borrowed by an individual student.
+Student Borrowing Record: Student Borrowing Record
+Allows users to check, for a group of students, how recently they have been updated: Allows users to check, for a group of students, how recently they have been updated
+Student Data Updater History: Student Data Updater History
+Allows user to control student enrolment in the current year: Allows user to control student enrolment in the current year
+Student Enrolment: Student Enrolment
+Provides a visual graph of student enrolment over a range of time.: Provides a visual graph of student enrolment over a range of time.
+Student Enrolment Trends: Student Enrolment Trends
+Print a report of all attendance data in the current school year for a student: Print a report of all attendance data in the current school year for a student
+Student History_all: Student History_all
+Allows a student to print a report of their attendance data in the current school year.: Allows a student to print a report of their attendance data in the current school year.
+Student History_my: Student History_my
+Print a report of all attendance data in the current school yearfor my children: Print a report of all attendance data in the current school yearfor my children
+Student History_myChildren: Student History_myChildren
+A report for bulk creation of student ID cards.: A report for bulk creation of student ID cards.
+Student ID Cards: Student ID Cards
+Allows students to self register as Present, provided they are within a certain range of IP addresses.: Allows students to self register as Present, provided they are within a certain range of IP addresses.
+Student Self Registration: Student Self Registration
+Shows student transport details: Shows student transport details
+Student Transport: Student Transport
+View a report of student houses by year group.: View a report of student houses by year group.
+Students by House: Students by House
+Print student roll group lists: Print student roll group lists
+Students by Roll Group: Students by Roll Group
+Print a report of students who are not physically on the school campus on a given day: Print a report of students who are not physically on the school campus on a given day
+Students Not Onsite: Students Not Onsite
+Print a report of students who are not present on a given day: Print a report of students who are not present on a given day
+Students Not Present: Students Not Present
+Allows users to view the availability of subs by date.: Allows users to view the availability of subs by date.
+Substitute Availability: Substitute Availability
+Allows users to map enrolments from homerooms to classes.: Allows users to map enrolments from homerooms to classes.
+Sync Course Enrolment: Sync Course Enrolment
+Check system versions and extensions installed.: Check system versions and extensions installed.
+System Check: System Check
+Main system settings: Main system settings
+System Settings: System Settings
+Allows administrators to configure and make use of third party services.: Allows administrators to configure and make use of third party services.
+Third Party Settings: Third Party Settings
+Allows admins to place timetable days into the school calendar: Allows admins to place timetable days into the school calendar
+Tie Days To Dates: Tie Days To Dates
+Allows a user to manage settings for the Tracking module.: Allows a user to manage settings for the Tracking module.
+Tracking Settings: Tracking Settings
+Manage all units within the school: Manage all units within the school
+Unit Planner_all: Unit Planner_all
+Manage all units within the learning areas I have appropriate permission: Manage all units within the learning areas I have appropriate permission
+Unit Planner_learningAreas: Unit Planner_learningAreas
+Create family data update request for any user: Create family data update request for any user
+Update Family Data_any: Update Family Data_any
+Allows adults in a family to create data update request for their family.: Allows adults in a family to create data update request for their family.
+Update Family Data_family: Update Family Data_family
+Create finance data update request for any user: Create finance data update request for any user
+Update Finance Data_any: Update Finance Data_any
+Allows adults in a family to create finance data update request for their family.: Allows adults in a family to create finance data update request for their family.
+Update Finance Data_family: Update Finance Data_family
+Create medical data update request for any user: Create medical data update request for any user
+Update Medical Data_any: Update Medical Data_any
+Allows users to update medical information for themselves and their family members: Allows users to update medical information for themselves and their family members
+Update Medical Form_family: Update Medical Form_family
+Create personal data update request for any user: Create personal data update request for any user
+Update Personal Data_any: Update Personal Data_any
+Allows users to update personal information for themselves and their family members: Allows users to update personal information for themselves and their family members
+Update Personal Data_family: Update Personal Data_family
+Configure options for the Data Updater module: Configure options for the Data Updater module
+Provides an overview of staff absences for the selected user.: Provides an overview of staff absences for the selected user.
+View Absences_any: View Absences_any
+View Absences_mine: View Absences_mine
+Allows students to view activities and register: Allows students to view activities and register
+View Activities_studentRegister: View Activities_studentRegister
+Allows parents to register their children for activities: Allows parents to register their children for activities
+View Activities_studentRegisterByParent: View Activities_studentRegisterByParent
+Allows users to view activities: Allows users to view activities
+View Activities_view: View Activities_view
+View unassigned rooms by timetable.: View unassigned rooms by timetable.
+View Available Facilities: View Available Facilities
+View unassigned teachers by timetable.: View unassigned teachers by timetable.
+View Available Teachers: View Available Teachers
+Allows a user to view automated behaviour letters sent out by the system.: Allows a user to view automated behaviour letters sent out by the system.
+View Behaviour Letters: View Behaviour Letters
+View behaviour records by student: View behaviour records by student
+View Behaviour Records_all: View Behaviour Records_all
+View behaviour records for students within a family.: View behaviour records for students within a family.
+View Behaviour Records_myChildren: View Behaviour Records_myChildren
+View attendance, by roll group and class: View attendance, by roll group and class
+View Daily Attendance: View Daily Attendance
+Allows users to view all department details.: Allows users to view all department details.
+View Departments: View Departments
+Allows a student to view their own external assessment records.: Allows a student to view their own external assessment records.
+View External Assessments_mine: View External Assessments_mine
+Allows a parent to view external assessment records for their children.: Allows a parent to view external assessment records for their children.
+View External Assessments_myChildrens: View External Assessments_myChildrens
+Allows parents to view individual needs plans for members of their family.: Allows parents to view individual needs plans for members of their family.
+View Individual Education Plans_myChildren: View Individual Education Plans_myChildren
+Allows staff to see Internal Assessment results for all children.: Allows staff to see Internal Assessment results for all children.
+View Internal Assessments_all: View Internal Assessments_all
+Allows students to view their own Internal Assessment results.: Allows students to view their own Internal Assessment results.
+View Internal Assessments_mine: View Internal Assessments_mine
+Allows parents to view their childrens' Internal Assessment results.: Allows parents to view their childrens' Internal Assessment results.
+View Internal Assessments_myChildrens: View Internal Assessments_myChildrens
+Allows a student to view their own invoices.: Allows a student to view their own invoices.
+View Invoices_mine: View Invoices_mine
+Allows parents to view invoices issued to members of their family.: Allows parents to view invoices issued to members of their family.
+View Invoices_myChildren: View Invoices_myChildren
+View all markbook information for all users: View all markbook information for all users
+View Markbook_allClassesAllData: View Markbook_allClassesAllData
+Allows teachers to view their own markbook information: Allows teachers to view their own markbook information
+View Markbook_myClasses: View Markbook_myClasses
+View your own marks: View your own marks
+View Markbook_myMarks: View Markbook_myMarks
+View Markbook_viewMyChildrensClasses: View Markbook_viewMyChildrensClasses
+Allows a user to see all days, periods, teachers and rooms in a timetable.: Allows a user to see all days, periods, teachers and rooms in a timetable.
+View Master Timetable: View Master Timetable
+Allows users to view all messages posted on their message wall.: Allows users to view all messages posted on their message wall.
+View Message Wall: View Message Wall
+View items which are on loan and have exceeded their due date.: View items which are on loan and have exceeded their due date.
+View Overdue Items: View Overdue Items
+View resources: View resources
+View Resources: View Resources
+View a brief profile of roll groups in school.: View a brief profile of roll groups in school.
+View Roll Groups: View Roll Groups
+View all rubrics in the school, except students who can only view those for own year group.: View all rubrics in the school, except students who can only view those for own year group.
+View Rubrics: View Rubrics
+View brief profile of any staff member in the school.: View brief profile of any staff member in the school.
+View Staff Profile_brief: View Staff Profile_brief
+View full profile of any staff member in the school.: View full profile of any staff member in the school.
+View Staff Profile_full: View Staff Profile_full
+View brief profile of any student in the school.: View brief profile of any student in the school.
+View Student Profile_brief: View Student Profile_brief
+View full profile of any student in the school.: View full profile of any student in the school.
+View Student Profile_full: View Student Profile_full
+View full profile of any student in the school, without access to Notes.: View full profile of any student in the school, without access to Notes.
+View Student Profile_fullNoNotes: View Student Profile_fullNoNotes
+Allows students to view their own information: Allows students to view their own information
+View Student Profile_my: View Student Profile_my
+Allows parents to view their student's information: Allows parents to view their student's information
+View Student Profile_myChildren: View Student Profile_myChildren
+View space usage according to the timetable: View space usage according to the timetable
+View Timetable by Facility: View Timetable by Facility
+Allows users to view timetables: Allows users to view timetables
+View Timetable by Person: View Timetable by Person
+Allows users to view timetables in all school years.: Allows users to view timetables in all school years.
+View Timetable by Person_allYears: View Timetable by Person_allYears
+Allows users to view their own timetable: Allows users to view their own timetable
+View Timetable by Person_my: View Timetable by Person_my
+Allows parents to view their children's timetable: Allows parents to view their children's timetable
+View Timetable by Person_myChildren: View Timetable by Person_myChildren
+A week-by-week overview of staff absences.: A week-by-week overview of staff absences.
+Weekly Absences: Weekly Absences
+Print work summary statistical data by roll group: Print work summary statistical data by roll group
+Work Summary by Roll Group: Work Summary by Roll Group
+Allows privileged users to enter Internal Assessment assessment data to columns in all classes.: Allows privileged users to enter Internal Assessment assessment data to columns in all classes.
+Write Internal Assessments_all: Write Internal Assessments_all
+Allows teachers to enter Internal Assessment assessment data to columns in their classes.: Allows teachers to enter Internal Assessment assessment data to columns in their classes.
+Write Internal Assessments_myClasses: Write Internal Assessments_myClasses

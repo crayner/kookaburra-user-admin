@@ -13,7 +13,6 @@
 namespace Kookaburra\UserAdmin\Form;
 
 
-use App\Form\Type\ChoiceFromSimpleArrayType;
 use App\Form\Type\DateSettingType;
 use App\Form\Type\ReactFormType;
 use App\Form\Type\SettingsType;
