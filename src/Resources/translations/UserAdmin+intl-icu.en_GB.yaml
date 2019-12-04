@@ -330,3 +330,33 @@ Emergency 2 Name: Emergency 2 Name
 Emergency 2 Number 1: Emergency 2 Number 1
 Emergency 2 Number 2: Emergency 2 Number 2
 Emergency 2 Relationship: Emergency 2 Relationship
+Category: Category
+role:
+    category:
+        staff: Staff
+        student: Student
+        parent: Parent
+        other: Other
+    restriction:
+        none: None
+        same role: People with the same role
+        admin only: Administrators only
+Abbreviation: Abbreviation
+Description: Description
+Type: Type
+This value cannot be changed.: This value cannot be changed.
+Are users with this primary role able to login?: Are users with this primary role able to login?
+Login To Past Years: Login To Past Years
+Login To Future Years: Login To Future Years
+Restriction: Restriction
+Determines who can grant or remove this role in Manage Users.: Determines who can grant or remove this role in Manage Users.
+Manage Roles: Manage Roles
+Edit Role: Edit Role
+None: None
+All years: All years
+Current year only: Current year only
+Current/past years only: Current/past years only
+Current/future years only: Current/future years only
+Duplicate: Duplicate
+Short Name: Short Name
+Login Years: Login Years
