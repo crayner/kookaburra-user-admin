@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package Kookaburra\UserAdmin\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\UserAdmin\Repository\FamilyRelationshipRepository")
  * @ORM\Table(options={"auto_increment": 1}, name="FamilyRelationship", uniqueConstraints={@ORM\UniqueConstraint(name="familyAdultChild", columns={"gibbonFamilyID","gibbonPersonID1","gibbonPersonID2"})})
- * @UniqueEntity({"family","person1","person2"})
+ * @UniqueEntity({"family","adult","child"})
  */
 class FamilyRelationship
 {
@@ -36,8 +36,9 @@ class FamilyRelationship
 
     /**
      * @var Family|null
-     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Family")
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Family", inversedBy="relationships")
      * @ORM\JoinColumn(name="gibbonFamilyID", referencedColumnName="gibbonFamilyID", nullable=false)
+     * @Assert\NotBlank()
      */
     private $family;
 
@@ -45,15 +46,17 @@ class FamilyRelationship
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
      * @ORM\JoinColumn(name="gibbonPersonID1", referencedColumnName="gibbonPersonID", nullable=false)
+     * @Assert\NotBlank()
      */
-    private $person1;
+    private $adult;
 
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
      * @ORM\JoinColumn(name="gibbonPersonID2", referencedColumnName="gibbonPersonID", nullable=false)
+     * @Assert\NotBlank()
      */
-    private $person2;
+    private $child;
 
     /**
      * @var string|null
@@ -81,6 +84,18 @@ class FamilyRelationship
         'Other',
     ];
 
+    /**
+     * FamilyRelationship constructor.
+     * @param Family|null $family
+     * @param Person|null $adult
+     * @param Person|null $child
+     */
+    public function __construct(?Family $family = null, ?Person $adult = null, ?Person $child = null)
+    {
+        $this->family = $family;
+        $this->adult = $adult;
+        $this->child = $child;
+    }
 
     /**
      * @return int|null
@@ -121,36 +136,40 @@ class FamilyRelationship
     /**
      * @return Person|null
      */
-    public function getPerson1(): ?Person
+    public function getAdult(): ?Person
     {
-        return $this->person1;
+        return $this->adult;
     }
 
     /**
-     * @param Person|null $person1
+     * Adult.
+     *
+     * @param Person|null $adult
      * @return FamilyRelationship
      */
-    public function setPerson1(?Person $person1): FamilyRelationship
+    public function setAdult(?Person $adult): FamilyRelationship
     {
-        $this->person1 = $person1;
+        $this->adult = $adult;
         return $this;
     }
 
     /**
      * @return Person|null
      */
-    public function getPerson2(): ?Person
+    public function getChild(): ?Person
     {
-        return $this->person2;
+        return $this->child;
     }
 
     /**
-     * @param Person|null $person2
+     * Child.
+     *
+     * @param Person|null $child
      * @return FamilyRelationship
      */
-    public function setPerson2(?Person $person2): FamilyRelationship
+    public function setChild(?Person $child): FamilyRelationship
     {
-        $this->person2 = $person2;
+        $this->child = $child;
         return $this;
     }
 
@@ -186,6 +205,20 @@ class FamilyRelationship
      */
     public function __toString(): string
     {
-        return $this->getFamily()->__toString() . ': ' . $this->getPerson1()->formatName() . ' is ' . $this->getRelationship() . ' of ' . $this->getPerson2()->formatName();
+        return $this->getFamily()->__toString() . ': ' . $this->getAdult()->formatName(['style' => 'formal']) . ' is ' . $this->getRelationship() . ' of ' . $this->getChild()->formatName(['style' => 'long']);
+    }
+
+    /**
+     * isEqualTo
+     * @param FamilyRelationship $relationship
+     * @return bool
+     */
+    public function isEqualTo(FamilyRelationship $relationship): bool
+    {
+        if (!$relationship->getAdult()->isEqualTo($this->getAdult()))
+            return false;
+        if (!$relationship->getChild()->isEqualTo($this->getChild()))
+            return false;
+        return true;
     }
 }

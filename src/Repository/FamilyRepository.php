@@ -15,6 +15,7 @@ namespace Kookaburra\UserAdmin\Repository;
 use Kookaburra\UserAdmin\Entity\Family;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
 
 /**
  * Class FamilyRepository
@@ -29,5 +30,22 @@ class FamilyRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Family::class);
+    }
+
+    /**
+     * findBySearch
+     * @param ManageSearch $search
+     * @return array
+     */
+    public function findBySearch(ManageSearch $search): array
+    {
+        return $this->createQueryBuilder('f')
+            ->select(['f','a','c'])
+            ->leftJoin('f.adults', 'a')
+            ->leftJoin('f.children', 'c')
+            ->where('f.name LIKE :search')
+            ->setParameter('search', '%'.$search->getSearch().'%')
+            ->getQuery()
+            ->getResult();
     }
 }

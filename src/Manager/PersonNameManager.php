@@ -107,6 +107,7 @@ class PersonNameManager
                 'initial' => false,
                 'title' => false,
                 'style' => null,
+                'debug' => false,
             ]
         );
         $resolver->setAllowedValues('style', ['long','short','formal',null]);
@@ -135,6 +136,10 @@ class PersonNameManager
                 $template = str_replace(['first', 'preferred', 'given'], 'initial', $template);
         } else {
             $styles = self::getFormatByPersonType($personType);
+            if ($options['style'] === 'formal')
+            {
+                $options['preferredName'] = false;
+            }
             $template = 'formal';
             $length = 'long';
             if ($options['initial']) {
@@ -160,6 +165,9 @@ class PersonNameManager
         }
 
         $template = trim($template);
+
+        if ($options['debug'])
+            dump($template,$person,$options);
 
         $name = trim(str_replace(
             ['first','surname','preferred','title','initial'],

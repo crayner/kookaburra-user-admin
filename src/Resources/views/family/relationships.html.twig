@@ -1,0 +1,48 @@
+{% trans_default_domain 'UserAdmin' %}
+
+{% form_theme relationship
+    'form/kookaburra_form.html.twig'
+%}
+
+{% set family = relationship.relationships.parent.vars.value %}
+
+<table class="smallIntBorder fullWidth standardForm relative striped">
+    {{ form_start(relationship) }}
+    <tr class="break">
+        <td class="px-2 border-b-0 sm:border-b border-t-0" colspan="{{ family.children.count + 1 }}">
+            <h3>{{ 'Relationships'|trans }}</h3>
+        </td>
+    </tr>
+
+    <tr class="head break">
+        <th>{{ 'Adults'|trans }}</th>
+        {% for child in family.children %}
+            <th>{{ child.person.formatName({style: 'long'}) }}</th>
+        {% endfor %}
+    </tr>
+
+    {% set pointer = 0 %}
+    {% for adult in family.adults %}
+        <tr>
+            <td class="px-2 border-b-0 sm:border-b border-t-0">{{ adult.person.formatName({style: 'formal', debug: true}) }}</td>
+            {% for child in family.children %}
+                <td class="px-2 border-b-0 sm:border-b border-t-0 smallWidth floatNone">
+                    {{ form_widget(relationship.relationships.children[pointer].relationship) }}
+                    {{ form_widget(relationship.relationships.children[pointer].adult, {value: adult.id}) }}
+                    {{ form_widget(relationship.relationships.children[pointer].child, {value: child.id}) }}
+                    {{ form_widget(relationship.relationships.children[pointer].family, {value: family.id}) }}
+                </td>
+                {% set pointer = pointer + 1 %}
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    {% do relationship.relationships.setRendered() %}
+    <tr class="break">
+        <td class="px-2 border-b-0 sm:border-b border-t-0" colspan="{{ family.children.count + 1 }}">
+            {{ form_widget(relationship.submit) }}
+        </td>
+    </tr>
+
+
+    {{ form_end(relationship) }}
+</table>

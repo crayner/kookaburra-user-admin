@@ -13,11 +13,11 @@
 
 namespace Kookaburra\UserAdmin\Entity;
 
+use App\Manager\EntityInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -26,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Kookaburra\UserAdmin\Repository\FamilyRepository")
  * @ORM\Table(options={"auto_increment": 1}, name="Family", uniqueConstraints={@ORM\UniqueConstraint(name="name",columns={"name"})})
  */
-class Family
+class Family implements EntityInterface
 {
     /**
      * @var integer|null
@@ -46,6 +46,7 @@ class Family
     /**
      * @var string|null
      * @ORM\Column(length=100, name="nameAddress", options={"comment": "The formal name to be used for addressing the family (e.g. Mr. & Mrs. Smith)"})
+     * @Assert\NotBlank()
      */
     private $nameAddress;
 
@@ -102,15 +103,22 @@ class Family
 
     /**
      * @var Collection|null
-     * @ORM\OneToMany(mappedBy="family", targetEntity="Kookaburra\UserAdmin\Entity\FamilyAdult")
+     * @ORM\OneToMany(mappedBy="family", targetEntity="Kookaburra\UserAdmin\Entity\FamilyAdult",orphanRemoval=true)
+     * @ORM\OrderBy({"contactPriority" = "ASC"})
      */
     private $adults;
 
     /**
      * @var Collection|null
-     * @ORM\OneToMany(mappedBy="family", targetEntity="Kookaburra\UserAdmin\Entity\FamilyChild")
+     * @ORM\OneToMany(mappedBy="family", targetEntity="Kookaburra\UserAdmin\Entity\FamilyChild",orphanRemoval=true)
      */
     private $children;
+
+    /**
+     * @var Collection|null
+     * @ORM\OneToMany(mappedBy="family", targetEntity="Kookaburra\UserAdmin\Entity\FamilyRelationship",orphanRemoval=true)
+     */
+    private $relationships;
 
     /**
      * Family constructor.
@@ -330,6 +338,14 @@ class Family
         if ($this->adults instanceof PersistentCollection)
             $this->adults->initialize();
 
+        $iterator = $this->adults->getIterator();
+        $iterator->uasort(
+            function ($a, $b) {
+                return ($a->getPerson()->formatName(['reverse' => true]) < $b->getPerson()->formatName(['reverse' => true])) ? -1 : 1;
+            }
+        );
+        $this->adults = new ArrayCollection(iterator_to_array($iterator, false));
+
         return $this->adults;
     }
 
@@ -354,6 +370,14 @@ class Family
         if ($this->children instanceof PersistentCollection)
             $this->children->initialize();
 
+        $iterator = $this->children->getIterator();
+        $iterator->uasort(
+            function ($a, $b) {
+                return ($a->getPerson()->formatName(['reverse' => true]) < $b->getPerson()->formatName(['reverse' => true])) ? -1 : 1;
+            }
+        );
+        $this->children = new ArrayCollection(iterator_to_array($iterator, false));
+
         return $this->children;
     }
 
@@ -364,6 +388,106 @@ class Family
     public function setChildren(?Collection $children): Family
     {
         $this->children = $children;
+        return $this;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'name' => $this->getName(),
+            'status' => $this->getStatus(),
+            'adults' => $this->getAdultNames(),
+            'children' => $this->getChildrenNames(),
+        ];
+    }
+
+    /**
+     * getAdultNames
+     * @return string
+     */
+    public function getAdultNames(): string
+    {
+        $result = '';
+        foreach($this->getAdults() as $adult)
+            $result .= $adult->getPerson()->formatName(['style' => 'formal']). "\n<br />";
+
+        return $result;
+    }
+
+    /**
+     * getChildrenNames
+     * @return string
+     */
+    public function getChildrenNames(): string
+    {
+        $result = '';
+        foreach($this->getChildren() as $adult)
+            $result .= $adult->getPerson()->formatName(['style' => 'formal']). "\n<br />";
+
+        return $result;
+    }
+
+    /**
+     * getRelationships
+     * @return Collection
+     */
+    public function getRelationships(bool $refresh = false): Collection
+    {
+        if ($this->relationships === null || $this->relationships->count() === 0 || $refresh) {
+            $this->relationships = $this->relationships ?: new ArrayCollection();
+            if ($this->relationships instanceof PersistentCollection)
+                $this->relationships->initialize();
+            if ($this->relationships->count() !== $this->getAdults()->count() * $this->getChildren()->count()) {
+                foreach ($this->getAdults() as $adult) {
+                    foreach ($this->getChildren() as $child) {
+                        $rel = new FamilyRelationship($this,$adult->getPerson(), $child->getPerson());
+                        $this->addRelationship($rel, false);
+                    }
+                }
+            }
+
+            $iterator = $this->relationships->getIterator();
+            $iterator->uasort(
+                function ($a, $b) {
+                    return ($a->getAdult()->formatName(['reverse' => true]) . $a->getChild()->formatName(['reverse' => true]) < $b->getAdult()->formatName(['reverse' => true]) . $b->getChild()->formatName(['reverse' => true])) ? -1 : 1;
+                }
+            );
+
+            $this->relationships = new ArrayCollection(iterator_to_array($iterator, false));
+        }
+        return $this->relationships;
+    }
+
+    /**
+     * Relationships.
+     *
+     * @param Collection|FamilyRelationship[]|null $relationships
+     * @return Family
+     */
+    public function setRelationships(?Collection $relationships): Family
+    {
+        $this->relationships = $relationships;
+        return $this;
+    }
+
+    /**
+     * addRelationship
+     * @param FamilyRelationship $relationship
+     * @return Family
+     */
+    public function addRelationship(FamilyRelationship $relationship, bool $refresh = true): Family
+    {
+        if ($refresh)
+            $this->getRelationships();
+        foreach($this->relationships as $w)
+            if ($relationship->isEqualTo($w))
+                return $this;
+
+        if ($relationship->getAdult() === null || $relationship->getChild() === null)
+            return $this;
+
+        $this->relationships->add($relationship);
+
         return $this;
     }
 }

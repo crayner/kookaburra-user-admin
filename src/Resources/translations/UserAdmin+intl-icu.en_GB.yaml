@@ -79,6 +79,12 @@ family:
         uncle: Uncle
         nanny/helper: Nanny/Helper
         other: Other
+    status:
+        married: Married
+        separated: Separated
+        divorced: Divorced
+        de facto: de Facto
+        other: Other
 'System Access: {name}': 'System Access: {name}'
 Can Login?: Can Login?
 Force Password Reset: Force Password Reset
@@ -933,3 +939,16 @@ Allows privileged users to enter Internal Assessment assessment data to columns 
 Write Internal Assessments_all: Write Internal Assessments_all
 Allows teachers to enter Internal Assessment assessment data to columns in their classes.: Allows teachers to enter Internal Assessment assessment data to columns in their classes.
 Write Internal Assessments_myClasses: Write Internal Assessments_myClasses
+General Information: General Information
+Family Name: Family Name
+Relationship Status: Relationship Status
+Home Language - Primary: Home Language - Primary
+Home Language - Secondary: Home Language - Secondary
+Formal Family Name: Formal Family Name
+Used to address correspondence sent to the parents/guardians of this family.: Used to address correspondence sent to the parents/guardians of this family.
+Residential Address: Residential Address
+Unit, Building & Street: Unit, Building & Street
+Residential Address (District): Residential Address (District)
+Suburb, Town, City, State (Postcode): Suburb, Town, City, State (Postcode)
+Residential Address (Country): Residential Address (Country)
+Edit Family: Edit Family
