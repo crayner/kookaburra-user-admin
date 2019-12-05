@@ -12,9 +12,6 @@
 
 namespace Kookaburra\UserAdmin\Controller;
 
-
-use App\Container\Container;
-use App\Container\ContainerManager;
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
 use Kookaburra\UserAdmin\Entity\Family;
@@ -82,15 +79,44 @@ class FamilyController extends AbstractController
         TranslationsHelper::setDomain('UserAdmin');
 
         $family = $family ?: new Family();
+        $family->getAdults();
+        $family->getChildren();
+        $family->getRelationships();
 
-        $action = intval($family->getId()) > 0 ? $this->generateUrl('user_admin__family_manage_edit', ['family' => intval($family->getId()), 'tabName' => $tabName]) : $this->generateUrl('user_admin__family_manage_add', ['tabName' => $tabName]);
+        $action = intval($family->getId()) > 0 ? $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => $tabName]) : $this->generateUrl('user_admin__family_manage_add', ['tabName' => $tabName]);
         $form = $this->createForm(FamilyGeneralType::class, $family,
             ['action' => $action]
         );
 
         $relationship = $this->createForm(RelationshipsType::class, $family,
-            ['action' => $this->generateUrl('user_admin__family_relationships', ['family' => $family])]
+            ['action' => $this->generateUrl('user_admin__family_relationships', ['family' => $family->getId()])]
         );
+
+        if ($request->getMethod('POST') && $request->request->has('family_general'))
+        {
+            $family->getAdults();
+            $family->getChildren();
+            $family->getRelationships();
+
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $id = $family->getId();
+                $provider = ProviderFactory::create(Family::class);
+
+                $data = $provider->persistFlush($family);
+
+                if ($data['status'] === 'success' && $id !== $family->getId())
+                {
+                    $form = $this->createForm(FamilyGeneralType::class, $family,
+                        ['action' => $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => $tabName])]
+                    );
+                }
+                foreach($data['errors'] as $message)
+                {
+                    $request->getSession()->getBag('flashes')->add($message['class'], $message['message']);
+                }
+            }
+        }
 
         return $this->render('@KookaburraUserAdmin/family/edit.html.twig',
             [
@@ -124,8 +150,11 @@ class FamilyController extends AbstractController
      */
     public function familyRelationships(Request $request, Family $family, FamilyRelationshipManager $manager)
     {
+        $family->getAdults();
+        $family->getChildren();
+        $family->getRelationships();
         $manager->handleRequest($request, $family);
 
-        return $this->redirectToRoute('user_admin__family_manage_edit', ['family' => $family]);
+        return $this->redirectToRoute('user_admin__family_manage_edit', ['family' => $family->getId()]);
     }
 }

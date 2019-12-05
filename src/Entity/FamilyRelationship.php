@@ -215,6 +215,8 @@ class FamilyRelationship
      */
     public function isEqualTo(FamilyRelationship $relationship): bool
     {
+        if (!$relationship->getFamily()->isEqualTo($this->getFamily()))
+            return false;
         if (!$relationship->getAdult()->isEqualTo($this->getAdult()))
             return false;
         if (!$relationship->getChild()->isEqualTo($this->getChild()))

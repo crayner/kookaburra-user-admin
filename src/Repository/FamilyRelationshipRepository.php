@@ -12,6 +12,7 @@
  */
 namespace Kookaburra\UserAdmin\Repository;
 
+use Doctrine\ORM\NonUniqueResultException;
 use Kookaburra\UserAdmin\Entity\FamilyRelationship;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -29,5 +30,28 @@ class FamilyRelationshipRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, FamilyRelationship::class);
+    }
+
+    /**
+     * findOneByFamilyAdultChild
+     * @param array $item
+     * @return mixed
+     */
+    public function findOneByFamilyAdultChild(array $item): ?FamilyRelationship
+    {
+        try {
+            return $this->createQueryBuilder('fr')
+                ->join('fr.family', 'f')
+                ->join('fr.adult', 'a')
+                ->join('fr.child', 'c')
+                ->where('f.id = :family')
+                ->andWhere('a.id = :adult')
+                ->andWhere('c.id = :child')
+                ->setParameters(['family' => $item['family'], 'adult' => $item['adult'], 'child' => $item['child']])
+                ->getQuery()
+                ->getOneOrNullResult();
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
     }
 }

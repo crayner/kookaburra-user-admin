@@ -87,6 +87,7 @@ class FamilyGeneralType extends AbstractType
                 [
                     'label' => 'Home Language - Secondary',
                     'placeholder' => ' ',
+                    'required' => false,
                 ]
             )
             ->add('nameAddress', TextType::class,
@@ -98,19 +99,22 @@ class FamilyGeneralType extends AbstractType
             ->add('homeAddress', TextType::class,
                 [
                     'label' => 'Residential Address',
-                    'help' => 'Unit, Building & Street'
-                ]
+                    'help' => 'Unit, Building & Street',
+                     'required' => false,
+               ]
             )
             ->add('homeAddressDistrict', TextType::class,
                 [
                     'label' => 'Residential Address (District)',
-                    'help' => 'Suburb, Town, City, State (Postcode)'
+                    'help' => 'Suburb, Town, City, State (Postcode)',
+                    'required' => false,
                 ]
             )
             ->add('homeAddressCountry', CountryType::class,
                 [
                     'label' => 'Residential Address (Country)',
                     'placeholder' => ' ',
+                    'required' => false,
                 ]
             )
             ->add('submit', SubmitType::class,

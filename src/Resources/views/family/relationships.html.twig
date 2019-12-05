@@ -24,12 +24,12 @@
     {% set pointer = 0 %}
     {% for adult in family.adults %}
         <tr>
-            <td class="px-2 border-b-0 sm:border-b border-t-0">{{ adult.person.formatName({style: 'formal', debug: true}) }}</td>
+            <td class="px-2 border-b-0 sm:border-b border-t-0">{{ adult.person.formatName({style: 'formal'}) }}</td>
             {% for child in family.children %}
                 <td class="px-2 border-b-0 sm:border-b border-t-0 smallWidth floatNone">
                     {{ form_widget(relationship.relationships.children[pointer].relationship) }}
-                    {{ form_widget(relationship.relationships.children[pointer].adult, {value: adult.id}) }}
-                    {{ form_widget(relationship.relationships.children[pointer].child, {value: child.id}) }}
+                    {{ form_widget(relationship.relationships.children[pointer].adult, {value: adult.person.id}) }}
+                    {{ form_widget(relationship.relationships.children[pointer].child, {value: child.person.id}) }}
                     {{ form_widget(relationship.relationships.children[pointer].family, {value: family.id}) }}
                 </td>
                 {% set pointer = pointer + 1 %}

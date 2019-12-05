@@ -40,6 +40,7 @@ class Family implements EntityInterface
      * @var string|null
      * @ORM\Column(length=100, unique=true)
      * @Assert\NotBlank()
+     * @Assert\Length(max=100)
      */
     private $name;
 
@@ -47,6 +48,7 @@ class Family implements EntityInterface
      * @var string|null
      * @ORM\Column(length=100, name="nameAddress", options={"comment": "The formal name to be used for addressing the family (e.g. Mr. & Mrs. Smith)"})
      * @Assert\NotBlank()
+     * @Assert\Length(max=100)
      */
     private $nameAddress;
 
@@ -85,6 +87,7 @@ class Family implements EntityInterface
      * @var string|null
      * @ORM\Column(length=30, name="languageHomePrimary")
      * @Assert\Language()
+     * @Assert\NotBlank()
      */
     private $languageHomePrimary;
 
@@ -103,20 +106,20 @@ class Family implements EntityInterface
 
     /**
      * @var Collection|null
-     * @ORM\OneToMany(mappedBy="family", targetEntity="Kookaburra\UserAdmin\Entity\FamilyAdult",orphanRemoval=true)
+     * @ORM\OneToMany(mappedBy="family", targetEntity="Kookaburra\UserAdmin\Entity\FamilyAdult",cascade={"persist","remove"}))
      * @ORM\OrderBy({"contactPriority" = "ASC"})
      */
     private $adults;
 
     /**
      * @var Collection|null
-     * @ORM\OneToMany(mappedBy="family", targetEntity="Kookaburra\UserAdmin\Entity\FamilyChild",orphanRemoval=true)
+     * @ORM\OneToMany(mappedBy="family", targetEntity="Kookaburra\UserAdmin\Entity\FamilyChild",cascade={"persist","remove"}))
      */
     private $children;
 
     /**
      * @var Collection|null
-     * @ORM\OneToMany(mappedBy="family", targetEntity="Kookaburra\UserAdmin\Entity\FamilyRelationship",orphanRemoval=true)
+     * @ORM\OneToMany(mappedBy="family", targetEntity="Kookaburra\UserAdmin\Entity\FamilyRelationship",cascade={"persist","remove"}))
      */
     private $relationships;
 
@@ -135,7 +138,7 @@ class Family implements EntityInterface
      */
     public function __toString(): string
     {
-        return $this->getName();
+        return $this->getName() ?: '';
     }
 
     /**
@@ -179,7 +182,7 @@ class Family implements EntityInterface
      */
     public function getNameAddress(): ?string
     {
-        return $this->nameAddress;
+        return $this->nameAddress ?: trim(str_replace('<br />', ' & ', $this->getAdultNames()), ' &');
     }
 
     /**
@@ -489,5 +492,26 @@ class Family implements EntityInterface
         $this->relationships->add($relationship);
 
         return $this;
+    }
+
+    /**
+     * isEqualTo
+     * @param Family $family
+     * @return bool
+     */
+    public function isEqualTo(Family $family)
+    {
+        if ($this->getName() !== $family->getName())
+            return false;
+        if ($this->getAdults()->count() !== $family->getAdults()->count())
+            return false;
+        if ($this->getChildren()->count() !== $family->getChildren()->count())
+            return false;
+        if ($this->getAdultNames() !== $family->getAdultNames())
+            return false;
+        if ($this->getChildrenNames() !== $family->getChildrenNames())
+            return false;
+
+        return true;
     }
 }
