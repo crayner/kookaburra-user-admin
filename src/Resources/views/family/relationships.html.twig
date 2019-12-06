@@ -4,13 +4,11 @@
     'form/kookaburra_form.html.twig'
 %}
 
-{% set family = relationship.relationships.parent.vars.value %}
-
 <table class="smallIntBorder fullWidth standardForm relative striped">
     {{ form_start(relationship) }}
     <tr class="break">
         <td class="px-2 border-b-0 sm:border-b border-t-0" colspan="{{ family.children.count + 1 }}">
-            <h3>{{ 'Relationships'|trans }}</h3>
+            <h3 id="relationships">{{ 'Relationships'|trans }}</h3>
         </td>
     </tr>
 

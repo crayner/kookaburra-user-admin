@@ -81,7 +81,7 @@ class Family implements EntityInterface
     /**
      * @var array
      */
-    private static $statusList = ['Married','Separated','Divorced','De Facto','Other'];
+    private static $statusList = ['Married', 'Separated', 'Divorced', 'De Facto', 'Other'];
 
     /**
      * @var string|null
@@ -411,8 +411,8 @@ class Family implements EntityInterface
     public function getAdultNames(): string
     {
         $result = '';
-        foreach($this->getAdults() as $adult)
-            $result .= $adult->getPerson()->formatName(['style' => 'formal']). "\n<br />";
+        foreach ($this->getAdults() as $adult)
+            $result .= $adult->getPerson()->formatName(['style' => 'formal']) . "\n<br />";
 
         return $result;
     }
@@ -424,8 +424,8 @@ class Family implements EntityInterface
     public function getChildrenNames(): string
     {
         $result = '';
-        foreach($this->getChildren() as $adult)
-            $result .= $adult->getPerson()->formatName(['style' => 'formal']). "\n<br />";
+        foreach ($this->getChildren() as $adult)
+            $result .= $adult->getPerson()->formatName(['style' => 'formal']) . "\n<br />";
 
         return $result;
     }
@@ -443,7 +443,7 @@ class Family implements EntityInterface
             if ($this->relationships->count() !== $this->getAdults()->count() * $this->getChildren()->count()) {
                 foreach ($this->getAdults() as $adult) {
                     foreach ($this->getChildren() as $child) {
-                        $rel = new FamilyRelationship($this,$adult->getPerson(), $child->getPerson());
+                        $rel = new FamilyRelationship($this, $adult->getPerson(), $child->getPerson());
                         $this->addRelationship($rel, false);
                     }
                 }
@@ -482,7 +482,7 @@ class Family implements EntityInterface
     {
         if ($refresh)
             $this->getRelationships();
-        foreach($this->relationships as $w)
+        foreach ($this->relationships as $w)
             if ($relationship->isEqualTo($w))
                 return $this;
 
@@ -513,5 +513,15 @@ class Family implements EntityInterface
             return false;
 
         return true;
+    }
+
+
+    /**
+     * hasRelationshipsNumbers
+     * @return bool
+     */
+    public function hasRelationshipsNumbers(): bool
+    {
+        return $this->getRelationships()->count() === $this->getAdults()->count() * $this->getChildren()->count();
     }
 }

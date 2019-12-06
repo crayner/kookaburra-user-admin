@@ -15,18 +15,19 @@ namespace Kookaburra\UserAdmin\Controller;
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
 use Kookaburra\UserAdmin\Entity\Family;
+use Kookaburra\UserAdmin\Entity\FamilyChild;
 use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
+use Kookaburra\UserAdmin\Form\FamilyChildType;
 use Kookaburra\UserAdmin\Form\RelationshipsType;
 use Kookaburra\UserAdmin\Form\FamilySearchType;
 use Kookaburra\UserAdmin\Form\FamilyGeneralType;
 use Kookaburra\UserAdmin\Manager\FamilyRelationshipManager;
+use Kookaburra\UserAdmin\Pagination\FamilyChildrenPagination;
 use Kookaburra\UserAdmin\Pagination\FamilyPagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -69,35 +70,29 @@ class FamilyController extends AbstractController
 
     /**
      * familyManage
-     * @Route("/family/{family}/edit/{tabName}",name="family_manage_edit")
+     * @Route("/family/{family}/edit/",name="family_manage_edit")
      * @Route("/family/add/{tabName}",name="family_manage_add")
      * @IsGranted("ROLE_ROUTE")
      * @param Family|null $family
      */
-    public function familyEdit(Request $request, ?Family $family = null, string $tabName = 'single')
+    public function familyEdit(Request $request, FamilyChildrenPagination $childrenPagination, ?Family $family = null)
     {
         TranslationsHelper::setDomain('UserAdmin');
 
         $family = $family ?: new Family();
-        $family->getAdults();
-        $family->getChildren();
-        $family->getRelationships();
-
-        $action = intval($family->getId()) > 0 ? $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => $tabName]) : $this->generateUrl('user_admin__family_manage_add', ['tabName' => $tabName]);
+        $action = intval($family->getId()) > 0 ? $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId()]) : $this->generateUrl('user_admin__family_manage_add');
         $form = $this->createForm(FamilyGeneralType::class, $family,
             ['action' => $action]
         );
 
+        if ($family->hasRelationshipsNumbers())
+            $family->getRelationships(true);
         $relationship = $this->createForm(RelationshipsType::class, $family,
             ['action' => $this->generateUrl('user_admin__family_relationships', ['family' => $family->getId()])]
         );
 
         if ($request->getMethod('POST') && $request->request->has('family_general'))
         {
-            $family->getAdults();
-            $family->getChildren();
-            $family->getRelationships();
-
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $id = $family->getId();
@@ -108,7 +103,7 @@ class FamilyController extends AbstractController
                 if ($data['status'] === 'success' && $id !== $family->getId())
                 {
                     $form = $this->createForm(FamilyGeneralType::class, $family,
-                        ['action' => $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => $tabName])]
+                        ['action' => $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId()])]
                     );
                 }
                 foreach($data['errors'] as $message)
@@ -118,10 +113,39 @@ class FamilyController extends AbstractController
             }
         }
 
+        $childrenPagination->setContent($family->getChildren()->toArray())->setPageMax(25)->setTargetElement('childPaginationContent')
+            ->setPaginationScript();
+
+        $child = new FamilyChild();
+        $addChild = $this->createForm(FamilyChildType::class, $child, ['action' => $action]);
+
+        if ($request->getMethod('POST') && $request->request->has('family_child'))
+        {
+            $addChild->handleRequest($request);
+            if ($addChild->isValid() && $family->getId() > 0) {
+                $id = $family->getId();
+                $provider = ProviderFactory::create(FamilyChild::class);
+
+                $child->setFamily($family);
+                $data = $provider->persistFlush($child);
+                foreach($data['errors'] as $message)
+                {
+                    $request->getSession()->getBag('flashes')->add($message['class'], $message['message']);
+                }
+
+                if ($data['status'] === 'success' && $id !== $family->getId())
+                {
+                    $family->getRelationships(true);
+                    return $this->redirectToRoute('user_admin__family_manage_edit', ['_fragment' => 'view_children', 'family' => $family->getId()]);
+                }
+            }
+        }
+
         return $this->render('@KookaburraUserAdmin/family/edit.html.twig',
             [
                 'form' => $form->createView(),
                 'relationship' => $relationship->createView(),
+                'addChild' => $addChild->createView(),
             ]
         );
     }
@@ -155,6 +179,6 @@ class FamilyController extends AbstractController
         $family->getRelationships();
         $manager->handleRequest($request, $family);
 
-        return $this->redirectToRoute('user_admin__family_manage_edit', ['family' => $family->getId()]);
+        return $this->redirectToRoute('user_admin__family_manage_edit', ['family' => $family->getId(), '_fragment' => 'relationships']);
     }
 }

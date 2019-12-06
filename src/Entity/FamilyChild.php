@@ -12,7 +12,11 @@
  */
 namespace Kookaburra\UserAdmin\Entity;
 
+use App\Manager\EntityInterface;
+use App\Util\ImageHelper;
+use App\Util\TranslationsHelper;
 use Doctrine\ORM\Mapping as ORM;
+use Kookaburra\UserAdmin\Util\StudentHelper;
 
 /**
  * Class FamilyChild
@@ -20,7 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Kookaburra\UserAdmin\Repository\FamilyChildRepository")
  * @ORM\Table(options={"auto_increment": 1}, name="FamilyChild", indexes={@ORM\Index(name="gibbonFamilyIndex", columns={"gibbonFamilyID"}),@ORM\Index(name="gibbonPersonIndex", columns={"gibbonPersonID"})})
  */
-class FamilyChild
+class FamilyChild implements EntityInterface
 {
     /**
      * @var integer|null
@@ -46,7 +50,7 @@ class FamilyChild
 
     /**
      * @var string|null
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text",nullable=true)
      */
     private $comment;
 
@@ -129,5 +133,21 @@ class FamilyChild
     public function __toString(): string
     {
         return $this->getFamily()->getName() . ': ' . $this->getPerson()->formatName();
+    }
+
+    /**
+     * toArray
+     * @return array
+     */
+    public function toArray(): array
+    {
+        $person = $this->getPerson();
+        return [
+            'photo' => ImageHelper::getAbsoluteImageURL('File', $person->getImage240()),
+            'fullName' => $person->formatName(['style' => 'long', 'preferredName' => false]),
+            'status' => TranslationsHelper::translate($person->getStatus(), [], 'UserAdmin'),
+            'roll' => StudentHelper::getCurrentRollGroup($person),
+            'comment' => $this->getComment(),
+        ];
     }
 }

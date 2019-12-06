@@ -236,7 +236,7 @@ HTML code to be inserted into blank note.: HTML code to be inserted into blank n
 Edit Note Category: Edit Note Category
 student:
     note_notification:
-        tutors:	Tutors
+        tutors:: Tutors
         tutors and teachers: Tutors & Teachers
 Enable Student Notes: Enable Student Notes
 Extended Brief Profile: Extended Brief Profile
@@ -959,3 +959,8 @@ Divorced: Divorced
 de Facto: de Facto
 Relationships: Relationships
 Adults: Adults
+Roll Group: Roll Group
+Comment: Comment
+"Child's Name": "Child's Name"
+View Children: View Children
+Add Child: Add Child

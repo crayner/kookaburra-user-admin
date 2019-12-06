@@ -10,6 +10,8 @@
 {% set breadcrumbs = 'new' %}
 {% set moduleName = 'UserAdmin' %}
 
+{% set family = form.vars.value %}
+
 {% block content %}
     {{ form_start(form) }}
     <table class="smallIntBorder fullWidth standardForm relative">
@@ -27,4 +29,5 @@
     {{ form_end(form) }}
 
     {% include '@KookaburraUserAdmin/family/relationships.html.twig'  %}
+    {% include '@KookaburraUserAdmin/family/children.html.twig'  %}
 {% endblock content %}
