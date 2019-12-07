@@ -394,7 +394,12 @@ class Family implements EntityInterface
         return $this;
     }
 
-    public function toArray(): array
+    /**
+     * toArray
+     * @param string|null $name
+     * @return array
+     */
+    public function toArray(?string $name = NULL): array
     {
         return [
             'name' => $this->getName(),

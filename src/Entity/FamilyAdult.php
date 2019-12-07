@@ -12,8 +12,12 @@
  */
 namespace Kookaburra\UserAdmin\Entity;
 
+use App\Manager\EntityInterface;
 use App\Manager\Traits\BooleanList;
+use App\Util\ImageHelper;
+use App\Util\TranslationsHelper;
 use Doctrine\ORM\Mapping as ORM;
+use Kookaburra\UserAdmin\Util\StudentHelper;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -25,7 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity({"family","person"})
  * @UniqueEntity({"family","contactPriority"})
  */
-class FamilyAdult
+class FamilyAdult implements EntityInterface
 {
     use BooleanList;
 
@@ -41,6 +45,7 @@ class FamilyAdult
      * @var Family|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Family", inversedBy="adults")
      * @ORM\JoinColumn(name="gibbonFamilyID", referencedColumnName="gibbonFamilyID", nullable=false)
+     * @Assert\NotBlank()
      */
     private $family;
 
@@ -48,6 +53,7 @@ class FamilyAdult
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person", inversedBy="adults")
      * @ORM\JoinColumn(name="gibbonPersonID", referencedColumnName="gibbonPersonID", nullable=false)
+     * @Assert\NotBlank()
      */
     private $person;
 
@@ -286,5 +292,30 @@ class FamilyAdult
     public function __toString(): string
     {
         return $this->getFamily()->getName() . ': ' . $this->getPerson()->formatName();
+    }
+
+    /**
+     * toArray
+     * @param string|null $name
+     * @return array
+     */
+    public function toArray(?string $name = null): array
+    {
+        $person = $this->getPerson();
+
+        return [
+            'fullName' => $person->formatName(['style' => 'formal']),
+            'status' => TranslationsHelper::translate($person->getStatus(), [], 'UserAdmin'),
+            'roll' => StudentHelper::getCurrentRollGroup($person),
+            'comment' => $this->getComment(),
+            'adult_id' => $person->getId(),
+            'family_id' => $this->getFamily()->getId(),
+            'childDataAccess' => TranslationsHelper::translate($this->getChildDataAccess() === 'Y' ? 'Yes' : 'No', [], 'messages'),
+            'phone' => TranslationsHelper::translate($this->getContactCall() === 'Y' ? 'Yes' : 'No', [], 'messages'),
+            'sms' => TranslationsHelper::translate($this->getContactSMS() === 'Y' ? 'Yes' : 'No', [], 'messages'),
+            'email' => TranslationsHelper::translate($this->getContactEmail() === 'Y' ? 'Yes' : 'No', [], 'messages'),
+            'mail' => TranslationsHelper::translate($this->getContactMail() === 'Y' ? 'Yes' : 'No', [], 'messages'),
+            'contactPriority' => $this->getContactPriority(),
+        ];
     }
 }

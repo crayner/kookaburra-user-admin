@@ -14,6 +14,7 @@ namespace Kookaburra\UserAdmin\Entity;
 
 use App\Manager\EntityInterface;
 use App\Manager\Traits\BooleanList;
+use App\Util\TranslationsHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -222,17 +223,18 @@ class StaffAbsenceType implements EntityInterface
 
     /**
      * toArray
+     * @param string|null $name
      * @return array
      */
-    public function toArray(): array
+    public function toArray(?string $name = NULL): array
     {
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
             'nameShort' => $this->getNameShort(),
             'reasons' => $this->getReasons(),
-            'requiresApproval' => $this->getRequiresApproval() === 'Y' ? 'Yes' : 'No',
-            'active' => $this->getActive() === 'Y' ? 'Yes' : 'No',
+            'requiresApproval' => TranslationsHelper::translate($this->getRequiresApproval() === 'Y' ? 'Yes' : 'No', [], 'messages'),
+            'active' => TranslationsHelper::translate($this->getActive() === 'Y' ? 'Yes' : 'No', [], 'messages'),
         ];
     }
 }

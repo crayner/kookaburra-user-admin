@@ -139,15 +139,18 @@ class FamilyChild implements EntityInterface
      * toArray
      * @return array
      */
-    public function toArray(): array
+    public function toArray(?string $name = null): array
     {
         $person = $this->getPerson();
+
         return [
             'photo' => ImageHelper::getAbsoluteImageURL('File', $person->getImage240()),
             'fullName' => $person->formatName(['style' => 'long', 'preferredName' => false]),
             'status' => TranslationsHelper::translate($person->getStatus(), [], 'UserAdmin'),
             'roll' => StudentHelper::getCurrentRollGroup($person),
             'comment' => $this->getComment(),
+            'family_id' => $this->getFamily()->getId(),
+            'child_id' => $person->getId(),
         ];
     }
 }

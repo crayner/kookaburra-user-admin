@@ -13,6 +13,7 @@
 
 namespace Kookaburra\UserAdmin\Entity;
 
+use App\Manager\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -24,7 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(options={"auto_increment": 1}, name="FamilyRelationship", uniqueConstraints={@ORM\UniqueConstraint(name="familyAdultChild", columns={"gibbonFamilyID","gibbonPersonID1","gibbonPersonID2"})})
  * @UniqueEntity({"family","adult","child"})
  */
-class FamilyRelationship
+class FamilyRelationship implements EntityInterface
 {
     /**
      * @var integer|null
@@ -222,5 +223,15 @@ class FamilyRelationship
         if (!$relationship->getChild()->isEqualTo($this->getChild()))
             return false;
         return true;
+    }
+
+    /**
+     * toArray
+     * @param string|null $name
+     * @return array
+     */
+    public function toArray(?string $name = null): array
+    {
+        return [];
     }
 }

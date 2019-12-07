@@ -1,0 +1,37 @@
+{% trans_default_domain 'UserAdmin' %}
+
+{% form_theme addAdult
+    'form/kookaburra_form.html.twig'
+%}
+
+<h3 id="view_adults">{{ 'View Adults'|trans }}<button onclick="toggleAdultForm()" type="button" title="{{ 'Add'|trans({}, 'messages') }}" style="float: right;"><span class="fas fa-plus-circle fa-fw fa-1-5x text-gray-700" /></button></h3>
+
+<div id="add_adult_form" class="hidden">
+    {{ form_start(addAdult) }}
+        <table class="smallIntBorder fullWidth standardForm relative">
+            <tbody>
+                <tr id="" class="break flex flex-col sm:flex-row justify-between content-center p-0">
+                    <th class="flex-grow justify-center px-2 border-b-0 sm:border-b border-t-0 " colspan="2">
+                        <h3>{{ 'Add Adult'|trans }}</h3>
+                    </th>
+                </tr>
+                {{ form_row(addAdult.person) }}
+                {{ form_row(addAdult.comment) }}
+                {{ form_row(addAdult.childDataAccess) }}
+                {{ form_row(addAdult.contactPriority) }}
+                {{ form_row(addAdult.contactCall) }}
+                {{ form_row(addAdult.contactSMS) }}
+                {{ form_row(addAdult.contactEmail) }}
+                {{ form_row(addAdult.contactMail) }}
+                {{ form_row(addAdult.submit) }}
+            </tbody>
+        </table>
+    {{ form_end(addAdult) }}
+</div>
+<script>
+    function toggleAdultForm(){
+        var element = document.getElementById('add_adult_form')
+        element.classList.toggle('hidden')
+    }
+</script>
+<section id="adultPaginationContent"></section>

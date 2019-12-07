@@ -129,9 +129,10 @@ class StudentNoteCategory implements EntityInterface
 
     /**
      * toArray
+     * @param string|null $name
      * @return array
      */
-    public function toArray(): array
+    public function toArray(?string $name = NULL): array
     {
         return [
             'name' => $this->getName(),

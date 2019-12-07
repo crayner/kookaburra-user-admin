@@ -15,13 +15,17 @@ namespace Kookaburra\UserAdmin\Controller;
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
 use Kookaburra\UserAdmin\Entity\Family;
+use Kookaburra\UserAdmin\Entity\FamilyAdult;
 use Kookaburra\UserAdmin\Entity\FamilyChild;
+use Kookaburra\UserAdmin\Entity\FamilyRelationship;
 use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
+use Kookaburra\UserAdmin\Form\FamilyAdultType;
 use Kookaburra\UserAdmin\Form\FamilyChildType;
 use Kookaburra\UserAdmin\Form\RelationshipsType;
 use Kookaburra\UserAdmin\Form\FamilySearchType;
 use Kookaburra\UserAdmin\Form\FamilyGeneralType;
 use Kookaburra\UserAdmin\Manager\FamilyRelationshipManager;
+use Kookaburra\UserAdmin\Pagination\FamilyAdultsPagination;
 use Kookaburra\UserAdmin\Pagination\FamilyChildrenPagination;
 use Kookaburra\UserAdmin\Pagination\FamilyPagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -71,11 +75,11 @@ class FamilyController extends AbstractController
     /**
      * familyManage
      * @Route("/family/{family}/edit/",name="family_manage_edit")
-     * @Route("/family/add/{tabName}",name="family_manage_add")
+     * @Route("/family/add/",name="family_manage_add")
      * @IsGranted("ROLE_ROUTE")
      * @param Family|null $family
      */
-    public function familyEdit(Request $request, FamilyChildrenPagination $childrenPagination, ?Family $family = null)
+    public function familyEdit(Request $request, FamilyChildrenPagination $childrenPagination, FamilyAdultsPagination $adultsPagination, ?Family $family = null)
     {
         TranslationsHelper::setDomain('UserAdmin');
 
@@ -85,7 +89,7 @@ class FamilyController extends AbstractController
             ['action' => $action]
         );
 
-        if ($family->hasRelationshipsNumbers())
+        if (!$family->hasRelationshipsNumbers())
             $family->getRelationships(true);
         $relationship = $this->createForm(RelationshipsType::class, $family,
             ['action' => $this->generateUrl('user_admin__family_relationships', ['family' => $family->getId()])]
@@ -123,8 +127,8 @@ class FamilyController extends AbstractController
         {
             $addChild->handleRequest($request);
             if ($addChild->isValid() && $family->getId() > 0) {
-                $id = $family->getId();
                 $provider = ProviderFactory::create(FamilyChild::class);
+                $childrenCount = $family->getChildren()->count() + 1;
 
                 $child->setFamily($family);
                 $data = $provider->persistFlush($child);
@@ -133,11 +137,45 @@ class FamilyController extends AbstractController
                     $request->getSession()->getBag('flashes')->add($message['class'], $message['message']);
                 }
 
-                if ($data['status'] === 'success' && $id !== $family->getId())
-                {
-                    $family->getRelationships(true);
-                    return $this->redirectToRoute('user_admin__family_manage_edit', ['_fragment' => 'view_children', 'family' => $family->getId()]);
+                while($family->getChildren()->count() !== $childrenCount) {
+                    $provider->refresh($family);
+                    sleep(0.25);
                 }
+                $family->getRelationships(true);
+                $relationship = $this->createForm(RelationshipsType::class, $family,
+                    ['action' => $this->generateUrl('user_admin__family_relationships', ['family' => $family->getId()])]
+                );
+            }
+        }
+
+        $adultsPagination->setContent($family->getAdults()->toArray())->setPageMax(25)->setTargetElement('adultPaginationContent')
+            ->setPaginationScript();
+
+        $adult = new FamilyAdult();
+        $addAdult = $this->createForm(FamilyAdultType::class, $adult, ['action' => $action]);
+
+        if ($request->getMethod('POST') && $request->request->has('family_adult'))
+        {
+            $addAdult->handleRequest($request);
+            if ($addAdult->isValid() && $family->getId() > 0) {
+                $provider = ProviderFactory::create(FamilyAdult::class);
+                $adultsCount = $family->getAdults()->count() + 1;
+
+                $adult->setFamily($family);
+                $data = $provider->persistFlush($adult);
+                foreach(array_unique($data['errors'], SORT_REGULAR) as $message)
+                {
+                    $request->getSession()->getBag('flashes')->add($message['class'], $message['message']);
+                }
+
+                while($family->getAdults()->count() !== $adultsCount) {
+                    $provider->refresh($family);
+                    sleep(0.25);
+                }
+                $family->getRelationships(true);
+                $relationship = $this->createForm(RelationshipsType::class, $family,
+                    ['action' => $this->generateUrl('user_admin__family_relationships', ['family' => $family->getId()])]
+                );
             }
         }
 
@@ -146,6 +184,7 @@ class FamilyController extends AbstractController
                 'form' => $form->createView(),
                 'relationship' => $relationship->createView(),
                 'addChild' => $addChild->createView(),
+                'addAdult' => $addAdult->createView()
             ]
         );
     }
@@ -176,9 +215,61 @@ class FamilyController extends AbstractController
     {
         $family->getAdults();
         $family->getChildren();
-        $family->getRelationships();
+        $family->getRelationships(true);
         $manager->handleRequest($request, $family);
 
         return $this->redirectToRoute('user_admin__family_manage_edit', ['family' => $family->getId(), '_fragment' => 'relationships']);
     }
+
+    /**
+     * familyChildDelete
+     * @param Family $family
+     * @param FamilyChild $child
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/family/{family}/child/{child}/remove/",name="family_child_remove")
+     * @Security("is_granted('ROLE_ROUTE', ['user_admin__family_manage_edit'])")
+     */
+    public function familyChildDelete(Request $request, Family $family, FamilyChild $child)
+    {
+        if ($family->getChildren()->contains($child)) {
+            $data = [];
+            $data['status'] = 'success';
+            $data['errors'] = [];
+
+            $relationships = $family->getRelationships(true)->filter(function(FamilyRelationship $relationship) use ($child) {
+                if ($relationship->getChild()->isEqualTo($child->getPerson())) return $relationship;
+            });
+            foreach($relationships as $relationship)
+                $data = ProviderFactory::create(FamilyRelationship::class)->remove($relationship, $data, false);
+            $data = ProviderFactory::create(FamilyChild::class)->remove($child, $data, true);
+
+            $messages = array_unique($data['errors'], SORT_REGULAR);
+            foreach($messages as $message) {
+                $request->getSession()->getBag('flashes')->add($message['class'], $message['message']);
+            }
+        } else {
+            $this->addFlash('error', 'return.error.1');
+        }
+
+        return $this->redirectToRoute('user_admin__family_manage_edit', ['_fragment' => 'view_children', 'family' => $family->getId()]);
+    }
+
+
+    /**
+     * removeChild
+     * @param FamilyChild $child
+     * @return Family
+     */
+    public function removeChild(FamilyChild $child): Family
+    {
+        if ($this->getChildren()->contains($child))
+        {
+            $relationships = $this->getRelationships(true)->filter(function(FamilyRelationship $relationship) use  ($child) {
+                if ($relationship->getChild()->isEqualTo($child->getPerson())) return $relationship;
+            });
+            $this->getChildren()->removeElement($child);
+        }
+        return $this;
+    }
+
 }

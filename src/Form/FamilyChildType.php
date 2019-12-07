@@ -64,7 +64,9 @@ class FamilyChildType extends AbstractType
                     'placeholder' => 'Please select...',
                     'query_builder' => function(EntityRepository $er) {
                         return $er->createQueryBuilder('p')
+                            ->select(['p','s'])
                             ->leftjoin('p.studentEnrolments','se')
+                            ->leftJoin('p.staff', 's')
                             ->where('se.id IS NOT NULL')
                             ->orderBy('p.surname', 'ASC')
                             ->groupBy('p.id')

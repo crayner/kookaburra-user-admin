@@ -3046,9 +3046,10 @@ class Person implements EntityInterface
 
     /**
      * toArray
+     * @param string|null $name
      * @return array
      */
-    public function toArray(): array
+    public function toArray(?string $name = NULL): array
     {
         return [
             'fullName' => $this->formatName(['informal' => true, 'reverse' => true, 'style' => 'long']),
