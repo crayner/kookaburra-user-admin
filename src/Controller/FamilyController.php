@@ -12,25 +12,25 @@
 
 namespace Kookaburra\UserAdmin\Controller;
 
+use App\Container\Container;
+use App\Container\ContainerManager;
+use App\Container\Panel;
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
 use Kookaburra\UserAdmin\Entity\Family;
-use Kookaburra\UserAdmin\Entity\FamilyAdult;
 use Kookaburra\UserAdmin\Entity\FamilyChild;
 use Kookaburra\UserAdmin\Entity\FamilyRelationship;
 use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
-use Kookaburra\UserAdmin\Form\FamilyAdultType;
 use Kookaburra\UserAdmin\Form\FamilyChildType;
-use Kookaburra\UserAdmin\Form\RelationshipsType;
-use Kookaburra\UserAdmin\Form\FamilySearchType;
 use Kookaburra\UserAdmin\Form\FamilyGeneralType;
-use Kookaburra\UserAdmin\Manager\FamilyRelationshipManager;
+use Kookaburra\UserAdmin\Form\FamilySearchType;
 use Kookaburra\UserAdmin\Pagination\FamilyAdultsPagination;
 use Kookaburra\UserAdmin\Pagination\FamilyChildrenPagination;
 use Kookaburra\UserAdmin\Pagination\FamilyPagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -73,203 +73,165 @@ class FamilyController extends AbstractController
     }
 
     /**
-     * familyManage
-     * @Route("/family/{family}/edit/",name="family_manage_edit")
-     * @Route("/family/add/",name="family_manage_add")
-     * @IsGranted("ROLE_ROUTE")
+     * familyEdit
+     * @param Request $request
+     * @param FamilyChildrenPagination $childrenPagination
+     * @param FamilyAdultsPagination $adultsPagination
+     * @param ContainerManager $manager
      * @param Family|null $family
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/family/{family}/edit/{tabName}",name="family_manage_edit")
+     * @Route("/family/add/{tabName}",name="family_manage_add")
+     * @IsGranted("ROLE_ROUTE")
      */
-    public function familyEdit(Request $request, FamilyChildrenPagination $childrenPagination, FamilyAdultsPagination $adultsPagination, ?Family $family = null)
+    public function familyEdit(Request $request, FamilyChildrenPagination $childrenPagination, FamilyAdultsPagination $adultsPagination, ContainerManager $manager, ?Family $family = null, string $tabName = 'General')
     {
         TranslationsHelper::setDomain('UserAdmin');
 
         $family = $family ?: new Family();
-        $action = intval($family->getId()) > 0 ? $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId()]) : $this->generateUrl('user_admin__family_manage_add');
+        $action = intval($family->getId()) > 0 ? $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => $tabName]) : $this->generateUrl('user_admin__family_manage_add', ['tabName' => $tabName]);
         $form = $this->createForm(FamilyGeneralType::class, $family,
             ['action' => $action]
         );
+        $provider = ProviderFactory::create(Family::class);
 
-        if (!$family->hasRelationshipsNumbers())
-            $family->getRelationships(true);
-        $relationship = $this->createForm(RelationshipsType::class, $family,
-            ['action' => $this->generateUrl('user_admin__family_relationships', ['family' => $family->getId()])]
-        );
+        $content = $request->getContentType() === 'json' ? json_decode($request->getContent(), true) : null;
 
-        if ($request->getMethod('POST') && $request->request->has('family_general'))
+        if ($request->getContentType() === 'json' && $content['panelName'] === 'General')
         {
-            $form->handleRequest($request);
+            $form->submit($content);
             if ($form->isValid()) {
                 $id = $family->getId();
-                $provider = ProviderFactory::create(Family::class);
 
                 $data = $provider->persistFlush($family);
 
                 if ($data['status'] === 'success' && $id !== $family->getId())
                 {
                     $form = $this->createForm(FamilyGeneralType::class, $family,
-                        ['action' => $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId()])]
+                        ['action' => $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), $tabName => 'General'])]
                     );
                 }
-                foreach($data['errors'] as $message)
-                {
-                    $request->getSession()->getBag('flashes')->add($message['class'], $message['message']);
-                }
+                $manager->singlePanel($form->createView());
+                $data['form'] = $manager->getFormFromContainer('formContent', 'single');
+                return new JsonResponse($data,200);
+            } else {
+                $manager->singlePanel($form->createView());
+                $data['form'] = $manager->getFormFromContainer('formContent', 'single');
+                $data['error'][] = ['class' => 'error', 'message' => TranslationsHelper::translate('return.error.1', [], 'messages')];
+                return new JsonResponse($data,200);
             }
         }
 
-        $childrenPagination->setContent($family->getChildren()->toArray())->setPageMax(25)->setTargetElement('childPaginationContent')
-            ->setPaginationScript();
+        $container = new Container();
+        $container->setTarget('formContent')->setSelectedPanel($tabName);
 
-        $child = new FamilyChild();
-        $addChild = $this->createForm(FamilyChildType::class, $child, ['action' => $action]);
+        $panel = new Panel('General', 'UserAdmin');
+        $container->addForm('General', $form->createView())->addPanel($panel);
 
-        if ($request->getMethod('POST') && $request->request->has('family_child'))
-        {
-            $addChild->handleRequest($request);
-            if ($addChild->isValid() && $family->getId() > 0) {
-                $provider = ProviderFactory::create(FamilyChild::class);
-                $childrenCount = $family->getChildren()->count() + 1;
+        $childrenPagination->setContent($family->getChildren()->toArray())->setPageMax(25)->setTargetElement('pagination');
+        $child = new FamilyChild($family);
+        $addChild = $this->createForm(FamilyChildType::class, $child, ['action' => $this->generateUrl('user_admin__family_child_add', ['family' => $family->getId()]), 'postFormContent' => $childrenPagination->toArray()]);
 
-                $child->setFamily($family);
-                $data = $provider->persistFlush($child);
-                foreach($data['errors'] as $message)
-                {
-                    $request->getSession()->getBag('flashes')->add($message['class'], $message['message']);
-                }
+        $panel = new Panel('Students', 'UserAdmin');
+        $container->addPanel($panel->setDisabled(intval($family->getId()) === 0))->addForm('Students', $addChild->createView());
 
-                while($family->getChildren()->count() !== $childrenCount) {
-                    $provider->refresh($family);
-                    sleep(0.25);
-                }
-                $family->getRelationships(true);
-                $relationship = $this->createForm(RelationshipsType::class, $family,
-                    ['action' => $this->generateUrl('user_admin__family_relationships', ['family' => $family->getId()])]
-                );
-            }
-        }
+        $manager->addContainer($container)->buildContainers();
 
-        $adultsPagination->setContent($family->getAdults()->toArray())->setPageMax(25)->setTargetElement('adultPaginationContent')
-            ->setPaginationScript();
+        return $this->render('@KookaburraUserAdmin/family/edit.html.twig');
 
-        $adult = new FamilyAdult();
-        $addAdult = $this->createForm(FamilyAdultType::class, $adult, ['action' => $action]);
-
-        if ($request->getMethod('POST') && $request->request->has('family_adult'))
-        {
-            $addAdult->handleRequest($request);
-            if ($addAdult->isValid() && $family->getId() > 0) {
-                $provider = ProviderFactory::create(FamilyAdult::class);
-                $adultsCount = $family->getAdults()->count() + 1;
-
-                $adult->setFamily($family);
-                $data = $provider->persistFlush($adult);
-                foreach(array_unique($data['errors'], SORT_REGULAR) as $message)
-                {
-                    $request->getSession()->getBag('flashes')->add($message['class'], $message['message']);
-                }
-
-                while($family->getAdults()->count() !== $adultsCount) {
-                    $provider->refresh($family);
-                    sleep(0.25);
-                }
-                $family->getRelationships(true);
-                $relationship = $this->createForm(RelationshipsType::class, $family,
-                    ['action' => $this->generateUrl('user_admin__family_relationships', ['family' => $family->getId()])]
-                );
-            }
-        }
-
-        return $this->render('@KookaburraUserAdmin/family/edit.html.twig',
-            [
-                'form' => $form->createView(),
-                'relationship' => $relationship->createView(),
-                'addChild' => $addChild->createView(),
-                'addAdult' => $addAdult->createView()
-            ]
-        );
     }
 
-
-
     /**
-     * familyManage
+     * familyDelete
      * @Route("/family/{family}/delete/",name="family_manage_delete")
      * @IsGranted("ROLE_ROUTE")
      * @param Family $family
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function familyDelete(Family $family)
     {
-        $this->redirectToRoute('user_admin__family_manage');
+        dd($family);
+        return $this->redirectToRoute('user_admin__family_manage');
     }
 
     /**
-     * familyManage
-     * @Route("/family/{family}/relationships/",name="family_relationships")
+     * familyChildRemove
+     * @Route("/family/{family}/remove/{child}/child/",name="family_child_remove")
      * @Security("is_granted('ROLE_ROUTE', ['user_admin__family_manage_edit'])")
      * @param Request $request
      * @param Family $family
-     * @param FamilyRelationshipManager $manager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function familyRelationships(Request $request, Family $family, FamilyRelationshipManager $manager)
-    {
-        $family->getAdults();
-        $family->getChildren();
-        $family->getRelationships(true);
-        $manager->handleRequest($request, $family);
-
-        return $this->redirectToRoute('user_admin__family_manage_edit', ['family' => $family->getId(), '_fragment' => 'relationships']);
-    }
-
-    /**
-     * familyChildDelete
-     * @param Family $family
      * @param FamilyChild $child
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @Route("/family/{family}/child/{child}/remove/",name="family_child_remove")
-     * @Security("is_granted('ROLE_ROUTE', ['user_admin__family_manage_edit'])")
      */
-    public function familyChildDelete(Request $request, Family $family, FamilyChild $child)
+    public function familyChildRemove(Request $request, Family $family, FamilyChild $child)
     {
         if ($family->getChildren()->contains($child)) {
             $data = [];
             $data['status'] = 'success';
             $data['errors'] = [];
 
-            $relationships = $family->getRelationships(true)->filter(function(FamilyRelationship $relationship) use ($child) {
-                if ($relationship->getChild()->isEqualTo($child->getPerson())) return $relationship;
-            });
-            foreach($relationships as $relationship)
-                $data = ProviderFactory::create(FamilyRelationship::class)->remove($relationship, $data, false);
-            $data = ProviderFactory::create(FamilyChild::class)->remove($child, $data, true);
+            $data = ProviderFactory::getRepository(FamilyRelationship::class)->removeFamilyChild($family, $child->getPerson(), $data);
+            if ($data['status'] === 'success')
+                $data = ProviderFactory::create(FamilyChild::class)->remove($child, $data);
 
             $messages = array_unique($data['errors'], SORT_REGULAR);
-            foreach($messages as $message) {
+            foreach($messages as $message)
                 $request->getSession()->getBag('flashes')->add($message['class'], $message['message']);
-            }
         } else {
-            $this->addFlash('error', 'return.error.1');
+            $request->getSession()->getBag('flashes')->add('error', ['return.error.1',[],'messages']);
         }
 
-        return $this->redirectToRoute('user_admin__family_manage_edit', ['_fragment' => 'view_children', 'family' => $family->getId()]);
+        return $this->redirectToRoute('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => 'Students']);
     }
-
 
     /**
-     * removeChild
-     * @param FamilyChild $child
-     * @return Family
+     * familyChildAdd
+     * @param Request $request
+     * @param Family $family
+     * @param ContainerManager $manager
+     * @param FamilyChildrenPagination $childrenPagination
+     * @return JsonResponse
+     * @Route("/family/{family}/add/child/",name="family_child_add")
+     * @Security("is_granted('ROLE_ROUTE', ['user_admin__family_manage_edit'])")
      */
-    public function removeChild(FamilyChild $child): Family
+    public function familyChildAdd(Request $request, Family $family, ContainerManager $manager, FamilyChildrenPagination $childrenPagination)
     {
-        if ($this->getChildren()->contains($child))
-        {
-            $relationships = $this->getRelationships(true)->filter(function(FamilyRelationship $relationship) use  ($child) {
-                if ($relationship->getChild()->isEqualTo($child->getPerson())) return $relationship;
-            });
-            $this->getChildren()->removeElement($child);
-        }
-        return $this;
-    }
+        $child = new FamilyChild($family);
+        $childrenPagination->setContent($family->getChildren()->toArray())->setPageMax(25)->setTargetElement('pagination');
+        $addChild = $this->createForm(FamilyChildType::class, $child, ['action' => $this->generateUrl('user_admin__family_child_add', ['family' => $family->getId()]), 'postFormContent' => $childrenPagination->toArray()]);
 
+        $content = json_decode($request->getContent(), true);
+
+        if ($request->getContentType() === 'json' && $content['panelName'] === 'Students')
+        {
+            $addChild->submit($content);
+            if ($addChild->isValid()) {
+                $data = [];
+                $provider = ProviderFactory::create(FamilyChild::class);
+                $family->addChild($child);
+
+                foreach($family->getChildren() as $item)
+                    $data = $provider->persistFlush($item, $data, false);
+                $data = $provider->persistFlush($item, $data);
+
+                $data['errors'] = array_unique($data['errors'], SORT_REGULAR);
+                if ($data['status'] === 'success') {
+                    $data['redirect'] =  $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => 'Students']);
+                    $data['status'] = 'redirect';
+                    $this->addFlash('success', 'return.success.0');
+                }
+                return new JsonResponse($data,200);
+            } else {
+                $data['status'] = 'error';
+                $data['errors'][] = ['class' => 'error', 'message' => 'return.error.1'];
+                $manager->singlePanel($addChild->createView());
+                $data['form'] = $manager->getFormFromContainer('formContent', 'single');
+                return new JsonResponse($data,200);
+            }
+        }
+        $data = [];
+        $data['errors'][] = ['class' => 'error', 'message' => ['return.error.1', [], 'messages']];
+        $data['status'] = 'error';
+        return new JsonResponse($data,400);
+    }
 }

@@ -40,7 +40,7 @@ class FamilyRelationshipType extends AbstractType
                     'label' => false,
                     'placeholder' => ' ',
                     'attr' => [
-                        'class' => 'smallWidth floatNone',
+                        'class' => '',
                     ],
                     'choice_list_prefix' => 'family.relationship',
                 ]

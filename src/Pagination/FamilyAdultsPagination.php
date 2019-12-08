@@ -88,9 +88,9 @@ class FamilyAdultsPagination extends ReactPaginationManager
             ->setAClass('')
             ->setColumnClass('column p-2 sm:p-3')
             ->setSpanClass('fas fa-eraser fa-fw fa-1-5x text-gray-700')
-            ->setRoute('user_admin__family_child_remove')
+            ->setRoute('user_admin__family_adult_remove')
             ->setOnClick('areYouSure')
-            ->setRouteParams(['family' => 'family_id', 'child' => 'id']);
+            ->setRouteParams(['family' => 'family_id', 'adult' => 'id']);
         $row->addAction($action);
 
         $this->setRow($row);

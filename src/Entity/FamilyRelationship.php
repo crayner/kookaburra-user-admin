@@ -61,8 +61,7 @@ class FamilyRelationship implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=50)
-     * @Assert\NotBlank()
+     * @ORM\Column(length=31,nullable=true)
      * @Assert\Choice(callback="getRelationshipList")
      */
     private $relationship;

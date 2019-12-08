@@ -76,7 +76,7 @@ class FamilyChildrenPagination extends ReactPaginationManager
             ->setSpanClass('fas fa-eraser fa-fw fa-1-5x text-gray-700')
             ->setRoute('user_admin__family_child_remove')
             ->setOnClick('areYouSure')
-            ->setRouteParams(['family' => 'family_id', 'child' => 'id']);
+            ->setRouteParams(['family' => 'family_id', 'child' => 'child_id']);
         $row->addAction($action);
 
         $this->setRow($row);

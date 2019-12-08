@@ -18,6 +18,7 @@ use App\Form\Type\ReactFormType;
 use Kookaburra\UserAdmin\Entity\Family;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -115,6 +116,12 @@ class FamilyGeneralType extends AbstractType
                     'label' => 'Residential Address (Country)',
                     'placeholder' => ' ',
                     'required' => false,
+                ]
+            )
+            ->add('panelName', HiddenType::class,
+                [
+                    'data' => 'General',
+                    'mapped' => false,
                 ]
             )
             ->add('submit', SubmitType::class,

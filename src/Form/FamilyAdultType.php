@@ -13,13 +13,16 @@
 namespace Kookaburra\UserAdmin\Form;
 
 
+use App\Form\Type\HiddenEntityType;
 use App\Form\Type\ReactFormType;
 use App\Form\Type\ToggleType;
 use App\Provider\ProviderFactory;
 use Doctrine\ORM\EntityRepository;
 use Kookaburra\SystemAdmin\Entity\Role;
+use Kookaburra\UserAdmin\Entity\Family;
 use Kookaburra\UserAdmin\Entity\FamilyAdult;
 use Kookaburra\UserAdmin\Entity\Person;
+use Kookaburra\UserAdmin\Form\Subscriber\FamilyAdultSubscriber;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -132,11 +135,17 @@ class FamilyAdultType extends AbstractType
                     'wrapper_class' => 'flex-1 relative text-right',
                 ]
             )
+            ->add('family', HiddenEntityType::class,
+                [
+                    'class' => Family::class,
+                ]
+            )
             ->add('submit', SubmitType::class,
                 [
                     'label' => 'Submit',
                 ]
             )
         ;
+        $builder->addEventSubscriber(new FamilyAdultSubscriber());
     }
 }

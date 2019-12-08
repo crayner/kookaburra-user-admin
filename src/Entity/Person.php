@@ -2778,7 +2778,8 @@ class Person implements EntityInterface
             return PersonNameManager::formatName($this, $options);
         }
 
-        trigger_error('Use of discrete settings for format name is deprecated since 1/Dec 2019.  Use the options configuration.', E_USER_DEPRECATED);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2);
+        trigger_error(sprintf('Use of discrete settings for format name is deprecated since 1/Dec 2019.  Use the options configuration. Called from %s on line %s.',$trace[1]['file'], $trace[1]['line']), E_USER_DEPRECATED);
         $format = [];
         $format['preferredName'] = $options;
         $format['reverse'] = $reverse;

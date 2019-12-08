@@ -26,8 +26,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package Kookaburra\UserAdmin\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\UserAdmin\Repository\FamilyAdultRepository")
  * @ORM\Table(options={"auto_increment": 1}, name="FamilyAdult", indexes={@ORM\Index(name="gibbonPersonIndex", columns={"gibbonPersonID"})}, uniqueConstraints={@ORM\UniqueConstraint(name="familyContactPriority", columns={"gibbonFamilyID","contactPriority"}), @ORM\UniqueConstraint(name="familymember", columns={"gibbonFamilyID","gibbonPersonID"})})
- * @UniqueEntity({"family","person"})
- * @UniqueEntity({"family","contactPriority"})
+ * @UniqueEntity(fields={"family","person"},errorPath="person")
+ * @UniqueEntity(fields={"family","contactPriority"},errorPath="contactPriority")
  */
 class FamilyAdult implements EntityInterface
 {
@@ -59,7 +59,7 @@ class FamilyAdult implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text",nullable=true)
      */
     private $comment;
 
@@ -72,7 +72,7 @@ class FamilyAdult implements EntityInterface
 
     /**
      * @var int|null
-     * @ORM\Column(type="smallint", name="contactPriority", options={"default": 1}, columnDefinition="INT(2)", nullable=true)
+     * @ORM\Column(type="smallint", name="contactPriority", options={"default": 1}, columnDefinition="INT(2)")
      * @Assert\Range(min=1,max=99)
      */
     private $contactPriority;
@@ -104,6 +104,15 @@ class FamilyAdult implements EntityInterface
      * @Assert\Choice({"Y","N"})
      */
     private $contactMail;
+
+    /**
+     * FamilyAdult constructor.
+     * @param Family|null $family
+     */
+    public function __construct(?Family $family = null)
+    {
+        $this->family = $family;
+    }
 
     /**
      * @return int|null

@@ -17,6 +17,7 @@ use App\Util\ImageHelper;
 use App\Util\TranslationsHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Kookaburra\UserAdmin\Util\StudentHelper;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class FamilyChild
@@ -38,6 +39,7 @@ class FamilyChild implements EntityInterface
      * @var Family|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Family", inversedBy="children")
      * @ORM\JoinColumn(name="gibbonFamilyID", referencedColumnName="gibbonFamilyID", nullable=false)
+     * @Assert\NotBlank()
      */
     private $family;
 
@@ -45,6 +47,7 @@ class FamilyChild implements EntityInterface
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person", inversedBy="children")
      * @ORM\JoinColumn(name="gibbonPersonID", referencedColumnName="gibbonPersonID", nullable=false)
+     * @Assert\NotBlank()
      */
     private $person;
 
@@ -53,6 +56,15 @@ class FamilyChild implements EntityInterface
      * @ORM\Column(type="text",nullable=true)
      */
     private $comment;
+
+    /**
+     * FamilyChild constructor.
+     * @param Family|null $family
+     */
+    public function __construct(?Family $family = null)
+    {
+        $this->family = $family;
+    }
 
     /**
      * @return int|null
@@ -150,7 +162,7 @@ class FamilyChild implements EntityInterface
             'roll' => StudentHelper::getCurrentRollGroup($person),
             'comment' => $this->getComment(),
             'family_id' => $this->getFamily()->getId(),
-            'child_id' => $person->getId(),
+            'child_id' => $this->getId(),
         ];
     }
 }

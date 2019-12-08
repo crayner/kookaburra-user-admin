@@ -87,4 +87,23 @@ class FamilyAdultRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * findByFamilyWithoutAdult
+     * @param int $person
+     * @param int $family
+     * @return array
+     */
+    public function findByFamilyWithoutAdult(int $person, int $family): array
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.family', 'f')
+            ->leftJoin('a.person', 'p')
+            ->where('f.id = :family')
+            ->andWhere('p.id <> :person')
+            ->setParameters(['person' => $person, 'family' => $family])
+            ->orderBy('a.contactPriority')
+            ->getQuery()
+            ->getResult();
+    }
 }

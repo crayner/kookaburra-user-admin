@@ -12,12 +12,15 @@
 
 namespace Kookaburra\UserAdmin\Form;
 
+use App\Form\Type\HeaderType;
 use App\Form\Type\ReactFormType;
+use App\Form\Type\ToggleType;
 use Doctrine\ORM\EntityRepository;
 use Kookaburra\UserAdmin\Entity\FamilyChild;
 use Kookaburra\UserAdmin\Entity\Person;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,6 +38,7 @@ class FamilyChildType extends AbstractType
             [
                 'translation_domain' => 'UserAdmin',
                 'data_class' => FamilyChild::class,
+                'preFormContent' => ['childPaginationContent'],
             ]
         );
     }
@@ -56,6 +60,14 @@ class FamilyChildType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('showHideForm', ToggleType::class,
+                [
+                    'label' => 'Add Child',
+                    'visibleByClass' => 'showChildAdd',
+                    'mapped' => false,
+                    'row_class' => 'break flex flex-col sm:flex-row justify-between content-center p-0',
+                ]
+            )
             ->add('person', EntityType::class,
                 [
                     'label' => 'Child\'s Name',
@@ -72,20 +84,29 @@ class FamilyChildType extends AbstractType
                             ->groupBy('p.id')
                             ->addOrderBy('p.preferredName', 'ASC');
                     },
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showChildAdd',
                 ]
             )
             ->add('comment', TextareaType::class,
                 [
                     'label' => 'Comment'   ,
                     'required' => false,
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showChildAdd',
                     'attr' => [
                         'rows' => 5,
                         'class' => 'w-full',
                     ],
                 ]
             )
+            ->add('panelName', HiddenType::class,
+                [
+                    'data' => 'Students',
+                    'mapped' => false,
+                ]
+            )
             ->add('submit', SubmitType::class,
                 [
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showChildAdd',
                     'label' => 'Submit',
                 ]
             )

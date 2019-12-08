@@ -964,3 +964,28 @@ Comment: Comment
 "Child's Name": "Child's Name"
 View Children: View Children
 Add Child: Add Child
+Remove Child from Family: Remove Child from Family
+Remove adult from family: Remove adult from family
+Data Access: Data Access
+Contact Priority: Contact Priority
+Contact by Phone: Contact by Phone
+Contact by SMS: Contact by SMS
+Contact by Email: Contact by Email
+Contact by Mail: Contact by Mail
+Data Access?: Data Access?
+Access data on family members?: Access data on family members?
+The order in which school should contact family members.: The order in which school should contact family members.
+Contact by phone call?: Contact by phone call?
+Receive non-emergency phone calls from school?: Receive non-emergency phone calls from school?
+Contact by SMS?: Contact by SMS?
+Receive non-emergency SMS messages from school?: Receive non-emergency SMS messages from school?
+Contact by Email?: Contact by Email?
+Receive non-emergency emails from school?: Receive non-emergency emails from school?
+Contact by Mail?: Contact by Mail?
+Receive postage mail from school?: Receive postage mail from school?
+View Adults: View Adults
+Add Adult: Add Adult
+'{name} is the': '{name} is the'
+'of {name}': 'of {name}'
+General: General
+Students: Students

@@ -4,9 +4,12 @@
     'form/kookaburra_form.html.twig'
 %}
 
-<h3 id="view_adults">{{ 'View Adults'|trans }}<button onclick="toggleAdultForm()" type="button" title="{{ 'Add'|trans({}, 'messages') }}" style="float: right;"><span class="fas fa-plus-circle fa-fw fa-1-5x text-gray-700" /></button></h3>
-
-<div id="add_adult_form" class="hidden">
+<h3 id="view_adults">{{ 'View Adults'|trans }}<button onclick="toggleAdultForm()" type="button" id="add_adult_button"
+                                                      title="{{ addAdult.vars.valid is same as (true) ? 'Add'|trans({}, 'messages') : 'Close'|trans({}, 'messages') }}"
+                                                      style="float: right;">
+        <span id="add_adult_button_span" class="fas {{ addAdult.vars.valid is same as (true) ? 'fa-plus-circle' : 'fa-times-circle'}} fa-fw fa-1-5x text-gray-700" />
+    </button></h3>
+<div id="add_adult_form" class="{{ addAdult.vars.valid is same as (true) ? 'hidden' : ''}}">
     {{ form_start(addAdult) }}
         <table class="smallIntBorder fullWidth standardForm relative">
             <tbody>
@@ -23,6 +26,7 @@
                 {{ form_row(addAdult.contactSMS) }}
                 {{ form_row(addAdult.contactEmail) }}
                 {{ form_row(addAdult.contactMail) }}
+                {{ form_row(addAdult.family, {value: family.id}) }}
                 {{ form_row(addAdult.submit) }}
             </tbody>
         </table>
@@ -32,6 +36,15 @@
     function toggleAdultForm(){
         var element = document.getElementById('add_adult_form')
         element.classList.toggle('hidden')
+        var span = document.getElementById('add_adult_button_span')
+        span.classList.toggle('fa-plus-circle')
+        span.classList.toggle('fa-times-circle')
+        var button = document.getElementById('add_adult_button')
+        if (element.classList.contains('hidden')) {
+            button.title = "{{ 'Add'|trans({}, 'messages') }}"
+        } else {
+            button.title = "{{ 'Close'|trans({}, 'messages') }}"
+        }
     }
 </script>
 <section id="adultPaginationContent"></section>
