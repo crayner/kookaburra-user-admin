@@ -26,6 +26,8 @@ use Kookaburra\UserAdmin\Form\FamilyAdultType;
 use Kookaburra\UserAdmin\Form\FamilyChildType;
 use Kookaburra\UserAdmin\Form\FamilyGeneralType;
 use Kookaburra\UserAdmin\Form\FamilySearchType;
+use Kookaburra\UserAdmin\Form\RelationshipsType;
+use Kookaburra\UserAdmin\Manager\FamilyRelationshipManager;
 use Kookaburra\UserAdmin\Pagination\FamilyAdultsPagination;
 use Kookaburra\UserAdmin\Pagination\FamilyChildrenPagination;
 use Kookaburra\UserAdmin\Pagination\FamilyPagination;
@@ -86,7 +88,7 @@ class FamilyController extends AbstractController
      * @Route("/family/add/{tabName}",name="family_manage_add")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function familyEdit(Request $request, FamilyChildrenPagination $childrenPagination, FamilyAdultsPagination $adultsPagination, ContainerManager $manager, ?Family $family = null, string $tabName = 'General')
+    public function familyEdit(Request $request, FamilyChildrenPagination $childrenPagination, FamilyAdultsPagination $adultsPagination, ContainerManager $manager, FamilyRelationshipManager $relationshipManager, ?Family $family = null, string $tabName = 'General')
     {
         TranslationsHelper::setDomain('UserAdmin');
 
@@ -143,6 +145,21 @@ class FamilyController extends AbstractController
 
         $panel = new Panel('Adults', 'UserAdmin');
         $container->addPanel($panel->setDisabled(intval($family->getId()) === 0))->addForm('Adults', $addAdult->createView());
+
+        $relationshipManager->getRelationships($family);
+
+        $relationship = $this->createForm(RelationshipsType::class, $family,
+            ['action' => $this->generateUrl('user_admin__family_relationships', ['family' => $family->getId()])]
+        );
+        $panel = new Panel('Relationships', 'UserAdmin');
+        $content = $this->renderView('@KookaburraUserAdmin/family/relationships.html.twig', [
+            'relationship' => $relationship->createView(),
+            'family' => $family,
+        ]);
+        $container->addPanel($panel->setDisabled(intval($family->getId()) === 0)->setContent($content));
+
+
+
 
         $manager->addContainer($container)->buildContainers();
 
@@ -323,5 +340,21 @@ class FamilyController extends AbstractController
         $data['errors'][] = ['class' => 'error', 'message' => ['return.error.1', [], 'messages']];
         $data['status'] = 'error';
         return new JsonResponse($data,400);
+    }
+
+    /**
+     * familyManage
+     * @Route("/family/{family}/relationships/",name="family_relationships", methods={"POST"})
+     * @Security("is_granted('ROLE_ROUTE', ['user_admin__family_manage_edit'])")
+     * @param Request $request
+     * @param Family $family
+     * @param FamilyRelationshipManager $manager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function familyRelationships(Request $request, Family $family, FamilyRelationshipManager $manager)
+    {
+        $manager->handleRequest($request, $family);
+
+        return $this->redirectToRoute('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => 'Relationships']);
     }
 }

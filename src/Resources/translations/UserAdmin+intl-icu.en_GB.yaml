@@ -963,7 +963,7 @@ Roll Group: Roll Group
 Comment: Comment
 "Child's Name": "Child's Name"
 View Children: View Children
-Add Student: Add Student
+Add Student to {name}: Add Student to {name}
 Remove Child from Family: Remove Child from Family
 Remove adult from family: Remove adult from family
 Data Access: Data Access
@@ -984,7 +984,7 @@ Receive non-emergency emails from school?: Receive non-emergency emails from sch
 Contact by Mail?: Contact by Mail?
 Receive postage mail from school?: Receive postage mail from school?
 View Adults: View Adults / Guardians
-Add Adult / Guardian: Add Adult / Guardian
+'Add Adult / Guardian to {name}': 'Add Adult / Guardian to {name}'
 '{name} is the': '{name} is the'
 'of {name}': 'of {name}'
 General: General

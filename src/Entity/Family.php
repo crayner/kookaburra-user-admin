@@ -545,9 +545,15 @@ class Family implements EntityInterface
         if ($this->getRelationships()->contains($relationship))
             return $this;
 
+        foreach($this->relationships as $item)
+            if ($relationship->isEqualTo($item))
+                return $this;
+
         $relationship->setFamily($this);
+
         $this->relationships->add($relationship);
-        return $this->sortRelationships(true);
+
+        return $this->sortRelationships();
     }
 
     /**
@@ -562,21 +568,20 @@ class Family implements EntityInterface
 
         $relationship->setFamily($this);
         $this->relationships->add($relationship);
-        return $this->sortRelationships(true);
+        return $this->sortRelationships();
     }
 
     /**
      * sortRelationships
      * @return Family
-     * @throws \Exception
      */
-    public function sortRelationships(bool $refreshRequired = false): Family
+    public function sortRelationships(): Family
     {
-        if ($this->relationshipsSorted && !$refresh)
+        try {
+            $iterator = $this->relationships->getIterator();
+        }  catch (\Exception $e) {
             return $this;
-
-        $iterator = $this->relationships->getIterator();
-
+        }
         $iterator->uasort(
             function ($a, $b) {
                 return ($a->getAdult()->formatName(['preferredName' => false, 'reverse' => true]) . $a->getChild()->formatName(['reverse' => true]) < $b->getAdult()->formatName(['preferredName' => false, 'reverse' => true]) . $b->getChild()->formatName(['reverse' => true])) ? -1 : 1;
@@ -584,7 +589,6 @@ class Family implements EntityInterface
         );
 
         $this->relationships = new ArrayCollection(iterator_to_array($iterator, false));
-        $this->relationshipsSorted = true;
         return $this;
     }
 

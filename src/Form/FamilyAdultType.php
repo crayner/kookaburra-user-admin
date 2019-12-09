@@ -14,6 +14,7 @@ namespace Kookaburra\UserAdmin\Form;
 
 
 use App\Form\Type\HiddenEntityType;
+use App\Form\Type\ParagraphType;
 use App\Form\Type\ReactFormType;
 use App\Form\Type\ToggleType;
 use App\Provider\ProviderFactory;
@@ -69,10 +70,23 @@ class FamilyAdultType extends AbstractType
             ->add('showHideForm', ToggleType::class,
                 [
                     'label' => 'Add Adult / Guardian',
+                    'help' => '{name}',
+                    'help_translation_parameters' => [
+                        '{name}' => $options['data']->getFamily()->getName(),
+                    ],
+                    'label_class' => 'h3',
                     'visibleByClass' => 'showAdultAdd',
                     'mapped' => false,
                     'row_class' => 'break flex flex-col sm:flex-row justify-between content-center p-0',
                 ]
+            )
+            ->add('adultNote', ParagraphType::class,
+                [
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showAdultAdd',
+                    'wrapper_class' => 'warning',
+                    'help' => 'Logic exists to try and ensure that there is always one and only one parent with Contact Priority set to 1. This may result in values being set which are not exactly what you chose.'
+                ]
+
             )
             ->add('person', EntityType::class,
                 [

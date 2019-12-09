@@ -14,6 +14,7 @@ namespace Kookaburra\UserAdmin\Manager;
 
 use App\Provider\ProviderFactory;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Driver\PDOException;
 use Kookaburra\UserAdmin\Entity\Family;
 use Kookaburra\UserAdmin\Entity\FamilyRelationship;
@@ -66,7 +67,6 @@ class FamilyRelationshipManager
             if ($errors->count() > 0)
             {
                 $request->getSession()->getBag('flashes')->add('error', ['return.error.1', [], 'messages']);
-                $request->getSession()->getBag('flashes')->add('warning', ['Please refresh the family data before attempting to change family relationships.', [], 'UserAdmin']);
                 $ok = false;
                 break;
             }
@@ -74,10 +74,10 @@ class FamilyRelationshipManager
         }
 
         if ($ok) {
-            $family->setRelationships(new ArrayCollection($relationships));
             try {
                 $em = ProviderFactory::getEntityManager();
-                $em->persist($family);
+                foreach($relationships as $fr)
+                    $em->persist($fr);
                 $em->flush();
                 $request->getSession()->getBag('flashes')->add('success', ['return.success.0', [], 'messages']);
             } catch (\PDOException | PDOException | \Exception $e) {
@@ -92,5 +92,23 @@ class FamilyRelationshipManager
     public function getValidator(): ValidatorInterface
     {
         return $this->validator;
+    }
+
+    public function getRelationships(Family $family): Collection
+    {
+        $adults = $family->getAdults();
+        $children = $family->getChildren();
+        $relationships = $family->getRelationships();
+        if ($adults->count() * $children->count() === $relationships->count())
+            return $relationships;
+
+        foreach($adults as $adult)
+            foreach($children as $child)
+            {
+                $relationship = new FamilyRelationship($family, $adult->getPerson(), $child->getPerson());
+                $family->addRelationship($relationship);
+            }
+
+        return $family->getRelationships();
     }
 }

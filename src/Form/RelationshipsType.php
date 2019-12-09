@@ -13,7 +13,6 @@
 namespace Kookaburra\UserAdmin\Form;
 
 use Kookaburra\UserAdmin\Entity\Family;
-use Kookaburra\UserAdmin\Form\Subscriber\FamilyAdultSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
