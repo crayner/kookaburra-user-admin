@@ -226,9 +226,10 @@ class UsernameFormat implements EntityInterface
 
     /**
      * toArray
+     * @param string|null $name
      * @return array
      */
-    public function toArray(): array
+    public function toArray(?string $name = null): array
     {
         return [
             'roles' => $this->getRoleNames(),

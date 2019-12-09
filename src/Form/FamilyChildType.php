@@ -62,7 +62,7 @@ class FamilyChildType extends AbstractType
         $builder
             ->add('showHideForm', ToggleType::class,
                 [
-                    'label' => 'Add Child',
+                    'label' => 'Add Student',
                     'visibleByClass' => 'showChildAdd',
                     'mapped' => false,
                     'row_class' => 'break flex flex-col sm:flex-row justify-between content-center p-0',

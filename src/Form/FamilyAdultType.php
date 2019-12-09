@@ -25,6 +25,7 @@ use Kookaburra\UserAdmin\Entity\Person;
 use Kookaburra\UserAdmin\Form\Subscriber\FamilyAdultSubscriber;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -65,12 +66,21 @@ class FamilyAdultType extends AbstractType
     {
         $parentRole = ProviderFactory::getRepository(Role::class)->findOneByName('Parent');
         $builder
+            ->add('showHideForm', ToggleType::class,
+                [
+                    'label' => 'Add Adult / Guardian',
+                    'visibleByClass' => 'showAdultAdd',
+                    'mapped' => false,
+                    'row_class' => 'break flex flex-col sm:flex-row justify-between content-center p-0',
+                ]
+            )
             ->add('person', EntityType::class,
                 [
                     'label' => 'Child\'s Name',
                     'class' => Person::class,
                     'choice_label' => 'fullName',
                     'placeholder' => 'Please select...',
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showAdultAdd',
                     'query_builder' => function(EntityRepository $er) use ($parentRole) {
                         return $er->createQueryBuilder('p')
                             ->select(['p','s'])
@@ -88,6 +98,7 @@ class FamilyAdultType extends AbstractType
                 [
                     'label' => 'Comment'   ,
                     'required' => false,
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showAdultAdd',
                     'attr' => [
                         'rows' => 5,
                         'class' => 'w-full',
@@ -97,6 +108,7 @@ class FamilyAdultType extends AbstractType
             ->add('childDataAccess', ToggleType::class,
                 [
                     'label' => 'Data Access?',
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showAdultAdd',
                     'help' => 'Access data on family members?',
                     'wrapper_class' => 'flex-1 relative text-right',
                 ]
@@ -104,12 +116,14 @@ class FamilyAdultType extends AbstractType
             ->add('contactPriority', IntegerType::class,
                 [
                     'label' => 'Contact Priority',
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showAdultAdd',
                     'help' => 'The order in which school should contact family members.',
                 ]
             )
             ->add('contactCall', ToggleType::class,
                 [
                     'label' => 'Contact by phone call?',
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showAdultAdd',
                     'help' => 'Receive non-emergency phone calls from school?',
                     'wrapper_class' => 'flex-1 relative text-right',
                 ]
@@ -117,6 +131,7 @@ class FamilyAdultType extends AbstractType
             ->add('contactSMS', ToggleType::class,
                 [
                     'label' => 'Contact by SMS?',
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showAdultAdd',
                     'help' => 'Receive non-emergency SMS messages from school?',
                     'wrapper_class' => 'flex-1 relative text-right',
                 ]
@@ -124,6 +139,7 @@ class FamilyAdultType extends AbstractType
             ->add('contactEmail', ToggleType::class,
                 [
                     'label' => 'Contact by Email?',
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showAdultAdd',
                     'help' => 'Receive non-emergency emails from school?',
                     'wrapper_class' => 'flex-1 relative text-right',
                 ]
@@ -131,8 +147,15 @@ class FamilyAdultType extends AbstractType
             ->add('contactMail', ToggleType::class,
                 [
                     'label' => 'Contact by Mail?',
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showAdultAdd',
                     'help' => 'Receive postage mail from school?',
                     'wrapper_class' => 'flex-1 relative text-right',
+                ]
+            )
+            ->add('panelName', HiddenType::class,
+                [
+                    'data' => 'Adults',
+                    'mapped' => false,
                 ]
             )
             ->add('family', HiddenEntityType::class,
@@ -142,6 +165,7 @@ class FamilyAdultType extends AbstractType
             )
             ->add('submit', SubmitType::class,
                 [
+                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showAdultAdd',
                     'label' => 'Submit',
                 ]
             )

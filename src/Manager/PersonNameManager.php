@@ -32,7 +32,7 @@ class PersonNameManager
      */
     public static function getFormats(): array
     {
-        return self::$formats;
+        return self::$formats ?: [];
     }
 
     /**
@@ -157,7 +157,7 @@ class PersonNameManager
             if ($template === 'formal')
                 $template = $styles['formal'];
             else
-                $template = $styles[$template][$length][$direction];
+                $template = isset($styles[$template][$length][$direction]) ? $styles[$template][$length][$direction] : 'title first surname';
 
             $template = str_replace('given', 'first', $template);
             if ($options['informal'] || $options['preferredName'])
@@ -184,6 +184,6 @@ class PersonNameManager
      */
     private static function getFormatByPersonType(string $personType): array
     {
-        return self::getFormats()[strtolower($personType)];
+        return isset(self::getFormats()[strtolower($personType)]) ? self::getFormats()[strtolower($personType)] : [];
     }
 }
