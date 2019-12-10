@@ -92,11 +92,33 @@ class FamilyRelationshipRepository extends ServiceEntityRepository
         try {
             foreach ($this->findBy(['family' => $family, 'adult' => $adult]) as $fa)
                 $this->getEntityManager()->remove($fa);
-            $this->getEntityManager()->flush();
+            if ($flush) $this->getEntityManager()->flush();
         } catch (\PDOException | PDOException | ORMException | OptimisticLockException $e) {
             $data['status'] = 'error';
             $data['errors'][] = ['class' => 'error', 'message' => ['return.error.1', [], 'messages']];
         }
         return $data;
+    }
+
+    /**
+     * findByFamily
+     * @param Family $family
+     * @return array|FamilyRelationship[]
+     */
+    public function findByFamily(Family $family): array
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.family = :family')
+            ->setParameter('family', $family)
+            ->select(['r','a','c','p','p1'])
+            ->leftJoin('r.adult', 'a')
+            ->leftJoin('r.child', 'c')
+            ->leftJoin('c.person', 'p')
+            ->leftJoin('a.person', 'p1')
+            ->orderBy('a.contactPriority', 'ASC')
+            ->addOrderBy('p.surname', 'ASC')
+            ->addOrderBy('p.firstName', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -16,7 +16,7 @@
         {% for item in relationship.relationships %}
             <tr>
                 <td class="px-2 border-b-0 sm:border-b border-t-0" style="text-align: right;">
-                    {{ '{name} is the'|trans({'{name}': item.adult.vars.data.formatName({style: 'formal'})}) }}
+                    {{ '{name} is the'|trans({'{name}': item.adult.vars.data.person.formatName({style: 'formal'})}) }}
                     {{ form_widget(item.adult) }}
                 </td>
                 <td width="15%">
@@ -24,7 +24,7 @@
                     {{ form_widget(item.family, {value: family.id}) }}
                 </td>
                 <td class="px-2 border-b-0 sm:border-b border-t-0">
-                    &nbsp;{{ 'of {name}'|trans({'{name}': item.child.vars.data.formatName({style: 'long', preferredName: false})}) }}
+                    &nbsp;{{ 'of {name}'|trans({'{name}': item.child.vars.data.person.formatName({style: 'long', preferredName: false})}) }}
                     {{ form_widget(item.child) }}
                 </td>
             </tr>

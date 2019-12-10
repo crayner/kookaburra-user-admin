@@ -963,7 +963,7 @@ Roll Group: Roll Group
 Comment: Comment
 "Child's Name": "Child's Name"
 View Children: View Children
-Add Student to {name}: Add Student to {name}
+Add Student: Add Student
 Remove Child from Family: Remove Child from Family
 Remove adult from family: Remove adult from family
 Data Access: Data Access
@@ -984,8 +984,12 @@ Receive non-emergency emails from school?: Receive non-emergency emails from sch
 Contact by Mail?: Contact by Mail?
 Receive postage mail from school?: Receive postage mail from school?
 View Adults: View Adults / Guardians
-'Add Adult / Guardian to {name}': 'Add Adult / Guardian to {name}'
+'Add Adult / Guardian': 'Add Adult / Guardian'
 '{name} is the': '{name} is the'
 'of {name}': 'of {name}'
 General: General
 Students: Students
+Search for Family Name: Search for Family Name
+Children: Children
+Logic exists to try and ensure that there is always one and only one parent with Contact Priority set to 1. This may result in values being set which are not exactly what you chose.: Logic exists to try and ensure that there is always one and only one parent with Contact Priority set to 1. This may result in values being set which are not exactly what you chose.
+'{name}': '{name}'

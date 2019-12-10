@@ -92,11 +92,11 @@ class PersonNameManager
 
     /**
      * formatName
-     * @param Person $person
+     * @param Person|array $person
      * @param array $options
      * @return string
      */
-    public static function formatName(Person $person, array $options): string
+    public static function formatName($person, array $options): string
     {
         $resolver = new OptionsResolver();
         $resolver->setDefaults(
@@ -114,7 +114,7 @@ class PersonNameManager
 
         $options = $resolver->resolve($options);
 
-        $personType = $person->getPersonType();
+        $personType = $person instanceof Person ? $person->getPersonType() : (isset($person['personType']) ? $person['personType'] : 'other');
 
         $template = 'title first surname';
 
@@ -169,9 +169,19 @@ class PersonNameManager
         if ($options['debug'])
             dump($template,$person,$options);
 
+        $data = $person;
+        if ($person instanceof Person)
+            $data = [
+                'first' => $person->getFirstName(),
+                'surname' => $person->getSurname(),
+                'preferred' => $person->getPreferredName(),
+                'title' => $person->getTitle(),
+                'initial' => substr($person->getFirstName(), 0,1),
+            ];
+
         $name = trim(str_replace(
-            ['first','surname','preferred','title','initial'],
-            [$person->getFirstName(),$person->getSurname(), $person->getPreferredName(),$person->getTitle(),substr($person->getFirstName(), 0,1)],
+            array_keys($data),
+            array_values($data),
             $template)
         );
         return $name;

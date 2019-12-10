@@ -26,7 +26,6 @@ use App\Entity\Theme;
 use App\Manager\EntityInterface;
 use App\Manager\Traits\BooleanList;
 use App\Provider\ProviderFactory;
-use App\Util\Format;
 use App\Util\ImageHelper;
 use App\Util\TranslationsHelper;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -36,7 +35,6 @@ use Doctrine\ORM\PersistentCollection;
 use Kookaburra\SystemAdmin\Entity\Role;
 use Kookaburra\UserAdmin\Manager\PersonNameManager;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as ASSERT;
 use Symfony\Component\Intl\Languages;
 

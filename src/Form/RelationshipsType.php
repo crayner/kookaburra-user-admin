@@ -12,6 +12,7 @@
 
 namespace Kookaburra\UserAdmin\Form;
 
+use Doctrine\Common\Collections\Collection;
 use Kookaburra\UserAdmin\Entity\Family;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -34,7 +35,7 @@ class RelationshipsType extends AbstractType
         $resolver->setDefaults(
             [
                 'translation_domain' => 'UserAdmin',
-                'data_class' => Family::class,
+                'data_class' => null,
             ]
         );
     }
@@ -52,6 +53,7 @@ class RelationshipsType extends AbstractType
                     'entry_type' => FamilyRelationshipType::class,
                     'allow_add' => false,
                     'allow_delete' => false,
+                    'data' => $options['data'],
                 ]
             )
             ->add('submit', SubmitType::class,

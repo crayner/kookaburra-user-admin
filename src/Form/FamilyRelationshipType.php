@@ -15,6 +15,8 @@ namespace Kookaburra\UserAdmin\Form;
 use App\Form\Type\EnumType;
 use App\Form\Type\HiddenEntityType;
 use Kookaburra\UserAdmin\Entity\Family;
+use Kookaburra\UserAdmin\Entity\FamilyAdult;
+use Kookaburra\UserAdmin\Entity\FamilyChild;
 use Kookaburra\UserAdmin\Entity\FamilyRelationship;
 use Kookaburra\UserAdmin\Entity\Person;
 use Symfony\Component\Form\AbstractType;
@@ -48,13 +50,13 @@ class FamilyRelationshipType extends AbstractType
             ->add('adult', HiddenEntityType::class,
                 [
                     'label' => false,
-                    'class' => Person::class,
+                    'class' => FamilyAdult::class,
                 ]
             )
             ->add('child', HiddenEntityType::class,
                 [
                     'label' => false,
-                    'class' => Person::class,
+                    'class' => FamilyChild::class,
                 ]
             )
             ->add('family', HiddenEntityType::class,

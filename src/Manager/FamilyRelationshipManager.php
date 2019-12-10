@@ -17,6 +17,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Driver\PDOException;
 use Kookaburra\UserAdmin\Entity\Family;
+use Kookaburra\UserAdmin\Entity\FamilyAdult;
+use Kookaburra\UserAdmin\Entity\FamilyChild;
 use Kookaburra\UserAdmin\Entity\FamilyRelationship;
 use Kookaburra\UserAdmin\Entity\Person;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,8 +60,8 @@ class FamilyRelationshipManager
         {
             $fr = $provider->findOneRelationship($item);
             $fr->setFamily($family)
-                ->setAdult($provider->getRepository(Person::class)->find($item['adult']))
-                ->setChild($provider->getRepository(Person::class)->find($item['child']))
+                ->setAdult($provider->getRepository(FamilyAdult::class)->find($item['adult']))
+                ->setChild($provider->getRepository(FamilyChild::class)->find($item['child']))
                 ->setRelationship($item['relationship'])
             ;
 
@@ -94,21 +96,45 @@ class FamilyRelationshipManager
         return $this->validator;
     }
 
+    /**
+     * getRelationships
+     * @param Family $family
+     * @return Collection
+     */
     public function getRelationships(Family $family): Collection
     {
-        $adults = $family->getAdults();
-        $children = $family->getChildren();
-        $relationships = $family->getRelationships();
-        if ($adults->count() * $children->count() === $relationships->count())
+        $adults = FamilyManager::getAdults($family);
+        $children = FamilyManager::getChildren($family);
+        $relationships = $this->getExistingRelationships($family);
+        if (count($adults) * count($children) === $relationships->count())
             return $relationships;
 
         foreach($adults as $adult)
             foreach($children as $child)
             {
-                $relationship = new FamilyRelationship($family, $adult->getPerson(), $child->getPerson());
-                $family->addRelationship($relationship);
+                $relationship = new FamilyRelationship($family, $adult, $child);
+                $save = true;
+                foreach($relationships as $item)
+                    if ($relationship->isEqualTo($item)) {
+                        $save = false;
+                        break;
+                    }
+                if ($save)
+                    $relationships->add($relationship);
             }
 
-        return $family->getRelationships();
+        return $relationships;
+    }
+
+    /**
+     * getExistingRelationships
+     * @param Family $family
+     * @return ArrayCollection
+     */
+    private function getExistingRelationships(Family $family): ArrayCollection
+    {
+        $result = ProviderFactory::getRepository(FamilyRelationship::class)->findByFamily($family);
+        $result = new ArrayCollection($result);
+        return $result;
     }
 }

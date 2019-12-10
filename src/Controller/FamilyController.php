@@ -17,6 +17,7 @@ use App\Container\ContainerManager;
 use App\Container\Panel;
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
+use Doctrine\Common\Collections\ArrayCollection;
 use Kookaburra\UserAdmin\Entity\Family;
 use Kookaburra\UserAdmin\Entity\FamilyAdult;
 use Kookaburra\UserAdmin\Entity\FamilyChild;
@@ -27,6 +28,7 @@ use Kookaburra\UserAdmin\Form\FamilyChildType;
 use Kookaburra\UserAdmin\Form\FamilyGeneralType;
 use Kookaburra\UserAdmin\Form\FamilySearchType;
 use Kookaburra\UserAdmin\Form\RelationshipsType;
+use Kookaburra\UserAdmin\Manager\FamilyManager;
 use Kookaburra\UserAdmin\Manager\FamilyRelationshipManager;
 use Kookaburra\UserAdmin\Pagination\FamilyAdultsPagination;
 use Kookaburra\UserAdmin\Pagination\FamilyChildrenPagination;
@@ -49,8 +51,12 @@ class FamilyController extends AbstractController
      * familyManage
      * @Route("/family/manage/",name="family_manage")
      * @IsGranted("ROLE_ROUTE")
+     * @param Request $request
+     * @param FamilyPagination $pagination
+     * @param FamilyManager $manager
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function familyManage(Request $request, FamilyPagination $pagination)
+    public function familyManage(Request $request, FamilyPagination $pagination, FamilyManager $manager)
     {
         $search = $request->getSession()->has('family_manage_search') ? $request->getSession()->get('family_manage_search') : new ManageSearch();
         $form = $this->createForm(FamilySearchType::class, $search, ['action' => $this->generateUrl('user_admin__family_manage')]);
@@ -62,8 +68,7 @@ class FamilyController extends AbstractController
             $form = $this->createForm(FamilySearchType::class, $search, ['action' => $this->generateUrl('user_admin__family_manage')]);
         }
 
-        $repository = ProviderFactory::getRepository(Family::class);
-        $content = $repository->findBySearch($search);
+        $content = $manager->findBySearch($search);
         $pagination->setContent($content)->setPageMax(25)
             ->setPaginationScript();
 
@@ -85,7 +90,7 @@ class FamilyController extends AbstractController
      * @param Family|null $family
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/family/{family}/edit/{tabName}",name="family_manage_edit")
-     * @Route("/family/add/{tabName}",name="family_manage_add")
+     * @Route("/family/add/",name="family_manage_add")
      * @IsGranted("ROLE_ROUTE")
      */
     public function familyEdit(Request $request, FamilyChildrenPagination $childrenPagination, FamilyAdultsPagination $adultsPagination, ContainerManager $manager, FamilyRelationshipManager $relationshipManager, ?Family $family = null, string $tabName = 'General')
@@ -132,24 +137,22 @@ class FamilyController extends AbstractController
         $panel = new Panel('General', 'UserAdmin');
         $container->addForm('General', $form->createView())->addPanel($panel);
 
-        $childrenPagination->setContent($family->getChildren()->toArray())->setPageMax(25)->setTargetElement('pagination');
+        $childrenPagination->setContent(FamilyManager::getChildren($family, true))->setPageMax(25)->setTargetElement('pagination');
         $child = new FamilyChild($family);
-        $addChild = $this->createForm(FamilyChildType::class, $child, ['action' => $this->generateUrl('user_admin__family_child_add', ['family' => $family->getId()]), 'postFormContent' => $childrenPagination->toArray()]);
+        $addChild = $this->createForm(FamilyChildType::class, $child, ['action' => $this->generateUrl('user_admin__family_child_add', ['family' => $family->getId() ?: 0]), 'postFormContent' => $childrenPagination->toArray()]);
 
         $panel = new Panel('Students', 'UserAdmin');
         $container->addPanel($panel->setDisabled(intval($family->getId()) === 0))->addForm('Students', $addChild->createView());
 
-        $adultsPagination->setContent($family->getAdults()->toArray())->setPageMax(25)->setTargetElement('pagination');
+        $adultsPagination->setContent(FamilyManager::getAdults($family, true))->setPageMax(25)->setTargetElement('pagination');
         $adult = new FamilyAdult($family);
-        $addAdult = $this->createForm(FamilyAdultType::class, $adult, ['action' => $this->generateUrl('user_admin__family_adult_add', ['family' => $family->getId()]), 'postFormContent' => $adultsPagination->toArray()]);
+        $addAdult = $this->createForm(FamilyAdultType::class, $adult, ['action' => $this->generateUrl('user_admin__family_adult_add', ['family' => $family->getId() ?: 0]), 'postFormContent' => $adultsPagination->toArray()]);
 
         $panel = new Panel('Adults', 'UserAdmin');
         $container->addPanel($panel->setDisabled(intval($family->getId()) === 0))->addForm('Adults', $addAdult->createView());
 
-        $relationshipManager->getRelationships($family);
-
-        $relationship = $this->createForm(RelationshipsType::class, $family,
-            ['action' => $this->generateUrl('user_admin__family_relationships', ['family' => $family->getId()])]
+        $relationship = $this->createForm(RelationshipsType::class, $relationshipManager->getRelationships($family),
+            ['action' => $this->generateUrl('user_admin__family_relationships', ['family' => $family->getId() ?: 0])]
         );
         $panel = new Panel('Relationships', 'UserAdmin');
         $content = $this->renderView('@KookaburraUserAdmin/family/relationships.html.twig', [
@@ -158,13 +161,9 @@ class FamilyController extends AbstractController
         ]);
         $container->addPanel($panel->setDisabled(intval($family->getId()) === 0)->setContent($content));
 
-
-
-
         $manager->addContainer($container)->buildContainers();
 
         return $this->render('@KookaburraUserAdmin/family/edit.html.twig');
-
     }
 
     /**
@@ -176,7 +175,8 @@ class FamilyController extends AbstractController
      */
     public function familyDelete(Family $family)
     {
-        dd($family);
+        dump($family);
+
         return $this->redirectToRoute('user_admin__family_manage');
     }
 
@@ -191,14 +191,12 @@ class FamilyController extends AbstractController
      */
     public function familyChildRemove(Request $request, Family $family, FamilyChild $child)
     {
-        if ($family->getChildren()->contains($child)) {
+        if ($child->getFamily()->isEqualTo($family)) {
             $data = [];
             $data['status'] = 'success';
             $data['errors'] = [];
 
-            $data = ProviderFactory::getRepository(FamilyRelationship::class)->removeFamilyChild($family, $child->getPerson(), $data);
-            if ($data['status'] === 'success')
-                $data = ProviderFactory::create(FamilyChild::class)->remove($child, $data);
+            $data = ProviderFactory::create(FamilyChild::class)->remove($child, $data);
 
             $messages = array_unique($data['errors'], SORT_REGULAR);
             foreach($messages as $message)
@@ -223,7 +221,7 @@ class FamilyController extends AbstractController
     public function familyChildAdd(Request $request, Family $family, ContainerManager $manager, FamilyChildrenPagination $childrenPagination)
     {
         $child = new FamilyChild($family);
-        $childrenPagination->setContent($family->getChildren()->toArray())->setPageMax(25)->setTargetElement('pagination');
+        $childrenPagination->setContent(FamilyManager::getChildren($family, true))->setPageMax(25)->setTargetElement('pagination');
         $addChild = $this->createForm(FamilyChildType::class, $child, ['action' => $this->generateUrl('user_admin__family_child_add', ['family' => $family->getId()]), 'postFormContent' => $childrenPagination->toArray()]);
 
         $content = json_decode($request->getContent(), true);
@@ -234,11 +232,10 @@ class FamilyController extends AbstractController
             if ($addChild->isValid()) {
                 $data = [];
                 $provider = ProviderFactory::create(FamilyChild::class);
-                $family->addChild($child);
 
-                foreach($family->getChildren() as $item)
+                foreach(FamilyManager::getChildren($family) as $item)
                     $data = $provider->persistFlush($item, $data, false);
-                $data = $provider->persistFlush($item, $data);
+                $data = $provider->persistFlush($child, $data);
 
                 $data['errors'] = array_unique($data['errors'], SORT_REGULAR);
                 if ($data['status'] === 'success') {
@@ -272,18 +269,24 @@ class FamilyController extends AbstractController
      */
     public function familyAdultRemove(Request $request, Family $family, FamilyAdult $adult)
     {
-        if ($family->getAdults()->contains($adult)) {
+        if ($adult->getFamily()->isEqualTo($family)) {
             $data = [];
             $data['status'] = 'success';
             $data['errors'] = [];
 
-            $data = ProviderFactory::getRepository(FamilyRelationship::class)->removeFamilyAdult($family, $adult->getPerson(), $data);
-            if ($data['status'] === 'success')
-                $data = ProviderFactory::create(FamilyAdult::class)->remove($adult, $data);
+            $data = ProviderFactory::create(FamilyAdult::class)->remove($adult, $data);
 
             $messages = array_unique($data['errors'], SORT_REGULAR);
             foreach($messages as $message)
                 $request->getSession()->getBag('flashes')->add($message['class'], $message['message']);
+            if ($data['status'] === 'success') {
+                $priority = 1;
+                foreach (FamilyManager::getAdults($family) as $q => $adult) {
+                    ProviderFactory::create(FamilyAdult::class)->persistFlush($adult->setContactPriority($priority++), [], false);
+                    $result[$q] = $adult;
+                }
+                ProviderFactory::create(FamilyAdult::class)->persistFlush($adult);
+            }
         } else {
             $request->getSession()->getBag('flashes')->add('error', ['return.error.1',[],'messages']);
         }
@@ -304,40 +307,50 @@ class FamilyController extends AbstractController
     public function familyAdultAdd(Request $request, Family $family, ContainerManager $manager, FamilyAdultsPagination $adultsPagination)
     {
         $adult = new FamilyAdult($family);
-        $adultsPagination->setContent($family->getAdults()->toArray())->setPageMax(25)->setTargetElement('pagination');
+        $adultsPagination->setContent(FamilyManager::getAdults($family, true))->setPageMax(25)->setTargetElement('pagination');
         $addAdult = $this->createForm(FamilyAdultType::class, $adult, ['action' => $this->generateUrl('user_admin__family_adult_add', ['family' => $family->getId()]), 'postFormContent' => $adultsPagination->toArray()]);
 
         $content = json_decode($request->getContent(), true);
 
         if ($request->getContentType() === 'json' && $content['panelName'] === 'Adults')
         {
+            $adults = new ArrayCollection(FamilyManager::getAdults($family));
             $addAdult->submit($content);
             if ($addAdult->isValid()) {
                 $data = [];
+                $data['status'] = 'success';
                 $provider = ProviderFactory::create(FamilyAdult::class);
-                $family->addAdult($adult);
 
-                foreach($family->getAdults() as $item)
-                    $data = $provider->persistFlush($item, $data, false);
-                $data = $provider->persistFlush($item, $data);
+                $data = $provider->persistFlush($adult, $data);
 
                 $data['errors'] = array_unique($data['errors'], SORT_REGULAR);
                 if ($data['status'] === 'success') {
                     $data['redirect'] =  $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => 'Adults']);
                     $data['status'] = 'redirect';
                     $this->addFlash('success', 'return.success.0');
+                    $priority = 1;
+                    foreach (FamilyManager::getAdults($family) as $q => $adult) {
+                        ProviderFactory::create(FamilyAdult::class)->persistFlush($adult->setContactPriority($priority++), [], false);
+                        $result[$q] = $adult;
+                    }
+                    ProviderFactory::create(FamilyAdult::class)->persistFlush($adult);
+                } else {
+                    $errors = [];
+                    foreach($data['errors'] as $error)
+                        $errors[] = ['class' => $error['class'], 'message' => TranslationsHelper::translate($error['message'])];
+                    $data['errors'] = $errors;
                 }
                 return new JsonResponse($data,200);
             } else {
                 $data['status'] = 'error';
-                $data['errors'][] = ['class' => 'error', 'message' => 'return.error.1'];
+                $data['errors'][] = ['class' => 'error', 'message' => TranslationsHelper::translate('return.error.1',[],'messages')];
                 $manager->singlePanel($addAdult->createView());
                 $data['form'] = $manager->getFormFromContainer('formContent', 'single');
                 return new JsonResponse($data,200);
             }
         }
         $data = [];
-        $data['errors'][] = ['class' => 'error', 'message' => ['return.error.1', [], 'messages']];
+        $data['errors'][] = ['class' => 'error', 'message' => TranslationsHelper::translate('return.error.1',[],'messages')];
         $data['status'] = 'error';
         return new JsonResponse($data,400);
     }

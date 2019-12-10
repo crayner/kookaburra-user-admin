@@ -15,6 +15,7 @@ namespace Kookaburra\UserAdmin\Entity;
 use App\Manager\EntityInterface;
 use App\Util\ImageHelper;
 use App\Util\TranslationsHelper;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Kookaburra\UserAdmin\Util\StudentHelper;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -30,14 +31,14 @@ class FamilyChild implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id()
-     * @ORM\Column(type="integer", name="gibbonFamilyChildID", columnDefinition="INT(8) UNSIGNED ZEROFILL AUTO_INCREMENT")
+     * @ORM\Column(type="integer", name="gibbonFamilyChildID", columnDefinition="INT(8) UNSIGNED ZEROFILL")
      * @ORM\GeneratedValue
      */
     private $id;
 
     /**
      * @var Family|null
-     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Family", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Family")
      * @ORM\JoinColumn(name="gibbonFamilyID", referencedColumnName="gibbonFamilyID", nullable=false)
      * @Assert\NotBlank()
      */
@@ -56,6 +57,12 @@ class FamilyChild implements EntityInterface
      * @ORM\Column(type="text",nullable=true)
      */
     private $comment;
+
+    /**
+     * @var Collection|FamilyRelationship[]
+     * @ORM\OneToMany(targetEntity="Kookaburra\UserAdmin\Entity\FamilyRelationship",mappedBy="child",orphanRemoval=true)
+     */
+    private $relationships;
 
     /**
      * FamilyChild constructor.
@@ -139,6 +146,26 @@ class FamilyChild implements EntityInterface
     }
 
     /**
+     * @return Collection|FamilyRelationship[]
+     */
+    public function getRelationships()
+    {
+        return $this->relationships;
+    }
+
+    /**
+     * Relationships.
+     *
+     * @param Collection|FamilyRelationship[] $relationships
+     * @return FamilyChild
+     */
+    public function setRelationships($relationships)
+    {
+        $this->relationships = $relationships;
+        return $this;
+    }
+
+    /**
      * __toString
      * @return string
      */
@@ -164,5 +191,21 @@ class FamilyChild implements EntityInterface
             'family_id' => $this->getFamily()->getId(),
             'child_id' => $this->getId(),
         ];
+    }
+
+    /**
+     * isEqualTo
+     * @param FamilyAdult $adult
+     * @return bool
+     */
+    public function isEqualTo(FamilyChild $child): bool
+    {
+        if($this->getPerson() === null || $child->getPerson() === null || $this->getFamily() === null || $child->getFamily() === null)
+            return false;
+        if (!$child->getPerson()->isEqualTo($this->getPerson()))
+            return false;
+        if (!$child->getFamily()->isEqualTo($this->getFamily()))
+            return false;
+        return true;
     }
 }

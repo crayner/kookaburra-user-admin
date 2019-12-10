@@ -12,6 +12,8 @@
  */
 namespace Kookaburra\UserAdmin\Repository;
 
+use App\Util\SchoolYearHelper;
+use Kookaburra\UserAdmin\Entity\Family;
 use Kookaburra\UserAdmin\Entity\FamilyChild;
 use Kookaburra\UserAdmin\Entity\Person;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -52,5 +54,29 @@ class FamilyChildRepository extends ServiceEntityRepository
             $children[] = $child->getPerson()->getId();
 
         return $children;
+    }
+
+    /**
+     * findByFamily
+     * @param Family|integer $family
+     * @return array
+     */
+    public function findByFamily($family, bool $asArray = false): array
+    {
+        $query = $this->createQueryBuilder('c')
+            ->join('c.family', 'f')
+            ->where('f.id = :family')
+            ->setParameter('family', $family instanceof Family ? $family->getId() : $family)
+            ->leftJoin('c.person', 'p')
+            ->orderBy('p.surname', 'ASC')
+            ->addOrderBy('p.firstName', 'ASC');
+
+        if ($asArray)
+            return $query->select(['p.title','p.surname','p.firstName AS first','p.preferredName AS preferred','p.image_240 AS photo','p.status','c.id AS child_id','c.comment','f.id AS family_id','p.id AS person'])
+                ->getQuery()
+                ->getResult();
+        return $query->select(['p', 'c'])
+            ->getQuery()
+            ->getResult();
     }
 }

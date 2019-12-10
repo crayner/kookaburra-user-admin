@@ -14,10 +14,9 @@ namespace Kookaburra\UserAdmin\Entity;
 
 use App\Manager\EntityInterface;
 use App\Manager\Traits\BooleanList;
-use App\Util\ImageHelper;
 use App\Util\TranslationsHelper;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Kookaburra\UserAdmin\Util\StudentHelper;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -36,14 +35,14 @@ class FamilyAdult implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id()
-     * @ORM\Column(type="integer", name="gibbonFamilyAdultID", columnDefinition="INT(8) UNSIGNED ZEROFILL AUTO_INCREMENT")
+     * @ORM\Column(type="integer", name="gibbonFamilyAdultID", columnDefinition="INT(8) UNSIGNED ZEROFILL")
      * @ORM\GeneratedValue
      */
     private $id;
 
     /**
      * @var Family|null
-     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Family", inversedBy="adults")
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Family")
      * @ORM\JoinColumn(name="gibbonFamilyID", referencedColumnName="gibbonFamilyID", nullable=false)
      * @Assert\NotBlank()
      */
@@ -73,6 +72,7 @@ class FamilyAdult implements EntityInterface
     /**
      * @var int|null
      * @ORM\Column(type="smallint", name="contactPriority", options={"default": 1}, columnDefinition="INT(2)")
+     * @Assert\NotBlank()
      * @Assert\Range(min=1,max=99)
      */
     private $contactPriority;
@@ -104,6 +104,12 @@ class FamilyAdult implements EntityInterface
      * @Assert\Choice({"Y","N"})
      */
     private $contactMail;
+
+    /**
+     * @var Collection|FamilyRelationship[]
+     * @ORM\OneToMany(targetEntity="Kookaburra\UserAdmin\Entity\FamilyRelationship",mappedBy="adult",orphanRemoval=true)
+     */
+    private $relationships;
 
     /**
      * FamilyAdult constructor.
@@ -295,6 +301,26 @@ class FamilyAdult implements EntityInterface
     }
 
     /**
+     * @return Collection|FamilyRelationship[]
+     */
+    public function getRelationships()
+    {
+        return $this->relationships;
+    }
+
+    /**
+     * Relationships.
+     *
+     * @param Collection|FamilyRelationship[] $relationships
+     * @return FamilyAdult
+     */
+    public function setRelationships($relationships)
+    {
+        $this->relationships = $relationships;
+        return $this;
+    }
+
+    /**
      * __toString
      * @return string
      */
@@ -315,7 +341,6 @@ class FamilyAdult implements EntityInterface
         return [
             'fullName' => $person->formatName(['style' => 'formal']),
             'status' => TranslationsHelper::translate($person->getStatus(), [], 'UserAdmin'),
-            'roll' => StudentHelper::getCurrentRollGroup($person),
             'comment' => $this->getComment(),
             'adult_id' => $this->getId(),
             'family_id' => $this->getFamily()->getId(),
@@ -326,5 +351,21 @@ class FamilyAdult implements EntityInterface
             'mail' => TranslationsHelper::translate(($this->getContactMail() === 'Y' ? 'Yes' : 'No'), [], 'messages'),
             'contactPriority' => $this->getContactPriority(),
         ];
+    }
+
+    /**
+     * isEqualTo
+     * @param FamilyAdult $adult
+     * @return bool
+     */
+    public function isEqualTo(FamilyAdult $adult): bool
+    {
+        if($this->getPerson() === null || $adult->getPerson() === null || $this->getFamily() === null || $adult->getFamily() === null)
+            return false;
+        if (!$adult->getPerson()->isEqualTo($this->getPerson()))
+            return false;
+        if (!$adult->getFamily()->isEqualTo($this->getFamily()))
+            return false;
+        return true;
     }
 }

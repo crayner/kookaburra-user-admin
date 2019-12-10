@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class FamilyRelationship
  * @package Kookaburra\UserAdmin\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\UserAdmin\Repository\FamilyRelationshipRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="FamilyRelationship", uniqueConstraints={@ORM\UniqueConstraint(name="familyAdultChild", columns={"gibbonFamilyID","gibbonPersonID1","gibbonPersonID2"})})
+ * @ORM\Table(options={"auto_increment": 1}, name="FamilyRelationship", uniqueConstraints={@ORM\UniqueConstraint(name="familyAdultChild", columns={"gibbonFamilyID","adult","child"})})
  * @UniqueEntity({"family","adult","child"})
  */
 class FamilyRelationship implements EntityInterface
@@ -30,31 +30,31 @@ class FamilyRelationship implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id()
-     * @ORM\Column(type="integer", name="gibbonFamilyRelationshipID", columnDefinition="INT(9) UNSIGNED ZEROFILL AUTO_INCREMENT")
+     * @ORM\Column(type="integer", name="gibbonFamilyRelationshipID", columnDefinition="INT(9) UNSIGNED ZEROFILL")
      * @ORM\GeneratedValue
      */
     private $id;
 
     /**
      * @var Family|null
-     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Family", inversedBy="relationships")
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Family")
      * @ORM\JoinColumn(name="gibbonFamilyID", referencedColumnName="gibbonFamilyID", nullable=false)
      * @Assert\NotBlank()
      */
     private $family;
 
     /**
-     * @var Person|null
-     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
-     * @ORM\JoinColumn(name="gibbonPersonID1", referencedColumnName="gibbonPersonID", nullable=false)
+     * @var FamilyAdult|null
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\FamilyAdult",inversedBy="relationships")
+     * @ORM\JoinColumn(name="adult",referencedColumnName="gibbonFamilyAdultID",nullable=false)
      * @Assert\NotBlank()
      */
     private $adult;
 
     /**
-     * @var Person|null
-     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
-     * @ORM\JoinColumn(name="gibbonPersonID2", referencedColumnName="gibbonPersonID", nullable=false)
+     * @var FamilyChild|null
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\FamilyChild",inversedBy="relationships")
+     * @ORM\JoinColumn(name="child",referencedColumnName="gibbonFamilyChildID",nullable=false)
      * @Assert\NotBlank()
      */
     private $child;
@@ -87,10 +87,10 @@ class FamilyRelationship implements EntityInterface
     /**
      * FamilyRelationship constructor.
      * @param Family|null $family
-     * @param Person|null $adult
-     * @param Person|null $child
+     * @param FamilyAdult|null $adult
+     * @param FamilyChild|null $child
      */
-    public function __construct(?Family $family = null, ?Person $adult = null, ?Person $child = null)
+    public function __construct(?Family $family = null, ?FamilyAdult $adult = null, ?FamilyChild $child = null)
     {
         $this->family = $family;
         $this->adult = $adult;
@@ -134,9 +134,9 @@ class FamilyRelationship implements EntityInterface
     }
 
     /**
-     * @return Person|null
+     * @return FamilyAdult|null
      */
-    public function getAdult(): ?Person
+    public function getAdult(): ?FamilyAdult
     {
         return $this->adult;
     }
@@ -144,19 +144,19 @@ class FamilyRelationship implements EntityInterface
     /**
      * Adult.
      *
-     * @param Person|null $adult
+     * @param FamilyAdult|null $adult
      * @return FamilyRelationship
      */
-    public function setAdult(?Person $adult): FamilyRelationship
+    public function setAdult(?FamilyAdult $adult): FamilyRelationship
     {
         $this->adult = $adult;
         return $this;
     }
 
     /**
-     * @return Person|null
+     * @return FamilyChild|null
      */
-    public function getChild(): ?Person
+    public function getChild(): ?FamilyChild
     {
         return $this->child;
     }
@@ -164,10 +164,10 @@ class FamilyRelationship implements EntityInterface
     /**
      * Child.
      *
-     * @param Person|null $child
+     * @param FamilyChild|null $child
      * @return FamilyRelationship
      */
-    public function setChild(?Person $child): FamilyRelationship
+    public function setChild(?FamilyChild $child): FamilyRelationship
     {
         $this->child = $child;
         return $this;
@@ -205,7 +205,7 @@ class FamilyRelationship implements EntityInterface
      */
     public function __toString(): string
     {
-        return $this->getFamily()->__toString() . ': ' . $this->getAdult()->formatName(['style' => 'formal']) . ' is ' . $this->getRelationship() . ' of ' . $this->getChild()->formatName(['style' => 'long']);
+        return $this->getFamily()->__toString() . ': ' . $this->getAdult()->getPerson()->formatName(['style' => 'formal']) . ' is ' . $this->getRelationship() . ' of ' . $this->getChild()->getPerson()->formatName(['style' => 'long']);
     }
 
     /**

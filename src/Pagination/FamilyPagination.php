@@ -45,6 +45,7 @@ class FamilyPagination extends ReactPaginationManager
         $column = new PaginationColumn();
         $column->setLabel('Relationship Status')
             ->setContentKey('status')
+            ->setSort(true)
             ->setClass('column relative pr-4 cursor-pointer widthAuto')
         ;
         $row->addColumn($column);
@@ -78,6 +79,7 @@ class FamilyPagination extends ReactPaginationManager
             ->setColumnClass('column p-2 sm:p-3')
             ->setSpanClass('far fa-trash-alt fa-fw fa-1-5x text-gray-700')
             ->setRoute('user_admin__family_manage_delete')
+            ->setOnClick('areYouSure')
             ->setRouteParams(['family' => 'id']);
         $row->addAction($action);
 

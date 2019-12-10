@@ -12,6 +12,7 @@
 
 namespace Kookaburra\UserAdmin\Util;
 
+use App\Provider\ProviderFactory;
 use App\Util\SchoolYearHelper;
 use Kookaburra\UserAdmin\Entity\Person;
 
@@ -39,12 +40,18 @@ class StudentHelper
 
     /**
      * getCurrentRollGroup
-     * @param Person $person
+     * @param Person|int $person
      */
-    public static function getCurrentRollGroup(Person $person): string
+    public static function getCurrentRollGroup($person): string
     {
+        if (is_int($person))
+            $person = ProviderFactory::getRepository(Person::class)->find($person);
+        if (!$person instanceof Person)
+            return '';
+
         if (!UserHelper::isStudent($person))
             return '';
+
         $se = null;
         foreach($person->getStudentEnrolments() as $enrolment)
         {

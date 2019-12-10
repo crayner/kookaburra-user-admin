@@ -18,6 +18,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
+use Kookaburra\UserAdmin\Manager\FamilyManager;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -106,34 +107,6 @@ class Family implements EntityInterface
     private $familySync;
 
     /**
-     * @var Collection|null
-     * @ORM\OneToMany(mappedBy="family", targetEntity="Kookaburra\UserAdmin\Entity\FamilyAdult")
-     * @ORM\OrderBy({"contactPriority" = "ASC"})
-     */
-    private $adults;
-
-    /**
-     * @var Collection|null
-     * @ORM\OneToMany(mappedBy="family", targetEntity="Kookaburra\UserAdmin\Entity\FamilyChild")
-     */
-    private $children;
-
-    /**
-     * @var Collection|null
-     * @ORM\OneToMany(mappedBy="family", targetEntity="Kookaburra\UserAdmin\Entity\FamilyRelationship")
-     */
-    private $relationships;
-
-    /**
-     * Family constructor.
-     */
-    public function __construct()
-    {
-        $this->adults = new ArrayCollection();
-        $this->children = new ArrayCollection();
-    }
-
-    /**
      * __toString
      * @return string
      */
@@ -183,7 +156,7 @@ class Family implements EntityInterface
      */
     public function getNameAddress(): ?string
     {
-        return $this->nameAddress ?: trim(str_replace('<br />', ' & ', $this->getAdultNames()), ' &');
+        return $this->nameAddress ?: trim(str_replace('<br />', ' & ', FamilyManager::getAdultNames($this)), ' &');
     }
 
     /**
@@ -331,138 +304,6 @@ class Family implements EntityInterface
     }
 
     /**
-     * @var bool
-     */
-    private $adultsSorted = false;
-
-    /**
-     * getAdults
-     * @return Collection|null
-     */
-    public function getAdults(): ?Collection
-    {
-        $this->adults = $this->adults ?: new ArrayCollection();
-
-        if ($this->adults instanceof PersistentCollection)
-            $this->adults->initialize();
-        
-        return $this->sortAdults()->adults;
-    }
-
-    /**
-     * @param Collection|null $adults
-     * @return Family
-     */
-    public function setAdults(?Collection $adults): Family
-    {
-        $this->adults = $adults;
-        return $this;
-    }
-
-    /**
-     * addAdult
-     * @param FamilyAdult $adult
-     * @return Family
-     */
-    public function addAdult(FamilyAdult $adult): Family
-    {
-        if ($this->getAdults()->contains($adult))
-            return $this;
-
-        $adult->setFamily($this);
-        $this->adults->add($adult);
-        return $this->sortAdults(true);
-    }
-
-    /**
-     * removeAdult
-     * @param FamilyAdult $adult
-     * @return Family
-     */
-    public function removeAdult(FamilyAdult $adult): Family
-    {
-        $this->getAdults()->removeElement($adult);
-
-        return $this->sortAdults(true);
-    }
-
-    /**
-     * sortAdults
-     * @return Family
-     */
-    public function sortAdults(bool $refresh = false): Family
-    {
-        if ($this->adultsSorted && !$refresh)
-            return $this;
-
-        $iterator = $this->adults->getIterator();
-        $iterator->uasort(
-            function ($a, $b) {
-                return $a->getContactPriority() < $b->getContactPriority() ? -1 : 1;
-            }
-        );
-        $this->adults = new ArrayCollection(iterator_to_array($iterator, false));
-        $this->adultsSorted = true;
-        return $this;
-    }
-
-    /**
-     * @return Collection|null
-     */
-    public function getChildren(): ?Collection
-    {
-        $this->children = $this->children ?: new ArrayCollection();
-
-        if ($this->children instanceof PersistentCollection)
-            $this->children->initialize();
-
-        $this->sortChildren();
-        return $this->children;
-    }
-
-    /**
-     * @param Collection|null $children
-     * @return Family
-     */
-    public function setChildren(?Collection $children): Family
-    {
-        $this->children = $children;
-        return $this;
-    }
-
-    /**
-     * addChild
-     * @param FamilyChild $child
-     * @return Family
-     */
-    public function addChild(FamilyChild $child): Family
-    {
-        if ($this->getChildren()->contains($child))
-            return $this;
-
-        $child->setFamily($this);
-        $this->children->add($child);
-        return $this->sortChildren();
-    }
-
-    /**
-     * sortChildren
-     * @return Family
-     * @throws \Exception
-     */
-    public function sortChildren(): Family
-    {
-        $iterator = $this->children->getIterator();
-        $iterator->uasort(
-            function ($a, $b) {
-                return ($a->getPerson()->formatName(['reverse' => true]) < $b->getPerson()->formatName(['reverse' => true])) ? -1 : 1;
-            }
-        );
-        $this->children = new ArrayCollection(iterator_to_array($iterator, false));
-        return $this;
-    }
-
-    /**
      * toArray
      * @param string|null $name
      * @return array
@@ -472,124 +313,9 @@ class Family implements EntityInterface
         return [
             'name' => $this->getName(),
             'status' => $this->getStatus(),
-            'adults' => $this->getAdultNames(),
-            'children' => $this->getChildrenNames(),
+            'adults' => FamilyManager::getAdultNames($this),
+            'children' => FamilyManager::getChildrenNames($this),
         ];
-    }
-
-    /**
-     * getAdultNames
-     * @return string
-     */
-    public function getAdultNames(): string
-    {
-        $result = '';
-        foreach ($this->getAdults() as $adult)
-            $result .= $adult->getPerson()->formatName(['style' => 'formal']) . "\n<br />";
-
-        return $result;
-    }
-
-    /**
-     * getChildrenNames
-     * @return string
-     */
-    public function getChildrenNames(): string
-    {
-        $result = '';
-        foreach ($this->getChildren() as $adult)
-            $result .= $adult->getPerson()->formatName(['style' => 'formal']) . "\n<br />";
-
-        return $result;
-    }
-
-    /**
-     * @var bool
-     */
-    private $relationshipsSorted = false;
-
-    /**
-     * getRelationships
-     * @return Collection
-     */
-    public function getRelationships(): Collection
-    {
-        $this->relationships = $this->relationships ?: new ArrayCollection();
-
-        if ($this->relationships instanceof PersistentCollection)
-            $this->relationships->initialize();
-
-        $this->sortRelationships();
-        return $this->relationships;
-    }
-
-    /**
-     * Relationships.
-     *
-     * @param Collection|FamilyRelationship[]|null $relationships
-     * @return Family
-     */
-    public function setRelationships(?Collection $relationships): Family
-    {
-        $this->relationships = $relationships;
-        return $this;
-    }
-
-    /**
-     * addRelationship
-     * @param FamilyRelationship $relationship
-     * @return Family
-     */
-    public function addRelationship(FamilyRelationship $relationship): Family
-    {
-        if ($this->getRelationships()->contains($relationship))
-            return $this;
-
-        foreach($this->relationships as $item)
-            if ($relationship->isEqualTo($item))
-                return $this;
-
-        $relationship->setFamily($this);
-
-        $this->relationships->add($relationship);
-
-        return $this->sortRelationships();
-    }
-
-    /**
-     * addRelationship
-     * @param FamilyRelationship $relationship
-     * @return Family
-     */
-    public function removeRelationship(FamilyRelationship $relationship): Family
-    {
-        if ($this->getRelationships()->contains($relationship))
-            return $this;
-
-        $relationship->setFamily($this);
-        $this->relationships->add($relationship);
-        return $this->sortRelationships();
-    }
-
-    /**
-     * sortRelationships
-     * @return Family
-     */
-    public function sortRelationships(): Family
-    {
-        try {
-            $iterator = $this->relationships->getIterator();
-        }  catch (\Exception $e) {
-            return $this;
-        }
-        $iterator->uasort(
-            function ($a, $b) {
-                return ($a->getAdult()->formatName(['preferredName' => false, 'reverse' => true]) . $a->getChild()->formatName(['reverse' => true]) < $b->getAdult()->formatName(['preferredName' => false, 'reverse' => true]) . $b->getChild()->formatName(['reverse' => true])) ? -1 : 1;
-            }
-        );
-
-        $this->relationships = new ArrayCollection(iterator_to_array($iterator, false));
-        return $this;
     }
 
     /**
@@ -599,27 +325,9 @@ class Family implements EntityInterface
      */
     public function isEqualTo(Family $family)
     {
-        if ($this->getName() !== $family->getName())
-            return false;
-        if ($this->getAdults()->count() !== $family->getAdults()->count())
-            return false;
-        if ($this->getChildren()->count() !== $family->getChildren()->count())
-            return false;
-        if ($this->getAdultNames() !== $family->getAdultNames())
-            return false;
-        if ($this->getChildrenNames() !== $family->getChildrenNames())
+        if ($this->getId() !== $family->getId())
             return false;
 
         return true;
-    }
-
-
-    /**
-     * hasRelationshipsNumbers
-     * @return bool
-     */
-    public function hasRelationshipsNumbers(): bool
-    {
-        return $this->getRelationships()->count() === $this->getAdults()->count() * $this->getChildren()->count();
     }
 }

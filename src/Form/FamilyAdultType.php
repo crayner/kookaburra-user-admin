@@ -12,7 +12,6 @@
 
 namespace Kookaburra\UserAdmin\Form;
 
-
 use App\Form\Type\HiddenEntityType;
 use App\Form\Type\ParagraphType;
 use App\Form\Type\ReactFormType;
@@ -33,6 +32,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class FamilyAdultType
+ * @package Kookaburra\UserAdmin\Form
+ */
 class FamilyAdultType extends AbstractType
 {
     /**
