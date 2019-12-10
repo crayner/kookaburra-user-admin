@@ -12,7 +12,6 @@
                     <span class="text-xxs text-gray-600 italic font-normal mt-1 sm:mt-0">{{ '{name}'|trans({'{name}': family.name}) }}</span></h3>
             </td>
         </tr>
-
         {% for item in relationship.relationships %}
             <tr>
                 <td class="px-2 border-b-0 sm:border-b border-t-0" style="text-align: right;">
@@ -29,6 +28,14 @@
                 </td>
             </tr>
         {% endfor %}
+        {% if relationship.relationships|length is same as(0) %}
+            <tr>
+                <td class="px-2 border-b-0 sm:border-b border-t-0" colspan="3">
+                    <div class="secondary">{{ 'There are not enough people in this family to form relationships.'|trans }}</div>
+                </td>
+            </tr>
+
+        {% endif %}
         {% do relationship.relationships.setRendered() %}
         <tr class="break">
             <td class="px-2 border-b-0 sm:border-b border-t-0" colspan="3">

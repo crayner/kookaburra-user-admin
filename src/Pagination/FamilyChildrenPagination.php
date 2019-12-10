@@ -70,6 +70,15 @@ class FamilyChildrenPagination extends ReactPaginationManager
         $row->addColumn($column);
 
         $action = new PaginationAction();
+        $action->setTitle('Edit')
+            ->setAClass('')
+            ->setColumnClass('column p-2 sm:p-3')
+            ->setSpanClass('fas fa-edit fa-fw fa-1-5x text-gray-700')
+            ->setRoute('user_admin__family_student_edit')
+            ->setRouteParams(['family' => 'family_id', 'student' => 'child_id']);
+        $row->addAction($action);
+
+        $action = new PaginationAction();
         $action->setTitle('Remove Child from Family')
             ->setAClass('')
             ->setColumnClass('column p-2 sm:p-3')
@@ -77,6 +86,15 @@ class FamilyChildrenPagination extends ReactPaginationManager
             ->setRoute('user_admin__family_child_remove')
             ->setOnClick('areYouSure')
             ->setRouteParams(['family' => 'family_id', 'child' => 'child_id']);
+        $row->addAction($action);
+
+        $action = new PaginationAction();
+        $action->setTitle('Change Password')
+            ->setAClass('')
+            ->setColumnClass('column p-2 sm:p-3')
+            ->setSpanClass('fas fa-user-lock fa-fw fa-1-5x text-gray-700')
+            ->setRoute('user_admin__reset_password')
+            ->setRouteParams(['person' => 'person']);
         $row->addAction($action);
 
         $this->setRow($row);

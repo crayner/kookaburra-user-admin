@@ -20,6 +20,7 @@ use Kookaburra\UserAdmin\Entity\FamilyAdult;
 use Kookaburra\UserAdmin\Entity\FamilyChild;
 use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
 use Kookaburra\UserAdmin\Util\StudentHelper;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 /**
  * Class FamilyManager
@@ -30,12 +31,12 @@ class FamilyManager
     /**
      * @var array|null
      */
-    private $allAdults;
+    private static $allAdults;
 
     /**
      * @var array|null
      */
-    private $allStudents;
+    private static $allStudents;
 
     /**
      * findBySearch
@@ -50,8 +51,8 @@ class FamilyManager
         foreach($result as $q=>$family)
             $familyList[] = $family['id'];
 
-        $this->allAdults = ProviderFactory::getRepository(FamilyAdult::class)->findByFamilyList($familyList);
-        $this->allStudents = ProviderFactory::getRepository(FamilyChild::class)->findByFamilyList($familyList);
+        self::$allAdults = ProviderFactory::getRepository(FamilyAdult::class)->findByFamilyList($familyList);
+        self::$allStudents = ProviderFactory::getRepository(FamilyChild::class)->findByFamilyList($familyList);
 
         foreach($result as $q=>$family)
         {
@@ -70,8 +71,8 @@ class FamilyManager
     public function getAdultNames($family): string
     {
         $result = '';
-        if (is_array($this->allAdults)) {
-            foreach($this->allAdults as $adult) {
+        if (is_array(self::$allAdults)) {
+            foreach(self::$allAdults as $adult) {
                 if ($adult['id'] < $family)
                     continue;
                 if ($adult['id'] > $family)
@@ -96,8 +97,8 @@ class FamilyManager
     public function getChildrenNames($family): string
     {
         $result = '';
-        if (is_array($this->allStudents)) {
-            foreach($this->allStudents as $student) {
+        if (is_array(self::$allStudents)) {
+            foreach(self::$allStudents as $student) {
                 if ($student['id'] < $family)
                     continue;
                 if ($student['id'] > $family)
@@ -154,5 +155,29 @@ class FamilyManager
             }
         }
         return $result;
+    }
+
+    /**
+     * deleteFamily
+     * @param Family $family
+     * @param FlashBagInterface $flashBag
+     */
+    public function deleteFamily(Family $family, FlashBagInterface $flashBag)
+    {
+        $adults = self::getAdults($family);
+        $students = self::getChildren($family);
+        $data = [];
+        $data['status'] = ['success'];
+        $data['errors'] = [];
+        $provider = ProviderFactory::create(Family::class);
+        foreach($adults as $adult)
+            $data = $provider->remove($adult,$data, false);
+        foreach($students as $student)
+            $data = $provider->remove($student, $data, false);
+        $data = $provider->remove($family, $data, true);
+
+        $data['errors'] = array_unique($data['errors'], SORT_REGULAR);
+        foreach($data['errors'] as $error)
+            $flashBag->add($error['class'], $error['message']);
     }
 }

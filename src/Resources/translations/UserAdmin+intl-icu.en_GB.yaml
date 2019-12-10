@@ -991,5 +991,6 @@ General: General
 Students: Students
 Search for Family Name: Search for Family Name
 Children: Children
-Logic exists to try and ensure that there is always one and only one parent with Contact Priority set to 1. This may result in values being set which are not exactly what you chose.: Logic exists to try and ensure that there is always one and only one parent with Contact Priority set to 1. This may result in values being set which are not exactly what you chose.
+contact_priority_logic: Logic exists ensure that the contact priority you select is used only once. If you select an existing contact priority, then the new parent/guardian is inserted at that position in priority.
 '{name}': '{name}'
+There are not enough people in this family to form relationships.: There are not enough people in this family to form relationships.

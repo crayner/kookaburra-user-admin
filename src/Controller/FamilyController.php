@@ -16,12 +16,12 @@ use App\Container\Container;
 use App\Container\ContainerManager;
 use App\Container\Panel;
 use App\Provider\ProviderFactory;
+use App\Util\ErrorMessageHelper;
 use App\Util\TranslationsHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Kookaburra\UserAdmin\Entity\Family;
 use Kookaburra\UserAdmin\Entity\FamilyAdult;
 use Kookaburra\UserAdmin\Entity\FamilyChild;
-use Kookaburra\UserAdmin\Entity\FamilyRelationship;
 use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
 use Kookaburra\UserAdmin\Form\FamilyAdultType;
 use Kookaburra\UserAdmin\Form\FamilyChildType;
@@ -173,8 +173,9 @@ class FamilyController extends AbstractController
      * @param Family $family
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function familyDelete(Family $family)
+    public function familyDelete(Family $family, FamilyManager $manager, Request $request)
     {
+        $manager->deleteFamily($family, $request->getSession()->getBag('flashes'));
         dump($family);
 
         return $this->redirectToRoute('user_admin__family_manage');
@@ -369,5 +370,53 @@ class FamilyController extends AbstractController
         $manager->handleRequest($request, $family);
 
         return $this->redirectToRoute('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => 'Relationships']);
+    }
+
+    /**
+     * familyStudentEdit
+     * @param Family $family
+     * @param FamilyChild $student
+     * @param Request $request
+     * @param ContainerManager $manager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/family/{family}/student/{student}/edit/",name="family_student_edit")
+     * @IsGranted("ROLE_ROUTE")
+     */
+    public function familyStudentEdit(Family $family, FamilyChild $student, Request $request, ContainerManager $manager)
+    {
+        $form = $this->createForm(FamilyChildType::class, $student, ['action' => $this->generateUrl('user_admin__family_student_edit', ['family' => $family->getId(), 'student' => $student->getId()])]);
+
+        if ($request->getContentType() === 'json')
+        {
+            $data = [];
+            $data['status'] = 'success';
+            $data['errors'] = [];
+            $content = json_decode($request->getContent(), true);
+
+            $form->submit($content);
+            if ($form->isValid()) {
+                $data = ProviderFactory::create(FamilyChild::class)->persistFlush($student, $data);
+
+                $manager->singlePanel($form->createView());
+                $data['form'] = $manager->getFormFromContainer('formContent', 'single');
+                if ($data['status'] === 'success') {
+                    $data['status'] = 'redirect';
+                    $data['redirect'] = $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => 'Students']);
+                    $this->addFlash('success', 'return.success.0');
+                }
+                return new JsonResponse($data, 200);
+            } else {
+                $data = ErrorMessageHelper::getInvalidInputsMessage($data, true);
+                $manager->singlePanel($form->createView());
+                $data['form'] = $manager->getFormFromContainer('formContent', 'single');
+                return new JsonResponse($data, 200);
+            }
+        }
+        $manager->singlePanel($form->createView());
+
+        return $this->render('@KookaburraUserAdmin/family/student_edit.html.twig',
+            [
+                'family' => $family,
+            ]);
     }
 }

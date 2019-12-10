@@ -87,7 +87,7 @@ class FamilyAdultType extends AbstractType
                 [
                     'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showAdultAdd',
                     'wrapper_class' => 'warning',
-                    'help' => 'Logic exists to try and ensure that there is always one and only one parent with Contact Priority set to 1. This may result in values being set which are not exactly what you chose.'
+                    'help' => 'contact_priority_logic'
                 ]
 
             )
