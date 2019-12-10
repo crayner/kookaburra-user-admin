@@ -28,6 +28,16 @@ use Kookaburra\UserAdmin\Util\StudentHelper;
 class FamilyManager
 {
     /**
+     * @var array|null
+     */
+    private $allAdults;
+
+    /**
+     * @var array|null
+     */
+    private $allStudents;
+
+    /**
      * findBySearch
      * @param ManageSearch $search
      * @return array
@@ -35,6 +45,13 @@ class FamilyManager
     public function findBySearch(ManageSearch $search): array
     {
         $result = ProviderFactory::getRepository(Family::class)->findBySearch($search);
+
+        $familyList = [];
+        foreach($result as $q=>$family)
+            $familyList[] = $family['id'];
+
+        $this->allAdults = ProviderFactory::getRepository(FamilyAdult::class)->findByFamilyList($familyList);
+        $this->allStudents = ProviderFactory::getRepository(FamilyChild::class)->findByFamilyList($familyList);
 
         foreach($result as $q=>$family)
         {
@@ -53,6 +70,17 @@ class FamilyManager
     public function getAdultNames($family): string
     {
         $result = '';
+        if (is_array($this->allAdults)) {
+            foreach($this->allAdults as $adult) {
+                if ($adult['id'] < $family)
+                    continue;
+                if ($adult['id'] > $family)
+                    break;
+                $adult['personType'] = 'Parent';
+                $result .= PersonNameManager::formatName($adult, ['style' => 'formal']) . "\n<br />";
+            }
+            return $result;
+        }
         foreach (self::getAdults($family, true) as $adult) {
             $adult['personType'] = 'Parent';
             $result .= PersonNameManager::formatName($adult, ['style' => 'formal']) . "\n<br />";
@@ -68,9 +96,19 @@ class FamilyManager
     public function getChildrenNames($family): string
     {
         $result = '';
-
+        if (is_array($this->allStudents)) {
+            foreach($this->allStudents as $student) {
+                if ($student['id'] < $family)
+                    continue;
+                if ($student['id'] > $family)
+                    break;
+                $student['personType'] = 'Student';
+                $result .= PersonNameManager::formatName($student, ['style' => 'formal']) . "\n<br />";
+            }
+            return $result;
+        }
         foreach (self::getChildren($family, true) as $student) {
-            $adult['personType'] = 'Student';
+            $student['personType'] = 'Student';
             $result .= PersonNameManager::formatName($student, ['style' => 'formal']) . "\n<br />";
         }
         return $result;

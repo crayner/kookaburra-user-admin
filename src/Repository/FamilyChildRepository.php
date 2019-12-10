@@ -12,7 +12,7 @@
  */
 namespace Kookaburra\UserAdmin\Repository;
 
-use App\Util\SchoolYearHelper;
+use Doctrine\DBAL\Connection;
 use Kookaburra\UserAdmin\Entity\Family;
 use Kookaburra\UserAdmin\Entity\FamilyChild;
 use Kookaburra\UserAdmin\Entity\Person;
@@ -76,6 +76,26 @@ class FamilyChildRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getResult();
         return $query->select(['p', 'c'])
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * findByFamilyList
+     * @param array $familyList
+     * @return array
+     */
+    public function findByFamilyList(array $familyList): array
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.family', 'f')
+            ->where('f.id in (:family)')
+            ->setParameter('family', $familyList, Connection::PARAM_INT_ARRAY)
+            ->leftJoin('c.person', 'p')
+            ->orderBy('f.id', 'ASC')
+            ->addOrderBy('p.surname', 'ASC')
+            ->addOrderBy('p.firstName', 'ASC')
+            ->select(['p.title','p.firstName AS first', 'p.preferredName AS preferred', 'p.surname', 'f.id AS id'])
             ->getQuery()
             ->getResult();
     }
