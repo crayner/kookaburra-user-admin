@@ -15,6 +15,8 @@
  */
 namespace Kookaburra\UserAdmin\Repository;
 
+use Doctrine\ORM\NoResultException;
+use Kookaburra\UserAdmin\Entity\District;
 use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\RollGroup;
 use App\Entity\SchoolYear;
@@ -374,5 +376,25 @@ class PersonRepository extends ServiceEntityRepository
 
         return $query->getQuery()
             ->getResult();
+    }
+
+    /**
+     * countDistrictUsage
+     * @param District $district
+     * @return int
+     */
+    public function countDistrictUsage(District $district): int
+    {
+        try {
+            return $this->createQueryBuilder('p')
+                ->select('COUNT(p.id)')
+                ->where('p.address1District = :district')
+                ->orWhere('p.address2District = :district')
+                ->setParameter('district', $district)
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NoResultException | NonUniqueResultException $e) {
+            return 0;
+        }
     }
 }

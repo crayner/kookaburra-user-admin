@@ -1,0 +1,27 @@
+{% trans_default_domain 'UserAdmin' %}
+
+{% extends 'kookaburra.html.twig' %}
+
+{% form_theme form
+    'form/kookaburra_form.html.twig'
+%}
+
+{% set title = district.id > 0 ? 'Edit District' : 'Add District' %}
+{% set module = {'baseURL': 'user_admin', 'crumbs': [{uri: 'user_admin__manage', name: 'People Admin'},{uri: 'user_admin__district_manage', name: 'Manage Districts'}], title: title, domain: 'UserAdmin'} %}
+{% set breadcrumbs = 'new' %}
+{% set moduleName = 'UserAdmin' %}
+
+
+{% block content %}
+    {{ form_start(form) }}
+        <table class="smallIntBorder fullWidth standardForm relative">
+            <tbody>
+                {{ form_row(form.header) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.territory) }}
+                {{ form_row(form.postCode) }}
+                {{ form_row(form.submit) }}
+            </tbody>
+        </table>
+    {{ form_end(form) }}
+{% endblock content %}

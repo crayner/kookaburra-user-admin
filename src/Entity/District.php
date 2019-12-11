@@ -13,6 +13,8 @@
 
 namespace Kookaburra\UserAdmin\Entity;
 
+use App\Manager\EntityInterface;
+use App\Provider\ProviderFactory;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -26,7 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @UniqueEntity({"name","territory","postCode"})
  */
-class District
+class District implements EntityInterface
 {
     /**
      * @var integer|null
@@ -117,9 +119,9 @@ class District
     /**
      * @return string|null
      */
-    public function getPostalCode(): ?string
+    public function getPostCode(): ?string
     {
-        return $this->postalCode;
+        return $this->postCode;
     }
 
     /**
@@ -128,9 +130,25 @@ class District
      * @param string|null $postalCode
      * @return District
      */
-    public function setPostalCode(?string $postalCode): District
+    public function setPostCode(?string $postCode): District
     {
-        $this->postalCode = $postalCode;
+        $this->postCode = $postCode;
         return $this;
+    }
+
+    /**
+     * toArray
+     * @param string|null $name
+     * @return array
+     */
+    public function toArray(?string $name = null): array
+    {
+        return [
+            'name' => $this->getName(),
+            'id' => $this->getId(),
+            'territory' => $this->getTerritory(),
+            'postCode' => $this->getPostCode(),
+            'canDelete' => ProviderFactory::create(District::class)->countUsage($this) === 0,
+        ];
     }
 }
