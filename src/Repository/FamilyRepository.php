@@ -12,6 +12,9 @@
  */
 namespace Kookaburra\UserAdmin\Repository;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Kookaburra\UserAdmin\Entity\District;
 use Kookaburra\UserAdmin\Entity\Family;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -46,5 +49,24 @@ class FamilyRepository extends ServiceEntityRepository
             ->setParameter('search', '%'.$search->getSearch().'%')
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * countDistrictUsage
+     * @param District $district
+     * @return int
+     */
+    public function countDistrictUsage(District $district): int
+    {
+        try {
+            return $this->createQueryBuilder('f')
+                ->select('COUNT(f.id)')
+                ->where('f.homeAddressDistrict = :district')
+                ->setParameter('district', $district)
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NoResultException | NonUniqueResultException $e) {
+            return 0;
+        }
     }
 }

@@ -151,4 +151,13 @@ class District implements EntityInterface
             'canDelete' => ProviderFactory::create(District::class)->countUsage($this) === 0,
         ];
     }
+
+    /**
+     * getFullName
+     * @return string
+     */
+    public function getFullName(): string
+    {
+        return trim($this->getName().' '.$this->getTerritory().' '.$this->getPostCode());
+    }
 }

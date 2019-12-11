@@ -25,7 +25,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Family
  * @package Kookaburra\UserAdmin\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\UserAdmin\Repository\FamilyRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="Family", uniqueConstraints={@ORM\UniqueConstraint(name="name",columns={"name"})})
+ * @ORM\Table(options={"auto_increment": 1}, name="Family", uniqueConstraints={@ORM\UniqueConstraint(name="name",columns={"name"}), @ORM\UniqueConstraint(name="familySync",columns={"familySync"})},
+ *     indexes={@ORM\Index(name="homeAddressDistrict", columns={"homeAddressDistrict"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class Family implements EntityInterface
@@ -33,7 +34,7 @@ class Family implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id
-     * @ORM\Column(type="integer", name="gibbonFamilyID", columnDefinition="INT(7) UNSIGNED ZEROFILL AUTO_INCREMENT")
+     * @ORM\Column(type="integer", name="gibbonFamilyID", columnDefinition="INT(7) UNSIGNED ZEROFILL")
      * @ORM\GeneratedValue
      */
     private $id;
@@ -61,8 +62,9 @@ class Family implements EntityInterface
     private $homeAddress;
 
     /**
-     * @var string|null
-     * @ORM\Column(name="homeAddressDistrict")
+     * @var District|null
+     * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\District")
+     * @ORM\JoinColumn(name="homeAddressDistrict", referencedColumnName="gibbonDistrictID", nullable=true)
      */
     private $homeAddressDistrict;
 
@@ -188,18 +190,20 @@ class Family implements EntityInterface
     }
 
     /**
-     * @return string|null
+     * @return District|null
      */
-    public function getHomeAddressDistrict(): ?string
+    public function getHomeAddressDistrict(): ?District
     {
         return $this->homeAddressDistrict;
     }
 
     /**
-     * @param string|null $homeAddressDistrict
+     * HomeAddressDistrict.
+     *
+     * @param District|null $homeAddressDistrict
      * @return Family
      */
-    public function setHomeAddressDistrict(?string $homeAddressDistrict): Family
+    public function setHomeAddressDistrict(?District $homeAddressDistrict): Family
     {
         $this->homeAddressDistrict = $homeAddressDistrict;
         return $this;

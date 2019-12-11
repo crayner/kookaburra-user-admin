@@ -72,6 +72,7 @@ class DistrictPagination extends ReactPaginationManager
             ->setSpanClass('far fa-trash-alt fa-fw fa-1-5x text-gray-700')
             ->setRoute('user_admin__district_delete')
             ->setOnClick('areYouSure')
+            ->setDisplayWhen('canDelete')
             ->setRouteParams(['district' => 'id']);
         $row->addAction($action);
 

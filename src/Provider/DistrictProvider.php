@@ -15,6 +15,7 @@ namespace Kookaburra\UserAdmin\Provider;
 use App\Manager\Traits\EntityTrait;
 use App\Provider\EntityProviderInterface;
 use Kookaburra\UserAdmin\Entity\District;
+use Kookaburra\UserAdmin\Entity\Family;
 use Kookaburra\UserAdmin\Entity\Person;
 
 /**
@@ -33,7 +34,6 @@ class DistrictProvider implements EntityProviderInterface
     /**
      * countUsage
      * @param District $district
-     * @todo Family Addresses
      * @return int
      */
     public function countUsage(District $district): int
@@ -41,7 +41,7 @@ class DistrictProvider implements EntityProviderInterface
         $result = $this->getRepository(Person::class)->countDistrictUsage($district);
         if ($result > 0)
             return $result;
-// add family address measures here
+        $result += $this->getRepository(Family::class)->countDistrictUsage($district);
         return $result;
     }
 }

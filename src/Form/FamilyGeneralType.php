@@ -12,9 +12,12 @@
 
 namespace Kookaburra\UserAdmin\Form;
 
+use App\Form\Type\EntityType;
 use App\Form\Type\EnumType;
 use App\Form\Type\HeaderType;
 use App\Form\Type\ReactFormType;
+use Doctrine\ORM\EntityRepository;
+use Kookaburra\UserAdmin\Entity\District;
 use Kookaburra\UserAdmin\Entity\Family;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
@@ -104,11 +107,21 @@ class FamilyGeneralType extends AbstractType
                      'required' => false,
                ]
             )
-            ->add('homeAddressDistrict', TextType::class,
+            ->add('homeAddressDistrict', EntityType::class,
                 [
                     'label' => 'Residential Address (District)',
                     'help' => 'Suburb, Town, City, State (Postcode)',
                     'required' => false,
+                    'class' => District::class,
+                    'choice_label' => 'fullName',
+                    'placeholder' => ' ',
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('d')
+                            ->orderBy('d.name')
+                            ->addOrderBy('d.territory')
+                            ->addOrderBy('d.postCode')
+                        ;
+                    },
                 ]
             )
             ->add('homeAddressCountry', CountryType::class,
