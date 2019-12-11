@@ -184,7 +184,7 @@ class FamilyController extends AbstractController
     /**
      * familyChildRemove
      * @Route("/family/{family}/remove/{child}/child/",name="family_child_remove")
-     * @Security("is_granted('ROLE_ROUTE', ['user_admin__family_manage_edit'])")
+     * @IsGranted("ROLE_ROUTE")
      * @param Request $request
      * @param Family $family
      * @param FamilyChild $child
@@ -230,39 +230,34 @@ class FamilyController extends AbstractController
         if ($request->getContentType() === 'json' && $content['panelName'] === 'Students')
         {
             $addChild->submit($content);
+            $data = [];
             if ($addChild->isValid()) {
-                $data = [];
                 $provider = ProviderFactory::create(FamilyChild::class);
 
                 foreach(FamilyManager::getChildren($family) as $item)
                     $data = $provider->persistFlush($item, $data, false);
                 $data = $provider->persistFlush($child, $data);
 
-                $data['errors'] = array_unique($data['errors'], SORT_REGULAR);
                 if ($data['status'] === 'success') {
                     $data['redirect'] =  $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => 'Students']);
                     $data['status'] = 'redirect';
                     $this->addFlash('success', 'return.success.0');
                 }
-                return new JsonResponse($data,200);
+                return new JsonResponse(ErrorMessageHelper::uniqueErrors($data, true),200);
             } else {
-                $data['status'] = 'error';
-                $data['errors'][] = ['class' => 'error', 'message' => 'return.error.1'];
+                $data = ErrorMessageHelper::getInvalidInputsMessage($data, true);
                 $manager->singlePanel($addChild->createView());
                 $data['form'] = $manager->getFormFromContainer('formContent', 'single');
                 return new JsonResponse($data,200);
             }
         }
-        $data = [];
-        $data['errors'][] = ['class' => 'error', 'message' => ['return.error.1', [], 'messages']];
-        $data['status'] = 'error';
-        return new JsonResponse($data,400);
+        return new JsonResponse(ErrorMessageHelper::getInvalidInputsMessage([], true),400);
     }
 
     /**
      * familyAdultRemove
      * @Route("/family/{family}/remove/{adult}/adult/",name="family_adult_remove")
-     * @Security("is_granted('ROLE_ROUTE', ['user_admin__family_manage_edit'])")
+     * @IsGranted("ROLE_ROUTE")
      * @param Request $request
      * @param Family $family
      * @param FamilyAdult $adult
@@ -415,6 +410,54 @@ class FamilyController extends AbstractController
         $manager->singlePanel($form->createView());
 
         return $this->render('@KookaburraUserAdmin/family/student_edit.html.twig',
+            [
+                'family' => $family,
+            ]);
+    }
+
+    /**
+     * familyAdultEdit
+     * @param Family $family
+     * @param FamilyChild $student
+     * @param Request $request
+     * @param ContainerManager $manager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/family/{family}/adult/{adult}/edit/",name="family_adult_edit")
+     * @IsGranted("ROLE_ROUTE")
+     */
+    public function familyAdultEdit(Family $family, FamilyAdult $adult, Request $request, ContainerManager $manager)
+    {
+        $form = $this->createForm(FamilyAdultType::class, $adult, ['action' => $this->generateUrl('user_admin__family_adult_edit', ['family' => $family->getId(), 'adult' => $adult->getId()])]);
+
+        if ($request->getContentType() === 'json')
+        {
+            $data = [];
+            $data['status'] = 'success';
+            $data['errors'] = [];
+            $content = json_decode($request->getContent(), true);
+
+            $form->submit($content);
+            if ($form->isValid()) {
+                $data = ProviderFactory::create(FamilyChild::class)->persistFlush($adult, $data);
+
+                $manager->singlePanel($form->createView());
+                $data['form'] = $manager->getFormFromContainer('formContent', 'single');
+                if ($data['status'] === 'success') {
+                    $data['status'] = 'redirect';
+                    $data['redirect'] = $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => 'Adults']);
+                    $this->addFlash('success', 'return.success.0');
+                }
+                return new JsonResponse($data, 200);
+            } else {
+                $data = ErrorMessageHelper::getInvalidInputsMessage($data, true);
+                $manager->singlePanel($form->createView());
+                $data['form'] = $manager->getFormFromContainer('formContent', 'single');
+                return new JsonResponse($data, 200);
+            }
+        }
+        $manager->singlePanel($form->createView());
+
+        return $this->render('@KookaburraUserAdmin/family/adult_edit.html.twig',
             [
                 'family' => $family,
             ]);

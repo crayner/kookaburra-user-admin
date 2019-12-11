@@ -52,6 +52,7 @@ class FamilyPagination extends ReactPaginationManager
 
         $column = new PaginationColumn();
         $column->setLabel('Adults')
+            ->setSort(true)
             ->setContentKey('adults')
             ->setClass('column relative pr-4 cursor-pointer widthAuto')
         ;
@@ -59,6 +60,7 @@ class FamilyPagination extends ReactPaginationManager
 
         $column = new PaginationColumn();
         $column->setLabel('Children')
+            ->setSort(true)
             ->setContentKey('children')
             ->setClass('column relative pr-4 cursor-pointer widthAuto')
         ;

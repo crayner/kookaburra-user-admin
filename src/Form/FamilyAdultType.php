@@ -12,6 +12,8 @@
 
 namespace Kookaburra\UserAdmin\Form;
 
+use App\Form\Type\DisplayType;
+use App\Form\Type\HeaderType;
 use App\Form\Type\HiddenEntityType;
 use App\Form\Type\ParagraphType;
 use App\Form\Type\ReactFormType;
@@ -69,48 +71,78 @@ class FamilyAdultType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $parentRole = ProviderFactory::getRepository(Role::class)->findOneByName('Parent');
+        if ($options['data']->getId() > 0) {
+            $builder
+                ->add('adultEditHeader', HeaderType::class,
+                    [
+                        'label' => 'Edit Adult',
+                    ]
+                )
+                ->add('adultNote', ParagraphType::class,
+                    [
+                        'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showAdultAdd',
+                        'wrapper_class' => 'warning',
+                        'help' => 'contact_priority_logic'
+                    ]
+                )
+                ->add('personName', DisplayType::class,
+                    [
+                        'label' => 'Adult\'s Name',
+                        'help' => 'This value cannot be changed',
+                        'data' => $options['data']->getPerson()->formatName(['style' => 'formal']),
+                        'mapped' => false,
+                    ]
+                )
+                ->add('person', HiddenEntityType::class,
+                    [
+                        'class' => Person::class,
+                    ]
+                )
+            ;
+        } else {
+            $builder
+                ->add('showHideForm', ToggleType::class,
+                    [
+                        'label' => 'Add Adult / Guardian',
+                        'help' => '{name}',
+                        'help_translation_parameters' => [
+                            '{name}' => $options['data']->getFamily()->getName(),
+                        ],
+                        'label_class' => 'h3',
+                        'visibleByClass' => 'showAdultAdd',
+                        'mapped' => false,
+                        'row_class' => 'break flex flex-col sm:flex-row justify-between content-center p-0',
+                    ]
+                )
+                ->add('adultNote', ParagraphType::class,
+                    [
+                        'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showAdultAdd',
+                        'wrapper_class' => 'warning',
+                        'help' => 'contact_priority_logic'
+                    ]
+                )
+                ->add('person', EntityType::class,
+                    [
+                        'label' => 'Adult\'s Name',
+                        'class' => Person::class,
+                        'choice_label' => 'fullName',
+                        'placeholder' => 'Please select...',
+                        'query_builder' => function(EntityRepository $er) {
+                            return $er->createQueryBuilder('p')
+                                ->select(['p','s'])
+                                ->leftjoin('p.studentEnrolments','se')
+                                ->leftJoin('p.staff', 's')
+                                ->where('se.id IS NOT NULL')
+                                ->orderBy('p.surname', 'ASC')
+                                ->groupBy('p.id')
+                                ->addOrderBy('p.preferredName', 'ASC');
+                        },
+                        'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showAdultAdd',
+                    ]
+                )
+            ;
+        }
         $builder
-            ->add('showHideForm', ToggleType::class,
-                [
-                    'label' => 'Add Adult / Guardian',
-                    'help' => '{name}',
-                    'help_translation_parameters' => [
-                        '{name}' => $options['data']->getFamily()->getName(),
-                    ],
-                    'label_class' => 'h3',
-                    'visibleByClass' => 'showAdultAdd',
-                    'mapped' => false,
-                    'row_class' => 'break flex flex-col sm:flex-row justify-between content-center p-0',
-                ]
-            )
-            ->add('adultNote', ParagraphType::class,
-                [
-                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showAdultAdd',
-                    'wrapper_class' => 'warning',
-                    'help' => 'contact_priority_logic'
-                ]
-
-            )
-            ->add('person', EntityType::class,
-                [
-                    'label' => 'Child\'s Name',
-                    'class' => Person::class,
-                    'choice_label' => 'fullName',
-                    'placeholder' => 'Please select...',
-                    'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 showAdultAdd',
-                    'query_builder' => function(EntityRepository $er) use ($parentRole) {
-                        return $er->createQueryBuilder('p')
-                            ->select(['p','s'])
-                            ->leftJoin('p.staff', 's')
-                            ->where('p.primaryRole = :role')
-                            ->orWhere('p.allRoles LIKE :roleId')
-                            ->setParameters(['role' => $parentRole, 'roleId' => '%'.$parentRole->getId().'%'])
-                            ->orderBy('p.surname', 'ASC')
-                            ->groupBy('p.id')
-                            ->addOrderBy('p.preferredName', 'ASC');
-                    },
-                ]
-            )
             ->add('comment', TextareaType::class,
                 [
                     'label' => 'Comment'   ,

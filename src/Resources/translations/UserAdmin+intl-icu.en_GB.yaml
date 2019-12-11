@@ -961,10 +961,10 @@ Relationships: Relationships
 Adults: Adults
 Roll Group: Roll Group
 Comment: Comment
-"Child's Name": "Child's Name"
-View Children: View Children
+"Child's Name": "Student's Name"
+View Children: View Students
 Add Student: Add Student
-Remove Child from Family: Remove Child from Family
+Remove Child from Family: Remove Student from Family
 Remove adult from family: Remove adult from family
 Data Access: Data Access
 Contact Priority: Contact Priority
@@ -990,7 +990,13 @@ View Adults: View Adults / Guardians
 General: General
 Students: Students
 Search for Family Name: Search for Family Name
-Children: Children
+Children: Students
 contact_priority_logic: Logic exists ensure that the contact priority you select is used only once. If you select an existing contact priority, then the new parent/guardian is inserted at that position in priority.
 '{name}': '{name}'
 There are not enough people in this family to form relationships.: There are not enough people in this family to form relationships.
+Change Password: Change Password
+"Student's Name": "Student's Name"
+"Adult's Name": "Adult's Name"
+Edit Adult: Edit Adult
+This value cannot be changed: This value cannot be changed
+Edit Student: Edit Student

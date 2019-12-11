@@ -31,7 +31,7 @@ class FamilyAdultsPagination extends ReactPaginationManager
         $column->setLabel('Name')
             ->setContentKey(['fullName'])
             ->setContentType('link')
-            ->setOptions(['route' => 'user_admin__edit', 'route_options' => ['person' => 'adult_id']])
+            ->setOptions(['route' => 'user_admin__edit', 'route_options' => ['person' => 'person']])
             ->setClass('column relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);
 
@@ -84,6 +84,15 @@ class FamilyAdultsPagination extends ReactPaginationManager
         $row->addColumn($column);
 
         $action = new PaginationAction();
+        $action->setTitle('Edit')
+            ->setAClass('')
+            ->setColumnClass('column p-2 sm:p-3')
+            ->setSpanClass('fas fa-edit fa-fw fa-1-5x text-gray-700')
+            ->setRoute('user_admin__family_adult_edit')
+            ->setRouteParams(['family' => 'family_id', 'adult' => 'adult_id']);
+        $row->addAction($action);
+
+        $action = new PaginationAction();
         $action->setTitle('Remove adult from family')
             ->setAClass('')
             ->setColumnClass('column p-2 sm:p-3')
@@ -91,6 +100,15 @@ class FamilyAdultsPagination extends ReactPaginationManager
             ->setRoute('user_admin__family_adult_remove')
             ->setOnClick('areYouSure')
             ->setRouteParams(['family' => 'family_id', 'adult' => 'adult_id']);
+        $row->addAction($action);
+
+        $action = new PaginationAction();
+        $action->setTitle('Change Password')
+            ->setAClass('')
+            ->setColumnClass('column p-2 sm:p-3')
+            ->setSpanClass('fas fa-user-lock fa-fw fa-1-5x text-gray-700')
+            ->setRoute('user_admin__reset_password')
+            ->setRouteParams(['person' => 'person']);
         $row->addAction($action);
 
         $this->setRow($row);
