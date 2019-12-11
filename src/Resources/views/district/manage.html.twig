@@ -1,0 +1,13 @@
+{% trans_default_domain 'UserAdmin' %}
+
+{% extends 'kookaburra.html.twig' %}
+
+{% set module = {'baseURL': 'user_admin', 'crumbs': [{uri: 'user_admin__manage', name: 'People Admin'}], title: 'Manage Districts', domain: 'UserAdmin'} %}
+{% set breadcrumbs = 'new' %}
+{% set moduleName = 'UserAdmin' %}
+
+
+{% block content %}
+    <h3>{{ 'Manage Districts'|trans }}<button style="float: right;" title="{{ 'Add'|trans }}" type="button" onclick="window.open('{{ path('user_admin__district_add') }}','_self')"><span class="fas fa-plus-circle fa-fw fa-1-5x text-gray-700"/></button></h3>
+    <section id="paginationContent"></section>
+{% endblock content %}

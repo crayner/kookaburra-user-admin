@@ -113,7 +113,5 @@ class FamilyAdultsPagination extends ReactPaginationManager
 
         $this->setRow($row);
         return $this;
-
     }
-
 }
