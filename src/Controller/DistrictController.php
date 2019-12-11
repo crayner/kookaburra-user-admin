@@ -18,7 +18,10 @@ use Kookaburra\UserAdmin\Entity\District;
 use Kookaburra\UserAdmin\Form\DistrictType;
 use Kookaburra\UserAdmin\Pagination\DistrictPagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\ChoiceList\View\ChoiceView;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,10 +49,10 @@ class DistrictController extends AbstractController
 
     /**
      * manage
-     * @Route("/district/add/",name="district_add")
+     * @Route("/district/add/{popup}",name="district_add")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function add(Request $request)
+    public function add(Request $request, string $popup = '')
     {
         $district = new District();
 
@@ -61,7 +64,10 @@ class DistrictController extends AbstractController
             $data = ProviderFactory::create(District::class)->persistFlush($district, []);
             ErrorMessageHelper::convertToFlash($data, $request->getSession()->getBag('flashes'));
             if ($data['status'] === 'success') {
-                return $this->redirectToRoute('user_admin__district_manage');
+                if ($popup === 'popup')
+                    return $this->render('components/closeWindow.html.twig');
+                else
+                    return $this->redirectToRoute('user_admin__district_manage');
             }
         }
 
@@ -69,6 +75,7 @@ class DistrictController extends AbstractController
             [
                 'form' => $form->createView(),
                 'district' => $district,
+                'popup' => $popup === 'popup',
             ]
         );
     }
@@ -117,5 +124,20 @@ class DistrictController extends AbstractController
             $this->addFlash('error', 'return.error.8');
         }
         return $this->redirectToRoute('user_admin__district_manage');
+    }
+
+    /**
+     * refreshDistrictList
+     * @Route("/district/refresh/",name="district_refresh")
+     * @Security("is_granted('ROLE_ANY_ROUTE', ['user_admin__edit','user_admin__family_manage_edit'])")
+     */
+    public function refreshDistrictList()
+    {
+        $list = ProviderFactory::getRepository(District::class)->findBy([],['name' => 'ASC', 'territory' => 'ASC', 'postCode' => 'ASC']);
+        $result = [];
+        foreach($list as $item)
+            $result[] = new ChoiceView($item,$item->getId(),$item->getFullName());
+        $data['choices'] = $result;
+        return new JsonResponse($data, 200);
     }
 }

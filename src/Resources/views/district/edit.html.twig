@@ -1,6 +1,12 @@
 {% trans_default_domain 'UserAdmin' %}
 
-{% extends 'kookaburra.html.twig' %}
+{% if popup %}
+    {% set popup = 'kookaburra_popup.html.twig' %}
+{% else %}
+    {% set popup = 'kookaburra.html.twig' %}
+{% endif %}
+
+{% extends popup %}
 
 {% form_theme form
     'form/kookaburra_form.html.twig'

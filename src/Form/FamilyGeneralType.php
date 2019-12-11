@@ -20,6 +20,7 @@ use Doctrine\ORM\EntityRepository;
 use Kookaburra\UserAdmin\Entity\District;
 use Kookaburra\UserAdmin\Entity\Family;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
@@ -113,6 +114,7 @@ class FamilyGeneralType extends AbstractType
                     'help' => 'Suburb, Town, City, State (Postcode)',
                     'required' => false,
                     'class' => District::class,
+                    'data' => $options['data']->getHomeAddressDistrict() !== null ? $options['data']->getHomeAddressDistrict()->getId() : null,
                     'choice_label' => 'fullName',
                     'placeholder' => ' ',
                     'query_builder' => function(EntityRepository $er) {
@@ -120,8 +122,11 @@ class FamilyGeneralType extends AbstractType
                             ->orderBy('d.name')
                             ->addOrderBy('d.territory')
                             ->addOrderBy('d.postCode')
-                        ;
+                            ;
                     },
+                    'auto_refresh' => true,
+                    'auto_refresh_url' => '/user/admin/district/refresh/',
+                    'add_url' => ['target' => 'Create_District', 'url' => '/user/admin/district/add/popup', 'options' => "width=800,height=400,top=200,left=100,directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no"],
                 ]
             )
             ->add('homeAddressCountry', CountryType::class,

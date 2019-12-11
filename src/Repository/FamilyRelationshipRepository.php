@@ -85,9 +85,10 @@ class FamilyRelationshipRepository extends ServiceEntityRepository
      * @param Family $family
      * @param Person $adult
      * @param array $data
+     * @param bool $flush
      * @return array
      */
-    public function removeFamilyAdult(Family $family, Person $adult, array $data = []): array
+    public function removeFamilyAdult(Family $family, Person $adult, array $data = [], bool $flush = true): array
     {
         try {
             foreach ($this->findBy(['family' => $family, 'adult' => $adult]) as $fa)
@@ -107,6 +108,8 @@ class FamilyRelationshipRepository extends ServiceEntityRepository
      */
     public function findByFamily(Family $family): array
     {
+        if (intval($family->getId()) === 0)
+            return [];
         return $this->createQueryBuilder('r')
             ->where('r.family = :family')
             ->setParameter('family', $family)

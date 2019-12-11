@@ -7,6 +7,6 @@
 {% set moduleName = 'UserAdmin' %}
 
 {% block content %}
-    <button type="button" style="float: right;" onclick="window.open('{{ path('user_admin__family_manage') }}','_self')" title="Return"><span class="fas fa-reply fa-fw fa-1-5x text-gray-600"/></button>
+    <button type="button" class="close-button gray" onclick="window.open('{{ path('user_admin__family_manage') }}','_self')" title="Return"><span class="fas fa-reply fa-fw"/></button>
     <div id="formContent"></div>
 {% endblock content %}
