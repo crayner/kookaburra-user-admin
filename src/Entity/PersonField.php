@@ -13,16 +13,21 @@
 
 namespace Kookaburra\UserAdmin\Entity;
 
+use App\Manager\EntityInterface;
 use App\Manager\Traits\BooleanList;
+use App\Util\TranslationsHelper;
 use Doctrine\ORM\Mapping as ORM;
+use Kookaburra\UserAdmin\Validator as Validate;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class PersonField
  * @package Kookaburra\UserAdmin\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\UserAdmin\Repository\PersonFieldRepository")
  * @ORM\Table(options={"auto_increment": 1}, name="PersonField")
+ * @Validate\PersonFieldOptions()
  */
-class PersonField
+class PersonField implements EntityInterface
 {
     use BooleanList;
 
@@ -37,43 +42,50 @@ class PersonField
     /**
      * @var string|null
      * @ORM\Column(length=50)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=50)
      */
     private $name;
 
     /**
      * @var string|null
      * @ORM\Column(length=1, options={"default": "Y"})
+     * @Assert\Choice(callback="getBooleanList")
      */
-    private $active;
+    private $active = 'Y';
 
     /**
      * @var string|null
      * @ORM\Column()
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $description;
 
     /**
      * @var string|null
      * @ORM\Column(length=10, name="type")
+     * @Assert\Choice(callback="getTypeList")
      */
     private $type;
 
     /**
      * @var array
      */
-    private static $typeList = ['varchar','text','date','url','select','checkboxes'];
+    private static $typeList = ['varchar','text','date','url','select'];
 
     /**
      * @var string|null
-     * @ORM\Column(type="text", options={"comment": "Field length for varchar, rows for text, comma-separate list for select/checkbox."})
+     * @ORM\Column(type="text", options={"comment": "Field length for varchar, rows for text, comma-separate list for select/checkbox."}, nullable=true)
      */
     private $options;
 
     /**
      * @var string|null
      * @ORM\Column(length=1, options={"default": "N"})
+     * @Assert\Choice(callback="getBooleanList")
      */
-    private $required;
+    private $required = 'N';
 
     /**
      * @var boolean|null
@@ -260,7 +272,7 @@ class PersonField
     /**
      * @return bool|null
      */
-    public function getActivePersonStudent(): ?bool
+    public function isActivePersonStudent(): ?bool
     {
         return $this->activePersonStudent;
     }
@@ -278,7 +290,7 @@ class PersonField
     /**
      * @return bool|null
      */
-    public function getActivePersonStaff(): ?bool
+    public function isActivePersonStaff(): ?bool
     {
         return $this->activePersonStaff;
     }
@@ -296,7 +308,7 @@ class PersonField
     /**
      * @return bool|null
      */
-    public function getActivePersonParent(): ?bool
+    public function isActivePersonParent(): ?bool
     {
         return $this->activePersonParent;
     }
@@ -314,7 +326,7 @@ class PersonField
     /**
      * @return bool|null
      */
-    public function getActivePersonOther(): ?bool
+    public function isActivePersonOther(): ?bool
     {
         return $this->activePersonOther;
     }
@@ -332,7 +344,7 @@ class PersonField
     /**
      * @return bool|null
      */
-    public function getActiveApplicationForm(): ?bool
+    public function isActiveApplicationForm(): ?bool
     {
         return $this->activeApplicationForm;
     }
@@ -350,7 +362,7 @@ class PersonField
     /**
      * @return bool|null
      */
-    public function getActiveDataUpdater(): ?bool
+    public function isActiveDataUpdater(): ?bool
     {
         return $this->activeDataUpdater;
     }
@@ -368,7 +380,7 @@ class PersonField
     /**
      * @return bool|null
      */
-    public function getActivePublicRegistration(): ?bool
+    public function isActivePublicRegistration(): ?bool
     {
         return $this->activePublicRegistration;
     }
@@ -409,5 +421,34 @@ class PersonField
     {
         $this->value = $value;
         return $this;
+    }
+
+    /**
+     * toArray
+     * @param string|null $name
+     * @return array
+     */
+    public function toArray(?string $name = null): array
+    {
+        return [
+            'name' => $this->getName(),
+            'type' => TranslationsHelper::translate('personfield.type.'.$this->getType(), [], 'UserAdmin'),
+            'active' => TranslationsHelper::translate($this->getActive() === 'Y' ? 'Yes' : 'No', [], 'messages'),
+            'categories' => $this->getCategoryNames(),
+        ];
+    }
+
+    /**
+     * getCategoryNames
+     * @return string
+     */
+    public function getCategoryNames(): string
+    {
+        $result = '';
+        $result .= $this->isActivePersonStudent() ? TranslationsHelper::translate('Student', [], 'UserAdmin') . "\n<br/>" : '';
+        $result .= $this->isActivePersonStaff() ? TranslationsHelper::translate('Staff', [], 'UserAdmin') . "\n<br/>" : '';
+        $result .= $this->isActivePersonParent() ? TranslationsHelper::translate('Parent', [], 'UserAdmin') . "\n<br/>" : '';
+        $result .= $this->isActivePersonOther() ? TranslationsHelper::translate('Other', [], 'UserAdmin') . "\n<br/>" : '';
+        return $result;
     }
 }

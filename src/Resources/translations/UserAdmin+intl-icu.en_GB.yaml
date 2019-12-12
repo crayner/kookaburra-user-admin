@@ -1007,3 +1007,24 @@ Post / Zip Code: Post / Zip Code
 Territory: Territory
 Post Code: Post / Zip Code
 'Create District': Create District
+Field Type: Field Type
+personfield:
+    type:
+        varchar: Short Text (max 255 characters)
+        text: Long Text
+        date: Date
+        url: Link
+        select: Dropdown
+    options:
+        help: 'Short Text: number of characters, up to 255.<br />Long Text: number of rows for field.<br />Dropdown: comma separated list of options.: Short Text: number of characters, up to 255.'
+        error:
+            text: The height in lines for the form text box must be defined.
+            varchar: The length of the short text (max 255) must be defined.
+            select: Provide a comma separated list of valid values for this dropdown.
+Options: Options
+Is the field compulsory?: Is the field compulsory?
+Role Categories: Role Categories
+Include in Data Updater?: Include in Data Updater?
+Include in Public Registration Form?: Include in Public Registration Form?
+Include in Application Form?: Include in Application Form?
+Edit Custom Field: Edit Custom Field

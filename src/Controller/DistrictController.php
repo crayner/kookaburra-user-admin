@@ -48,9 +48,12 @@ class DistrictController extends AbstractController
     }
 
     /**
-     * manage
+     * add
      * @Route("/district/add/{popup}",name="district_add")
      * @IsGranted("ROLE_ROUTE")
+     * @param Request $request
+     * @param string $popup
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function add(Request $request, string $popup = '')
     {
@@ -81,9 +84,12 @@ class DistrictController extends AbstractController
     }
 
     /**
-     * manage
+     * edit
      * @Route("/district/{district}/edit/",name="district_edit")
      * @IsGranted("ROLE_ROUTE")
+     * @param District $district
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function edit(District $district, Request $request)
     {
@@ -103,12 +109,13 @@ class DistrictController extends AbstractController
             [
                 'form' => $form->createView(),
                 'district' => $district,
+                'popup' => false,
             ]
         );
     }
 
     /**
-     * manage
+     * delete
      * @Route("/district/{district}/delete/",name="district_delete")
      * @IsGranted("ROLE_ROUTE")
      * @param District $district

@@ -1,0 +1,50 @@
+{% trans_default_domain 'UserAdmin' %}
+
+
+    {% set popup = 'kookaburra.html.twig' %}
+
+{% extends popup %}
+
+{% form_theme form
+    'form/kookaburra_form.html.twig'
+%}
+
+{% set title = entity.id > 0 ? 'Edit Custom Field' : 'Add Custom Field' %}
+{% set module = {'baseURL': 'user_admin', 'crumbs': [{uri: 'user_admin__manage', name: 'People Admin'},{uri: 'user_admin__custom_fields_manage', name: 'Manage Custom Fields'}], title: title, domain: 'UserAdmin'} %}
+{% set breadcrumbs = 'new' %}
+{% set moduleName = 'UserAdmin' %}
+
+
+{% block content %}
+    {{ form_start(form) }}
+        <table class="smallIntBorder fullWidth standardForm relative">
+            <tbody>
+                {{ form_row(form.name) }}
+                {{ form_row(form.active) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.type) }}
+                {{ form_row(form.options) }}
+                {{ form_row(form.required) }}
+                {{ form_row(form.roleCategories) }}
+                <tr>
+                    <td colspan="2">
+                        <table class="fullWidth" style="border: none; border-left: 1px solid #cccccc;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 25%; border: 1px solid #cccccc;">{{ form_label(form.activePersonStudent) }}<div class="text-right">{{ form_widget(form.activePersonStudent) }}</div></td>
+                                    <td style="width: 25%; border: 1px solid #cccccc;">{{ form_label(form.activePersonStaff) }}<div class="text-right">{{ form_widget(form.activePersonStaff) }}</div></td>
+                                    <td style="width: 25%; border: 1px solid #cccccc;">{{ form_label(form.activePersonParent) }}<div class="text-right">{{ form_widget(form.activePersonParent) }}</div></td>
+                                    <td style="width: 25%; border: 1px solid #cccccc;">{{ form_label(form.activePersonOther) }}<div class="text-right">{{ form_widget(form.activePersonOther) }}</div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                {{ form_row(form.activeDataUpdater) }}
+                {{ form_row(form.activeApplicationForm) }}
+                {{ form_row(form.activePublicRegistration) }}
+                {{ form_row(form.submit) }}
+            </tbody>
+        </table>
+    {{ form_end(form) }}
+{% endblock content %}
