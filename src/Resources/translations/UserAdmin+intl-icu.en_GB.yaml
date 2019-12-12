@@ -1028,3 +1028,15 @@ Include in Data Updater?: Include in Data Updater?
 Include in Public Registration Form?: Include in Public Registration Form?
 Include in Application Form?: Include in Application Form?
 Edit Custom Field: Edit Custom Field
+Current Password: Current Password
+Personal Google Calendar ID: Personal Google Calendar ID
+'Google Calendar ID for your personal calendar.<br/>Only enables timetable integration when logging in via Google.': 'Google Calendar ID for your personal calendar.<br/>Only enables timetable integration when logging in via Google.'
+Set your own custom background image.<br/>Please provide URL to image.: Set your own custom background image.<br/>Please provide URL to image.
+Personal Theme: Personal Theme
+Override the system theme.: Override the system theme.
+System Default: System Default
+Personal Language: Personal Language
+Override the system default language.: Override the system default language.
+Receive Email Notifications?: Receive Email Notifications?
+Notifications can always be viewed on screen.: Notifications can always be viewed on screen.
+Enable Smart Workflow Help?: Enable Smart Workflow Help?
