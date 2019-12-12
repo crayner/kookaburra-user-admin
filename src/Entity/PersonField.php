@@ -434,7 +434,12 @@ class PersonField implements EntityInterface
             'name' => $this->getName(),
             'type' => TranslationsHelper::translate('personfield.type.'.$this->getType(), [], 'UserAdmin'),
             'active' => TranslationsHelper::translate($this->getActive() === 'Y' ? 'Yes' : 'No', [], 'messages'),
+            'isActive' => $this->getActive() === 'Y',
             'categories' => $this->getCategoryNames(),
+            'student' => $this->isActivePersonStudent(),
+            'parent' => $this->isActivePersonParent(),
+            'staff' => $this->isActivePersonStaff(),
+            'other' => $this->isActivePersonOther(),
         ];
     }
 

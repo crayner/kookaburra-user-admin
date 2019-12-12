@@ -14,6 +14,7 @@ namespace Kookaburra\UserAdmin\Pagination;
 
 use App\Manager\Entity\PaginationAction;
 use App\Manager\Entity\PaginationColumn;
+use App\Manager\Entity\PaginationFilter;
 use App\Manager\Entity\PaginationRow;
 use App\Manager\ReactPaginationInterface;
 use App\Manager\ReactPaginationManager;
@@ -77,6 +78,42 @@ class PersonFieldPagination extends ReactPaginationManager
             ->setOnClick('areYouSure')
             ->setRouteParams(['field' => 'id']);
         $row->addAction($action);
+
+        $filter = new PaginationFilter();
+        $filter->setName('Active: Yes')
+            ->setContentKey('isActive')
+            ->setValue(true);
+        $row->addFilter($filter);
+
+        $filter = new PaginationFilter();
+        $filter->setName('Active: No')
+            ->setContentKey('isActive')
+            ->setValue(false);
+        $row->addFilter($filter);
+
+        $filter = new PaginationFilter();
+        $filter->setName('Role: Student')
+            ->setContentKey('student')
+            ->setValue(true);
+        $row->addFilter($filter);
+
+        $filter = new PaginationFilter();
+        $filter->setName('Role: Parent')
+            ->setContentKey('parent')
+            ->setValue(true);
+        $row->addFilter($filter);
+
+        $filter = new PaginationFilter();
+        $filter->setName('Role: Staff')
+            ->setContentKey('staff')
+            ->setValue(true);
+        $row->addFilter($filter);
+
+        $filter = new PaginationFilter();
+        $filter->setName('Role: Other')
+            ->setContentKey('other')
+            ->setValue(true);
+        $row->addFilter($filter);
 
         $this->setRow($row);
         return $this;
