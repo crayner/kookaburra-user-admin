@@ -36,27 +36,6 @@ class ManageSearchType extends AbstractType
                     'required' => false,
                 ]
             )
-            ->add('filter', ChoiceType::class,
-                [
-                    'label' => 'Filter by',
-                    'help' => 'Preset filters with your search.',
-                    'placeholder' => 'Filters',
-                    'choices' => [
-                        'Role: Student' => "role:student",
-                        'Role: Parent' => "role:parent",
-                        'Role: Staff' => "role:staff",
-                        'Status: Full' => "status:full",
-                        'Status: Left' => "status:left",
-                        'Status: Expected' => "status:expected",
-                        'Before Start Date' => "date:starting",
-                        'After End Date' => "date:ended",
-                    ],
-                    'required' => false,
-                    'attr' => [
-                        'onChange' => 'this.form.submit()',
-                    ],
-                ]
-            )
             ->add('clear', SubmitType::class,
                 [
                     'label' => '<span class="fas fa-broom fa-fw"></span>',

@@ -14,6 +14,7 @@ namespace Kookaburra\UserAdmin\Pagination;
 
 use App\Manager\Entity\PaginationAction;
 use App\Manager\Entity\PaginationColumn;
+use App\Manager\Entity\PaginationFilter;
 use App\Manager\Entity\PaginationRow;
 use App\Manager\ReactPaginationInterface;
 use App\Manager\ReactPaginationManager;
@@ -102,6 +103,54 @@ class ManagePagination extends ReactPaginationManager
             ->setRoute('user_admin__reset_password')
             ->setRouteParams(['person' => 'id']);
         $row->addAction($action);
+
+        $filter = new PaginationFilter();
+        $filter->setName('Role: Student')
+            ->setValue('Student')
+            ->setContentKey('_role');
+        $row->addFilter($filter);
+
+        $filter = new PaginationFilter();
+        $filter->setName('Role: Parent')
+            ->setValue('Parent')
+            ->setContentKey('_role');
+        $row->addFilter($filter);
+
+        $filter = new PaginationFilter();
+        $filter->setName('Role: Staff')
+            ->setValue('Staff')
+            ->setContentKey('_role');
+        $row->addFilter($filter);
+
+        $filter = new PaginationFilter();
+        $filter->setName('Status: Full')
+            ->setValue('Full')
+            ->setContentKey('_status');
+        $row->addFilter($filter);
+
+        $filter = new PaginationFilter();
+        $filter->setName('Status: Left')
+            ->setValue('Left')
+            ->setContentKey('_status');
+        $row->addFilter($filter);
+
+        $filter = new PaginationFilter();
+        $filter->setName('Status: Expected')
+            ->setValue('Expected')
+            ->setContentKey('_status');
+        $row->addFilter($filter);
+
+        $filter = new PaginationFilter();
+        $filter->setName('Before Start Date')
+            ->setValue(true)
+            ->setContentKey('start_date');
+        $row->addFilter($filter);
+
+        $filter = new PaginationFilter();
+        $filter->setName('After End Date')
+            ->setValue(true)
+            ->setContentKey('end_date');
+        $row->addFilter($filter);
 
         $this->setRow($row);
         return $this;

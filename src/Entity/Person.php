@@ -3054,10 +3054,14 @@ class Person implements EntityInterface
             'fullName' => $this->formatName(['informal' => true, 'reverse' => true, 'style' => 'long']),
             'photo' => ImageHelper::getAbsoluteImageURL('File', $this->getImage240()),
             'status' => TranslationsHelper::translate($this->getStatus()),
+            '_status' => $this->getStatus(),
             'family' => $this->getFamilyName(),
             'username' => $this->getUsername(),
+            '_role' => $this->getPrimaryRole() ? $this->getPrimaryRole()->getCategory() : '',
             'role' => $this->getPrimaryRole() ? $this->getPrimaryRole()->getName() : '',
             'canDelete' => $this->canDelete(),
+            'start_date' => $this->getDateStart() === null || $this->getDateStart() <= new \DateTime() ? false : true,
+            'end_date' => $this->getDateEnd() === null || $this->getDateEnd() >= new \DateTime() ? false : true,
         ];
     }
 
