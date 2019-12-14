@@ -73,7 +73,7 @@ class PeopleController extends AbstractController
         $content = $repository->findBySearch($search);
         $pagination->setContent($content)->setPageMax(25)
             ->setPaginationScript();
-dump($pagination);
+
         $request->getSession()->set('people_manage_search', $search);
 
         return $this->render('@KookaburraUserAdmin/manage.html.twig',

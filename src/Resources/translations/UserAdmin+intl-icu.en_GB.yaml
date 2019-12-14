@@ -1040,3 +1040,76 @@ Override the system default language.: Override the system default language.
 Receive Email Notifications?: Receive Email Notifications?
 Notifications can always be viewed on screen.: Notifications can always be viewed on screen.
 Enable Smart Workflow Help?: Enable Smart Workflow Help?
+General Options: General Options
+Introduction: Introduction
+Information to display before the form: Information to display before the form
+Application Form Referee Link: Application Form Referee Link
+Link to an external form that will be emailed to a referee of the applicant's choosing.: Link to an external form that will be emailed to a referee of the applicant's choosing.
+Postscript: Postscript
+Information to display at the end of the form: Information to display at the end of the form
+Agreement: Agreement
+Without this text, which is displayed above the agreement, users will not be asked to agree to anything: Without this text, which is displayed above the agreement, users will not be asked to agree to anything
+Application Fee: Application Fee
+The cost of applying to the school.: The cost of applying to the school.
+Public Applications?: Public Applications?
+If yes, members of the public can submit applications: If yes, members of the public can submit applications
+Milestones: Milestones
+Comma-separated list of the major steps in the application process. Applicants can be tracked through the various stages.: Comma-separated list of the major steps in the application process. Applicants can be tracked through the various stages.
+How Did Your Hear?: How Did Your Hear?
+Comma-separated list: Comma-separated list
+Enable Limited Years of Entry: Enable Limited Years of Entry
+If yes, applicants choices for Year of Entry can be limited to specific school years.: If yes, applicants choices for Year of Entry can be limited to specific school years.
+Available Years of Entry: Available Years of Entry
+Which school years should be available to apply to?: Which school years should be available to apply to?
+2019-2020: 2019-2020
+2020-2021: 2020-2021
+Required Document Options: Required Document Options
+Required Documents: Required Documents
+Comma-separated list of documents which must be submitted electronically with the application form.: Comma-separated list of documents which must be submitted electronically with the application form.
+Internal Documents: Internal Documents
+Comma-separated list of documents for internal upload and use.: Comma-separated list of documents for internal upload and use.
+Required Documents Text: Required Documents Text
+Explanatory text to appear with the required documents?: Explanatory text to appear with the required documents?
+Required Documents Compulsory?: Required Documents Compulsory?
+Are the required documents compulsory?: Are the required documents compulsory?
+Language Learning Options: Language Learning Options
+Language Options Active: Language Options Active
+Should the Language Options section be turned on?: Should the Language Options section be turned on?
+Language Options Blurb: Language Options Blurb
+Introductory text if Language Options section is turned on.: Introductory text if Language Options section is turned on.
+Language Options Language List: Language Options Language List
+Comma-separated list of available language selections if Language Options section is turned on.: Comma-separated list of available language selections if Language Options section is turned on.
+Sections: Sections
+Special Education Needs Active: Special Education Needs Active
+Should the Special Education Needs section be turned on?: Should the Special Education Needs section be turned on?
+Application Form SEN Text: Application Form SEN Text
+Text to appear with the Special Educational Needs section of the student application form.: Text to appear with the Special Educational Needs section of the student application form.
+Scholarship Options Active: Scholarship Options Active
+Should the Scholarship Options section be turned on?: Should the Scholarship Options section be turned on?
+Scholarships: Scholarships
+Information to display before the scholarship options: Information to display before the scholarship options
+Payment Options Active: Payment Options Active
+Should the Payment section be turned on?: Should the Payment section be turned on?
+Acceptance Options: Acceptance Options
+Username Format: Username Format
+How should usernames be formated? Choose from [preferredName], [preferredNameInitial], [surname].: How should usernames be formated? Choose from [preferredName], [preferredNameInitial], [surname].
+Student Notification Message: Student Notification Message
+A custom message to add to the standard email to students on acceptance.: A custom message to add to the standard email to students on acceptance.
+Student Notification Default: Student Notification Default
+Should student acceptance email be turned on or off by default.: Should student acceptance email be turned on or off by default.
+Parents Notification Message: Parents Notification Message
+A custom message to add to the standard email to parents on acceptance.: A custom message to add to the standard email to parents on acceptance.
+Parents Notification Default: Parents Notification Default
+Should parent acceptance email be turned on or off by default.: Should parent acceptance email be turned on or off by default.
+Student Default Email: Student Default Email
+Set default email for students on acceptance, using [username] to insert username.: Set default email for students on acceptance, using [username] to insert username.
+Student Default Website: Student Default Website
+Set default website for students on acceptance, using [username] to insert username.: Set default website for students on acceptance, using [username] to insert username.
+Auto House Assign: Auto House Assign
+Attempt to automatically place student in a house?: Attempt to automatically place student in a house?
+Language Learning: Language Learning
+Acceptance: Acceptance
+All: All
+'Active: Yes': 'Active: Yes'
+'Active: No': 'Active: No'
+'Role: Other': 'Role: Other'

@@ -20,9 +20,9 @@ use App\Form\Type\SettingsType;
 use App\Form\Type\ToggleType;
 use App\Provider\ProviderFactory;
 use App\Validator\SimpleArray;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -30,6 +30,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 
 /**
  * Class ApplicationFormType
@@ -37,6 +38,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ApplicationFormType extends AbstractType
 {
+    /**
+     * buildForm
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -374,7 +380,12 @@ class ApplicationFormType extends AbstractType
                         [
                             'scope' => 'Application Form',
                             'name' => 'studentDefaultEmail',
-                            'entry_type' => TextType::class,
+                            'entry_type' => EmailType::class,
+                            'entry_options' => [
+                                'constraints' => [
+                                    new Email(['mode' => 'loose']),
+                                ],
+                            ],
                         ],
                         [
                             'scope' => 'Application Form',
@@ -420,5 +431,4 @@ class ApplicationFormType extends AbstractType
     {
         return ReactFormType::class;
     }
-
 }
