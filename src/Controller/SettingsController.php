@@ -12,12 +12,16 @@
 
 namespace Kookaburra\UserAdmin\Controller;
 
+use App\Container\Container;
 use App\Container\ContainerManager;
+use App\Container\Panel;
 use App\Entity\Setting;
+use App\Util\TranslationsHelper;
 use Kookaburra\UserAdmin\Entity\StaffAbsenceType;
 use Kookaburra\UserAdmin\Entity\StudentNoteCategory;
 use App\Provider\ProviderFactory;
 use Kookaburra\UserAdmin\Form\PeopleSettingsType;
+use Kookaburra\UserAdmin\Form\PublicRegistrationType;
 use Kookaburra\UserAdmin\Form\StaffSettingsType;
 use Kookaburra\UserAdmin\Form\StudentSettingsType;
 use Kookaburra\UserAdmin\Form\UpdaterSettingsType;
@@ -59,7 +63,8 @@ class SettingsController extends AbstractController
             $data = [];
             try {
                 $data['errors'] = $settingProvider->handleSettingsForm($form, $request, $translator);
-                $form = $this->createForm(PeopleSettingsType::class, null, ['action' => $this->generateUrl('user_admin__people_settings')]);
+                if ('success' === $settingProvider->getStatus())
+                    $form = $this->createForm(PeopleSettingsType::class, null, ['action' => $this->generateUrl('user_admin__people_settings')]);
             } catch (\Exception $e) {
                 $data['errors'][] = ['class' => 'error', 'message' => $translator->trans('return.error.2', [], 'messages')];
             }
@@ -95,7 +100,8 @@ class SettingsController extends AbstractController
             $data = [];
             try {
                 $data['errors'] = $settingProvider->handleSettingsForm($form, $request, $translator);
-                $form = $this->createForm(StudentSettingsType::class, null, ['action' => $this->generateUrl('user_admin__students_settings')]);
+                if ('success' === $settingProvider->getStatus())
+                    $form = $this->createForm(StudentSettingsType::class, null, ['action' => $this->generateUrl('user_admin__students_settings')]);
             } catch (\Exception $e) {
                 $data['errors'][] = ['class' => 'error', 'message' => $translator->trans('return.error.2', [], 'messages')];
             }
@@ -137,7 +143,8 @@ class SettingsController extends AbstractController
             $data = [];
             try {
                 $data['errors'] = $settingProvider->handleSettingsForm($form, $request, $translator);
-                $form = $this->createForm(StaffSettingsType::class, null, ['action' => $this->generateUrl('user_admin__staff_settings')]);
+                if ('success' === $settingProvider->getStatus())
+                    $form = $this->createForm(StaffSettingsType::class, null, ['action' => $this->generateUrl('user_admin__staff_settings')]);
             } catch (\Exception $e) {
                 $data['errors'][] = ['class' => 'error', 'message' => $translator->trans('return.error.2', [], 'messages')];
             }
@@ -176,7 +183,8 @@ class SettingsController extends AbstractController
             $data = [];
             try {
                 $data['errors'] = $settingProvider->handleSettingsForm($form, $request, $translator);
-                $form = $this->createForm(UpdaterSettingsType::class, null, ['action' => $this->generateUrl('user_admin__updater_settings')]);
+                if ('success' === $settingProvider->getStatus())
+                    $form = $this->createForm(UpdaterSettingsType::class, null, ['action' => $this->generateUrl('user_admin__updater_settings')]);
             } catch (\Exception $e) {
                 $data['errors'][] = ['class' => 'error', 'message' => $translator->trans('return.error.2', [], 'messages')];
             }
@@ -200,5 +208,53 @@ class SettingsController extends AbstractController
                 'required' => $required,
             ]
         );
+    }
+
+    /**
+     * publicRegistrationSettings
+     * @param Request $request
+     * @param ContainerManager $manager
+     * @param TranslatorInterface $translator
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("/public/registration/settings/{tabName}", name="public_registration_settings")
+     * @IsGranted("ROLE_ROUTE")
+     */
+    public function publicRegistrationSettings(Request $request, ContainerManager $manager, TranslatorInterface $translator, string $tabName = 'General Settings')
+    {
+        $settingProvider = ProviderFactory::create(Setting::class);
+
+        // System Settings
+        $form = $this->createForm(PublicRegistrationType::class, null, ['action' => $this->generateUrl('user_admin__public_registration_settings')]);
+
+        if ($request->getContentType() === 'json') {
+            $data = [];
+            try {
+                $data['errors'] = $settingProvider->handleSettingsForm($form, $request, $translator);
+                if ('success' === $settingProvider->getStatus())
+                    $form = $this->createForm(PublicRegistrationType::class, null, ['action' => $this->generateUrl('user_admin__public_registration_settings')]);
+            } catch (\Exception $e) {
+                $data['errors'][] = ['class' => 'error', 'message' => $translator->trans('return.error.2', [], 'messages')];
+            }
+
+            $manager->singlePanel($form->createView());
+            $data['form'] = $manager->getFormFromContainer('formContent', 'single');
+
+            return new JsonResponse($data, 200);
+
+        }
+        $container = new Container();
+        $container->setTarget('formContent')->setSelectedPanel($tabName);
+        TranslationsHelper::setDomain('UserAdmin');
+
+        $panel = new Panel('General Settings', 'UserAdmin');
+        $container->addForm('single', $form->createView())->addPanel($panel);
+
+        $panel = new Panel('Interface', 'UserAdmin');
+        $container->addPanel($panel);
+
+        $manager->addContainer($container)->buildContainers();
+
+        return $this->render('@KookaburraUserAdmin/settings/public_registration.html.twig');
+
     }
 }

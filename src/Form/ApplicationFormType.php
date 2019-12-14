@@ -154,7 +154,7 @@ class ApplicationFormType extends AbstractType
             )
             ->add('submit', SubmitType::class,
                 [
-                    'label' => 'Submit',
+                    'label' => 'Submit All Panels',
                     'panel' => 'General Options',
                ]
             )
@@ -214,7 +214,7 @@ class ApplicationFormType extends AbstractType
             )
             ->add('submit2', SubmitType::class,
                 [
-                    'label' => 'Submit',
+                    'label' => 'Submit All Panels',
                     'panel' => 'Required Documents',
                 ]
             )
@@ -266,7 +266,7 @@ class ApplicationFormType extends AbstractType
             )
             ->add('submit3', SubmitType::class,
                 [
-                    'label' => 'Submit',
+                    'label' => 'Submit All Panels',
                     'panel' => 'Language Learning',
                 ]
             )
@@ -328,7 +328,7 @@ class ApplicationFormType extends AbstractType
             )
             ->add('submit4', SubmitType::class,
                 [
-                    'label' => 'Submit',
+                    'label' => 'Submit All Panels',
                     'panel' => 'Sections',
                 ]
             )
@@ -402,7 +402,7 @@ class ApplicationFormType extends AbstractType
             )
             ->add('acceptance', SubmitType::class,
                 [
-                    'label' => 'Submit',
+                    'label' => 'Submit All Panels',
                     'panel' => 'Acceptance',
                 ]
             )

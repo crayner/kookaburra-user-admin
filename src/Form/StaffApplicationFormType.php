@@ -114,7 +114,7 @@ class StaffApplicationFormType extends AbstractType
             )
             ->add('generalSubmit', SubmitType::class,
                 [
-                    'label' => 'Submit',
+                    'label' => 'Submit All Panels',
                     'panel' => 'General Options',
                 ]
             )
@@ -143,7 +143,7 @@ class StaffApplicationFormType extends AbstractType
             )
             ->add('refereeSubmit', SubmitType::class,
                 [
-                    'label' => 'Submit',
+                    'label' => 'Submit All Panels',
                     'panel' => 'Referee Links',
                 ]
             )
@@ -190,7 +190,7 @@ class StaffApplicationFormType extends AbstractType
             )
             ->add('requiredSubmit', SubmitType::class,
                 [
-                    'label' => 'Submit',
+                    'label' => 'Submit All Panels',
                     'panel' => 'Required Documents',
                 ]
             )
@@ -244,7 +244,7 @@ class StaffApplicationFormType extends AbstractType
             )
             ->add('acceptanceSubmit', SubmitType::class,
                 [
-                    'label' => 'Submit',
+                    'label' => 'Submit All Panels',
                     'panel' => 'Acceptance',
                 ]
             )

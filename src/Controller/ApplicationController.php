@@ -52,6 +52,8 @@ class ApplicationController extends AbstractController
 
             try {
                 $data['errors'] = $settingProvider->handleSettingsForm($form, $request, $translator);
+                if ('success' === $settingProvider->getStatus())
+                    $form = $this->createForm(ApplicationFormType::class, null, ['action' => $this->generateUrl('user_admin__application_form_settings', ['tabName' => $tabName])]);
             } catch (\Exception $e) {
                 $data['errors'][] = ['class' => 'error', 'message' => $translator->trans('return.error.2', [], 'messages')];
             }
@@ -104,6 +106,8 @@ class ApplicationController extends AbstractController
             $data = [];
             try {
                 $data['errors'] = $settingProvider->handleSettingsForm($form, $request, $translator);
+                if ('success' === $settingProvider->getStatus())
+                    $form = $this->createForm(StaffApplicationFormType::class, null, ['action' => $this->generateUrl('user_admin__staff_application_form_settings', ['tabName' => $tabName])]);
             } catch (\Exception $e) {
                 $data['errors'][] = ['class' => 'error', 'message' => $translator->trans('return.error.2', [], 'messages')];
             }
