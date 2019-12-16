@@ -1,0 +1,44 @@
+{% trans_default_domain 'UserAdmin' %}
+
+{% extends 'kookaburra.html.twig' %}
+
+{% form_theme form
+    'form/kookaburra_form.html.twig'
+%}
+
+{% set module = {'baseURL': 'user_admin', 'crumbs': [{uri: 'user_admin__manage', name: 'People Admin'}], title: 'Import People Photos', domain: 'UserAdmin'} %}
+{% set breadcrumbs = 'new' %}
+{% set moduleName = 'UserAdmin' %}
+
+{% block content %}
+    <h3>{{ 'Imported Images'|trans }}</h3>
+    {% for photo in finder %}
+        <img src="{{ asset('uploads/imports/' ~ photo.getBasename()) }}" class="max150 user left" />
+    {% endfor %}
+    <h3>{{ 'Select Import File'|trans }}</h3>
+    {{ form_start(form) }}
+    <table class="smallIntBorder fullWidth standardForm relative">
+        <tbody>
+            {{ form_row(form.file) }}
+            {{ form_row(form.submit) }}
+        </tbody>
+    </table>
+    {{ form_end(form) }}
+    <div class="info">
+        <h4 class="info">{{ 'Notes'|trans }}</h4>
+        <ol>
+            <li>{{ 'You can only submit ZIP files.'|trans }}</li>
+            <li>{{ 'Files in the import directory will be overwritten by files with the same name.'|trans }}</li>
+            <li>{{ 'Please note the following requirements for images in preparing your ZIP file'|trans }}:
+                <ol>
+                    <li>{{ 'File Name - The system modifies the filename when linked to the correct person.'|trans }}</li>
+                    <li>{{ 'Folder * - The ZIP file must not contain any folders, only files.'|trans }}</li>
+                    <li>{{ 'File Type * - Images must be formatted as JPG or PNG.'|trans }}</li>
+                    <li>{{ 'Image Size * - Displayed at 240px by 320px.'|trans }}</li>
+                    <li>{{ 'Size Range * - Accepts images up to 360px by 480px.'|trans }}</li>
+                    <li>{{ 'Aspect Ratio Range * - Accepts aspect ratio between 0.7:1 and 0.84:1.'|trans }}</li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+{% endblock content %}
