@@ -64,6 +64,9 @@ use Symfony\Component\Intl\Languages;
  *     fields={"studentID"},
  *     ignoreNull=true
  * )
+ * @UniqueEntity(
+ *     fields={"username"},
+ * )
  */
 class Person implements EntityInterface
 {
@@ -204,6 +207,7 @@ class Person implements EntityInterface
     public function setSurname(?string $surname): Person
     {
         $this->surname = mb_substr($surname, 0, 60);
+        $this->setOfficialName(null);
         return $this;
     }
 
@@ -262,6 +266,7 @@ class Person implements EntityInterface
         if (null === $this->getFirstName())
             return $this->setFirstName($preferredName);
 
+        $this->setOfficialName(null);
         return $this;
     }
 
@@ -286,6 +291,8 @@ class Person implements EntityInterface
      */
     public function setOfficialName(?string $officialName): Person
     {
+        if ($officialName === null && !empty($this->getSurname()) && !empty($this->getFirstName()))
+            $officialName = $this->getFirstName() . ' ' . $this->getSurname();
         $this->officialName = mb_substr($officialName, 0, 150);
         return $this;
     }
@@ -561,7 +568,7 @@ class Person implements EntityInterface
 
     /**
      * @var \DateTimeImmutable|null
-     * @ORM\Column(type="date_immutable", nullable=true)
+     * @ORM\Column(type="date_immutable",nullable=true)
      */
     private $dob;
 

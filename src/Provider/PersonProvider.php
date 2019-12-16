@@ -248,9 +248,12 @@ class PersonProvider implements EntityProviderInterface, UserLoaderInterface
         return $resolver->resolve($alert);
     }
 
+    /**
+     * handleRegistration
+     * @param FormInterface $form
+     */
     public function handleRegistration(FormInterface $form)
     {
-        $person = new Person();
         $person = $form->getData();
         $this->setEntity($person);
 
@@ -262,8 +265,7 @@ class PersonProvider implements EntityProviderInterface, UserLoaderInterface
         $person->setStatus(ProviderFactory::create(Setting::class)->getSettingByScope('User Admin', 'publicRegistrationDefaultStatus'));
         $role = ProviderFactory::create(Setting::class)->getSettingByScope('User Admin', 'publicRegistrationDefaultRole');
         $person->setPrimaryRole($role = ProviderFactory::getRepository(Role::class)->find($role));
-        $person->setAllRoles($role->getId());
-
+        $person->setAllRoles([$role->getId()]);
 
         foreach($form->get('fields')->getData() as $key=>$value)
         {
@@ -282,10 +284,11 @@ class PersonProvider implements EntityProviderInterface, UserLoaderInterface
 
             $event->sendNotifications();
 
-            $this->getSession()->addFlash('success', 'Your registration was successfully submitted and is now pending approval. Our team will review your registration and be in touch in due course.');
+            $data['errors'][] = ['class' => 'success', 'message' => ['Your registration was successfully submitted and is now pending approval. Our team will review your registration and be in touch in due course.', [], 'UserAdmin']];
         } else {
-            $this->getSession()->addFlash('success', 'Your registration was successfully submitted, and you may now log into the system using your new username and password.');
+            $data['errors'][] = ['class' => 'success', 'messages' => ['Your registration was successfully submitted, and you may now log into the system using your new username and password.', [], 'UserAdmin']];
         }
+        return $data;
     }
 
     /**

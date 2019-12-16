@@ -31,6 +31,7 @@ use Kookaburra\SystemAdmin\Entity\Role;
 use Kookaburra\UserAdmin\Entity\FamilyRelationship;
 use Kookaburra\UserAdmin\Entity\Person;
 use Kookaburra\UserAdmin\Util\UserHelper;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -170,10 +171,16 @@ class PersonType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $emailConstraint = [];
+        if (ProviderFactory::create(Setting::class)->getSettingByScopeAsBoolean('User Admin','uniqueEmailAddress'))
+            $emailConstraint = [
+                new UniqueEntity(['fields' => ['email'], 'ignoreNull' => true]),
+            ];
         $resolver->setDefaults(
             [
                 'translation_domain' => 'UserAdmin',
                 'data_class' => Person::class,
+                'constraints' => $emailConstraint,
             ]
         );
     }

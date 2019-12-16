@@ -1113,3 +1113,9 @@ All: All
 'Active: Yes': 'Active: Yes'
 'Active: No': 'Active: No'
 'Role: Other': 'Role: Other'
+Account Details: Account Details
+date_format: 'Format: {format}'
+Other Information: Other Information
+Privacy Statement: Privacy Statement
+Your registration was successfully submitted and is now pending approval. Our team will review your registration and be in touch in due course.: Your registration was successfully submitted and is now pending approval. Our team will review your registration and be in touch in due course.
+'Your registration was successfully submitted, and you may now log into the system using your new username and password.': 'Your registration was successfully submitted, and you may now log into the system using your new username and password.'
