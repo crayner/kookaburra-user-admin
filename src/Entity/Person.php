@@ -3063,13 +3063,46 @@ class Person implements EntityInterface
             'status' => TranslationsHelper::translate($this->getStatus()),
             '_status' => $this->getStatus(),
             'family' => $this->getFamilyName(),
+            'family_id' => $this->getFamilyId(),
             'username' => $this->getUsername(),
             '_role' => $this->getPrimaryRole() ? $this->getPrimaryRole()->getCategory() : '',
             'role' => $this->getPrimaryRole() ? $this->getPrimaryRole()->getName() : '',
             'canDelete' => $this->canDelete(),
             'start_date' => $this->getDateStart() === null || $this->getDateStart() <= new \DateTime() ? false : true,
             'end_date' => $this->getDateEnd() === null || $this->getDateEnd() >= new \DateTime() ? false : true,
+            'email' => $this->getEmail(),
+            'studentID' => $this->getStudentID() ?: '',
+            'phone' => trim($this->getPhone1().$this->getPhone2().$this->getPhone3().$this->getPhone4()) ?: '',
+            'rego' => $this->getVehicleRegistration() ?: '',
+            'name' => $this->getSurname().' '.$this->getFirstName().' '.$this->getPreferredName(),
         ];
+    }
+
+    /**
+     * @var
+     */
+    private $family;
+
+    /**
+     * getFamily
+     * @return Family|null
+     */
+    public function getFamily(): ?Family
+    {
+        if ($this->family instanceof Family)
+            return $this->family;
+        if ($this->getAdults()->count() > 0) {
+            $adult = $this->getAdults()->first();
+            if ($adult->getFamily() instanceof Family)
+                return $this->family = $adult->getFamily();
+        }
+        if ($this->getChildren()->count() > 0) {
+            $child = $this->getChildren()->first();
+            if ($child->getFamily() instanceof Family)
+                return $this->family = $child->getFamily();
+        }
+        $this->famil = null;
+        return $this->family;
     }
 
     /**
@@ -3078,17 +3111,16 @@ class Person implements EntityInterface
      */
     public function getFamilyName(): string
     {
-        if ($this->getAdults()->count() > 0) {
-            $adult = $this->getAdults()->first();
-            if ($adult->getFamily() instanceof Family)
-                return $adult->getFamily()->getName();
-        }
-        if ($this->getChildren()->count() > 0) {
-            $adult = $this->getChildren()->first();
-            if ($adult->getFamily() instanceof Family)
-                return $adult->getFamily()->getName();
-        }
-        return '';
+        return $this->getFamily() ? $this->getFamily()->getName() : '';
+    }
+
+    /**
+     * getFamilyName
+     * @return string
+     */
+    public function getFamilyId(): string
+    {
+        return $this->getFamily() ? $this->getFamily()->getName() : '';
     }
 
     /**

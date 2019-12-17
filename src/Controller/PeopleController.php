@@ -59,28 +59,12 @@ class PeopleController extends AbstractController
      */
     public function manage(ManagePagination $pagination, Request $request)
     {
-        $search = $request->getSession()->has('people_manage_search') ? $request->getSession()->get('people_manage_search') : new ManageSearch();
-        $form = $this->createForm(ManageSearchType::class, $search, ['action' => $this->generateUrl('user_admin__manage')]);
-
-        $form->handleRequest($request);
-
-        if ($form->get('clear')->isClicked()) {
-            $search = new ManageSearch();
-            $form = $this->createForm(ManageSearchType::class, $search, ['action' => $this->generateUrl('user_admin__manage')]);
-        }
-
         $repository = ProviderFactory::getRepository(Person::class);
-        $content = $repository->findBySearch($search);
+        $content = $repository->findBySearch(new ManageSearch());
         $pagination->setContent($content)->setPageMax(25)
             ->setPaginationScript();
 
-        $request->getSession()->set('people_manage_search', $search);
-
-        return $this->render('@KookaburraUserAdmin/manage.html.twig',
-            [
-                'form' => $form->createView(),
-            ]
-        );
+        return $this->render('@KookaburraUserAdmin/manage.html.twig');
     }
 
     /**

@@ -2,34 +2,14 @@
 
 {% extends 'kookaburra.html.twig' %}
 
-{% form_theme form
-    'form/kookaburra_form.html.twig'
-%}
-
 {% set module = {'baseURL': 'user_admin', 'crumbs': [{uri: 'user_admin__manage', name: 'People Admin'}], title: 'Manage People', domain: 'UserAdmin'} %}
 {% set breadcrumbs = 'new' %}
 {% set moduleName = 'UserAdmin' %}
 
 
 {% block content %}
-    <h3>{{ 'Search'|trans }}</h3>
-    {{ form_start(form) }}
-        <table class="noIntBorder fullWidth relative">
-            <tbody>
-                {{ form_row(form.search) }}
-
-                <tr class="flex flex-col sm:flex-row justify-between content-center p-0">
-                    <td class="flex-grow justify-center px-2 border-b-0 sm:border-b border-t-0"><span class="emphasis small">{{ '* denotes a required field'|trans({}, 'messages') }}</span></td>
-                    <td class="w-full max-w-full sm:max-w-xs flex justify-end items-center px-2 border-b-0 sm:border-b border-t-0">
-                        {{ form_widget(form.clear) }}
-                        {{ form_widget(form.find) }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    {{ form_end(form) }}
     <h3>{{ 'View'|trans }}
-        <button style="float: right;" title="{{ 'Add Person'|trans }}" type="button" onclick="window.open('{{ path('user_admin__add') }}','_self')"><span class="fas fa-plus-circle fa-fw fa-1-5x text-gray-700"/></button>
+        <button class="close-button grey" title="{{ 'Add Person'|trans }}" type="button" onclick="window.open('{{ path('user_admin__add') }}','_self')"><span class="fas fa-plus-circle fa-fw"/></button>
     </h3>
     <section id="paginationContent"></section>
 {% endblock content %}

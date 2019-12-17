@@ -30,6 +30,7 @@ class RoleManagePagination extends ReactPaginationManager
         $column = new PaginationColumn();
         $column->setLabel('Category')
             ->setContentKey('category')
+            ->setSort(true)
             ->setClass('column relative pr-4 cursor-pointer widthAuto')
         ;
         $row->addColumn($column);

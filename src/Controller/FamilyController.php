@@ -58,27 +58,11 @@ class FamilyController extends AbstractController
      */
     public function familyManage(Request $request, FamilyPagination $pagination, FamilyManager $manager)
     {
-        $search = $request->getSession()->has('family_manage_search') ? $request->getSession()->get('family_manage_search') : new ManageSearch();
-        $form = $this->createForm(FamilySearchType::class, $search, ['action' => $this->generateUrl('user_admin__family_manage')]);
-
-        $form->handleRequest($request);
-
-        if ($form->get('clear')->isClicked()) {
-            $search = new ManageSearch();
-            $form = $this->createForm(FamilySearchType::class, $search, ['action' => $this->generateUrl('user_admin__family_manage')]);
-        }
-
-        $content = $manager->findBySearch($search);
+        $content = $manager->findBySearch(new ManageSearch());
         $pagination->setContent($content)->setPageMax(25)
             ->setPaginationScript();
 
-        $request->getSession()->set('family_manage_search', $search);
-
-        return $this->render('@KookaburraUserAdmin/family/manage.html.twig',
-            [
-                'form' => $form->createView(),
-            ]
-        );
+        return $this->render('@KookaburraUserAdmin/family/manage.html.twig');
     }
 
     /**

@@ -29,6 +29,7 @@ class ManagePagination extends ReactPaginationManager
     public function execute(): ReactPaginationInterface
     {
         TranslationsHelper::setDomain('UserAdmin');
+        TranslationsHelper::setTranslation('Search in', 'Preferred, surname, username, role, student ID, email, phone number, vehicle registration', [], 'UserAdmin');
         $row = new PaginationRow();
 
         $column = new PaginationColumn();
@@ -44,6 +45,7 @@ class ManagePagination extends ReactPaginationManager
         $column->setLabel('Name')
             ->setContentKey(['fullName'])
             ->setSort(true)
+            ->setSearch(true)
             ->setClass('column relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);
 
@@ -51,12 +53,14 @@ class ManagePagination extends ReactPaginationManager
         $column->setLabel('Primary Role')
             ->setContentKey(['role'])
             ->setSort(false)
+            ->setSearch(true)
             ->setClass('column relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);
 
         $column = new PaginationColumn();
         $column->setLabel('Status')
             ->setContentKey(['status'])
+            ->setSearch(true)
             ->setSort(false)
             ->setClass('column relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);
@@ -64,7 +68,10 @@ class ManagePagination extends ReactPaginationManager
         $column = new PaginationColumn();
         $column->setLabel('Family')
             ->setContentKey(['family'])
-            ->setSort(false)
+            ->setContentType('link')
+            ->setSort(true)
+            ->setOptions(['route' => 'user_admin__family_manage_edit', 'route_options' => ['family' => 'family_id']])
+            ->setSearch(true)
             ->setClass('column hidden sm:table-cell relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);
 
@@ -72,7 +79,38 @@ class ManagePagination extends ReactPaginationManager
         $column->setLabel('Username')
             ->setContentKey(['username'])
             ->setSort(false)
+            ->setSearch(true)
             ->setClass('column hidden sm:table-cell relative pr-4 cursor-pointer widthAuto');
+        $row->addColumn($column);
+
+        $column = new PaginationColumn();
+        $column->setContentKey(['email'])
+            ->setDataOnly(true)
+            ->setSearch(true);
+        $row->addColumn($column);
+
+        $column = new PaginationColumn();
+        $column->setContentKey(['studentID'])
+            ->setDataOnly(true)
+            ->setSearch(true);
+        $row->addColumn($column);
+
+        $column = new PaginationColumn();
+        $column->setContentKey(['phone'])
+            ->setDataOnly(true)
+            ->setSearch(true);
+        $row->addColumn($column);
+
+        $column = new PaginationColumn();
+        $column->setContentKey(['rego'])
+            ->setDataOnly(true)
+            ->setSearch(true);
+        $row->addColumn($column);
+
+        $column = new PaginationColumn();
+        $column->setContentKey(['name'])
+            ->setDataOnly(true)
+            ->setSearch(true);
         $row->addColumn($column);
 
         $action = new PaginationAction();
@@ -107,48 +145,56 @@ class ManagePagination extends ReactPaginationManager
         $filter = new PaginationFilter();
         $filter->setName('Role: Student')
             ->setValue('Student')
+            ->setGroup('Role')
             ->setContentKey('_role');
         $row->addFilter($filter);
 
         $filter = new PaginationFilter();
         $filter->setName('Role: Parent')
             ->setValue('Parent')
+            ->setGroup('Role')
             ->setContentKey('_role');
         $row->addFilter($filter);
 
         $filter = new PaginationFilter();
         $filter->setName('Role: Staff')
             ->setValue('Staff')
+            ->setGroup('Role')
             ->setContentKey('_role');
         $row->addFilter($filter);
 
         $filter = new PaginationFilter();
         $filter->setName('Status: Full')
             ->setValue('Full')
+            ->setGroup('Status')
             ->setContentKey('_status');
         $row->addFilter($filter);
 
         $filter = new PaginationFilter();
         $filter->setName('Status: Left')
             ->setValue('Left')
+            ->setGroup('Status')
             ->setContentKey('_status');
         $row->addFilter($filter);
 
         $filter = new PaginationFilter();
         $filter->setName('Status: Expected')
             ->setValue('Expected')
+            ->setGroup('Status')
             ->setContentKey('_status');
         $row->addFilter($filter);
 
         $filter = new PaginationFilter();
         $filter->setName('Before Start Date')
             ->setValue(true)
+            ->setGroup('Date')
             ->setContentKey('start_date');
         $row->addFilter($filter);
 
         $filter = new PaginationFilter();
         $filter->setName('After End Date')
             ->setValue(true)
+            ->setGroup('Date')
             ->setContentKey('end_date');
         $row->addFilter($filter);
 

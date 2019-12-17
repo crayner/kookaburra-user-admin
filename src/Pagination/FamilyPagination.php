@@ -32,12 +32,14 @@ class FamilyPagination extends ReactPaginationManager
     public function execute(): ReactPaginationInterface
     {
         TranslationsHelper::setDomain('UserAdmin');
+        TranslationsHelper::setTranslation('Search in', 'Name, Adults & Students', [], 'UserAdmin');
         $row = new PaginationRow();
 
         $column = new PaginationColumn();
         $column->setLabel('Name')
             ->setContentKey('name')
             ->setSort(true)
+            ->setSearch(true)
             ->setClass('column relative pr-4 cursor-pointer widthAuto')
         ;
         $row->addColumn($column);
@@ -53,6 +55,7 @@ class FamilyPagination extends ReactPaginationManager
         $column = new PaginationColumn();
         $column->setLabel('Adults')
             ->setSort(true)
+            ->setSearch(true)
             ->setContentKey('adults')
             ->setClass('column relative pr-4 cursor-pointer widthAuto')
         ;
@@ -61,6 +64,7 @@ class FamilyPagination extends ReactPaginationManager
         $column = new PaginationColumn();
         $column->setLabel('Children')
             ->setSort(true)
+            ->setSearch(true)
             ->setContentKey('children')
             ->setClass('column relative pr-4 cursor-pointer widthAuto')
         ;
