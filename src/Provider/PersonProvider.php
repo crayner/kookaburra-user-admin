@@ -18,6 +18,7 @@ use App\Entity\INPersonDescriptor;
 use App\Entity\MarkbookEntry;
 use App\Provider\EntityProviderInterface;
 use App\Provider\ProviderFactory;
+use App\Util\ImageHelper;
 use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\PersonMedical;
 use Kookaburra\SystemAdmin\Entity\Role;
@@ -359,5 +360,24 @@ class PersonProvider implements EntityProviderInterface, UserLoaderInterface
             return true;
 
         return $person->hasRole('Parent');
+    }
+
+    /**
+     * groupedChoiceList
+     */
+    public function groupedChoiceList(): array
+    {
+        $people = $this->getRepository()->findAllStudentsByRollGroup();
+        $people = array_merge($people, $this->getRepository()->findCurrentStaffAsArray());
+        $people = array_merge($people, $this->getRepository()->findCurrentParentsAsArray());
+
+        $type = null;
+        $result = [];
+        foreach($people as $person) {
+            $result[$person['type']][$person['fullName']]['id'] = $person['id'];
+            $result[$person['type']][$person['fullName']]['photo'] = ImageHelper::getAbsoluteImageURL('file', $person['photo'] ?: '/build/static/DefaultPerson.png');
+            $result[$person['type']][$person['fullName']]['name'] = $person['fullName'];
+        }
+        return $result;
     }
 }

@@ -15,7 +15,10 @@
  */
 namespace Kookaburra\UserAdmin\Repository;
 
+use App\Provider\ProviderFactory;
+use App\Util\TranslationsHelper;
 use Doctrine\ORM\NoResultException;
+use Kookaburra\SystemAdmin\Entity\Role;
 use Kookaburra\UserAdmin\Entity\District;
 use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\RollGroup;
@@ -155,7 +158,7 @@ class PersonRepository extends ServiceEntityRepository
      * @param array $roles
      * @return mixed
      */
-    public function findByRoles(array $roles)
+    public function findByRoles(array $roles = [])
     {
         return $this->createQueryBuilder('p')
             ->select(['p', 'r.name'])
@@ -164,7 +167,7 @@ class PersonRepository extends ServiceEntityRepository
             ->where('p.status = :full')
             ->setParameter('full', 'Full')
             ->groupBy('p.id')
-            ->orderBy('r.id', 'ASC')
+            ->orderBy('r.name', 'ASC')
             ->addOrderBy('p.surname', 'ASC')
             ->addOrderBy('p.firstName', "ASC")
             ->getQuery()
@@ -220,6 +223,30 @@ class PersonRepository extends ServiceEntityRepository
     }
 
     /**
+     * findCurrentStaff
+     * @return array
+     * @throws \Exception
+     */
+    public function findCurrentStaffAsArray(): array
+    {
+        $today = new \DateTime(date('Y-m-d'));
+        return $this->createQueryBuilder('p')
+            ->select(['p.id', "CONCAT(p.surname, ', ', p.preferredName) AS fullName", "'".TranslationsHelper::translate('Staff', [], 'UserAdmin')."' AS type", 'p.image_240 AS photo'])
+            ->join('p.staff','s')
+            ->where('s.id IS NOT NULL')
+            ->andWhere('p.status = :full')
+            ->setParameter('full', 'Full')
+            ->andWhere('(p.dateStart IS NULL OR p.dateStart <= :today)')
+            ->andWhere('(p.dateEnd IS NULL OR p.dateEnd >= :today)')
+            ->setParameter('today', $today)
+            ->orderBy('p.surname')
+            ->addOrderBy('p.preferredName')
+            ->getQuery()
+            ->getResult();
+        ;
+    }
+
+    /**
      * findAllFullList
      * @return array
      */
@@ -242,7 +269,7 @@ class PersonRepository extends ServiceEntityRepository
     public function findAllStudentsByRollGroup()
     {
         return $this->createQueryBuilder('p')
-            ->select(['p.id', 'p.studentID', "CONCAT(p.surname, ', ', p.preferredName) AS fullName", 'rg.name AS rollGroup'])
+            ->select(['p.id', 'p.studentID', "CONCAT(p.surname, ', ', p.preferredName) AS fullName", 'rg.name AS rollGroup', 'rg.name AS type', 'p.image_240 AS photo'])
             ->where('p.status = :full')
             ->setParameter('full', 'Full')
             ->join('p.studentEnrolments', 'se')
@@ -266,6 +293,26 @@ class PersonRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->select(['p','fa','s'])
+            ->join('p.adults', 'fa')
+            ->where('(fa.contactPriority <= 2 and fa.contactPriority > 0)')
+            ->andWhere('p.status = :full')
+            ->leftJoin('p.staff', 's')
+            ->andWhere('s.id IS NULL')
+            ->setParameter('full', 'Full')
+            ->orderBy('p.surname', 'ASC')
+            ->addOrderBy('p.preferredName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * findCurrentParents
+     * @return array
+     */
+    public function findCurrentParentsAsArray(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select(['p.id', "CONCAT(p.surname, ', ', p.preferredName) AS fullName", "'".TranslationsHelper::translate('Parent', [], 'UserAdmin')."' AS type", 'p.image_240 AS photo'])
             ->join('p.adults', 'fa')
             ->where('(fa.contactPriority <= 2 and fa.contactPriority > 0)')
             ->andWhere('p.status = :full')

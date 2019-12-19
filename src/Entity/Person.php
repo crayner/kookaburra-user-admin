@@ -67,6 +67,7 @@ use Symfony\Component\Intl\Languages;
  * @UniqueEntity(
  *     fields={"username"},
  * )
+ * @ORM\HasLifecycleCallbacks()
  */
 class Person implements EntityInterface
 {
@@ -664,6 +665,8 @@ class Person implements EntityInterface
      */
     public function setImage240(?string $image_240): Person
     {
+        $this->setExistingImage();
+        $image_240 = ImageHelper::getRelativePath($image_240);
         $this->image_240 = mb_substr($image_240, 0, 75);
         return $this;
     }
@@ -3188,4 +3191,44 @@ class Person implements EntityInterface
             return 'Student';
         return 'Other';
     }
+
+    /**
+     * @var string|null
+     */
+    private $existingImage;
+
+    /**
+     * @return string|null
+     */
+    public function getExistingImage(): ?string
+    {
+        return $this->existingImage;
+    }
+
+    /**
+     * ExistingImage.
+     *
+     * @return Person
+     */
+    public function setExistingImage(): Person
+    {
+        $this->existingImage = $this->getImage240(false);
+        return $this;
+    }
+
+
+    /**
+     * clearExistingImage
+     * @return Person
+     * @ORM\PostUpdate())
+     */
+    public function clearExistingImage(): Person
+    {
+        if (empty($this->getExistingImage()))
+            return $this;
+
+        ImageHelper::deleteImage($this->getExistingImage());
+        return $this;
+    }
+
 }

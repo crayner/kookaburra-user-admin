@@ -1134,8 +1134,20 @@ Please note the following requirements for images in preparing your ZIP file: Pl
 File Name - The system modifies the filename when linked to the correct person.: File Name - The system modifies the filename when linked to the correct person.
 Folder * - The ZIP file must not contain any folders, only files.: Folder * - The ZIP file must not contain any folders, only files.
 File Type * - Images must be formatted as JPG or PNG.: File Type * - Images must be formatted as JPG or PNG.
-Image Size * - Displayed at 240px by 320px.: Image Size * - Displayed at 240px by 320px.
+Image Size * - Displayed at 240px by 320px.: Image Size * - Displayed at 320 x 240 px.
 Size Range * - Accepts images up to 360px by 480px.: Size Range * - Accepts images up to 360px by 480px.
 'Aspect Ratio Range * - Accepts aspect ratio between 0.7:1 and 0.84:1.': 'Aspect Ratio Range * - Accepts aspect ratio between 0.7:1 and 0.84:1.'
 Date: Date
 'Name, Adults & Students': Name, Adults & Students
+'Import Images': Import Images
+Drop Image here: Drop Image here
+Target Person: Target Person
+Select the person and then drag the image from your computer to set the image for this person.: Select the person and then drag the image from your computer to set the image for this person.
+Remove Photo: Remove Photo
+'The image must ratio of {ratio}:1 is outside the allowed limits of 0.7:1 to 0.84:1.': 'The image must ratio of {ratio}:1 is outside the allowed limits of 0.7:1 to 0.84:1.'
+'The height and width maximum is 480 x 360px. The image supplied was {height} x {width}px.': 'The height and width maximum is 480 x 360px. The image supplied was {height} x {width}px.'
+'The file is too big. Max 350k. File size given is {size}.': 'The file is too big. Max 350k. File size given is {size}.'
+'{name} upload failed...': '{name} upload failed...'
+Target this person...: Target this person...
+Replace this image: Replace this image
+Images [.jpg, .png, .jpeg] only: Images [.jpg, .png, .jpeg] only
