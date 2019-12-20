@@ -59,12 +59,28 @@ class PeopleController extends AbstractController
      */
     public function manage(ManagePagination $pagination, Request $request)
     {
-        $repository = ProviderFactory::getRepository(Person::class);
-        $content = $repository->findBySearch(new ManageSearch());
-        $pagination->setContent($content)->setPageMax(25)
+        $pagination->setContent([])->setPageMax(25)->setContentLoader('/user/admin/people/content/loader/')
             ->setPaginationScript();
 
         return $this->render('@KookaburraUserAdmin/manage.html.twig');
+    }
+
+    /**
+     * manageContent
+     * @param ManagePagination $pagination
+     * @Route("/people/content/loader/", name="manage_people_content_loader")
+     * @Security("is_granted('ROLE_ROUTE', ['user_admin__manage'])")
+     */
+    public function manageContent(ManagePagination $pagination)
+    {
+        try {
+            $repository = ProviderFactory::getRepository(Person::class);
+            $content = $repository->findBySearch(new ManageSearch());
+            $pagination->setContent($content);
+            return new JsonResponse(['content' => $pagination->getContent(), 'pageMax' => $pagination->getPageMax(), 'status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return new JsonResponse(['status' => 'error', 'message' => $e->getMessage()], 200);
+        }
     }
 
     /**

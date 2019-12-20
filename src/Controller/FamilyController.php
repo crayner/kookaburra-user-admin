@@ -22,6 +22,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Kookaburra\UserAdmin\Entity\Family;
 use Kookaburra\UserAdmin\Entity\FamilyAdult;
 use Kookaburra\UserAdmin\Entity\FamilyChild;
+use Kookaburra\UserAdmin\Entity\Person;
 use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
 use Kookaburra\UserAdmin\Form\FamilyAdultType;
 use Kookaburra\UserAdmin\Form\FamilyChildType;
@@ -33,9 +34,11 @@ use Kookaburra\UserAdmin\Manager\FamilyRelationshipManager;
 use Kookaburra\UserAdmin\Pagination\FamilyAdultsPagination;
 use Kookaburra\UserAdmin\Pagination\FamilyChildrenPagination;
 use Kookaburra\UserAdmin\Pagination\FamilyPagination;
+use Kookaburra\UserAdmin\Pagination\ManagePagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ErrorHandler\Error\UndefinedMethodError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,11 +61,28 @@ class FamilyController extends AbstractController
      */
     public function familyManage(Request $request, FamilyPagination $pagination, FamilyManager $manager)
     {
-        $content = $manager->findBySearch(new ManageSearch());
-        $pagination->setContent($content)->setPageMax(25)
+        $pagination->setContent([])->setPageMax(25)->setContentLoader('/user/admin/family/content/loader/')
             ->setPaginationScript();
 
         return $this->render('@KookaburraUserAdmin/family/manage.html.twig');
+    }
+
+    /**
+     * manageContent
+     * @Route("/family/content/loader/", name="family_content_loader")
+     * @Security("is_granted('ROLE_ROUTE', ['user_admin__family_manage'])")
+     * @param FamilyPagination $pagination
+     * @return JsonResponse
+     */
+    public function manageContent(FamilyPagination $pagination, FamilyManager $manager)
+    {
+        try {
+            $content = $manager->findBySearch(new ManageSearch());
+            $pagination->setContent($content);
+            return new JsonResponse(['content' => $pagination->getContent(), 'pageMax' => $pagination->getPageMax(), 'status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return new JsonResponse(['status' => 'error', 'message' => $e->getMessage()], 200);
+        }
     }
 
     /**
