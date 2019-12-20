@@ -115,7 +115,7 @@ class PhotoImporter
     private function getTranslations(): array
     {
         $tx = [];
-        $tx['Drop Image here'] = TranslationsHelper::translate('Drop Image here', [], 'UserAdmin');
+        $tx['Drop Image Here'] = TranslationsHelper::translate('Drop Image Here', [], 'UserAdmin');
         $tx['Target Person'] = TranslationsHelper::translate('Target Person', [], 'UserAdmin');
         $tx['target_person_help'] = TranslationsHelper::translate('Select the person and then drag the image from your computer to set the image for this person.', [], 'UserAdmin');
         $tx['Remove Photo'] = TranslationsHelper::translate('Remove Photo', [], 'UserAdmin');

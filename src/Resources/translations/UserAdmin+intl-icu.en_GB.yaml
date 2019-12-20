@@ -1140,7 +1140,7 @@ Size Range * - Accepts images up to 360px by 480px.: Size Range * - Accepts imag
 Date: Date
 'Name, Adults & Students': Name, Adults & Students
 'Import Images': Import Images
-Drop Image here: Drop Image here
+Drop Image Here: Drop image here
 Target Person: Target Person
 Select the person and then drag the image from your computer to set the image for this person.: Select the person and then drag the image from your computer to set the image for this person.
 Remove Photo: Remove Photo
@@ -1151,3 +1151,4 @@ Remove Photo: Remove Photo
 Target this person...: Target this person...
 Replace this image: Replace this image
 Images [.jpg, .png, .jpeg] only: Images [.jpg, .png, .jpeg] only
+'Use this page to drag and drop images from your computer to the site for the targeted individual. Existing images are replaced.': 'Use this page to drag and drop images from your computer to the site for the targeted individual. Existing images are replaced.'
