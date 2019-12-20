@@ -7,4 +7,4 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     Kookaburra\UserAdmin\:
         resource: '../../../src/*'
-        exclude: '../../../src/{DependencyInjection,Resources,Tests,Entity,Form/Subscriber}'
+        exclude: '../../../src/{DependencyInjection,Resources,Tests,Entity,Form/Subscriber,Provider}'

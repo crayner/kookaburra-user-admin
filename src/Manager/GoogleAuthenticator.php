@@ -1,6 +1,8 @@
 <?php
 namespace Kookaburra\UserAdmin\Manager;
 
+use App\Entity\Setting;
+use App\Provider\ProviderFactory;
 use Kookaburra\SystemAdmin\Manager\UsernamePasswordToken;
 use Kookaburra\UserAdmin\Entity\Person;
 use App\Manager\GibbonManager;
@@ -76,12 +78,12 @@ class GoogleAuthenticator implements AuthenticatorInterface
      * @param SecurityUserProvider $provider
      * @throws \Google_Exception
      */
-	public function __construct(RouterInterface $router, MessageManager $messageManager, SettingProvider $settingManager, LoggerInterface $logger, SecurityUserProvider $provider)
+	public function __construct(RouterInterface $router, MessageManager $messageManager, LoggerInterface $logger, SecurityUserProvider $provider)
 	{
-		$this->em = $settingManager->getEntityManager();
+        $this->settingManager = ProviderFactory::create(Setting::class);
+		$this->em = $this->settingManager->getEntityManager();
 		$this->router = $router;
 		$this->messageManager = $messageManager;
-		$this->settingManager = $settingManager;
         $this->logger = $logger;
         $this->provider = $provider;
         if ($this->readGoogleOAuth() !== false) {
