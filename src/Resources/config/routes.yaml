@@ -1,4 +1,4 @@
 controllers:
-    resource: ../../vendor/kookaburra/user-admin/src/Controller/
+    resource: ../../../../../../vendor/kookaburra/user-admin/src/Controller/
     type: annotation
     schemes: [ 'https' ]
