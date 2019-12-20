@@ -1,2 +1,356 @@
 version: 0.0.00
 name: User Admin
+module:
+    name: 'User Admin'
+    description: 'Allows administrators to manage users.'
+    entryURL: manage
+    type: Core
+    active: 'Y'
+    category: Admin
+    version: 0.0.00
+    author: 'Craig Rayner'
+    url: 'http://www.craigrayner.com'
+    actions:
+        'Application Form Settings':
+            name: 'Application Form Settings'
+            precedence: 0
+            category: 'Student Management'
+            description: 'Allows admins to control the application form'
+            URLList: application_form_settings
+            entryURL: application_form_settings
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        'Manage People_editDelete':
+            name: 'Manage People_editDelete'
+            precedence: 1
+            category: 'People Management'
+            description: 'Edit any user within the system'
+            URLList: 'manage,edit,add,delete,reset_password'
+            entryURL: manage
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        'Manage Roles':
+            name: 'Manage Roles'
+            precedence: 0
+            category: 'People Management'
+            description: ''
+            URLList: 'role_delete,role_duplicate,role_manage,role_edit,role_add'
+            entryURL: role_manage
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        'Manage Permissions':
+            name: 'Manage Permissions'
+            precedence: 0
+            category: 'People Management'
+            description: ''
+            URLList: 'permission_manage,permission_manage_edit,permission_toggle'
+            entryURL: permission_manage
+            entrySidebar: 'N'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        'Manage Families':
+            name: 'Manage Families'
+            precedence: 0
+            category: 'People Management'
+            description: ''
+            URLList: "family_manage,family_manage_add,family_manage_edit,family_manage_delete,family_student_edit,family_adult_edit,family_child_remove,family_a ▶
+            entryURL: family_manage
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        Rollover:
+            name: Rollover
+            precedence: 0
+            category: 'Student Management'
+            description: 'Allows admins to kick the school forward one year'
+            URLList: rollover.php
+            entryURL: rollover.php
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        'Manage People Settings':
+            name: 'Manage People Settings'
+            precedence: 0
+            category: 'People Settings'
+            description: 'Configure settings relating to people management.'
+            URLList: people_settings
+            entryURL: people_settings
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        'Updater Settings':
+            name: 'Updater Settings'
+            precedence: 0
+            category: 'People Settings'
+            description: 'Configure options for the Data Updater module'
+            URLList: 'dataUpdaterSettings.php, updater_settings'
+            entryURL: updater_settings
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        'Manage Students Settings':
+            name: 'Manage Students Settings'
+            precedence: 0
+            category: 'People Settings'
+            description: 'Manage settings for the Student module'
+            URLList: 'students_settings,student_note_category,student_note_category_add,student_note_category_delete'
+            entryURL: students_settings
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        'Manage Districts':
+            name: 'Manage Districts'
+            precedence: 0
+            category: 'People Management'
+            description: 'Manage a list of districts for address autocomplete.'
+            URLList: 'district_manage,district_add,district_edit,district_delete'
+            entryURL: district_manage
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+                - Administrator
+        'Public Registration Settings':
+            name: 'Public Registration Settings'
+            precedence: 0
+            category: 'Student Management'
+            description: 'Gives access to enable and configure public registration.'
+            URLList: public_registration_settings
+            entryURL: public_registration_settings
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        'Manage Custom Fields':
+            name: 'Manage Custom Fields'
+            precedence: 0
+            category: 'People Management'
+            description: 'Allows a user to create, edit and delete custom fields for users.'
+            URLList: 'custom_fields_manage,custom_field_edit,custom_field_add,custom_field_delete'
+            entryURL: custom_fields_manage
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        'Import User Photos':
+            name: 'Import User Photos'
+            precedence: 0
+            category: Import
+            description: 'Allows bulk import of user photos based on a ZIP file.'
+            URLList: import_photos
+            entryURL: import_photos
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        'Manage Staff Settings':
+            name: 'Manage Staff Settings'
+            precedence: 0
+            category: 'People Settings'
+            description: 'Controls settings for users with role category Staff.'
+            URLList: 'staff_settings,staff_absence_type_delete,staff_absence_type_edit,staff_absence_type_add'
+            entryURL: staff_settings
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        'Staff Application Form Settings':
+            name: 'Staff Application Form Settings'
+            precedence: 0
+            category: 'Staff Management'
+            description: 'Allows admins to control the staff application form.'
+            URLList: staff_application_form_settings
+            entryURL: staff_application_form_settings
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'Y'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+        'Manage People_edit':
+            name: 'Manage People_edit'
+            precedence: 0
+            category: 'People Management'
+            description: 'Allows admin to edit any user within the system, but not to delete them.'
+            URLList: 'manage,edit,add,reset_password'
+            entryURL: manage
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'Y'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'Y'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+        'Personal Preferences':
+            name: 'Personal Preferences'
+            precedence: 0
+            category: 'People Management'
+            description: 'Allows you to set your own preferences for background, theme, et.al. Change your password.'
+            URLList: preferences
+            entryURL: preferences
+            entrySidebar: 'Y'
+            menuShow: 'Y'
+            defaultPermissionAdmin: 'N'
+            defaultPermissionTeacher: 'N'
+            defaultPermissionStudent: 'N'
+            defaultPermissionParent: 'N'
+            defaultPermissionSupport: 'N'
+            categoryPermissionStaff: 'N'
+            categoryPermissionStudent: 'N'
+            categoryPermissionParent: 'N'
+            categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+                - Teacher
+                - Student
+                - Parent
+                - 'Support Staff'
