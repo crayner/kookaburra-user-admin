@@ -13,14 +13,14 @@
 
 namespace Kookaburra\UserAdmin\Entity;
 
-use App\Entity\SchoolYear;
+use Kookaburra\SchoolAdmin\Entity\AcademicYear;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class FamilyUpdate
  * @package Kookaburra\UserAdmin\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\UserAdmin\Repository\FamilyUpdateRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="FamilyUpdate", indexes={@ORM\Index(name="gibbonFamilyIndex", columns={"gibbonFamilyID", "gibbonSchoolYearID"})})
+ * @ORM\Table(options={"auto_increment": 1}, name="FamilyUpdate", indexes={@ORM\Index(name="gibbonFamilyIndex", columns={"gibbonFamilyID", "gibbonAcademicYearID"})})
  */
 class FamilyUpdate
 {
@@ -33,11 +33,11 @@ class FamilyUpdate
     private $id;
 
     /**
-     * @var SchoolYear|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\SchoolYear")
-     * @ORM\JoinColumn(name="gibbonSchoolYearID", referencedColumnName="gibbonSchoolYearID")
+     * @var AcademicYear|null
+     * @ORM\ManyToOne(targetEntity="Kookaburra\SchoolAdmin\Entity\AcademicYear")
+     * @ORM\JoinColumn(name="gibbonAcademicYearID", referencedColumnName="gibbonAcademicYearID")
      */
-    private $schoolYear;
+    private $AcademicYear;
 
     /**
      * @var string
@@ -125,20 +125,20 @@ class FamilyUpdate
     }
 
     /**
-     * @return SchoolYear|null
+     * @return AcademicYear|null
      */
-    public function getSchoolYear(): ?SchoolYear
+    public function getAcademicYear(): ?AcademicYear
     {
-        return $this->schoolYear;
+        return $this->AcademicYear;
     }
 
     /**
-     * @param SchoolYear|null $schoolYear
+     * @param AcademicYear|null $AcademicYear
      * @return FamilyUpdate
      */
-    public function setSchoolYear(?SchoolYear $schoolYear): FamilyUpdate
+    public function setAcademicYear(?AcademicYear $AcademicYear): FamilyUpdate
     {
-        $this->schoolYear = $schoolYear;
+        $this->AcademicYear = $AcademicYear;
         return $this;
     }
 

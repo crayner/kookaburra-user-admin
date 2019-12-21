@@ -22,8 +22,8 @@ use Kookaburra\SystemAdmin\Entity\Role;
 use Kookaburra\UserAdmin\Entity\District;
 use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\RollGroup;
-use App\Entity\SchoolYear;
-use App\Util\SchoolYearHelper;
+use Kookaburra\SchoolAdmin\Entity\AcademicYear;
+use Kookaburra\SchoolAdmin\Util\AcademicYearHelper;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\NonUniqueResultException;
@@ -91,12 +91,12 @@ class PersonRepository extends ServiceEntityRepository
 
     /**
      * findStudentsForFastFinder
-     * @param SchoolYear $schoolYear
+     * @param AcademicYear $AcademicYear
      * @param string $studentTitle
      * @return array|null
      * @throws \Exception
      */
-    public function findStudentsForFastFinder(SchoolYear $schoolYear, string $studentTitle): ?array
+    public function findStudentsForFastFinder(AcademicYear $academicYear, string $studentTitle): ?array
     {
         return $this->createQueryBuilder('p')
             ->select([
@@ -106,11 +106,11 @@ class PersonRepository extends ServiceEntityRepository
             ])
             ->join('p.studentEnrolments', 'se')
             ->join('se.rollGroup', 'rg')
-            ->where('se.schoolYear = :schoolYear')
+            ->where('se.academicYear = :academicYear')
             ->andWhere('p.status = :full')
             ->andWhere('(p.dateStart IS NULL OR p.dateStart <= :today)')
             ->andWhere('(p.dateEnd IS NULL OR p.dateEnd >= :today)')
-            ->setParameters(['today' => new \DateTime(date('Y-m-d')), 'schoolYear' => $schoolYear, 'full' => 'Full'])
+            ->setParameters(['today' => new \DateTime(date('Y-m-d')), 'academicYear' => $academicYear, 'full' => 'Full'])
             ->orderBy('text')
             ->getQuery()
             ->getResult();
@@ -180,12 +180,12 @@ class PersonRepository extends ServiceEntityRepository
      */
     public function findCurrentStudents(): array
     {
-        $schoolYear = SchoolYearHelper::getCurrentSchoolYear();
+        $AcademicYear = AcademicYearHelper::getCurrentAcademicYear();
         $today = new \DateTime(date('Y-m-d'));
         return $this->createQueryBuilder('p')
             ->join('p.studentEnrolments','se')
-            ->where('se.schoolYear = :schoolYear')
-            ->setParameter('schoolYear', $schoolYear)
+            ->where('se.AcademicYear = :AcademicYear')
+            ->setParameter('AcademicYear', $AcademicYear)
             ->andWhere('p.status = :full')
             ->setParameter('full', 'Full')
             ->andWhere('(p.dateStart IS NULL OR p.dateStart <= :today)')
@@ -273,8 +273,8 @@ class PersonRepository extends ServiceEntityRepository
             ->where('p.status = :full')
             ->setParameter('full', 'Full')
             ->join('p.studentEnrolments', 'se')
-            ->andWhere('se.schoolYear = :currentYear')
-            ->setParameter('currentYear', SchoolYearHelper::getCurrentSchoolYear())
+            ->andWhere('se.AcademicYear = :currentYear')
+            ->setParameter('currentYear', AcademicYearHelper::getCurrentAcademicYear())
             ->join('se.rollGroup', 'rg')
             ->leftJoin('p.staff', 's')
             ->andWhere('s.id IS NULL')

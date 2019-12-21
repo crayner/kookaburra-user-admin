@@ -12,7 +12,7 @@
 
 namespace Kookaburra\UserAdmin\Form;
 
-use App\Entity\SchoolYear;
+use Kookaburra\SchoolAdmin\Entity\AcademicYear;
 use App\Form\Type\EntityType;
 use App\Form\Type\HeaderType;
 use App\Form\Type\ReactFormType;
@@ -145,7 +145,7 @@ class ApplicationFormType extends AbstractType
                             'entry_type' => ChoiceType::class,
                             'entry_options' => [
                                 'row_class' => 'flex flex-col sm:flex-row justify-between content-center p-0 visible_years',
-                                'choices' => ProviderFactory::create(SchoolYear::class)->selectSchoolYears('Active'),
+                                'choices' => ProviderFactory::create(AcademicYear::class)->selectAcademicYears('Active'),
                                 'multiple' => true,
                             ],
                         ],

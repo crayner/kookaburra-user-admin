@@ -26,7 +26,7 @@ use App\Entity\Setting;
 use App\Entity\StudentEnrolment;
 use App\Manager\Traits\EntityTrait;
 use Kookaburra\UserAdmin\Manager\SecurityUser;
-use App\Util\SchoolYearHelper;
+use Kookaburra\SchoolAdmin\Util\AcademicYearHelper;
 use Kookaburra\UserAdmin\Util\SecurityHelper;
 use Kookaburra\SystemAdmin\Entity\NotificationEvent;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
@@ -98,7 +98,7 @@ class PersonProvider implements EntityProviderInterface, UserLoaderInterface
             $alertLevelID = 0;
             $alertThresholdText = '';
 
-            $results = $this->getRepository(MarkbookEntry::class)->findAttainmentOrEffortConcerns($person, $this->getSession()->get('schoolYear'));
+            $results = $this->getRepository(MarkbookEntry::class)->findAttainmentOrEffortConcerns($person, $this->getSession()->get('AcademicYear'));
 
             $settingProvider = ProviderFactory::create(Setting::class);
             $academicAlertLowThreshold = $settingProvider->getSettingByScope('Students', 'academicAlertLowThreshold');
@@ -125,7 +125,7 @@ class PersonProvider implements EntityProviderInterface, UserLoaderInterface
                         'title'           => 'concerns_alert_level', // 'Student has a %name% alert for academic concern over the past 60 days.',
                         'title_params'    => array_merge(['name' => $alert->getName(), 'highest_level' => $alert->getName()],  $alertThresholdParams),
                         'translation_domain'    => 'kookaburra',
-                        'link'            => './?q=/modules/Students/student_view_details.php&gibbonPersonID='.$person->getId().'&subpage=Markbook&filter='.$this->getSession()->get('schoolYear')->getId(),
+                        'link'            => './?q=/modules/Students/student_view_details.php&gibbonPersonID='.$person->getId().'&subpage=Markbook&filter='.$this->getSession()->get('AcademicYear')->getId(),
                     ]);
                 }
             }
@@ -326,7 +326,7 @@ class PersonProvider implements EntityProviderInterface, UserLoaderInterface
      */
     public function isStudent(Person $person): bool
     {
-        $result = $this->getRepository(StudentEnrolment::class)->findOneBy(['person' => $person, 'schoolYear' => SchoolYearHelper::getCurrentSchoolYear()]);
+        $result = $this->getRepository(StudentEnrolment::class)->findOneBy(['person' => $person, 'AcademicYear' => AcademicYearHelper::getCurrentAcademicYear()]);
         return $result instanceof StudentEnrolment;
     }
 

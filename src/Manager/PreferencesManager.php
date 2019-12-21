@@ -14,7 +14,7 @@ namespace Kookaburra\UserAdmin\Manager;
 
 use App\Entity\I18n;
 use Kookaburra\UserAdmin\Entity\Person;
-use App\Entity\SchoolYear;
+use Kookaburra\SchoolAdmin\Entity\AcademicYear;
 use App\Entity\Staff;
 use App\Entity\Theme;
 use App\Provider\ProviderFactory;
@@ -34,8 +34,8 @@ class PreferencesManager
         $session = $request->getSession();
         
         //Check to see if academic year id variables are set, if not set them
-        if ($session->exists('gibbonAcademicYearID') || $session->exists('gibbonSchoolYearName')) {
-            ProviderFactory::create(SchoolYear::class)->setCurrentSchoolYear($session);
+        if ($session->exists('gibbonAcademicYearID') || $session->exists('gibbonAcademicYearName')) {
+            ProviderFactory::create(AcademicYear::class)->setCurrentAcademicYear($session);
         }
 
         $calendarFeedPersonal = $request->request->get('calendarFeedPersonal', '');

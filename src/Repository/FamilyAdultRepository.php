@@ -12,7 +12,7 @@
  */
 namespace Kookaburra\UserAdmin\Repository;
 
-use App\Entity\SchoolYear;
+use Kookaburra\SchoolAdmin\Entity\AcademicYear;
 use Doctrine\DBAL\Connection;
 use Kookaburra\UserAdmin\Entity\Family;
 use Kookaburra\UserAdmin\Entity\FamilyAdult;
@@ -66,7 +66,7 @@ class FamilyAdultRepository extends ServiceEntityRepository
      * @param string $studentTitle
      * @return array
      */
-    public function findStudentsOfParentFastFinder(Person $person, string $studentTitle, SchoolYear $schoolYear): ?array
+    public function findStudentsOfParentFastFinder(Person $person, string $studentTitle, AcademicYear $AcademicYear): ?array
     {
         $person = ProviderFactory::getRepository(Person::class)->find(2762);
         return $this->createQueryBuilder('fa')
@@ -81,10 +81,10 @@ class FamilyAdultRepository extends ServiceEntityRepository
             ->join('p.studentEnrolments', 'se')
             ->join('se.rollGroup', 'rg')
             ->where('fa.person = :person')
-            ->andWhere('se.schoolYear = :schoolYear')
+            ->andWhere('se.AcademicYear = :AcademicYear')
             ->andWhere('(p.dateStart IS NULL OR p.dateStart >= :today)')
             ->andWhere('(p.dateEnd IS NULL OR p.dateEnd <= :today)')
-            ->setParameters(['person' => $person, 'schoolYear' => $schoolYear, 'today' => new \DateTime(date('Y-m-d'))])
+            ->setParameters(['person' => $person, 'AcademicYear' => $AcademicYear, 'today' => new \DateTime(date('Y-m-d'))])
             ->orderBy('text')
             ->getQuery()
             ->getResult();

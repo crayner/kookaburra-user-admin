@@ -1,7 +1,7 @@
 <?php
 namespace Kookaburra\UserAdmin\Manager;
 
-use App\Entity\SchoolYear;
+use Kookaburra\SchoolAdmin\Entity\AcademicYear;
 use App\Provider\ProviderFactory;
 use App\Util\LocaleHelper;
 use Psr\Log\LoggerInterface;
@@ -61,7 +61,7 @@ class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
             if (null !== $flashBag)
                 $session->getFlashBag()->setAll($flashBag);
 
-            ProviderFactory::create(SchoolYear::class)->setCurrentSchoolYear($session);
+            ProviderFactory::create(AcademicYear::class)->setCurrentAcademicYear($session);
         }
 		$request->setLocale($this->locale);
 

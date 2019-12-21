@@ -18,7 +18,7 @@ namespace Kookaburra\UserAdmin\Entity;
 use App\Entity\ApplicationForm;
 use App\Entity\House;
 use App\Entity\I18n;
-use App\Entity\SchoolYear;
+use Kookaburra\SchoolAdmin\Entity\AcademicYear;
 use App\Entity\Setting;
 use App\Entity\Staff;
 use App\Entity\StudentEnrolment;
@@ -53,7 +53,7 @@ use Symfony\Component\Intl\Languages;
  *     @ORM\Index(name="phone_code_3",columns={"phone3CountryCode"}),
  *     @ORM\Index(name="phone_code_4",columns={"phone4CountryCode"}),
  *     @ORM\Index(name="house",columns={"gibbonHouseID"}),
- *     @ORM\Index(name="school_year_class_of",columns={"gibbonSchoolYearIDClassOf"}),
+ *     @ORM\Index(name="academic_year_class_of",columns={"gibbonAcademicYearIDClassOf"}),
  *     @ORM\Index(name="application_form",columns={"gibbonApplicationFormID"}),
  *     @ORM\Index(name="theme",columns={"gibbonThemeIDPersonal"}),
  *     @ORM\Index(name="primary_role",columns={"gibbonRoleIDPrimary"}),
@@ -2095,27 +2095,27 @@ class Person implements EntityInterface
     }
 
     /**
-     * @var SchoolYear|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\SchoolYear")
-     * @ORM\JoinColumn(nullable=true, name="gibbonSchoolYearIDClassOf", referencedColumnName="gibbonSchoolYearID")
+     * @var AcademicYear|null
+     * @ORM\ManyToOne(targetEntity="Kookaburra\SchoolAdmin\Entity\AcademicYear")
+     * @ORM\JoinColumn(nullable=true, name="class_of_academic_year", referencedColumnName="id")
      */
-    private $schoolYearClassOf;
+    private $academicYearClassOf;
 
     /**
-     * @return SchoolYear|null
+     * @return AcademicYear|null
      */
-    public function getSchoolYearClassOf(): ?SchoolYear
+    public function getAcademicYearClassOf(): ?AcademicYear
     {
-        return $this->schoolYearClassOf;
+        return $this->academicYearClassOf;
     }
 
     /**
-     * @param SchoolYear|null $schoolYearClassOf
+     * @param AcademicYear|null $academicYearClassOf
      * @return Person
      */
-    public function setSchoolYearClassOf(?SchoolYear $schoolYearClassOf): Person
+    public function setAcademicYearClassOf(?AcademicYear $academicYearClassOf): Person
     {
-        $this->schoolYearClassOf = $schoolYearClassOf;
+        $this->academicYearClassOf = $academicYearClassOf;
         return $this;
     }
 

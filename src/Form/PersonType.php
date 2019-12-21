@@ -13,7 +13,7 @@
 namespace Kookaburra\UserAdmin\Form;
 
 use App\Entity\House;
-use App\Entity\SchoolYear;
+use Kookaburra\SchoolAdmin\Entity\AcademicYear;
 use App\Entity\Setting;
 use App\Form\Transform\EntityToStringTransformer;
 use App\Form\Type\EntityType;
@@ -475,10 +475,10 @@ class PersonType extends AbstractType
         ;
         if (UserHelper::isStudent($options['data'])) {
             $builder
-                ->add('schoolYearClassOf', EntityType::class,
+                ->add('AcademicYearClassOf', EntityType::class,
                     [
                         'label' => 'Class of',
-                        'class' => SchoolYear::class,
+                        'class' => AcademicYear::class,
                         'choice_label' => 'name',
                         'query_builder' => function (EntityRepository $er) {
                             return $er->createQueryBuilder('sy')

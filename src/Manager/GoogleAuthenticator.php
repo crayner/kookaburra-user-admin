@@ -172,7 +172,7 @@ class GoogleAuthenticator implements AuthenticatorInterface
 	public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
 	{
 		$this->logger->notice("Google Authentication Failure: ".  $exception->getMessage());
-        LogProvider::setLog($request->getSession()->get('gibbonSchoolYearIDCurrent'), null, null, 'Google Login - Failed', ['username' => $this->google_user, 'message' => $exception->getMessage()], $request->server->get('REMOTE_ADDR'));
+        LogProvider::setLog($request->getSession()->get('gibbonAcademicYearIDCurrent'), null, null, 'Google Login - Failed', ['username' => $this->google_user, 'message' => $exception->getMessage()], $request->server->get('REMOTE_ADDR'));
 
         $this->authenticationFailure($request->query->all());
 
@@ -228,16 +228,16 @@ class GoogleAuthenticator implements AuthenticatorInterface
         }
 
         $user = $this->createUserSession($user, $request->getSession());
-        $this->setSchoolYear($request->getSession(), 0);
+        $this->setAcademicYear($request->getSession(), 0);
 
         $q = null;
         if ($request->getSession()->has('google_state')) {
             $state = $request->getSession()->get('google_state');
-            list($schoolYearID, $i18nID, $q) = explode(':', $state);
+            list($AcademicYearID, $i18nID, $q) = explode(':', $state);
             if ($q === 'false')
                 $q = null;
             $request->getSession()->forget('google_state');
-            if (($response = $this->checkSchoolYear($user, $request->getSession(), intval($schoolYearID))) instanceof Response)
+            if (($response = $this->checkAcademicYear($user, $request->getSession(), intval($AcademicYearID))) instanceof Response)
                 return $response;
 
             $this->setLanguage($request, $i18nID);

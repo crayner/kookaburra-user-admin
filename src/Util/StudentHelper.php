@@ -13,7 +13,7 @@
 namespace Kookaburra\UserAdmin\Util;
 
 use App\Provider\ProviderFactory;
-use App\Util\SchoolYearHelper;
+use Kookaburra\SchoolAdmin\Util\AcademicYearHelper;
 use Kookaburra\UserAdmin\Entity\Person;
 
 /**
@@ -55,7 +55,7 @@ class StudentHelper
         $se = null;
         foreach($person->getStudentEnrolments() as $enrolment)
         {
-            if ($enrolment->getSchoolYear()->getId() === SchoolYearHelper::getCurrentSchoolYear()->getId()) {
+            if ($enrolment->getAcademicYear()->getId() === AcademicYearHelper::getCurrentAcademicYear()->getId()) {
                 $se = $enrolment;
                 break;
             }

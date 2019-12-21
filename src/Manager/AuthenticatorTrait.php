@@ -13,7 +13,7 @@
 namespace Kookaburra\UserAdmin\Manager;
 
 use App\Entity\I18n;
-use App\Entity\SchoolYear;
+use Kookaburra\SchoolAdmin\Entity\AcademicYear;
 use App\Provider\LogProvider;
 use App\Provider\ProviderFactory;
 use App\Util\ErrorHelper;
@@ -47,46 +47,46 @@ trait AuthenticatorTrait
     }
 
     /**
-     * setSchoolYear
+     * setAcademicYear
      * @param SessionInterface $session
-     * @param int $schoolYear
+     * @param int $AcademicYear
      * @return bool
      */
-    public function setSchoolYear(SessionInterface $session, int $schoolYear)
+    public function setAcademicYear(SessionInterface $session, int $AcademicYear)
     {
-        $schoolYear = $schoolYear === 0 ? ProviderFactory::getRepository(SchoolYear::class)->findOneByStatus('Current') : ProviderFactory::getRepository(SchoolYear::class)->find($schoolYear);
+        $AcademicYear = $AcademicYear === 0 ? ProviderFactory::getRepository(AcademicYear::class)->findOneByStatus('Current') : ProviderFactory::getRepository(AcademicYear::class)->find($AcademicYear);
 
-        if ($schoolYear instanceof SchoolYear) {
-            $session->set('gibbonAcademicYearID', $schoolYear->getId());
-            $session->set('gibbonSchoolYearID', $schoolYear->getId());
-            $session->set('gibbonSchoolYearName', $schoolYear->getName());
-            $session->set('gibbonSchoolYearSequenceNumber', $schoolYear->getSequenceNumber());
-            $session->set('schoolYear', $schoolYear);
+        if ($AcademicYear instanceof AcademicYear) {
+            $session->set('gibbonAcademicYearID', $AcademicYear->getId());
+            $session->set('gibbonAcademicYearID', $AcademicYear->getId());
+            $session->set('gibbonAcademicYearName', $AcademicYear->getName());
+            $session->set('gibbonAcademicYearSequenceNumber', $AcademicYear->getSequenceNumber());
+            $session->set('AcademicYear', $AcademicYear);
         } else {
             $session->forget('gibbonAcademicYearID');
-            $session->forget('gibbonSchoolYearID');
-            $session->forget('gibbonSchoolYearName');
-            $session->forget('gibbonSchoolYearSequenceNumber');
-            $session->forget('schoolYear');
+            $session->forget('gibbonAcademicYearID');
+            $session->forget('gibbonAcademicYearName');
+            $session->forget('gibbonAcademicYearSequenceNumber');
+            $session->forget('AcademicYear');
         }
 
         return true;
     }
 
     /**
-     * checkSchoolYear
+     * checkAcademicYear
      * @param Person $person
      * @param SessionInterface $session
-     * @param int $schoolYear
+     * @param int $AcademicYear
      * @return bool|RedirectResponse|Response
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function checkSchoolYear(Person $person, SessionInterface $session, int $schoolYear = 0)
+    public function checkAcademicYear(Person $person, SessionInterface $session, int $AcademicYear = 0)
     {
-        if (0 === $schoolYear || $schoolYear === intval($session->get('gibbonSchoolYearID')))
-            return $this->setSchoolYear($session, $schoolYear);
+        if (0 === $AcademicYear || $AcademicYear === intval($session->get('gibbonAcademicYearID')))
+            return $this->setAcademicYear($session, $AcademicYear);
 
         if (!$person->getPrimaryRole() instanceof Role)
             return $this->authenticationFailure('return.fail.9');
@@ -94,20 +94,20 @@ trait AuthenticatorTrait
         $role = $person->getPrimaryRole();
 
         if (! $role->isFutureYearsLogin() && ! $role->isPastYearsLogin()) {
-            LogProvider::setLog($schoolYear, null, $person, 'Login - Failed', ['username' => $person->getUsername(), 'reason' => 'Not permitted to access non-current school year'], null);
+            LogProvider::setLog($AcademicYear, null, $person, 'Login - Failed', ['username' => $person->getUsername(), 'reason' => 'Not permitted to access non-current school year'], null);
             return $this->authenticationFailure('return.fail.9');
         }
-        $schoolYear = ProviderFactory::create(SchoolYear::class)->find($schoolYear);
+        $AcademicYear = ProviderFactory::create(AcademicYear::class)->find($AcademicYear);
 
-        if (!$schoolYear instanceof SchoolYear)
+        if (!$AcademicYear instanceof AcademicYear)
             return ErrorHelper::ErrorResponse('Configuration Error: there is a problem accessing the current Academic Year from the database.',[], static::$instance);
 
-        if (!$role->isPastYearsLogin() && $session->get('gibbonSchoolYearSequenceNumber') > $schoolYear->getSequenceNumber()) {
-            LogProvider::setLog($schoolYear, null, $person, 'Login - Failed', ['username' => $person->getUsername(), 'reason' => 'Not permitted to access non-current school year'], null);
+        if (!$role->isPastYearsLogin() && $session->get('gibbonAcademicYearSequenceNumber') > $AcademicYear->getSequenceNumber()) {
+            LogProvider::setLog($AcademicYear, null, $person, 'Login - Failed', ['username' => $person->getUsername(), 'reason' => 'Not permitted to access non-current school year'], null);
             return $this->authenticationFailure('return.fail.9');
         }
 
-        $this->setSchoolYear($session, $schoolYear->getId());
+        $this->setAcademicYear($session, $AcademicYear->getId());
         return true;
     }
 
