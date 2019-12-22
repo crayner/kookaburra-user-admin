@@ -43,9 +43,9 @@ class FamilyManager
      * @param ManageSearch $search
      * @return array
      */
-    public function findBySearch(ManageSearch $search): array
+    public function findBySearch(): array
     {
-        $result = ProviderFactory::getRepository(Family::class)->findBySearch($search);
+        $result = ProviderFactory::getRepository(Family::class)->findBySearch();
 
         $familyList = [];
         foreach($result as $q=>$family)

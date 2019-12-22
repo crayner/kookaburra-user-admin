@@ -35,7 +35,7 @@ class FamilyUpdate
     /**
      * @var AcademicYear|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\SchoolAdmin\Entity\AcademicYear")
-     * @ORM\JoinColumn(name="gibbonAcademicYearID", referencedColumnName="gibbonAcademicYearID")
+     * @ORM\JoinColumn(name="gibbonAcademicYearID", referencedColumnName="id")
      */
     private $AcademicYear;
 

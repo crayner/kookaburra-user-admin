@@ -37,16 +37,13 @@ class FamilyRepository extends ServiceEntityRepository
 
     /**
      * findBySearch
-     * @param ManageSearch $search
      * @return array
      */
-    public function findBySearch(ManageSearch $search): array
+    public function findBySearch(): array
     {
         return $this->createQueryBuilder('f')
             ->select(['f.id','f.name','f.status'])
-            ->where('f.name LIKE :search')
-            ->orWhere('f.nameAddress LIKE :search')
-            ->setParameter('search', '%'.$search->getSearch().'%')
+            ->orderBy('f.name')
             ->getQuery()
             ->getResult();
     }

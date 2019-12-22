@@ -81,7 +81,7 @@ class FamilyAdultRepository extends ServiceEntityRepository
             ->join('p.studentEnrolments', 'se')
             ->join('se.rollGroup', 'rg')
             ->where('fa.person = :person')
-            ->andWhere('se.AcademicYear = :AcademicYear')
+            ->andWhere('se.academicYear = :AcademicYear')
             ->andWhere('(p.dateStart IS NULL OR p.dateStart >= :today)')
             ->andWhere('(p.dateEnd IS NULL OR p.dateEnd <= :today)')
             ->setParameters(['person' => $person, 'AcademicYear' => $AcademicYear, 'today' => new \DateTime(date('Y-m-d'))])

@@ -77,7 +77,7 @@ class FamilyController extends AbstractController
     public function manageContent(FamilyPagination $pagination, FamilyManager $manager)
     {
         try {
-            $content = $manager->findBySearch(new ManageSearch());
+            $content = $manager->findBySearch();
             $pagination->setContent($content);
             return new JsonResponse(['content' => $pagination->getContent(), 'pageMax' => $pagination->getPageMax(), 'status' => 'success'], 200);
         } catch (\Exception $e) {

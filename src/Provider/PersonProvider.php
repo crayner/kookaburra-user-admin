@@ -300,7 +300,7 @@ class PersonProvider implements EntityProviderInterface, UserLoaderInterface
     public function getCurrentStudentChoiceList(): array {
         $result = [];
         foreach($this->getRepository()->findCurrentStudents() as $q=>$w){
-            $result[]= new ChoiceView([], $w->getId(), $w->formatName(true,true), []);
+            $result[]= new ChoiceView([], $w->getId(), $w->formatName(['style' => 'long', 'reverse' => true]), []);
         }
         return $result;
     }
@@ -313,7 +313,7 @@ class PersonProvider implements EntityProviderInterface, UserLoaderInterface
     public function getCurrentStaffChoiceList(): array {
         $result = [];
         foreach($this->getRepository()->findCurrentStaff() as $q=>$w){
-            $result[]= new ChoiceView([], $w->getId(), $w->formatName(true,true), []);
+            $result[]= new ChoiceView([], $w->getId(), $w->formatName(['style' => 'long', 'reverse' => true]), []);
         }
         return $result;
     }

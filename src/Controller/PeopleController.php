@@ -22,10 +22,8 @@ use App\Util\TranslationsHelper;
 use Doctrine\DBAL\Driver\PDOException;
 use Kookaburra\UserAdmin\Entity\Person;
 use Kookaburra\UserAdmin\Form\ChangePasswordType;
-use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
 use Kookaburra\UserAdmin\Form\ManageSearchType;
 use Kookaburra\UserAdmin\Form\PersonType;
-use Kookaburra\UserAdmin\Form\ResetPasswordType;
 use Kookaburra\UserAdmin\Manager\SecurityUser;
 use Kookaburra\UserAdmin\Pagination\ManagePagination;
 use Kookaburra\UserAdmin\Util\SecurityHelper;
@@ -75,7 +73,7 @@ class PeopleController extends AbstractController
     {
         try {
             $repository = ProviderFactory::getRepository(Person::class);
-            $content = $repository->findBySearch(new ManageSearch());
+            $content = $repository->findBySearch();
             $pagination->setContent($content);
             return new JsonResponse(['content' => $pagination->getContent(), 'pageMax' => $pagination->getPageMax(), 'status' => 'success'], 200);
         } catch (\Exception $e) {

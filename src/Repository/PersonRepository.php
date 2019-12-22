@@ -184,8 +184,8 @@ class PersonRepository extends ServiceEntityRepository
         $today = new \DateTime(date('Y-m-d'));
         return $this->createQueryBuilder('p')
             ->join('p.studentEnrolments','se')
-            ->where('se.AcademicYear = :AcademicYear')
-            ->setParameter('AcademicYear', $AcademicYear)
+            ->where('se.academicYear = :academicYear')
+            ->setParameter('academicYear', $AcademicYear)
             ->andWhere('p.status = :full')
             ->setParameter('full', 'Full')
             ->andWhere('(p.dateStart IS NULL OR p.dateStart <= :today)')
@@ -273,7 +273,7 @@ class PersonRepository extends ServiceEntityRepository
             ->where('p.status = :full')
             ->setParameter('full', 'Full')
             ->join('p.studentEnrolments', 'se')
-            ->andWhere('se.AcademicYear = :currentYear')
+            ->andWhere('se.academicYear = :currentYear')
             ->setParameter('currentYear', AcademicYearHelper::getCurrentAcademicYear())
             ->join('se.rollGroup', 'rg')
             ->leftJoin('p.staff', 's')
@@ -370,7 +370,7 @@ class PersonRepository extends ServiceEntityRepository
      * @param ManageSearch $search
      * @return array
      */
-    public function findBySearch(ManageSearch $search): array
+    public function findBySearch(): array
     {
         $query = $this->createQueryBuilder('p')
             ->select(['p','fa','fc','fama','famc','s', 'r'])
@@ -381,45 +381,9 @@ class PersonRepository extends ServiceEntityRepository
             ->leftJoin('fc.family', 'famc')
             ->leftJoin('p.staff', 's')
             ->leftJoin('p.studentEnrolments', 'se')
-            ->where('p.vehicleRegistration LIKE :search OR p.phone1 LIKE :search OR p.phone2 LIKE :search OR p.phone3 LIKE :search OR p.phone4 LIKE :search OR p.email LIKE :search OR p.emailAlternate LIKE :search OR p.studentID LIKE :search OR p.username LIKE :search OR p.surname LIKE :search OR p.preferredName LIKE :search')
-            ->setParameter('search', '%'.$search->getSearch().'%')
             ->orderBy('p.surname')
             ->addOrderBy('p.preferredName')
         ;
-        switch ($search->getFilter()) {
-            case '':
-                break;
-            case 'role:student':
-                $query->andWhere('se IS NOT NULL');
-                break;
-            case 'role:parent':
-                $query->andWhere('fa IS NOT NULL')
-                    ->andWhere('fa.contactPriority <= 2');
-                break;
-            case 'role:staff':
-                $query->andWhere('s IS NOT NULL');
-                break;
-            case 'status:full':
-                $query->andWhere('p.status = :status')
-                    ->setParameter('status', 'Full');
-                break;
-            case 'status:left':
-                $query->andWhere('p.status = :status')
-                    ->setParameter('status', 'Left');
-                break;
-            case 'status:expected':
-                $query->andWhere('p.status = :status')
-                    ->setParameter('status', 'Expected');
-                break;
-            case 'date:starting':
-                $query->andWhere('p.dateStart > :today')
-                    ->setParameter('today', new \DateTimeImmutable());
-                break;
-            case 'date:ended':
-                $query->andWhere('p.dateEnd < :today')
-                    ->setParameter('today', new \DateTimeImmutable());
-                break;
-        }
 
         return $query->getQuery()
             ->getResult();
