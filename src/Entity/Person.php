@@ -53,7 +53,7 @@ use Symfony\Component\Intl\Languages;
  *     @ORM\Index(name="phone_code_3",columns={"phone3CountryCode"}),
  *     @ORM\Index(name="phone_code_4",columns={"phone4CountryCode"}),
  *     @ORM\Index(name="house",columns={"gibbonHouseID"}),
- *     @ORM\Index(name="academic_year_class_of",columns={"gibbonAcademicYearIDClassOf"}),
+ *     @ORM\Index(name="academic_year_class_of",columns={"class_of_academic_year"}),
  *     @ORM\Index(name="application_form",columns={"gibbonApplicationFormID"}),
  *     @ORM\Index(name="theme",columns={"gibbonThemeIDPersonal"}),
  *     @ORM\Index(name="primary_role",columns={"gibbonRoleIDPrimary"}),
