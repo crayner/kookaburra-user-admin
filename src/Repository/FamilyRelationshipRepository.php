@@ -19,7 +19,7 @@ use Doctrine\ORM\ORMException;
 use Kookaburra\UserAdmin\Entity\Family;
 use Kookaburra\UserAdmin\Entity\FamilyRelationship;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Kookaburra\UserAdmin\Entity\Person;
 
 /**

@@ -17,7 +17,7 @@ use Doctrine\ORM\NoResultException;
 use Kookaburra\UserAdmin\Entity\District;
 use Kookaburra\UserAdmin\Entity\Family;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
 
 /**

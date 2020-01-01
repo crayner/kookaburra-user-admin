@@ -16,7 +16,6 @@
 namespace Kookaburra\UserAdmin\Entity;
 
 use App\Entity\ApplicationForm;
-use App\Entity\House;
 use App\Entity\I18n;
 use Kookaburra\SchoolAdmin\Entity\AcademicYear;
 use App\Entity\Setting;
@@ -32,6 +31,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
+use Kookaburra\SchoolAdmin\Entity\House;
 use Kookaburra\SystemAdmin\Entity\Role;
 use Kookaburra\UserAdmin\Manager\PersonNameManager;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -52,7 +52,7 @@ use Symfony\Component\Intl\Languages;
  *     @ORM\Index(name="phone_code_2",columns={"phone2CountryCode"}),
  *     @ORM\Index(name="phone_code_3",columns={"phone3CountryCode"}),
  *     @ORM\Index(name="phone_code_4",columns={"phone4CountryCode"}),
- *     @ORM\Index(name="house",columns={"gibbonHouseID"}),
+ *     @ORM\Index(name="house",columns={"house"}),
  *     @ORM\Index(name="academic_year_class_of",columns={"class_of_academic_year"}),
  *     @ORM\Index(name="application_form",columns={"gibbonApplicationFormID"}),
  *     @ORM\Index(name="theme",columns={"gibbonThemeIDPersonal"}),
@@ -1999,8 +1999,8 @@ class Person implements EntityInterface
 
     /**
      * @var House|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\House")
-     * @ORM\JoinColumn(nullable=true, name="gibbonHouseID", referencedColumnName="gibbonHouseID")
+     * @ORM\ManyToOne(targetEntity="Kookaburra\SchoolAdmin\Entity\House")
+     * @ORM\JoinColumn(nullable=true, name="house", referencedColumnName="id")
      */
     private $house;
 
@@ -3216,7 +3216,6 @@ class Person implements EntityInterface
         return $this;
     }
 
-
     /**
      * clearExistingImage
      * @return Person
@@ -3230,5 +3229,4 @@ class Person implements EntityInterface
         ImageHelper::deleteImage($this->getExistingImage());
         return $this;
     }
-
 }

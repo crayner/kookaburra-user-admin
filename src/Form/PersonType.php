@@ -15,7 +15,6 @@
 
 namespace Kookaburra\UserAdmin\Form;
 
-use App\Entity\House;
 use Kookaburra\SchoolAdmin\Entity\AcademicYear;
 use App\Entity\Setting;
 use App\Form\Transform\EntityToStringTransformer;
@@ -30,6 +29,7 @@ use App\Form\Type\ToggleType;
 use App\Provider\ProviderFactory;
 use App\Util\LocaleHelper;
 use Doctrine\ORM\EntityRepository;
+use Kookaburra\SchoolAdmin\Entity\House;
 use Kookaburra\SystemAdmin\Entity\Role;
 use Kookaburra\UserAdmin\Entity\FamilyRelationship;
 use Kookaburra\UserAdmin\Entity\Person;

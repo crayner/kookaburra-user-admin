@@ -14,7 +14,7 @@ namespace Kookaburra\UserAdmin\Repository;
 
 use Kookaburra\UserAdmin\Entity\PersonReset;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Class PersonResetRepository

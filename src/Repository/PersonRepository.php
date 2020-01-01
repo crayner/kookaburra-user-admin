@@ -18,6 +18,7 @@ namespace Kookaburra\UserAdmin\Repository;
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
 use Doctrine\ORM\NoResultException;
+use Kookaburra\SchoolAdmin\Entity\House;
 use Kookaburra\SystemAdmin\Entity\Role;
 use Kookaburra\UserAdmin\Entity\District;
 use Kookaburra\UserAdmin\Entity\Person;
@@ -27,7 +28,7 @@ use Kookaburra\SchoolAdmin\Util\AcademicYearHelper;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -402,6 +403,25 @@ class PersonRepository extends ServiceEntityRepository
                 ->where('p.address1District = :district')
                 ->orWhere('p.address2District = :district')
                 ->setParameter('district', $district)
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NoResultException | NonUniqueResultException $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * countPeopleInHouse
+     * @param House $house
+     * @return int
+     */
+    public function countPeopleInHouse(House $house): int
+    {
+        try {
+            return $this->createQueryBuilder('p')
+                ->select('COUNT(p.id)')
+                ->where('p.house = :house')
+                ->setParameter('house', $house)
                 ->getQuery()
                 ->getSingleScalarResult();
         } catch (NoResultException | NonUniqueResultException $e) {

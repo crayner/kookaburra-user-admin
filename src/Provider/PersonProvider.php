@@ -22,6 +22,7 @@ use App\Entity\MarkbookEntry;
 use App\Provider\EntityProviderInterface;
 use App\Provider\ProviderFactory;
 use App\Util\ImageHelper;
+use Kookaburra\SchoolAdmin\Entity\House;
 use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\PersonMedical;
 use Kookaburra\SystemAdmin\Entity\Role;
@@ -329,7 +330,7 @@ class PersonProvider implements EntityProviderInterface, UserLoaderInterface
      */
     public function isStudent(Person $person): bool
     {
-        $result = $this->getRepository(StudentEnrolment::class)->findOneBy(['person' => $person, 'AcademicYear' => AcademicYearHelper::getCurrentAcademicYear()]);
+        $result = $this->getRepository(StudentEnrolment::class)->findOneBy(['person' => $person, 'academicYear' => AcademicYearHelper::getCurrentAcademicYear()]);
         return $result instanceof StudentEnrolment;
     }
 
@@ -382,5 +383,15 @@ class PersonProvider implements EntityProviderInterface, UserLoaderInterface
             $result[$person['type']][$person['fullName']]['name'] = $person['fullName'];
         }
         return $result;
+    }
+
+    /**
+     * isHouseInUse
+     * @param House $house
+     * @return bool
+     */
+    public function isHouseInUse(House $house): bool
+    {
+        return $this->getRepository()->countPeopleInHouse($house) > 0;
     }
 }

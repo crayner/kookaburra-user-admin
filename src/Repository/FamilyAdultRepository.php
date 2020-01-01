@@ -19,7 +19,7 @@ use Kookaburra\UserAdmin\Entity\FamilyAdult;
 use Kookaburra\UserAdmin\Entity\Person;
 use App\Provider\ProviderFactory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Class FamilyAdultRepository
