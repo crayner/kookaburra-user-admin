@@ -3033,7 +3033,7 @@ class Person implements EntityInterface
      */
     public function __toString(): string
     {
-        return $this->formatName(['status' => 'long', 'preferred' => false]);
+        return $this->formatName(['style' => 'long', 'preferred' => false]);
     }
 
     /**
