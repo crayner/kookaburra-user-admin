@@ -58,7 +58,7 @@ class PeopleController extends AbstractController
      * @Route("/")
      * @Security("is_granted('ROLE_ROUTE', ['user_admin__manage'])")
      */
-    public function manage(ManagePagination $pagination, Request $request)
+    public function manage(ManagePagination $pagination)
     {
         $pagination->setContent([])->setPageMax(25)->setContentLoader('/user/admin/people/content/loader/')
             ->setPaginationScript();

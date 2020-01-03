@@ -104,6 +104,7 @@ class PersonNameManager
         $resolver = new OptionsResolver();
         $resolver->setDefaults(
             [
+                'preferred' => true,
                 'preferredName' => true,
                 'reverse' => false,
                 'informal' => false,
@@ -113,9 +114,13 @@ class PersonNameManager
                 'debug' => false,
             ]
         );
+
         $resolver->setAllowedValues('style', ['long','short','formal',null]);
 
         $options = $resolver->resolve($options);
+
+        // Backwards Compat
+        $options['preferred'] = $options['preferredName'] = $options['preferred'] && $options['preferredName'];
 
         $personType = $person instanceof Person ? $person->getPersonType() : (isset($person['personType']) ? $person['personType'] : 'other');
 
@@ -141,7 +146,7 @@ class PersonNameManager
             $styles = self::getFormatByPersonType($personType);
             if ($options['style'] === 'formal')
             {
-                $options['preferredName'] = false;
+                $options['preferred'] = $options['preferredName'] = false;
             }
             $template = 'formal';
             $length = 'long';
@@ -154,7 +159,7 @@ class PersonNameManager
                 $direction = 'reversed';
                 $template = 'first';
             }
-            if ($options['informal'] || $options['preferredName'])
+            if ($options['informal'] || $options['preferred'])
                 $template = 'preferred';
 
             if ($template === 'formal')
@@ -163,7 +168,7 @@ class PersonNameManager
                 $template = isset($styles[$template][$length][$direction]) ? $styles[$template][$length][$direction] : 'title first surname';
 
             $template = str_replace('given', 'first', $template);
-            if ($options['informal'] || $options['preferredName'])
+            if ($options['informal'] || $options['preferred'])
                 $template = str_replace('first', 'preferred', $template);
         }
 

@@ -2789,7 +2789,7 @@ class Person implements EntityInterface
         $trace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2);
         trigger_error(sprintf('Use of discrete settings for format name is deprecated since 1/Dec 2019.  Use the options configuration. Called from %s on line %s.',$trace[1]['file'], $trace[1]['line']), E_USER_DEPRECATED);
         $format = [];
-        $format['preferredName'] = $options;
+        $format['preferred'] = $options;
         $format['reverse'] = $reverse;
         $format['informal'] = $informal;
         $format['initial'] = $initial;
@@ -2800,10 +2800,18 @@ class Person implements EntityInterface
 
     /**
      * getFullName
-     * This is used for sorting purposes.
      * @return string
      */
     public function getFullName()
+    {
+        return $this->getFirstName() . $this->getSurname();
+    }
+
+    /**
+     * getFullNameReversed
+     * @return string
+     */
+    public function getFullNameReversed()
     {
         return $this->getSurname().': '.$this->getFirstName();
     }
@@ -3025,7 +3033,7 @@ class Person implements EntityInterface
      */
     public function __toString(): string
     {
-        return $this->formatName();
+        return $this->formatName(['status' => 'long', 'preferred' => false]);
     }
 
     /**

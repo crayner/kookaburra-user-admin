@@ -62,9 +62,9 @@ class FamilyController extends AbstractController
      * @param FamilyManager $manager
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function familyManage(Request $request, FamilyPagination $pagination, FamilyManager $manager)
+    public function familyManage(FamilyPagination $pagination)
     {
-        $pagination->setContent([])->setPageMax(25)->setContentLoader('/user/admin/family/content/loader/')
+        $pagination->setContent([])->setPageMax(25)->setContentLoader($this->generateUrl('user_admin__family_content_loader'))
             ->setPaginationScript();
 
         return $this->render('@KookaburraUserAdmin/family/manage.html.twig');
