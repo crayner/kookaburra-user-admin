@@ -310,16 +310,28 @@ class PersonProvider implements EntityProviderInterface, UserLoaderInterface
     }
 
     /**
+     * @var array|null
+     */
+    private $staffChoiceList;
+
+    /**
      * getCurrentStaffChoiceList
      * @return array
      * @throws \Exception
      */
-    public function getCurrentStaffChoiceList(): array {
-        $result = [];
-        foreach($this->getRepository()->findCurrentStaff() as $q=>$w){
-            $result[]= new ChoiceView([], $w->getId(), $w->formatName(['style' => 'long', 'reverse' => true]), []);
+    public function getCurrentStaffChoiceList(bool $useEntity = false): array
+    {
+        if (null === $this->staffChoiceList) {
+            $result = [];
+            foreach ($this->getRepository()->findCurrentStaff() as $q => $w) {
+                if ($useEntity)
+                    $result[$w->getId()] = $w;
+                else
+                    $result[] = new ChoiceView($w, $w->getId(), $w->formatName(['style' => 'long', 'reverse' => true]), []);
+            }
+            $this->staffChoiceList = $result;
         }
-        return $result;
+        return $this->staffChoiceList;
     }
 
     /**
