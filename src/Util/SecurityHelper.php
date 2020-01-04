@@ -73,6 +73,11 @@ class SecurityHelper
     }
 
     /**
+     * @var array
+     */
+    private static $highestGroupedActionList = [];
+
+    /**
      * getHighestGroupedAction
      * @param string $address
      * @return bool|string
@@ -81,8 +86,10 @@ class SecurityHelper
     public static function getHighestGroupedAction(string $address)
     {
         $module = self::checkModuleReady($address);
+        if (isset(self::$highestGroupedActionList[$address]))
+            return self::$highestGroupedActionList[$address];
         if ($user = UserHelper::getCurrentUser() === null)
-            return false;
+            return self::$highestGroupedActionList[$address] = false;
         try {
             $result =  self::getActionProvider()->getRepository()->createQueryBuilder('a')
                 ->select('a.name')
@@ -97,12 +104,16 @@ class SecurityHelper
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getOneOrNullResult();
-            return empty($result['name']) ? false :  $result['name'];
-        } catch (PDOException $e) {
-        } catch (\PDOException $e) {
+            return self::$highestGroupedActionList[$address] = empty($result['name']) ? false :  $result['name'];
+        } catch (PDOException | \PDOException $e) {
         }
-        return false;
+        return self::$highestGroupedActionList[$address] = false;
     }
+
+    /**
+     * @var array
+     */
+    private static $checkModuleReadyList = [];
 
     /**
      * checkModuleReady
@@ -111,13 +122,14 @@ class SecurityHelper
      */
     public static function checkModuleReady(string $address)
     {
+        if (isset(self::$checkModuleReadyList[$address]))
+            return self::$checkModuleReadyList[$address];
         try {
-            return self::getModuleProvider()->findOneBy(['name' => self::getModuleName($address), 'active' => 'Y']);
-        } catch (PDOException $e) {
-        } catch (\PDOException $e) {
+            return self::$checkModuleReadyList[$address] = self::getModuleProvider()->findOneBy(['name' => self::getModuleName($address), 'active' => 'Y']);
+        } catch (PDOException | \PDOException $e) {
         }
 
-        return false;
+        return self::$checkModuleReadyList[$address] = false;
     }
 
     /**

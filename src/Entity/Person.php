@@ -2804,7 +2804,7 @@ class Person implements EntityInterface
      */
     public function getFullName()
     {
-        return $this->getFirstName() . $this->getSurname();
+        return $this->getFirstName() . ' ' . $this->getSurname();
     }
 
     /**

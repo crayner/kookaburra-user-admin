@@ -15,21 +15,18 @@
  */
 namespace Kookaburra\UserAdmin\Repository;
 
-use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
 use Doctrine\ORM\NoResultException;
+use Kookaburra\RollGroups\Entity\RollGroup;
 use Kookaburra\SchoolAdmin\Entity\House;
-use Kookaburra\SystemAdmin\Entity\Role;
 use Kookaburra\UserAdmin\Entity\District;
 use Kookaburra\UserAdmin\Entity\Person;
-use App\Entity\RollGroup;
 use Kookaburra\SchoolAdmin\Entity\AcademicYear;
 use Kookaburra\SchoolAdmin\Util\AcademicYearHelper;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
-use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
