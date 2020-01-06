@@ -88,7 +88,7 @@ class Person implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id
-     * @ORM\Column(type="integer", name="gibbonPersonID", columnDefinition="INT(10) UNSIGNED ZEROFILL")
+     * @ORM\Column(type="integer", name="gibbonPersonID", columnDefinition="INT(10) UNSIGNED ZEROFILL AUTO_INCREMENT")
      * @ORM\GeneratedValue
      */
     private $id;
