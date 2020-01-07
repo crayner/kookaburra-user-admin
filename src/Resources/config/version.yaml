@@ -96,7 +96,7 @@ module:
             precedence: 0
             category: 'People Management'
             description: ''
-            URLList: "family_manage,family_manage_add,family_manage_edit,family_manage_delete,family_student_edit,family_adult_edit,family_child_remove,family_a ▶
+            URLList: "family_manage,family_manage_add,family_manage_edit,family_manage_delete,family_student_edit,family_adult_edit,family_child_remove,family_adult_remove"
             entryURL: family_manage
             entrySidebar: 'Y'
             menuShow: 'Y'
