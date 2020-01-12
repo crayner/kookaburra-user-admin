@@ -60,7 +60,7 @@ class PeopleController extends AbstractController
      */
     public function manage(ManagePagination $pagination)
     {
-        $pagination->setContent([])->setPageMax(25)->setContentLoader('/user/admin/people/content/loader/')
+        $pagination->setContent([])->setPageMax(25)->setContentLoader($this->generateUrl('user_admin__manage_people_content_loader'))
             ->setPaginationScript();
 
         return $this->render('@KookaburraUserAdmin/manage.html.twig');
