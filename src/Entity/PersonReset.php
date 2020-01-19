@@ -18,7 +18,8 @@ use Doctrine\ORM\Mapping as ORM;
  * Class PersonReset
  * @package Kookaburra\UserAdmin\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\UserAdmin\Repository\PersonResetRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="PersonReset")
+ * @ORM\Table(options={"auto_increment": 1}, name="PersonReset",
+ *     indexes={@ORM\Index(name="person",columns={"person"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class PersonReset
@@ -26,7 +27,7 @@ class PersonReset
     /**
      * @var integer|null
      * @ORM\Id
-     * @ORM\Column(type="bigint", name="gibbonPersonResetID", columnDefinition="INT(12) UNSIGNED ZEROFILL AUTO_INCREMENT")
+     * @ORM\Column(type="bigint", columnDefinition="INT(12) UNSIGNED ZEROFILL AUTO_INCREMENT")
      * @ORM\GeneratedValue
      */
     private $id;
@@ -34,7 +35,7 @@ class PersonReset
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
-     * @ORM\JoinColumn(name="gibbonPersonID", referencedColumnName="gibbonPersonID", nullable=false)
+     * @ORM\JoinColumn(name="person", referencedColumnName="id", nullable=false)
      */
     private $person;
 

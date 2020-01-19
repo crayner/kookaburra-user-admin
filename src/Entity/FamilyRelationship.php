@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class FamilyRelationship
  * @package Kookaburra\UserAdmin\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\UserAdmin\Repository\FamilyRelationshipRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="FamilyRelationship", uniqueConstraints={@ORM\UniqueConstraint(name="familyAdultChild", columns={"gibbonFamilyID","adult","child"})})
+ * @ORM\Table(options={"auto_increment": 1}, name="FamilyRelationship", uniqueConstraints={@ORM\UniqueConstraint(name="familyAdultChild", columns={"family","adult","child"})})
  * @UniqueEntity({"family","adult","child"})
  */
 class FamilyRelationship implements EntityInterface
@@ -30,7 +30,7 @@ class FamilyRelationship implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id()
-     * @ORM\Column(type="integer", name="gibbonFamilyRelationshipID", columnDefinition="INT(9) UNSIGNED ZEROFILL")
+     * @ORM\Column(type="integer", columnDefinition="INT(9) UNSIGNED ZEROFILL")
      * @ORM\GeneratedValue
      */
     private $id;
@@ -38,7 +38,7 @@ class FamilyRelationship implements EntityInterface
     /**
      * @var Family|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Family")
-     * @ORM\JoinColumn(name="gibbonFamilyID", referencedColumnName="gibbonFamilyID", nullable=false)
+     * @ORM\JoinColumn(name="gibbonFamilyID", referencedColumnName="id", nullable=false)
      * @Assert\NotBlank()
      */
     private $family;
@@ -46,7 +46,7 @@ class FamilyRelationship implements EntityInterface
     /**
      * @var FamilyAdult|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\FamilyAdult",inversedBy="relationships")
-     * @ORM\JoinColumn(name="adult",referencedColumnName="gibbonFamilyAdultID",nullable=false)
+     * @ORM\JoinColumn(name="adult",referencedColumnName="id",nullable=false)
      * @Assert\NotBlank()
      */
     private $adult;
@@ -54,7 +54,7 @@ class FamilyRelationship implements EntityInterface
     /**
      * @var FamilyChild|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\FamilyChild",inversedBy="relationships")
-     * @ORM\JoinColumn(name="child",referencedColumnName="gibbonFamilyChildID",nullable=false)
+     * @ORM\JoinColumn(name="child",referencedColumnName="id",nullable=false)
      * @Assert\NotBlank()
      */
     private $child;

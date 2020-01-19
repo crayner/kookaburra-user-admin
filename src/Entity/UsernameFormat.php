@@ -31,14 +31,14 @@ class UsernameFormat implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id
-     * @ORM\Column(type="smallint", name="gibbonUsernameFormatID", columnDefinition="INT(3) UNSIGNED ZEROFILL AUTO_INCREMENT")
+     * @ORM\Column(type="smallint", columnDefinition="INT(3) UNSIGNED ZEROFILL AUTO_INCREMENT")
      * @ORM\GeneratedValue
      */
     private $id;
 
     /**
      * @var array|null
-     * @ORM\Column(name="gibbonRoleIDList", nullable=true, type="simple_array")
+     * @ORM\Column(name="role_list", nullable=true, type="simple_array")
      */
     private $roleList;
 

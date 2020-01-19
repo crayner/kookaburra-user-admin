@@ -19,6 +19,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class KookaburraUserAdminExtension
@@ -48,9 +49,82 @@ class KookaburraUserAdminExtension extends Extension
         {
             $container
                 ->getDefinition(PersonNameManager::class)
-                ->addMethodCall('setFormats', [$config['name_formats']])
+                ->addMethodCall('setFormats', [isset($config['name_formats']) ? $config['name_formats'] : $this->getNameFormatsDefault()])
             ;
         }
+    }
 
+    /**
+     * getNameFormatsDefault
+     * @return array
+     */
+    private function getNameFormatsDefault(): array
+    {
+        return Yaml::parse("
+staff:
+    first:
+        short:
+            reversed: 'surname, initial'
+            normal: 'initial surname'
+        long:
+            reversed: 'surname, first'
+            normal: 'first surname'
+    preferred:
+        short:
+            reversed: 'surname, initial'
+            normal: 'initial surname'
+        long:
+            reversed: 'surname, first'
+            normal: 'first surname'
+    formal: 'title first surname'
+parent:
+    first:
+        short:
+            reversed: 'surname, initial'
+            normal: 'initial surname'
+        long:
+            reversed: 'surname, first'
+            normal: 'first surname'
+    preferred:
+        short:
+            reversed: 'surname, initial'
+            normal: 'initial surname'
+        long:
+            reversed: 'surname, preferred'
+            normal: 'preferred surname'
+    formal: 'title first surname'
+other:
+    first:
+        short:
+            reversed: 'surname, initial'
+            normal: 'initial surname'
+        long:
+            reversed: 'surname, first'
+            normal: 'first surname'
+    preferred:
+        short:
+            reversed: 'surname, initial'
+            normal: 'initial surname'
+        long:
+            reversed: 'surname, preferred'
+            normal: 'preferred surname'
+    formal: 'title first surname'
+student:
+    first:
+        short:
+            reversed: 'surname, initial'
+            normal: 'initial surname'
+        long:
+            reversed: 'surname, first'
+            normal: 'first surname'
+    preferred:
+        short:
+            reversed: 'surname, initial'
+            normal: 'initial surname'
+        long:
+            reversed: 'surname, preferred'
+            normal: 'preferred surname'
+    formal: 'first surname'
+");
     }
 }

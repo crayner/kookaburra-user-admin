@@ -56,7 +56,7 @@ use Symfony\Component\Intl\Languages;
  *     @ORM\Index(name="academic_year_class_of",columns={"class_of_academic_year"}),
  *     @ORM\Index(name="application_form",columns={"gibbonApplicationFormID"}),
  *     @ORM\Index(name="theme",columns={"gibbonThemeIDPersonal"}),
- *     @ORM\Index(name="primary_role",columns={"gibbonRoleIDPrimary"}),
+ *     @ORM\Index(name="primary_role",columns={"primary_role"}),
  *     @ORM\Index(name="i18n",columns={"gibboni18nIDPersonal"})
  * }
  *     )
@@ -88,7 +88,7 @@ class Person implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id
-     * @ORM\Column(type="integer", name="gibbonPersonID", columnDefinition="INT(10) UNSIGNED ZEROFILL AUTO_INCREMENT")
+     * @ORM\Column(type="integer", columnDefinition="INT(10) UNSIGNED ZEROFILL AUTO_INCREMENT")
      * @ORM\GeneratedValue
      */
     private $id;
@@ -510,7 +510,7 @@ class Person implements EntityInterface
     /**
      * @var Role|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\SystemAdmin\Entity\Role")
-     * @ORM\JoinColumn(name="gibbonRoleIDPrimary", referencedColumnName="gibbonRoleID", nullable=false)
+     * @ORM\JoinColumn(name="primary_role", referencedColumnName="id", nullable=false)
      * @ASSERT\NotBlank()
      */
     private $primaryRole;
@@ -2341,7 +2341,7 @@ class Person implements EntityInterface
     /**
      * @var ApplicationForm|null
      * @ORM\ManyToOne(targetEntity="App\Entity\ApplicationForm")
-     * @ORM\JoinColumn(name="gibbonApplicationFormID", referencedColumnName="gibbonApplicationFormID", nullable=true)
+     * @ORM\JoinColumn(name="application_form", referencedColumnName="gibbonApplicationFormID", nullable=true)
      */
     private $applicationForm;
 
@@ -2510,7 +2510,7 @@ class Person implements EntityInterface
     /**
      * @var Theme|null
      * @ORM\ManyToOne(targetEntity="App\Entity\Theme")
-     * @ORM\JoinColumn(name="gibbonThemeIDPersonal", referencedColumnName="gibbonThemeID", nullable=true)
+     * @ORM\JoinColumn(name="theme", referencedColumnName="gibbonThemeID", nullable=true)
      */
     private $theme;
 
@@ -2535,7 +2535,7 @@ class Person implements EntityInterface
     /**
      * @var I18n|null
      * @ORM\ManyToOne(targetEntity="App\Entity\I18n")
-     * @ORM\JoinColumn(name="gibboni18nIDPersonal", referencedColumnName="gibboni18nID", nullable=true)
+     * @ORM\JoinColumn(name="personal_i18n", referencedColumnName="gibboni18nID", nullable=true)
      */
     private $i18nPersonal;
 

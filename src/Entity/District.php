@@ -33,7 +33,7 @@ class District implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id()
-     * @ORM\Column(type="integer", name="gibbonDistrictID", columnDefinition="INT(6) UNSIGNED ZEROFILL")
+     * @ORM\Column(type="integer", columnDefinition="INT(6) UNSIGNED ZEROFILL")
      * @ORM\GeneratedValue
      */
     private $id;

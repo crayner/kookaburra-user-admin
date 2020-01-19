@@ -34,7 +34,7 @@ class Family implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id
-     * @ORM\Column(type="integer", name="gibbonFamilyID", columnDefinition="INT(7) UNSIGNED ZEROFILL")
+     * @ORM\Column(type="integer", columnDefinition="INT(7) UNSIGNED ZEROFILL")
      * @ORM\GeneratedValue
      */
     private $id;
@@ -64,7 +64,7 @@ class Family implements EntityInterface
     /**
      * @var District|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\District")
-     * @ORM\JoinColumn(name="homeAddressDistrict", referencedColumnName="gibbonDistrictID", nullable=true)
+     * @ORM\JoinColumn(name="homeAddressDistrict", referencedColumnName="id", nullable=true)
      */
     private $homeAddressDistrict;
 

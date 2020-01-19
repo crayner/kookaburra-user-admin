@@ -53,7 +53,7 @@ class FamilyUpdate
     /**
      * @var Family|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Family")
-     * @ORM\JoinColumn(name="gibbonFamilyID", referencedColumnName="gibbonFamilyID", nullable=false)
+     * @ORM\JoinColumn(name="gibbonFamilyID", referencedColumnName="id", nullable=false)
      */
     private $family;
 
@@ -96,7 +96,7 @@ class FamilyUpdate
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person")
-     * @ORM\JoinColumn(name="gibbonPersonIDUpdater", referencedColumnName="gibbonPersonID", nullable=false)
+     * @ORM\JoinColumn(name="gibbonPersonIDUpdater", referencedColumnName="id", nullable=false)
      */
     private $personUpdater;
 

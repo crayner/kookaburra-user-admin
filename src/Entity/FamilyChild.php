@@ -26,8 +26,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @package Kookaburra\UserAdmin\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\UserAdmin\Repository\FamilyChildRepository")
  * @ORM\Table(options={"auto_increment": 1}, name="FamilyChild",
- *     indexes={@ORM\Index(name="gibbonFamilyIndex", columns={"gibbonFamilyID"}),@ORM\Index(name="gibbonPersonIndex", columns={"gibbonPersonID"})},
- *     uniqueConstraints={@ORM\UniqueConstraint(name="familyMember", columns={"gibbonFamilyID","gibbonPersonID"})})
+ *     indexes={@ORM\Index(name="family", columns={"family"}),@ORM\Index(name="person", columns={"person"})},
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="familyMember", columns={"family","person"})})
  * @UniqueEntity(fields={"family","person"}, errorPath="person")
  */
 class FamilyChild implements EntityInterface
@@ -35,7 +35,7 @@ class FamilyChild implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id()
-     * @ORM\Column(type="integer",name="gibbonFamilyChildID",columnDefinition="INT(8) UNSIGNED ZEROFILL")
+     * @ORM\Column(type="integer",columnDefinition="INT(8) UNSIGNED ZEROFILL")
      * @ORM\GeneratedValue
      */
     private $id;
@@ -43,7 +43,7 @@ class FamilyChild implements EntityInterface
     /**
      * @var Family|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Family")
-     * @ORM\JoinColumn(name="gibbonFamilyID",referencedColumnName="gibbonFamilyID",nullable=false)
+     * @ORM\JoinColumn(name="family",referencedColumnName="id",nullable=false)
      * @Assert\NotBlank()
      */
     private $family;
@@ -51,7 +51,7 @@ class FamilyChild implements EntityInterface
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person", inversedBy="children")
-     * @ORM\JoinColumn(name="gibbonPersonID",referencedColumnName="gibbonPersonID",nullable=false)
+     * @ORM\JoinColumn(name="gibbonPersonID",referencedColumnName="id",nullable=false)
      * @Assert\NotBlank()
      */
     private $person;

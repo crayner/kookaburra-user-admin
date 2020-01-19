@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class FamilyAdult
  * @package Kookaburra\UserAdmin\Entity
  * @ORM\Entity(repositoryClass="Kookaburra\UserAdmin\Repository\FamilyAdultRepository")
- * @ORM\Table(options={"auto_increment": 1}, name="FamilyAdult", indexes={@ORM\Index(name="gibbonPersonIndex", columns={"gibbonPersonID"})}, uniqueConstraints={@ORM\UniqueConstraint(name="familyContactPriority", columns={"gibbonFamilyID","contactPriority"}), @ORM\UniqueConstraint(name="familymember", columns={"gibbonFamilyID","gibbonPersonID"})})
+ * @ORM\Table(options={"auto_increment": 1}, name="FamilyAdult", indexes={@ORM\Index(name="person", columns={"person"})}, uniqueConstraints={@ORM\UniqueConstraint(name="familyContactPriority", columns={"family","contactPriority"}), @ORM\UniqueConstraint(name="familymember", columns={"family","person"})})
  * @UniqueEntity(fields={"family","person"},errorPath="person")
  * @UniqueEntity(fields={"family","contactPriority"},errorPath="contactPriority")
  */
@@ -35,7 +35,7 @@ class FamilyAdult implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id()
-     * @ORM\Column(type="integer", name="gibbonFamilyAdultID", columnDefinition="INT(8) UNSIGNED ZEROFILL")
+     * @ORM\Column(type="integer",columnDefinition="INT(8) UNSIGNED ZEROFILL")
      * @ORM\GeneratedValue
      */
     private $id;
@@ -43,7 +43,7 @@ class FamilyAdult implements EntityInterface
     /**
      * @var Family|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Family")
-     * @ORM\JoinColumn(name="gibbonFamilyID", referencedColumnName="gibbonFamilyID", nullable=false)
+     * @ORM\JoinColumn(name="family", referencedColumnName="id", nullable=false)
      * @Assert\NotBlank()
      */
     private $family;
@@ -51,7 +51,7 @@ class FamilyAdult implements EntityInterface
     /**
      * @var Person|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Person", inversedBy="adults")
-     * @ORM\JoinColumn(name="gibbonPersonID", referencedColumnName="gibbonPersonID", nullable=false)
+     * @ORM\JoinColumn(name="person", referencedColumnName="id", nullable=false)
      * @Assert\NotBlank()
      */
     private $person;
