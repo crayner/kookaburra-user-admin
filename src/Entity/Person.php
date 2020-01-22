@@ -2510,7 +2510,7 @@ class Person implements EntityInterface
     /**
      * @var Theme|null
      * @ORM\ManyToOne(targetEntity="App\Entity\Theme")
-     * @ORM\JoinColumn(name="theme", referencedColumnName="gibbonThemeID", nullable=true)
+     * @ORM\JoinColumn(name="personal_theme", referencedColumnName="gibbonThemeID", nullable=true)
      */
     private $theme;
 

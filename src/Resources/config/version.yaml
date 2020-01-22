@@ -330,6 +330,9 @@ module:
             categoryPermissionStudent: 'N'
             categoryPermissionParent: 'N'
             categoryPermissionOther: 'N'
+            permissions:
+                - Administrator
+                - 'Support Staff'
         'Personal Preferences':
             name: 'Personal Preferences'
             precedence: 0
