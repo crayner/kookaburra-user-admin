@@ -45,7 +45,6 @@ use Symfony\Component\Intl\Languages;
  * @ORM\Table(
  *     options={"auto_increment": 1},
  *     name="Person",
- *     options={"auto_increment": 1},
  *     uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"})},
  *     indexes={@ORM\Index(name="username_2", columns={"username", "email"}),
  *     @ORM\Index(name="phone_code_1",columns={"phone1CountryCode"}),

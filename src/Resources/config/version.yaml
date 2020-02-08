@@ -211,7 +211,6 @@ module:
             categoryPermissionOther: 'N'
             permissions:
                 - Administrator
-                - Administrator
         'Public Registration Settings':
             name: 'Public Registration Settings'
             precedence: 0
