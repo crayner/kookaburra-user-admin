@@ -89,7 +89,7 @@ class PersonRepository extends ServiceEntityRepository
 
     /**
      * findStudentsForFastFinder
-     * @param AcademicYear $AcademicYear
+     * @param AcademicYear $academicYear
      * @param string $studentTitle
      * @return array|null
      * @throws \Exception
@@ -104,7 +104,7 @@ class PersonRepository extends ServiceEntityRepository
             ])
             ->join('p.studentEnrolments', 'se')
             ->join('se.rollGroup', 'rg')
-            ->where('se.academicYear = :academicYear')
+            ->where('rg.academicYear = :academicYear')
             ->andWhere('p.status = :full')
             ->andWhere('(p.dateStart IS NULL OR p.dateStart <= :today)')
             ->andWhere('(p.dateEnd IS NULL OR p.dateEnd >= :today)')
