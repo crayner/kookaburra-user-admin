@@ -90,24 +90,8 @@ class SecurityHelper
             return self::$highestGroupedActionList[$address];
         if ($user = UserHelper::getCurrentUser() === null)
             return self::$highestGroupedActionList[$address] = false;
-        try {
-            $result =  self::getActionProvider()->getRepository()->createQueryBuilder('a')
-                ->select('a.name')
-                ->join('a.permissions', 'p')
-                ->where('a.URLList LIKE :actionName')
-                ->setParameter('actionName', '%'.self::getActionName($address).'%')
-                ->andWhere('a.module = :module')
-                ->setParameter('module', $module)
-                ->andWhere('p.role = :currentRole')
-                ->setParameter('currentRole', UserHelper::getCurrentUser()->getPrimaryRole())
-                ->orderBy('a.precedence', 'DESC')
-                ->setMaxResults(1)
-                ->getQuery()
-                ->getOneOrNullResult();
-            return self::$highestGroupedActionList[$address] = empty($result['name']) ? false :  $result['name'];
-        } catch (PDOException | \PDOException $e) {
-        }
-        return self::$highestGroupedActionList[$address] = false;
+        $result = self::getActionProvider()->getRepository()->findHighestGroupedAction(self::getActionName($address), $module);
+        return self::$highestGroupedActionList[$address] = $result ? $result['name'] : false;
     }
 
     /**
