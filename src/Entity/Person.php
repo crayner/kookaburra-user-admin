@@ -125,7 +125,7 @@ class Person implements EntityInterface
     public static function getGenderAssert(): array
     {
         $x = self::$genderList;
-        unset($x['Unspecified']);
+//        unset($x['Unspecified']);
         return $x;
     }
 
@@ -2607,6 +2607,7 @@ class Person implements EntityInterface
     /**
      * @var string|null
      * @ORM\Column(length=1, options={"default": "Y"}, name="receiveNotificationEmails")
+     * @ASSERT\Choice(callback="getBooleanList")
      */
     private $receiveNotificationEmails = 'Y';
 

@@ -111,7 +111,6 @@ class PreferenceSettingsType extends AbstractType
                 [
                     'label' => 'Receive Email Notifications?',
                     'help' => 'Notifications can always be viewed on screen.',
-                    'required' => false,
                 ]
             )
         ;
