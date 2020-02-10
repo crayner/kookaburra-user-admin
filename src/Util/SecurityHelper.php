@@ -264,42 +264,7 @@ class SecurityHelper
      */
     public static function isRouteAccessible(string $route, string $sub = '%', ?LoggerInterface $logger = null): bool
     {
-        $action = '';
-        $module = null;
-        $role = '';
-        if (null !== $logger)
-            self::$logger = $logger;
-        //Check user is logged in
-        if (UserHelper::getCurrentUser() instanceof Person) {
-            //Check user has a current role set
-            if (! empty(UserHelper::getCurrentUser()->getPrimaryRole())) {
-                //Check module ready
-                $module = self::checkModuleRouteReady($route);
-                $action = self::getActionNameFromRoute($route);
-                if ($module instanceof Module) {
-                    //Check current role has access rights to the current action.
-                    try {
-                        $role = UserHelper::getCurrentUser()->getPrimaryRole();
-                        if (count(self::getActionProvider()->findByURLListModuleRole(
-                                [
-                                    'name' => "%".$action."%",
-                                    "module" => $module,
-                                    'role' => $role,
-                                    'sub' => $sub === '' ? '%' : $sub,
-                                ]
-                            )) > 0)
-                            return true;
-                    } catch (PDOException $e) {
-                    }
-                } else {
-                    self::$logger->warning(sprintf('No module was linked to the address "%s"', $module));
-                }
-            }
-        } else {
-            self::$logger->debug(sprintf('The user was not valid!' ));
-        }
-        self::$logger->debug(sprintf('The action "%s", role "%s" and sub-action "%s" combination is not accessible.', $action, $role, $sub ));
-
+        return self::isActionAccessible($route, $sub, $logger);
         return false;
     }
 
