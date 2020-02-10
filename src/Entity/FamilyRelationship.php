@@ -38,7 +38,7 @@ class FamilyRelationship implements EntityInterface
     /**
      * @var Family|null
      * @ORM\ManyToOne(targetEntity="Kookaburra\UserAdmin\Entity\Family")
-     * @ORM\JoinColumn(name="gibbonFamilyID", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="family", referencedColumnName="id", nullable=false)
      * @Assert\NotBlank()
      */
     private $family;

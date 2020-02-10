@@ -48,14 +48,14 @@ class District implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=30)
+     * @ORM\Column(length=30, nullable=true)
      * @Assert\Length(max=30)
      */
     private $territory;
 
     /**
      * @var string|null
-     * @ORM\Column(length=10)
+     * @ORM\Column(length=10, nullable=true, name="post_code")
      * @Assert\Length(max=10)
      */
     private $postCode;
