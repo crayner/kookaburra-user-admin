@@ -265,7 +265,6 @@ class SecurityHelper
     public static function isRouteAccessible(string $route, string $sub = '%', ?LoggerInterface $logger = null): bool
     {
         return self::isActionAccessible($route, $sub, $logger);
-        return false;
     }
 
     /**
