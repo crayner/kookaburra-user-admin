@@ -215,18 +215,24 @@ class SecurityHelper
      */
     public static function isActionAccessible(string $address, string $sub = '%', ?LoggerInterface $logger = null): bool
     {
-        $action = '';
-        $module = null;
-        $role = '';
         if (null !== $logger)
             self::$logger = $logger;
-        //Check user is logged in
+        return self::isActionAccessibleToRole(self::checkModuleReady($address),self::getActionName($address), $address, $sub);
+    }
+
+    /**
+     * isActionAccessibleToRole
+     * @param Module|bool $module
+     * @param string $action
+     * @param string $sub
+     * @return bool
+     */
+    private static function isActionAccessibleToRole($module, string $action, string $address, string $sub)
+    {
         if (UserHelper::getCurrentUser() instanceof Person) {
             //Check user has a current role set
             if (! empty(UserHelper::getCurrentUser()->getPrimaryRole())) {
                 //Check module ready
-                $module = self::checkModuleReady($address);
-                $action = self::getActionName($address);
                 if ($module instanceof Module) {
                     //Check current role has access rights to the current action.
                     try {
@@ -245,15 +251,17 @@ class SecurityHelper
                 } else {
                     self::$logger->warning(sprintf('No module was linked to the address "%s"', $address));
                 }
+            } else {
+                self::$logger->debug(sprintf('The user does not have a valid Primary Role.' ));
             }
         } else {
             self::$logger->debug(sprintf('The user was not valid!' ));
         }
+
         self::$logger->debug(sprintf('The action "%s", role "%s" and sub-action "%s" combination is not accessible.', $action, $role, $sub ));
 
         return false;
     }
-
     /**
      * isRouteAccessible
      * @param string $route
@@ -264,7 +272,9 @@ class SecurityHelper
      */
     public static function isRouteAccessible(string $route, string $sub = '%', ?LoggerInterface $logger = null): bool
     {
-        return self::isActionAccessible($route, $sub, $logger);
+        if (null !== $logger)
+            self::$logger = $logger;
+        return self::isActionAccessibleToRole(self::checkModuleRouteReady($route),self::getActionNameFromRoute($route), $route, $sub);
     }
 
     /**
