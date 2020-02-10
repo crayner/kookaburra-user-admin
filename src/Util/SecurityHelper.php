@@ -212,13 +212,14 @@ class SecurityHelper
      * @param string $address
      * @param string $sub
      * @return bool
-     * @throws \Exception
      */
     public static function isActionAccessible(string $address, string $sub = '%', ?LoggerInterface $logger = null): bool
     {
         $action = '';
-        $module = '';
+        $module = null;
         $role = '';
+        if (null !== $logger)
+            self::$logger = $logger;
         //Check user is logged in
         if (UserHelper::getCurrentUser() instanceof Person) {
             //Check user has a current role set
@@ -235,7 +236,7 @@ class SecurityHelper
                                     'name' => "%".$action."%",
                                     "module" => $module,
                                     'role' => $role,
-                                    'sub' => $sub,
+                                    'sub' => $sub === '' ? '%' : $sub,
                                 ]
                             )) > 0)
                             return true;
@@ -264,8 +265,10 @@ class SecurityHelper
     public static function isRouteAccessible(string $route, string $sub = '%', ?LoggerInterface $logger = null): bool
     {
         $action = '';
-        $module = '';
+        $module = null;
         $role = '';
+        if (null !== $logger)
+            self::$logger = $logger;
         //Check user is logged in
         if (UserHelper::getCurrentUser() instanceof Person) {
             //Check user has a current role set
@@ -282,7 +285,7 @@ class SecurityHelper
                                     'name' => "%".$action."%",
                                     "module" => $module,
                                     'role' => $role,
-                                    'sub' => $sub,
+                                    'sub' => $sub === '' ? '%' : $sub,
                                 ]
                             )) > 0)
                             return true;
