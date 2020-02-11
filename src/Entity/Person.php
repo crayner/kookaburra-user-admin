@@ -53,10 +53,10 @@ use Symfony\Component\Intl\Languages;
  *     @ORM\Index(name="phone_code_4",columns={"phone4CountryCode"}),
  *     @ORM\Index(name="house",columns={"house"}),
  *     @ORM\Index(name="academic_year_class_of",columns={"class_of_academic_year"}),
- *     @ORM\Index(name="application_form",columns={"gibbonApplicationFormID"}),
- *     @ORM\Index(name="theme",columns={"gibbonThemeIDPersonal"}),
+ *     @ORM\Index(name="application_form",columns={"application_form"}),
+ *     @ORM\Index(name="theme",columns={"personal_theme"}),
  *     @ORM\Index(name="primary_role",columns={"primary_role"}),
- *     @ORM\Index(name="i18n",columns={"gibboni18nIDPersonal"})
+ *     @ORM\Index(name="i18n",columns={"personal_i18n"})
  * }
  *     )
  * @UniqueEntity(
