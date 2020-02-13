@@ -81,7 +81,6 @@ class SecurityHelper
      * getHighestGroupedAction
      * @param string $address
      * @return bool|string
-     * @throws \Exception
      */
     public static function getHighestGroupedAction(string $address)
     {
@@ -139,6 +138,14 @@ class SecurityHelper
      */
     public static function getModuleName(string $address)
     {
+        if (strpos($address, '__'))
+        {
+            $module = explode('__', $address);
+            $module = explode('_', $module[0]);
+            foreach($module as $q=>$w)
+                $module[$q] = ucfirst($w);
+            return implode(' ', $module);
+        }
         return substr(substr($address, 9), 0, strpos(substr($address, 9), '/'));
     }
 
