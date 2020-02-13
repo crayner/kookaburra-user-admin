@@ -184,7 +184,7 @@ class PersonNameManager
                 'surname' => $person->getSurname(),
                 'preferred' => $person->getPreferredName(),
                 'title' => $person->getTitle(),
-                'initial' => substr($person->getFirstName(), 0,1),
+                'initial' => substr($person->getFirstName(), 0,1).'.',
             ];
 
         $name = trim(str_replace(
