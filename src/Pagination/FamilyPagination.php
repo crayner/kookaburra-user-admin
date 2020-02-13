@@ -19,14 +19,14 @@ use App\Manager\Entity\PaginationAction;
 use App\Manager\Entity\PaginationColumn;
 use App\Manager\Entity\PaginationRow;
 use App\Manager\ReactPaginationInterface;
-use App\Manager\ReactPaginationManager;
+use App\Manager\AbstractPaginationManager;
 use App\Util\TranslationsHelper;
 
 /**
  * Class FamilyPagination
  * @package Kookaburra\UserAdmin\Pagination
  */
-class FamilyPagination extends ReactPaginationManager
+class FamilyPagination extends AbstractPaginationManager
 {
     /**
      * execute
