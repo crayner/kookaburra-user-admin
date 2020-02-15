@@ -19,13 +19,13 @@ namespace Kookaburra\UserAdmin\Pagination;
 use App\Manager\Entity\PaginationAction;
 use App\Manager\Entity\PaginationColumn;
 use App\Manager\Entity\PaginationRow;
-use App\Manager\ReactPaginationInterface;
+use App\Manager\PaginationInterface;
 use App\Manager\AbstractPaginationManager;
 use App\Util\TranslationsHelper;
 
 class FamilyAdultsPagination extends AbstractPaginationManager
 {
-    public function execute(): ReactPaginationInterface
+    public function execute(): PaginationInterface
     {
         TranslationsHelper::setDomain('UserAdmin');
         $row = new PaginationRow();

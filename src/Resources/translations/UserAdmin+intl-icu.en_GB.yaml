@@ -1151,3 +1151,49 @@ Target this person...: Target this person...
 Replace this image: Replace this image
 Images [.jpg, .png, .jpeg] only: Images [.jpg, .png, .jpeg] only
 'Use this page to drag and drop images from your computer to the site for the targeted individual. Existing images are replaced.': 'Use this page to drag and drop images from your computer to the site for the targeted individual. Existing images are replaced.'
+Import: Import
+People Management: People Management
+People Settings: People Settings
+Staff Management: Staff Management
+Student Management: Student Management
+Module Menu: Module Menu
+'Staff Type: Teaching': 'Staff Type: Teaching'
+'Staff Type: Support': 'Staff Type: Support'
+'Staff Role: Administrator': 'Staff Role: Administrator'
+'Staff Role: Librarian': 'Staff Role: Librarian'
+'Staff Role: Support Staff': 'Staff Role: Support Staff'
+'Staff Role: Teacher': 'Staff Role: Teacher'
+Application Questions: Application Questions
+HTML text that will appear as questions for the applicant to answer.: HTML text that will appear as questions for the applicant to answer.
+If yes, members of the public can submit staff applications: If yes, members of the public can submit staff applications
+Submit All Panels: Submit All Panels
+Application Form Referee Links: Application Form Referee Links
+Required Documents Options: Required Documents Options
+Notification Message: Notification Message
+A custom message to add to the standard email on acceptance.: A custom message to add to the standard email on acceptance.
+Notification Default: Notification Default
+Should acceptance email be turned on or off by default.: Should acceptance email be turned on or off by default.
+Default Email: Default Email
+Set default email on acceptance, using [username] to insert username.: Set default email on acceptance, using [username] to insert username.
+Default Website: Default Website
+Set default website on acceptance, using [username] to insert username.: Set default website on acceptance, using [username] to insert username.
+Referee Links: Referee Links
+General Settings: General Settings
+Enable Public Registration: Enable Public Registration
+Allows members of the public to register to use the system.: Allows members of the public to register to use the system.
+Public Registration Minimum Age: Public Registration Minimum Age
+The minimum age, in years, permitted to register.: The minimum age, in years, permitted to register.
+Public Registration Default Status: Public Registration Default Status
+"Should new users be 'Full' or 'Pending Approval'?": "Should new users be 'Full' or 'Pending Approval'?"
+Public Registration Default Role: Public Registration Default Role
+System role to be assigned to registering members of the public.: System role to be assigned to registering members of the public.
+Interface Options: Interface Options
+Public Registration Introductory Text: Public Registration Introductory Text
+HTML text that will appear above the public registration form.: HTML text that will appear above the public registration form.
+Public Registration Postscript: Public Registration Postscript
+HTML text that will appear underneath the public registration form.: HTML text that will appear underneath the public registration form.
+Public Registration Privacy Statement: Public Registration Privacy Statement
+HTML text that will appear above the Submit button, explaining privacy policy.: HTML text that will appear above the Submit button, explaining privacy policy.
+Public Registration Agreement: Public Registration Agreement
+Agreement that user must confirm before joining. Blank for no agreement.: Agreement that user must confirm before joining. Blank for no agreement.
+Interface: Interface
