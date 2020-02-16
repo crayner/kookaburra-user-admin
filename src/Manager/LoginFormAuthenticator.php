@@ -105,8 +105,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         {
             $authenticate['_username'] =   $request->request->get('username');
             $authenticate['_password'] =   $request->request->get('password');
-            $authenticate['gibbonAcademicYearID'] = $request->request->get('gibbonAcademicYearID');
-            $authenticate['address'] = $request->request->get('address');
+            $authenticate['academicYear'] = $request->request->get('academicYear');
+            $authenticate['i18n'] = $request->request->get('i18n');
             $authenticate['_token'] = 'legacy';
         }
 
@@ -114,10 +114,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             'email' => $authenticate['_username'],
             'password' => $authenticate['_password'],
             'csrf_token' => $authenticate['_token'],
-            'gibbonAcademicYearID' => $authenticate['gibbonAcademicYearID'],
-            'address' => $authenticate['address'],
-
+            'academicYear' => $authenticate['academicYear'],
+            'i18n' => $authenticate['i18n'],
         ];
+
         $request->getSession()->set(
             Security::LAST_USERNAME,
             $credentials['email']
@@ -180,8 +180,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         if (! $person->isCanLogin())
             return $this->authenticationFailure('return.fail.2');
 
-        if ($request->request->has('gibbonAcademicYearID'))
-            if (($response = $this->checkAcademicYear($person, $session, $request->request->get('gibbonAcademicYearID'))) instanceof Response)
+        if ($request->request->has('academicYear'))
+            if (($response = $this->checkAcademicYear($person, $session, $request->request->get('academicYear'))) instanceof Response)
                 return $response;
 
         $this->setLanguage($request);
@@ -194,7 +194,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         ProviderFactory::getEntityManager()->persist($person);
         ProviderFactory::getEntityManager()->flush();
 
-        LogProvider::setLog($session->get('gibbonAcademicYearIDCurrent'), null, $person, 'Login - Success', array('username' => $person->getUsername()), $ip);
+        LogProvider::setLog($session->get('academicYearCurrent'), null, $person, 'Login - Success', array('username' => $person->getUsername()), $ip);
 
         if ($targetPath = $this->getTargetPath($request, $providerKey))
             return new RedirectResponse($targetPath);

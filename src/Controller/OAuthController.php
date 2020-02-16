@@ -37,13 +37,14 @@ class OAuthController extends AbstractController
         return $this->redirect($manager->connectUrl());
 	}
 
-	/**
-	 * After going to Google, you're redirected back here
-	 * because this is the "redirect_route" you configured
-	 * in config.yml
-	 *
-	 * @Route("/security/oauth2callback/", name="connect_google_check")
-	 */
+    /**
+     * After going to Google, you're redirected back here
+     * because this is the "redirect_route" you configured
+     * in config.yml
+     *
+     * @Route("/security/oauth2callback/", name="connect_google_check")
+     * @param Request $request
+     */
 	public function connectCheckGoogle(Request $request)
 	{
 	}
