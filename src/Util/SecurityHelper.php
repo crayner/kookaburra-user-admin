@@ -44,6 +44,16 @@ class SecurityHelper
     private static $checker;
 
     /**
+     * @var Module|null
+     */
+    private static $module;
+
+    /**
+     * @var Action|null
+     */
+    private static $action;
+
+    /**
      * SecurityHelper constructor.
      * @param LoggerInterface $logger
      * @param AuthorizationCheckerInterface $checker
@@ -132,6 +142,17 @@ class SecurityHelper
     }
 
     /**
+     * getModuleFromRoute
+     * @param string $route
+     * @return array
+     */
+    public static function getModuleFromRoute(string $route): array 
+    {
+        self::getActionFromRoute($route);
+        return self::$module ? self::$module->toArray() : [];
+    }
+
+    /**
      * getModuleName
      * @param string $address
      * @return bool|string
@@ -169,6 +190,20 @@ class SecurityHelper
     {
         $route = self::splitRoute($route);
         return $route['module'];
+    }
+
+    /**
+     * getActionFromRoute
+     * @param $route
+     * @return array
+     */
+    public static function getActionFromRoute($route): array
+    {
+        if (null === self::$action) {
+            self::$action = ProviderFactory::getRepository(Action::class)->findOneByRoute($route);
+            self::$module = self::$action ? self::$action->getModule() : null;
+        }
+        return self::$action ? self::$action->toArray() : [];
     }
 
     /**
