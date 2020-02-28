@@ -200,6 +200,10 @@ class SecurityHelper
     public static function getActionFromRoute($route): array
     {
         if (null === self::$action) {
+            if (strpos($route, '__')) {
+                $x = explode('__', $route);
+                $route = $x[1];
+            }
             self::$action = ProviderFactory::getRepository(Action::class)->findOneByRoute($route);
             self::$module = self::$action ? self::$action->getModule() : null;
         }
