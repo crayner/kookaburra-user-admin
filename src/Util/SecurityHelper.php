@@ -199,7 +199,7 @@ class SecurityHelper
      */
     public static function getActionFromRoute($route): array
     {
-        if (null === self::$action) {
+        if (null === self::$action && mb_strpos($route, '__') !== false) {
             if (strpos($route, '__')) {
                 $x = explode('__', $route);
                 $route = $x[1];
