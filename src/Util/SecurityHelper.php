@@ -149,6 +149,12 @@ class SecurityHelper
     public static function getModuleFromRoute(string $route): array 
     {
         self::getActionFromRoute($route);
+        if (!self::$module && mb_strpos($route, '__') !== false) {
+            $route = explode('__', $route);
+            $route = $route[0];
+            self::$module = ProviderFactory::getRepository(Module::class)->findOneBy(['name' => ucwords(str_replace('_', ' ', $route))]);
+        }
+
         return self::$module ? self::$module->toArray() : [];
     }
 

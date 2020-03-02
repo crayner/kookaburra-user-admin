@@ -102,7 +102,7 @@ class PreferenceController extends AbstractController
                 $em->persist($person);
                 $em->flush();
                 $em->refresh($person);
-                $data['errors'][] = ['class' => 'success', 'message' => $translator->trans('Your request was completed successfully.')];
+                $data['errors'][] = ['class' => 'success', 'message' => $translator->trans('return.success.0')];
                 $settingsForm = $this->createForm(PreferenceSettingsType::class, $person, ['action' => $this->generateUrl('user_admin__preferences', ['tabName' => 'Settings'])]);
                 $manager->singlePanel($settingsForm->createView());
                 $data['form'] = $manager->getFormFromContainer('formContent', 'single');
