@@ -290,7 +290,7 @@ class SecurityHelper
             self::$logger->debug(sprintf('The user was not valid!' ));
         }
 
-        self::$logger->debug(sprintf('The action "%s", role "%s" and sub-action "%s" combination is not accessible.', $action, $role, $sub ));
+        self::$logger->debug(sprintf('The action "%s", role "%s" and sub-action "%s" combination is not accessible.', $action,isset($role) ? $role : '', $sub ));
 
         return false;
     }
