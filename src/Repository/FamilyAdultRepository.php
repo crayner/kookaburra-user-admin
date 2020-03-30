@@ -64,7 +64,9 @@ class FamilyAdultRepository extends ServiceEntityRepository
      * findStudentsOfParentFastFinder
      * @param Person $person
      * @param string $studentTitle
+     * @param AcademicYear $AcademicYear
      * @return array
+     * @throws \Exception
      */
     public function findStudentsOfParentFastFinder(Person $person, string $studentTitle, AcademicYear $AcademicYear): ?array
     {

@@ -181,7 +181,10 @@ class PersonRepository extends ServiceEntityRepository
         $AcademicYear = AcademicYearHelper::getCurrentAcademicYear();
         $today = new \DateTime(date('Y-m-d'));
         return $this->createQueryBuilder('p')
-            ->join('p.studentEnrolments','se')
+            ->select(['p','s','fa'])
+            ->leftJoin('p.studentEnrolments','se')
+            ->leftJoin('p.staff', 's')
+            ->leftJoin('p.adults', 'fa')
             ->where('se.academicYear = :academicYear')
             ->setParameter('academicYear', $AcademicYear)
             ->andWhere('p.status = :full')

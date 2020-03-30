@@ -3165,7 +3165,7 @@ class Person implements EntityInterface
 
     /**
      * isEqualTo
-     * @param Person $user
+     * @param Person $person
      * @return bool
      */
     public function isEqualTo(Person $person): bool

@@ -298,13 +298,16 @@ class PersonProvider implements EntityProviderInterface, UserLoaderInterface
 
     /**
      * getCurrentStudentChoiceList
+     * @param bool $useEntity
      * @return array
-     * @throws \Exception
      */
-    public function getCurrentStudentChoiceList(): array {
+    public function getCurrentStudentChoiceList(bool $useEntity = false): array {
         $result = [];
         foreach($this->getRepository()->findCurrentStudents() as $q=>$w){
-            $result[]= new ChoiceView([], $w->getId(), $w->formatName(['style' => 'long', 'reverse' => true]), []);
+            if ($useEntity)
+                $result[$w->getId()] = $w;
+            else
+                $result[] = new ChoiceView([], $w->getId(), $w->formatName(['style' => 'long', 'reverse' => true]), []);
         }
         return $result;
     }
@@ -316,8 +319,8 @@ class PersonProvider implements EntityProviderInterface, UserLoaderInterface
 
     /**
      * getCurrentStaffChoiceList
+     * @param bool $useEntity
      * @return array
-     * @throws \Exception
      */
     public function getCurrentStaffChoiceList(bool $useEntity = false): array
     {
