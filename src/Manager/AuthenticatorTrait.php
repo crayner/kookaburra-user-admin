@@ -119,6 +119,7 @@ trait AuthenticatorTrait
      * @param string|Person $username
      * @param $session
      * @return Person
+     * @todo Clear legacy
      */
     public function createUserSession($username, SessionInterface $session) {
 
@@ -128,6 +129,9 @@ trait AuthenticatorTrait
             $userData = ProviderFactory::getRepository(Person::class)->find($username->getId());
         else
             $userData = ProviderFactory::getRepository(Person::class)->loadUserByUsernameOrEmail($username);
+
+        $session->clear('backgroundImage');
+        $session->set('person', $userData);
 
         // all legacy
         $session->set('username', $username);
@@ -161,7 +165,6 @@ trait AuthenticatorTrait
         $session->set('googleAPIRefreshToken', $userData->getgoogleAPIRefreshToken());
         $session->set('receiveNotificationEmails', $userData->getreceiveNotificationEmails());
         $session->set('gibbonHouseID', $userData->getHouse() ? $userData->getHouse()->getId() : null);
-
         //Deal with themes
         $session->set('gibbonThemeIDPersonal', $userData->getTheme() ? $userData->getTheme()->getId() : null);
 
