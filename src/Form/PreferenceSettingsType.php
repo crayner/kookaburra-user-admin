@@ -15,7 +15,7 @@
 
 namespace Kookaburra\UserAdmin\Form;
 
-use App\Entity\I18n;
+use Kookaburra\SystemAdmin\Entity\I18n;
 use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\Setting;
 use App\Entity\Theme;

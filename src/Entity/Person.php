@@ -16,7 +16,7 @@
 namespace Kookaburra\UserAdmin\Entity;
 
 use App\Entity\ApplicationForm;
-use App\Entity\I18n;
+use Kookaburra\SystemAdmin\Entity\I18n;
 use Kookaburra\SchoolAdmin\Entity\AcademicYear;
 use App\Entity\Setting;
 use App\Entity\Staff;
@@ -2533,8 +2533,8 @@ class Person implements EntityInterface
 
     /**
      * @var I18n|null
-     * @ORM\ManyToOne(targetEntity="App\Entity\I18n")
-     * @ORM\JoinColumn(name="personal_i18n", referencedColumnName="gibboni18nID", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Kookaburra\SystemAdmin\Entity\I18n")
+     * @ORM\JoinColumn(name="personal_i18n", referencedColumnName="id", nullable=true)
      */
     private $i18nPersonal;
 

@@ -15,7 +15,7 @@
 
 namespace Kookaburra\UserAdmin\Manager;
 
-use App\Entity\I18n;
+use Kookaburra\SystemAdmin\Entity\I18n;
 use Kookaburra\SchoolAdmin\Entity\AcademicYear;
 use App\Provider\LogProvider;
 use App\Provider\ProviderFactory;
@@ -33,7 +33,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 trait AuthenticatorTrait
 {
-
     /**
      * setLanguage
      * @param Request $request
@@ -41,6 +40,11 @@ trait AuthenticatorTrait
     public function setLanguage(Request $request, int $i18nID = null)
     {
         $session = $request->getSession();
+
+        if (intval($i18nID) > 0 && intval($i18nID) !== intval($session->get('i18n')->getId()))
+            ProviderFactory::create(I18n::class)->setLanguageSession($session,  ['id' => $i18nID], false);
+
+
         if (null !== $i18nID && intval($i18nID) !== intval($session->get(['i18n', 'gibboni18nID'])))
             ProviderFactory::create(I18n::class)->setLanguageSession($session,  ['id' => $i18nID], false);
         elseif ($request->request->has('gibboni18nID') && intval($request->request->get('gibboni18nID')) !== intval($session->get(['i18n', 'gibboni18nID'])))

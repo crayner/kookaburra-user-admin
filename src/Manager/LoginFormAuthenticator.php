@@ -12,7 +12,7 @@
  */
 namespace Kookaburra\UserAdmin\Manager;
 
-use App\Entity\I18n;
+use Kookaburra\SystemAdmin\Entity\I18n;
 use Kookaburra\UserAdmin\Entity\Person;
 use Kookaburra\SystemAdmin\Entity\Role;
 use Kookaburra\SchoolAdmin\Entity\AcademicYear;

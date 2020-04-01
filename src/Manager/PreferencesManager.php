@@ -15,7 +15,7 @@
 
 namespace Kookaburra\UserAdmin\Manager;
 
-use App\Entity\I18n;
+use Kookaburra\SystemAdmin\Entity\I18n;
 use Kookaburra\UserAdmin\Entity\Person;
 use Kookaburra\SchoolAdmin\Entity\AcademicYear;
 use App\Entity\Staff;
@@ -37,7 +37,7 @@ class PreferencesManager
         $session = $request->getSession();
         
         //Check to see if academic year id variables are set, if not set them
-        if ($session->exists('gibbonAcademicYearID') || $session->exists('gibbonAcademicYearName')) {
+        if ($session->exists('academicYear')) {
             ProviderFactory::create(AcademicYear::class)->setCurrentAcademicYear($session);
         }
 
