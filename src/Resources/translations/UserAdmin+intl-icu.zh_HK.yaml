@@ -1,0 +1,1204 @@
+'Basic Information': 基本資料
+Title: 標題
+person:
+    title:
+        ms: Ms
+        miss: 小姐
+        mr: Mr
+        mrs: Mrs
+        dr: Dr
+    gender:
+        f: 女性
+        m: 男性
+        other: 其他
+        unspecified: 不明
+    status:
+        full: 滿
+        expected: '預期'
+        left: 離開
+        'pending approval': 待決批准
+    address:
+        warning: '<div class="warning">Address information for an individual only needs to be set under the following conditions:</div><ol><li>If the person is not in a family.</li><li>If the person`s family does not have a home address set.</li><li>If the person needs an address in addition to their family`s home address.</li></ol>'
+    phonetypelist:
+        '': ''
+        mobile: 手提電話
+        home: '主頁'
+        work: 作業
+        fax: Facsimile
+        pager: 傳呼機
+        other: 其他
+Surname: 姓
+'Family name as shown in ID documents.': 顯示在身分證明文件的名稱。
+'Given Names': 'Given Names'
+'Given names as shown in ID documents.': 'Given names as shown in ID documents.'
+'Preferred Name': 首選名稱
+'Most common name, alias, nickname, etc.': '最常見的名稱, 別號, 綽號 等等'
+'Official Name': 正式名稱
+'Full name as shown in ID documents.': 顯示在身分證明文件的全名。
+'Name In Characters': 字母的名稱
+'Chinese or other character-based name.': 中文或其他基於字符的的名稱.
+Gender: 性別
+'Date of Birth': 出生日期
+'Personal Photo': 'Personal Photo'
+"Displayed at 240px by 320px.\nAccepts images up to 360px by 480px.\nAccepts aspect ratio between 1:1.2 and 1:1.4.": "Displayed at 240px by 320px.\nAccepts images up to 360px by 480px.\nAccepts aspect ratio between 1:1.2 and 1:1.4."
+'System Access': 進接系統
+'Contact Information': 聯絡人資料
+Actions: 行動
+Add: '增加'
+Delete: 刪除
+'Close Message': 'Close Message'
+'There are no records to display.': 沒有要顯示的記錄
+Basic: Basic
+System: System
+Contact: 聯絡
+UserAdmin: UserAdmin
+'People Admin': 'People Admin'
+'Manage People': 'Manage People'
+'Edit Person': 'Edit Person'
+'Primary Role': 主要角色
+'Controls what a user can do and see.': 控制用戶可以做和看什麼。
+'All Roles': 所有的角色
+'Controls what a user can do and see. Use Control, Command and/or Shift to select multiple.': 'Controls what a user can do and see. Use Control, Command and/or Shift to select multiple.'
+Username: 用戶名
+'System login name.': 'System login name.'
+Status: 狀態
+'This determines visibility within the system.': 這確定系統中的能見度。
+family:
+    relationship:
+        mother: 父母
+        father: 父親
+        step-mother: 'Step Mother'
+        step-father: 'Step Father'
+        'adoptive parent': 養父母
+        guardian: 監護人
+        grandmother: 祖母
+        grandfather: 祖父
+        aunt: 阿姨
+        uncle: 叔叔
+        nanny/helper: 保母/家務助理
+        other: 其他
+    status:
+        married: 已婚
+        separated: 分居
+        divorced: 離婚
+        'de facto': 'de Facto'
+        other: 其他
+'System Access: {name}': 'System Access: {name}'
+'Can Login?': 可以登錄？
+'Force Password Reset': 'Force Password Reset'
+'User will be prompted on next login.': 用戶在下次登錄會提示。
+'Contact Information: {name}': 'Contact Information: {name}'
+Email: 電子郵件
+'Alternate Email': 備用的電子郵件
+'Enter Personal Address': 'Enter Personal Address'
+'Address 1': '地址 1'
+'Unit, Building, Street': '單位, 建築, 街'
+'Address 1 Locality': 'Address 1 Locality'
+'City, Suburb or Town, State, Postcode (ZIP)': 'City, Suburb or Town, State, Postcode (ZIP)'
+'Address 1 Country': '地址 1 國家'
+'Address 2': '地址 2 '
+'Address 2 Locality': 'Address 2 Locality'
+'Address 2 Country': '地址 2 國家'
+'Phone 1': 電話號碼1
+'Type, country code, number.': '類型, 國家代碼'
+' ': ' '
+Mobile: 手提電話
+Home: '主頁'
+Work: 作業
+Facsimile: Facsimile
+Pager: 傳呼機
+Other: 其他
+'Phone 2': '電話 2'
+'Phone 3': '電話 3'
+'Phone 4': '電話 4'
+Website: 網站
+'School Information: {name}': 'School Information: {name}'
+'Last School': '去年的學校'
+'Start Date': 開始日期
+'The first day at school for this person.': 'The first day at school for this person.'
+'End Date': 結束日期
+'The last day at school for this person.': 'The last day at school for this person.'
+'Class of': 'Class of'
+'When is the student expected to graduate?': '學生預期什麼時候畢業'
+'Next School': '下一間學校'
+'Departure Reason': '離開原因'
+'Background Information: {name}': 'Background Information: {name}'
+'First Language': 第一語言
+'Second Language': 第二語言
+'Third Language': 第三語言
+'Country of Birth': 出生國
+'Birth Certificate Scan': 'Birth Certificate Scan'
+'Less than 2M,  Accepts PDF and image files only.': 'Less than 2M,  Accepts PDF and image files only.'
+Ethnicity: 種族
+'Ethnicity selection can be altered at {anchor}People Settings{endAnchor}': 'Ethnicity selection can be altered at {anchor}People Settings{endAnchor}'
+Religion: 宗教
+'Religion selection can be altered at {anchor}People Settings{endAnchor}': 'Religion selection can be altered at {anchor}People Settings{endAnchor}'
+'Citizenship 1': '國籍 1'
+'Citizenship 1 Passport Number': '國籍1 護照號碼'
+'Citizenship 1 Passport Scan': '國籍1 護照掃描'
+'Citizenship 2': '國籍 2'
+'Citizenship 2 Passport Number': '國籍2 護照號碼'
+'{name} ID Card Number': '{name} ID Card Number'
+'{name} ID Card Scan': '{name} ID Card Scan'
+'{name} Residency/Visa Type': '{name} Residency/Visa Type'
+'{name} Visa Expiry Date': '{name} Visa Expiry Date'
+'If relevant': 'If relevant'
+'Emergency Contacts: {name}': 'Emergency Contacts: {name}'
+'These details are used when immediate family members (e.g. parent, spouse) cannot be reached first. Please try to avoid listing immediate family members.': 這些資料是如果直系親屬（例如：家長，配偶）不能先聯絡。
+'Contact 1 Name': '聯絡人1 姓名'
+'Contact 1 Relationship': '聯絡人1 關係'
+'Contact 1 Number 1': '聯絡人 1 電話號碼 1'
+'Contact 1 Number 2': '聯絡人 1 電話號碼 2'
+'Contact 2 Name': '聯絡人1 姓名'
+'Contact 2 Relationship': '聯絡人1 關係'
+Mother: 父母
+Father: 父親
+'Step Mother': 'Step Mother'
+'Step Father': 'Step Father'
+'Adoptive Parent': 養父母
+Guardian: 監護人
+Grandmother: 祖母
+Grandfather: 祖父
+Aunt: 阿姨
+Uncle: 叔叔
+Nanny/Helper: 保母/家務助理
+'Contact 2 Number 1': '聯絡人 1 電話號碼 1'
+'Contact 2 Number 2': '聯絡人 1 電話號碼 2'
+Submit: 提交
+'Miscellaneous: {name}': 'Miscellaneous: {name}'
+House: 社
+'Student Identifier': 'Student Identifier'
+'Must be unique if set.': 如果訂了一定要獨特。
+Transport: 交通工區
+'Transport Notes': 運輸筆記
+'Locker Number': 儲物櫃號碼
+'Vehicle Registration': 車牌號碼
+School: '學校'
+Background: 背景
+Emergency: Emergency
+Miscellaneous: '雜項'
+Full: 滿
+Left: 離開
+Photo: 照片
+Name: 名稱
+Family: 家庭
+'Records {start}-{end} of {total}': 'Records {start}-{end} of {total}'
+'First Page': 'First Page'
+'Previous Page': 'Previous Page'
+'Next Page': 'Next Page'
+'Last Page': 'Last Page'
+'Are you sure you want to delete this record?': '你確定你要刪除這個記錄嗎?'
+'This operation cannot be undone, and may lead to loss of vital data in your system. PROCEED WITH CAUTION!': '不能撤銷這個行動, 並可導致重要數據在系統中的損失. 慎重地繼續!'
+Close: 關
+'Yes': 是
+Search: 搜索
+'Search for': 'Search for'
+'Preferred, surname, username, role, student ID, email, phone number, vehicle registration': 'Preferred, surname, username, role, student ID, email, phone number, vehicle registration'
+'Filter by': 'Filter by'
+'Preset filters with your search.': 'Preset filters with your search.'
+Filters: 篩選
+'Role: Student': 'Role: Student'
+'Role: Parent': 'Role: Parent'
+'Role: Staff': 'Role: Staff'
+'Status: Full': 'Status: Full'
+'Status: Left': 'Status: Left'
+'Status: Expected': 'Status: Expected'
+'Before Start Date': 'Before Start Date'
+'After End Date': 完成日期後
+View: 觀看
+'Add Person': 'Add Person'
+'': ''
+return:
+    fail:
+        1: 'Incorrect username or password.'
+        2: '你沒有足夠的特權去登入'
+        9: 'Your primary role does not support the ability to log into the specified year.'
+    success:
+        a: 'Your account has been successfully updated. You can now continue to use the system as per normal.'
+Active: 活性
+Alerts: Alerts
+'Manage Student Settings': 'Manage Student Settings'
+Settings: 設定
+'Student Note Categories': 學生筆記類別
+'Student Notes': 'Student Notes'
+'This section allows you to manage the categories which can be associated with student notes. Categories can be given templates, which will pre-populate the student note on selection.': '這個部分允許你管理可以與學生的筆記有關聯的類別. 類別可以給出模板, 這將會在選擇中預填充學生的筆記. '
+Edit: 編輯
+'Day-Type Options': '日的類型選項'
+'Field Values': '領域值'
+'Manage People Settings': 'Manage People Settings'
+'PRIVACY OPTIONS': 'PRIVACY OPTIONS'
+'People Data Options': 'People Data Options'
+'Must be unique': '必須由獨特'
+Template: 模板
+'HTML code to be inserted into blank note.': 'HTML 代碼被插入到空白記。'
+'Edit Note Category': 編輯筆記類別
+student:
+    note_notification:
+        tutors: 導師
+        'tutors and teachers': 'Tutors & Teachers'
+'Enable Student Notes': 啟用學生筆記
+'Extended Brief Profile': 擴展基本檔案
+'High Academic Alert Threshold': 'High Academic Alert Threshold'
+'High Behaviour Alert Threshold': 'High Behaviour Alert Threshold'
+'Low Academic Alert Threshold': 'Low Academic Alert Threshold'
+'Low Behaviour Alert Threshold': 'Low Behaviour Alert Threshold'
+'Medium Academic Alert Threshold': 'Medium Academic Alert Threshold'
+'Medium Behaviour Alert Threshold': 'Medium Behaviour Alert Threshold'
+'Note Creation Notification': 'Note Creation Notification'
+'Should student notes be turned on?': '學生的筆記應不應該關上?'
+'Student Agreement Options': '學生同意項目'
+'The extended version of the brief student profile includes contact information of parents.': 擴大的學生基本檔案包括家長的聯絡資料。
+'The number of Behaviour concerns needed in the past 60 days to raise a high level alert on a student.': 'The number of Behaviour concerns needed in the past 60 days to raise a high level alert on a student.'
+'The number of Behaviour concerns needed in the past 60 days to raise a low level alert on a student.': 'The number of Behaviour concerns needed in the past 60 days to raise a low level alert on a student.'
+'The number of Behaviour concerns needed in the past 60 days to raise a medium level alert on a student.': 'The number of Behaviour concerns needed in the past 60 days to raise a medium level alert on a student.'
+'The number of Markbook concerns needed in the past 60 days to raise a high level academic alert on a student.': 'The number of Markbook concerns needed in the past 60 days to raise a high level academic alert on a student.'
+'The number of Markbook concerns needed in the past 60 days to raise a low level academic alert on a student.': 'The number of Markbook concerns needed in the past 60 days to raise a low level academic alert on a student.'
+'The number of Markbook concerns needed in the past 60 days to raise a medium level academic alert on a student.': 'The number of Markbook concerns needed in the past 60 days to raise a medium level academic alert on a student.'
+'Determines who to notify when a new student note is created.': 'Determines who to notify when a new student note is created.'
+'Comma-separated list of agreements that students might be asked to sign in school (e.g. ICT Policy).': '學生在學校中有可能需要簽的(協議例如: ICT政策)的用逗號分隔的列表。'
+Nationality: 國籍
+Privacy: 隱私
+'Privacy Blurb': 私人簡介
+'Privacy Options': 私人選擇
+Religions: Religions
+'Should privacy options be turned on across the system?': 私人選擇應該在系統中開嗎？
+'Should users be allowed to set their own personal backgrounds?': '用戶可以定自己的背景嗎?'
+'Unique Email Address': 'Unique Email Address'
+'Comma-separated list of ethnicities available in system': 在系統中擁有種族的用逗號分隔的列表。
+'Comma-separated list of nationalities available in system. If blank, system will default to list of countries': 在系統中擁有國籍的用逗號分隔的列表。
+'Comma-separated list of options to make available (e.g. half-day, full-day). If blank, this field will not show up in the application form.': 'Comma-separated list of options to make available (e.g. half-day, full-day). If blank, this field will not show up in the application form.'
+'Comma-separated list of reasons for departure from school. If blank, user can enter any text.': '離開學校原因的用逗號分隔的列表。 如果空白，用戶可以加入任何的文字。'
+'Comma-separated list of residency status available in system. If blank, system will allow text input': 在系統中擁有種族的用逗號分隔的列表。
+'Day-Type Text': 日期類型文字
+'Departure Reasons': '離開原因'
+'Descriptive text to accompany image privacy option when shown to users.': 顯示用戶時在相片私人條例隔壁的描述文字。
+'Explanatory text to include with Day-Type Options.': 'Explanatory text to include with Day-Type Options.'
+'Residency Status': 居留身份
+'Are primary email addresses required to be unique?': 'Are primary email addresses required to be unique?'
+'Comma-separated list of choices to make available if privacy options are turned on. If blank, privacy fields will not be displayed.': '如果私人選擇的選項的用逗號分開的名單。如果空白，那私人領域不會顯示'
+'Personal Background': 個人背景
+'Delete Person': 'Delete Person'
+'Reset Password': 重置密碼
+'Please select...': 請選擇...
+'Employment Details: {name}': 'Employment Details: {name}'
+Profession: 職業
+Employer: 雇主
+'Job Title': 職稱
+Employment: 僱用
+'New Password': 新密碼
+'Confirm New Password': 確認新密碼
+'Force Reset Password?': 強迫重置密碼？
+'The person will need to change their password at the next attempt to sign in.': 'The person will need to change their password at the next attempt to sign in.'
+'The password policy stipulates that passwords must:': '密碼策略條規定密碼必須:'
+'Contain at least one lowercase letter, and one uppercase letter.': '至少包括一個小寫字母, 和一個大寫字母'
+'Contain at least one number.': 至少包括一個數字
+'Must be at least {oneString} characters in length.': 'Must be at least {oneString} characters in length.'
+'Contain at least one non-alphanumeric character (e.g. a punctuation mark or space).': '至少包括一個非字母數字字符 (例如 標點符號或空格).'
+'Required Updates?': 'Required Updates?'
+'Should the data updater highlight updates that are required?': 'Should the data updater highlight updates that are required?'
+'Required Update Types': 'Required Update Types'
+'Which type of data updates should be required.': 'Which type of data updates should be required.'
+updater:
+    bytype:
+        family: 家庭
+        personal: 個人
+        medical: 醫療
+        finance: 財經
+'Cutoff Date': 'Cutoff Date'
+'Earliest acceptable date when checking if data updates are required.': 'Earliest acceptable date when checking if data updates are required.'
+'Data Updater Redirect': 'Data Updater Redirect'
+'Which types of users should be redirected to the Data Updater if updates are required.': 'Which types of users should be redirected to the Data Updater if updates are required.'
+Parent: 家長
+Staff: 員工
+Student: 學生
+'Updater Settings': 'Updater Settings'
+'REQUIRED FIELDS FOR PERSONAL UPDATES': 'REQUIRED FIELDS FOR PERSONAL UPDATES'
+'These required field settings apply to all users, except those who hold the ability to submit a data update request for all users in the system (generally just admins).': '這些需要的領域適用於所有用戶，除了持有能力的人去提交一個數據更新的請求給全部在系統中的用戶 (通常只是管理人)。'
+Field: '領域'
+Required: 需要
+'Read Only': 'Read Only'
+Hidden: Hidden
+'First Name': 名字
+'This field cannot be required': '這個領域不能按要求'
+'Address 1 District': '地址 1 地區'
+'Address 2 District': '地址 2 地區'
+'Citizenship 1 Passport': '國籍 1 護照'
+'Citizenship 2 Passport': '國籍 2 護照'
+'National ID Card Number': 國民身分證號碼
+'Visa Expiry Date': 簽證到期日
+'Emergency 1 Name': '緊急 1 名字'
+'Emergency 1 Number 1': '緊急 1 號碼 1'
+'Emergency 1 Number 2': '緊急 1 號碼 2'
+'Emergency 1 Relationship': '緊急 1 關係'
+'Emergency 2 Name': '緊急 2 名字'
+'Emergency 2 Number 1': '緊急 1 號碼 2'
+'Emergency 2 Number 2': '緊急 2 號碼 2'
+'Emergency 2 Relationship': '緊急 2 關係'
+Category: 類別
+role:
+    category:
+        staff: 員工
+        student: 學生
+        parent: 家長
+        other: 其他
+    restriction:
+        none: 無
+        'same role': 'People with the same role'
+        'admin only': 'Administrators only'
+Abbreviation: Abbreviation
+Description: 描寫
+Type: 類型
+'This value cannot be changed.': 不能改變這個價值。
+'Are users with this primary role able to login?': 'Are users with this primary role able to login?'
+'Login To Past Years': 登入過去年份
+'Login To Future Years': 登入將來年份
+Restriction: Restriction
+'Determines who can grant or remove this role in Manage Users.': 'Determines who can grant or remove this role in Manage Users.'
+'Manage Roles': 編輯角色
+'Edit Role': 編輯角色
+None: 無
+'All years': 所有年份
+'Current year only': 只限這年
+'Current/past years only': 只限這年或過去年份
+'Current/future years only': 只限這年或將來年份
+Duplicate: 重複
+'Short Name': 簡稱
+'Login Years': 登入年份
+'Manage Permissions': 編輯授權
+Filter: 過濾
+Module: Module
+Role: 角色
+'Clear Search': 清除搜索
+'Action Permissions': 'Action Permissions'
+Administrator: 管理員
+Librarian: Librarian
+'Support Staff': 支援員工
+Teacher: 老師
+'Record student attendance for activities.': 'Record student attendance for activities.'
+'Activity Attendance by Date': 'Activity Attendance by Date'
+'Toggle Permission': 'Toggle Permission'
+'View all student activity choices in the current year for a given roll group.': 'View all student activity choices in the current year for a given roll group.'
+'Activity Choices by Roll Group': 'Activity Choices by Roll Group'
+'View all student activity choices in the current year for a given student': 觀看一位學生今年內的所有學生活動選擇。
+'Activity Choices by Student': 學生的活動選擇
+'View summary enrolment information for all activities in the current year.': 觀看今年所有的申請資料的總結。
+'Activity Enrolment Summary': '學生報名終結'
+'View spread of enrolment over terms and days by roll group': 觀看班級的學期和日期的申請的傳播。
+'Activity Spread by Roll Group': 班級的活動範圍
+'Print roll group lists showing count of various activity types': 印出顯示不同活動的類型的。班級名單
+'Activity Type by Roll Group': 班級的
+'Summarises gender, age and school year': 性別，年齡和年級結論
+'Age & Gender Summary': 年齡和性別
+'Allows users, with or without an account, to apply for student place.': 允許用戶，有或沒有戶口，申請一個學生的位置。
+'Application Form': '報名表'
+'Allows prospective staff to apply for job openings.': 'Allows prospective staff to apply for job openings.'
+'Allows admins to control the application form': 允許管理員管制申請表。
+'Application Form Settings': 申請表的設置
+'Allows users to approve or decline staff absences.': 'Allows users to approve or decline staff absences.'
+'Approve Staff Absences': 'Approve Staff Absences'
+'Allows for current records to be archived for viewing in the future.': 允許目前記錄在未來觀看時存檔。
+'Archive Records': 存檔記錄
+'Allows users to assess each other''s work': 允許用戶評估其他人的工作
+Assess: 評估
+'Take attendance, one class at a time': 'Take attendance, one class at a time'
+'Attendance By Class': 'Attendance By Class'
+'Take attendance, one person at a time': 用一個一個人來點出席表
+'Attendance By Person': 由人士找出席
+'Take attendance, one roll group at a time': 用一個班級點出席表
+'Attendance By Roll Group_all': 'Attendance By Roll Group_all'
+'Take attendance for a teacher''s own roll groups': 'Take attendance for a teacher''s own roll groups'
+'Attendance By Roll Group_myGroups': 'Attendance By Roll Group_myGroups'
+'Print attendance lists': 打印出席表
+'Attendance History by Activity': 'Attendance History by Activity'
+'Print a report of student attendace in a given date range': 'Print a report of student attendace in a given date range'
+'Attendance Summary by Date': 'Attendance Summary by Date'
+'Display a graph of student attendance types over time': 'Display a graph of student attendance types over time'
+'Attendance Trends': 'Attendance Trends'
+'View items borrowed by an individual.': 'View items borrowed by an individual.'
+'Borrowing Record': 'Borrowing Record'
+'Search and view all borrowable items maintained by the library.': 'Search and view all borrowable items maintained by the library.'
+'Browse The Library': 瀏覽文庫
+'Search and view all borrowable items maintained by the library': '搜索和觀看所有圖書館管理可借的項目。'
+'Allows for the creation of message templates.': 'Allows for the creation of message templates.'
+'Canned Response': 'Canned Response'
+'Shows the number of classes students are enroled in, organised by roll group': '用班級組織，觀看看學生報名的課堂。'
+'Class Enrolment by Roll Group': 按照班級來招生
+'Print a report of classes who have not been registered on a given day': 'Print a report of classes who have not been registered on a given day'
+'Classes Not Registered': 'Classes Not Registered'
+'Allows users to browse and explore concepts and keywords, based on the Unit Planner.': 'Allows users to browse and explore concepts and keywords, based on the Unit Planner.'
+'Concept Explorer': 'Concept Explorer'
+'Course Enrolment by Class': 按照班級來招生的過程
+'Manage course enrolment for a single user': 管理一位用戶的課程申請
+'Course Enrolment by Person': 按照人士來招生的過程
+'Allows privileged users to move enrolments from the current year to the next year.': 'Allows privileged users to move enrolments from the current year to the next year.'
+'Course Enrolment Rollover': 側翻課程招生
+'Allows a user to export certain key assessment data points to a spreadsheet.': 'Allows a user to export certain key assessment data points to a spreadsheet.'
+'Data Points': 資料點
+'Allows administrators to configure the system display settings.': 'Allows administrators to configure the system display settings.'
+'Display Settings': 'Display Settings'
+'Allows editing of any column in any class.': 允許編輯在班裡任何的列行。
+'Edit Markbook_everything': 編輯成績表_所有東西
+'Edit columns and grades for a single class belonging to the user, or multiple classes across the whole school.': '編輯屬於用戶班級的列行和分數，或在學校中多個的班級。'
+'Edit Markbook_multipleClassesAcrossSchool': '編輯成績表_在學校中多重的課堂'
+'Edit columns and grades for a single class belonging to the user, or multiple classes within departments.': 編輯屬於用戶班級的列行和分數，或在部門中多個的班級。
+'Edit Markbook_multipleClassesInDepartment': '編輯成績表_在部門中多重的課堂'
+'Edit columns and grades for a single class at a time.': 編輯一班中的列行和分數
+'Edit Markbook_singleClass': '編輯成績表_單一課堂'
+'Allows users to show a summary of emergency contact data for a group of students.': 允許用戶顯示一組學生的緊急聯絡的結論。
+'Emergency Data Summary': 緊急資料終結
+'Show SMS emergency details by transport route': 觀看交通路線的SMS緊急資料。
+'Emergency SMS by Transport': 緊急交通SMS
+'Output all parental first mobile numbers by year group: if there are no details, then show emergency details.': '顯示在年紀處所有的家長第一的電話號碼: 如果沒有資料，顯示緊急詳情。'
+'Emergency SMS by Year Group': 年級的緊急SMS
+'Enter Activity Attendance': 'Enter Activity Attendance'
+'Record student attendance for activities you organise, coach or assist in.': 'Record student attendance for activities you organise, coach or assist in.'
+'Enter Activity Attendance_leader': 'Enter Activity Attendance_leader'
+'Allows users to manage external assessment data': 允許用戶管理以外評估的資料。
+'External Assessment Data_manage': 外部評估資料_管理
+'Allow users to view assessment data for all students': 允許用戶觀看所有學生的評估資料。
+'External Assessment Data_view': 外部評估資料_觀看
+'View family addresses by student': 用家庭地址觀看學生
+'Family Address by Student': 用學生的家庭地址
+'Allows users to check, for active families, how recently they have been updated.': 'Allows users to check, for active families, how recently they have been updated.'
+'Family Data Updater History': 'Family Data Updater History'
+'Manage requests for updates to family data.': 管理更新家庭資料的要求
+'Family Data Updates': 家庭數據更新
+'Manage requests for updates to finance data.': 管理更新財經資料的要求
+'Finance Data Updates': 金融數據更新
+'Allows user to spot students who are repeat or regular offenders.': 允許用戶找重覆或經常違理的學生
+'Find Behaviour Patterns': 尋找行為的模式
+'Allows user to record first aid visits and actions.': 'Allows user to record first aid visits and actions.'
+'First Aid Record': 'First Aid Record'
+'Configure External Assessment module options': 配置以外評估模板選擇
+'Formal Assessment Settings': 正式評估設定
+'Print payment list': 印出費用名單
+'Generate Invoices': 創作單據
+'Allows a user to see progress tracking graphs for all students in school.': 'Allows a user to see progress tracking graphs for all students in school.'
+Graphing_all: Graphing_all
+'Allows a user to view and run available imports.': 'Allows a user to view and run available imports.'
+'Import From File': 'Import From File'
+'Allows bulk import of user photos based on a ZIP file.': 'Allows bulk import of user photos based on a ZIP file.'
+'Import User Photos': 'Import User Photos'
+'Provides a visual graph of individual needs school-wide.': 'Provides a visual graph of individual needs school-wide.'
+'Individual Needs Overview': 'Individual Needs Overview'
+'Allows user to view IN records for all students': 允許用戶觀看所有學生的IN紀錄
+'Individual Needs Records_view': 個人需要紀錄_觀看
+'Allows users to contribute teaching strategies to IN records for all students': 'Allows users to contribute teaching strategies to IN records for all students'
+'Individual Needs Records_viewContribute': 個人需要紀錄_觀看貢獻
+'Allows users to edit IN records for all students': 'Allows users to edit IN records for all students'
+'Individual Needs Records_viewEdit': 個人需要紀錄_觀看編輯
+'Allows user to see a flexible summary of IN data.': 允許用戶觀看IN資料的活動總結
+'Individual Needs Summary': 個別需要終結
+'Allows for the creation of job openings, which can be used in the job application form.': 'Allows for the creation of job openings, which can be used in the job application form.'
+'Job Openings': 'Job Openings'
+'A report showing all the students who have left within a specified date range.': 一份顯示所有在指定日期範圍的所有離開的學生。
+'Left Students': 離開的學生
+'Manage lending, returns, reservations, repairs, decommissioning, etc.': 管理借書，換書，儲備，修理，退役等等。
+'View all planner information and edit all planner information for classes user is in': '觀看所有計畫的資料和編輯用戶課堂中的所有計畫資料。'
+'Lesson Planner_viewAllEditMyClasses': '課堂計畫_觀看編輯所有我的課堂'
+'View and edit all planner information for all classes': '觀看和編輯所有課堂的所有計畫資料'
+'Lesson Planner_viewEditAllClasses': '課堂計畫_觀看編輯所有課堂'
+'Allows parents to view their children''s classes': '允許家長觀看他們孩子的課堂'
+'Lesson Planner_viewMyChildrensClasses': '課堂計畫_觀看所有我兒童的課堂'
+'View all planner information for classes user is in': '觀看用戶課堂所有的計畫資料。'
+'Lesson Planner_viewMyClasses': '課堂計畫_觀看所有我的課堂'
+'Show students in roll group, less those with an older sibling, so that letters can be carried home by oldest in family.': 顯示在班級的學生，不顯示有大的兄弟姐妹，那信可以給他們拿回家。
+'Letters Home by Roll Group': 從班級寄回家的信
+'Change the core settings of a library.': 'Change the core settings of a library.'
+'Library Settings': 'Library Settings'
+'Lend and return items using a bar-code scanner.': 'Lend and return items using a bar-code scanner.'
+'Loan / Return Manager': 'Loan / Return Manager'
+'Allows managers to build activity program': 允許經理建立活動計畫
+'Manage Activities': 編輯活動
+'Control activity settings': 控制活動的設定
+'Manage Activity Settings': 'Manage Activity Settings'
+'Manage the alert levels which are used throughout the school to flag problems.': '管理所有在學校的旗號警戒級別。'
+'Manage Alert Levels': '管理警報級別'
+'Allows administrators to view and action staff applications.': 'Allows administrators to view and action staff applications.'
+'Manage Applications': '編輯報名表'
+'Allows admins to view and action applications, but not to delete them': 'Allows admins to view and action applications, but not to delete them'
+'Manage Applications_edit': 'Manage Applications_edit'
+'Allows admins to view and action applications': 允許管理員觀看和行動申請表。
+'Manage Applications_editDelete': 'Manage Applications_editDelete'
+'Edit student attendance logs.': 'Edit student attendance logs.'
+'Manage Attendance Logs': 'Manage Attendance Logs'
+'Allows administrators to configure the attendance module.': 'Allows administrators to configure the attendance module.'
+'Manage Attendance Settings': 'Manage Attendance Settings'
+'Manage all behaviour records': 管理所有的行為記錄
+'Manage Behaviour Records_all': 管理行為紀錄_所有
+'Manage behaviour records create by the user': '管理用戶所創造的的行為紀錄'
+'Manage Behaviour Records_my': 管理行為紀錄_我的
+'Manage settings for the Behaviour module': 管理行為模塊的設定
+'Manage Behaviour Settings': 'Manage Behaviour Settings'
+'Allows users to create, view and edit billing windows.': '允許用戶創造，觀看和編輯計費結算窗戶'
+'Manage Billing Schedule': 管理付錢時間表
+'Allows a sufficiently priviledged user to create and manage budget cycles.': '允許一位充分的全的用戶創作和管理預算循環。'
+'Manage Budget Cycles': '編輯預算循環'
+'Allows users to create, edit and delete budgets.': '允許用戶創作，編輯和刪除預算。'
+'Manage Budgets': '編輯預算'
+'Control all items in the school library catalog': '控制在學校圖書館所有的項目'
+'Manage Catalog': 管理目錄
+'Control all items in the school library catalogue': 'Control all items in the school library catalogue'
+'Manage Catalogue': 'Manage Catalogue'
+'Allow admins to manage timetable columns': 允許管理員管理時間表的列行
+'Manage Columns': 管理列行
+'Manage Courses & Classes': '管理課程和課堂'
+'Allows a user to create, edit and delete custom fields for users.': 容許用户創建，修改及刪除自定義字段
+'Manage Custom Fields': '管理自訂的領域'
+'Manage settings that control Staff, Student and Parent dashboards.': 'Manage settings that control Staff, Student and Parent dashboards.'
+'Manage Dashboard Settings': 'Manage Dashboard Settings'
+'Manage Days of the Week': 管理一周中的日子
+'Allows admins to create learning areas and administrative groups.': '允許管理員創造學習區域和行政小組'
+'Manage Departments': 管理部門
+'Manage a list of districts for address autocomplete.': 管理自動完成的地區名單。
+'Manage Districts': 管理地區
+'Determines who can approve expense requests, in accordance to the Expense Approval Type setting in School Admin.': '決定誰可以批准費用的請求，按照學校管理員的分批准費用類型。'
+'Manage Expense Approvers': 編輯費用批准人
+'Gives access to full control all expenses across all budgets.': '允許用戶有所有預算的費用的權利。'
+'Manage Expenses_all': 'Manage Expenses_all'
+'Gives access to control expenses, according to budget-level access rights.': '允許能根據控制費用的權利的人控制費用。'
+'Manage Expenses_myBudgets': 'Manage Expenses_myBudgets'
+'Add, edit and delete external assessments.': '加入，編輯和刪除對外的評估。'
+'Manage External Assessments': 管理外部評估
+'Allows users to create a list of spaces and rooms in the school': '允許用戶創造在學校的空間和房間的名單'
+'Manage Facilities': 'Manage Facilities'
+'Allows a user to book a room for on-off use, and manage bookings made by all other users.': '允許一位用戶預訂一間課室做有時的用途，和管理其他用戶的預定。'
+'Manage Facility Bookings_allBookings': 'Manage Facility Bookings_allBookings'
+'Allows a user to book a room for on-off use, and manage their own bookings.': '允許一位用戶預訂一間課室做有時的用途，和讓他們管理自己的預定。'
+'Manage Facility Bookings_myBookings': 'Manage Facility Bookings_myBookings'
+'Allows a user to create and manage one-off location changes for all classes within the timetable.': '允許一位用在時間表中的創作和管理更改一個所有課堂的課室做一次過的用途。'
+'Manage Facility Changes_allClasses': 'Manage Facility Changes_allClasses'
+'Allows a user to create and manage one-off location changes for their own classes within the timetable.': '允許一位用在時間表中的創作和管理更改一個自己課堂的課室做一次過的用途。'
+'Manage Facility Changes_myClasses': 'Manage Facility Changes_myClasses'
+'Allows a department coordinator to manage changes for all classes in their department.': 'Allows a department coordinator to manage changes for all classes in their department.'
+'Manage Facility Changes_myDepartment': 'Manage Facility Changes_myDepartment'
+'Allows privileged users to manage settings for spaces.': 'Allows privileged users to manage settings for spaces.'
+'Manage Facility Settings': 'Manage Facility Settings'
+'Manage Families': 管理家庭
+'Allows users to create, edit and delete fee categories.': '允許用戶創造，編輯和刪除費用類別'
+'Manage Fee Categories': 編輯費用的級別
+'Allows users to create, view and edit fees.': 允許用戶創作，觀看和編輯收費。
+'Manage Fees': 編輯費用
+'Manage file extensions allowed across the system': 管理在系統中所有的文件擴展名。
+'Manage File Extensions': 管理文件擴展
+'Allows users to edit the text that appears in invoices and receipts.': 允許用戶編輯在發票和收據上的文字
+'Manage Finance Settings': 'Manage Finance Settings'
+'Manage all aspects of grade scales, which are used throughout ARR to control grade input.': '管理成績規模的所有部分，這是通過ARR來控制加入成績。'
+'Manage Grade Scales': 管理成績規模
+'Allows management of custom groups for message targetting': 'Allows management of custom groups for message targetting'
+'Manage Groups_all': 'Manage Groups_all'
+'Manage Groups_my': 'Manage Groups_my'
+'Manage Houses': 管理社
+'Allows admins to control the descriptors available for use in the Individual Needs module.': 允許管理員管制在個人需要中的描述
+'Manage IN Settings': 'Manage IN Settings'
+'Allows privileged users to create and manage Internal Assessment columns.': 'Allows privileged users to create and manage Internal Assessment columns.'
+'Manage Internal Assessments': 管理內部評估
+'Allows users to view and edit invoice recipients.': 允許用戶觀看和編輯發表收件者。
+'Manage Invoicees': 管理發票
+'Allows users to generate, view, delete and edit invoices.': 允許用戶創作，觀看，刪除和編輯發票
+'Manage Invoices': 編輯發票
+'Allows administrators to control system-wide language and localisation settings.': 允許管理員管制系統語言和本地化的設定。
+'Manage Languages': 'Manage Languages'
+'Manage medical form information for users': 'Manage medical form information for users'
+'Manage Medical Forms': '管理醫療表格'
+'Edit all messages': 編輯所有信息
+'Manage Messages_all': 管理信息_所有
+'Edit all messages created by the user': '編輯所有用戶創造的信息'
+'Manage Messages_my': 管理信息_我的
+'Manage gateway settings for outgoing SMS messages.': 管理送出的所有信息的網關設定。
+'Manage Messenger Settings': 'Manage Messenger Settings'
+'Manage Modules': 管理程式組件
+'View all outcomes in the school': '觀看學校中的所有結果'
+'Manage Outcomes_viewAll': 管理結果_觀看所有
+'View all outcomes in the school, edit any from Learning Areas where you are Coordinator or Teacher (Curriculum)': '觀看在學校中的所有結果，編輯你是協調員或老師(課程)的學習區域。'
+'Manage Outcomes_viewAllEditLearningArea': 管理結果_觀看所有編輯學習區域
+'Manage all outcomes in the school': '管理學校中所有的結果'
+'Manage Outcomes_viewEditAll': 管理結果_觀看編輯所有
+'Configure settings relating to people management.': 'Configure settings relating to people management.'
+'Allows admin to edit any user within the system, but not to delete them.': 'Allows admin to edit any user within the system, but not to delete them.'
+'Manage People_edit': 'Manage People_edit'
+'Edit any user within the system': 編輯在系統裡任何的學生
+'Manage People_editDelete': 'Manage People_editDelete'
+'Edit settings for the planner': 編輯計畫表的設定
+'Manage Planner Settings': 編輯計畫的設定
+'Manage settings for the resources module': 管理資源模塊的設定
+'Manage Resource Settings': 'Manage Resource Settings'
+'Manage all resources': 管理所有的資源
+'Manage Resources_all': 管理資源_所有
+'Manage resources created by the user': 管理用戶創作的資源
+'Manage Resources_my': 管理資源_我的
+'Manage Roll Groups': 管理班級
+'View all rubrics in the school, edit any from Learning Areas where you are Coordinator or Teacher (Curriculum)': '觀看學校的所有的評分表，編輯你是協調員或老師(課程)的學習區域。'
+'Manage Rubrics_viewAllEditLearningArea': 管理評分表_觀看所有編輯學習區域
+'Manage all rubrics in the school': '管理在學校中所有的評分表'
+'Manage Rubrics_viewEditAll': 管理評分表_觀看編輯所有
+'Allows user to control the definition of academic years within the system': 允許用戶控制在系統中學年的定義
+'Manage Academic Years': 'Manage Academic Years'
+'Manage Special Days': 全力特別的日期
+'Allows administrators to edit and delete staff absences.': 'Allows administrators to edit and delete staff absences.'
+'Manage Staff Absences': 'Manage Staff Absences'
+'Allows administrators to manage coverage requests.': 'Allows administrators to manage coverage requests.'
+'Manage Staff Coverage': 'Manage Staff Coverage'
+'Controls settings for users with role category Staff.': 'Controls settings for users with role category Staff.'
+'Manage Staff Settings': 'Manage Staff Settings'
+'Edit general and confidential information on members of staff.': 'Edit general and confidential information on members of staff.'
+'Manage Staff_confidential': 'Manage Staff_confidential'
+'Edit general information on members of staff.': 'Edit general information on members of staff.'
+'Manage Staff_general': 'Manage Staff_general'
+'Allows a departmental Coordinator or Assistant Coordinator to manage student enrolment within their department.': 'Allows a departmental Coordinator or Assistant Coordinator to manage student enrolment within their department.'
+'Manage Student Enrolment': '管理學生報名'
+'Manage settings for the Student module': 管理學生模塊的設定
+'Manage Students Settings': 'Manage Students Settings'
+'Edit information for users who can provide staff coverage.': 'Edit information for users who can provide staff coverage.'
+'Manage Substitutes': 'Manage Substitutes'
+'Manage Terms': 管理學期
+'Allow admins to create and manage timetables': '允許管理員創造和管理時間表'
+'Manage Timetables': 管理時間表
+'Manage markbook weightings for any class.': 'Manage markbook weightings for any class.'
+'Manage Weightings_everything': 'Manage Weightings_everything'
+'Manage markbook weightings for a single class at a time.': 'Manage markbook weightings for a single class at a time.'
+'Manage Weightings_singleClass': 'Manage Weightings_singleClass'
+'Manage Year Groups': 管理年級
+'Configure options for the Markbook module': 成績表的模塊的配置選擇
+'Markbook Settings': 成績表的設置
+'Allows users to show a summary of medical data for a group of students.': 允許用戶顯示一組學生的醫療資料的結論。
+'Medical Data Summary': 醫療資料結論
+'Allows admins to process data update requests for medical data': 允許管理員處理更新醫療資料的要求
+'Medical Form Updates': 'Medical Form Updates'
+'Allows a user to view the activities they are involved in': '允許一位用戶觀看他們參加的活動。'
+'My Activities': 我的活動
+'Allows an activity organizer to manage enrolment for their activities.': 'Allows an activity organizer to manage enrolment for their activities.'
+'My Activities_viewEditEnrolment': 'My Activities_viewEditEnrolment'
+'Provides an overview of coverage for staff absences.': 'Provides an overview of coverage for staff absences.'
+'My Coverage': 'My Coverage'
+'Provides an overview of any required data updates for a user, including family data if applicable.': 'Provides an overview of any required data updates for a user, including family data if applicable.'
+'My Data Updates': 'My Data Updates'
+'Allows a user to request expenses from budgets they have access to.': '允許一位用戶要求從他們能進入預算中的費用。'
+'My Expense Requests': 我的費用請求
+'Submit staff absences for any user.': 'Submit staff absences for any user.'
+'New Absence_any': 'New Absence_any'
+'Allows a user to submit their own staff absences.': 'Allows a user to submit their own staff absences.'
+'New Absence_mine': 'New Absence_mine'
+'Bulk email to any activity': 向任何活動群發電郵
+'New Message_activities_any': 新信息_活動_任何
+'Bulk email to any of my activities': 向我任何的活動群發電郵
+'New Message_activities_my': 新信息_活動_我的
+'Include parents in messages posted to activities': 在活動中公告的信息包括家長。
+'New Message_activities_parents': 新信息_活動_家長
+'Bulk email to applicants by intended school year of entry': 向特定進入年份申請者送出群發電郵
+'New Message_applicants': 新信息_申請人
+'Bulk email by student attendance.': 'Bulk email by student attendance.'
+'New Message_attendance': 'New Message_attendance'
+'Send messages by email.': 用電郵送出信息
+'New Message_byEmail': 新信息_用電郵
+'Send messages by message wall.': 用信息牆送出信息
+'New Message_byMessageWall': 新信息_用信息表
+'Send messages by SMS.': 用SMS送出信息
+'New Message_bySMS': 新信息_用SMS
+'Allows user to use pre-defined Canned Responses.': 'Allows user to use pre-defined Canned Responses.'
+'New Message_cannedResponse': 'New Message_cannedResponse'
+'Bulk email to any class': '向任何課堂群發電郵'
+'New Message_classes_any': 新信息_班級_任何
+'Bulk email to any of my classes': '向我任何的課堂群發電郵'
+'New Message_classes_my': 新信息_班級_我的
+'Include parents in messages posted to classes': 在班級中公告的信息包括家長。
+'New Message_classes_parents': 新信息_班級_家長
+'Bulk email to any courses': 向任何課程群發電郵
+'New Message_courses_any': 新信息_課程_任何
+'Bulk email to any of my courses': 向我任何的課程群發電郵
+'New Message_courses_my': 新信息_課程_我的
+'Include parents in messages posted to courses': 在課程中公告的信息包括家長。
+'New Message_courses_parents': 新信息_課程_家長
+'Bulk email from the school''s email address': '從學校的電郵送出群發電郵'
+'New Message_fromSchool': '新信息_從學校'
+'Bulk email to any group': 'Bulk email to any group'
+'New Message_groups_any': 'New Message_groups_any'
+'Bulk email to any group a user owns or is a member of': 'Bulk email to any group a user owns or is a member of'
+'New Message_groups_my': 'New Message_groups_my'
+'Include parents in messages posted to groups': 'Include parents in messages posted to groups'
+'New Message_groups_parents': 'New Message_groups_parents'
+'Bulk email to members of all houses': 向所有社中的成員群發電郵
+'New Message_houses_all': 新信息_社_所有
+'Bulk email to members of my house': 向我的社中的成員群發電郵
+'New Message_houses_my': 新信息_社_我的
+'Bulk email to indvidual users': 向個別的用戶群發電郵
+'New Message_individuals': 新信息_個人
+'Allows users to include read receipts in emails.': 'Allows users to include read receipts in emails.'
+'New Message_readReceipts': 'New Message_readReceipts'
+'Bulk email to a particular role': 給一個角色的群發電郵
+'New Message_role': 新信息_角色
+'Bulk email to any roll group': 向任何班級群發電郵
+'New Message_rollGroups_any': 新信息_班級_任何
+'Bulk email to any of my roll groups': 向我任何的班級群發電郵
+'New Message_rollGroups_my': 新信息_班級_我的
+'Include parents in messages posted to parents': 在家長中公告的信息包括家長。
+'New Message_rollGroups_parents': 新信息_班級_家長
+'Send messages users by transport field.': '根據用戶的交通工具傳播信息.'
+'New Message_transport_any': 'New Message_transport_any'
+'Send messages parents of users by transport field.': '根據不同的交通工具各用戶家長的信息。'
+'New Message_transport_parents': 'New Message_transport_parents'
+'Bulk email to any year group': 向任何年紀群發電郵
+'New Message_yearGroups_any': 新信息_年級_任何
+'Include parents in messages posted to year group': 在年紀中公告的信息包括家長。
+'New Message_yearGroups_parents': 新信息_年級_家長
+'Allows for the quick posting of a Message Wall message to all users.': 允許給所有用戶的快捷信息牆信息。
+'New Quick Wall Message': 新的快捷信息牆信息
+'A report showing all new students in the current school year.': 一個檢視今年所有的新學生。
+'New Students': 新學生
+'Manage settings for system notifications.': 'Manage settings for system notifications.'
+'Notification Settings': 'Notification Settings'
+'Users can view and accept any available coverage requests.': 'Users can view and accept any available coverage requests.'
+'Open Requests': 'Open Requests'
+'This view gives an overview of which whole school and learning area outcomes are covered by classes in a given course, allowing for curriculum mapping by outcome and course.': '這一個顯示給你一個覆蓋在一個課程的課堂，全校和學習領域的結果，允許安排課程和結果。'
+'Outcomes By Course': 課程的結果
+'This report shows responses to the weekly summary email, organised by calendar week and role group.': '這個報告顯示每週計畫結論的回覆，用月曆週和班級組織。'
+'Parent Weekly Email Summary': 家長每週電郵結論
+'Print participant lists': '印出參加者的名單'
+'Participants by Activity': '活動的參加者'
+'Allows admins to process data update requests for personal data': 允許管理員處理更新私人資料的要求
+'Personal Data Updates': 'Personal Data Updates'
+'Allows you to set your own preferences for background, theme, et.al. Change your password.': 'Allows you to set your own preferences for background, theme, et.al. Change your password.'
+'Personal Preferences': 'Personal Preferences'
+'Generate a printable attendance sheet for activities.': 'Generate a printable attendance sheet for activities.'
+'Printable Attendance Sheet': 'Printable Attendance Sheet'
+'Shows privacy options selected, for those students with a selection made.': 觀看有選擇私人選擇的學生。
+'Privacy Choices by Student': 學生的私人選擇
+'Gives access to enable and configure public registration.': 允許用戶啟用和配置公開的註冊。
+'Public Registration Settings': 公開登記設定
+'Allows a staff member to request coverage for their absences.': 'Allows a staff member to request coverage for their absences.'
+'Request Coverage': 'Request Coverage'
+'Summarises gender and number of students across all roll groups.': 總結所有班級中的性別和學生數量。
+'Roll Group Summary': 班級總結
+'Print a report of roll groups who have not been registered on a given day': 印出所有在指定日期沒有登記的班級
+'Roll Groups Not Registered': 還沒有登記的班級
+'Allows admins to kick the school forward one year': '允許管理員將學校推前一年。'
+Rollover: 側翻
+'Allows users to generate scope and sequence documentation for individual courses, based on the Unit Planner.': 'Allows users to generate scope and sequence documentation for individual courses, based on the Unit Planner.'
+'Scope & Sequence': 'Scope & Sequence'
+'Set future absences one student at a time': 一次過定一位學生的未來缺席。
+'Set Future Absence': 定未來的缺席
+'Provides an overview of staff absences for the school year.': 'Provides an overview of staff absences for the school year.'
+'Staff Absence Summary': 'Staff Absence Summary'
+'Allows admins to control the staff application form.': 'Allows admins to control the staff application form.'
+'Staff Application Form Settings': 'Staff Application Form Settings'
+'Allows for interface strings to be replaced with custom values.': 'Allows for interface strings to be replaced with custom values.'
+'String Replacement': 'String Replacement'
+'View items borrowed by an individual student.': '觀看以為學生借的項目'
+'Student Borrowing Record': 學生結束紀錄
+'Allows users to check, for a group of students, how recently they have been updated': 允許用戶檢查一組學生的最後更新日期
+'Student Data Updater History': 學生更新資料歷史
+'Allows user to control student enrolment in the current year': 允許用戶控制今年的學生登記
+'Student Enrolment': 學生申請
+'Provides a visual graph of student enrolment over a range of time.': 'Provides a visual graph of student enrolment over a range of time.'
+'Student Enrolment Trends': 'Student Enrolment Trends'
+'Print a report of all attendance data in the current school year for a student': 印出一位學生在這個學年所有的出席資料
+'Student History_all': 學生歷史_所有
+'Allows a student to print a report of their attendance data in the current school year.': 'Allows a student to print a report of their attendance data in the current school year.'
+'Student History_my': 'Student History_my'
+'Print a report of all attendance data in the current school yearfor my children': 印出我的兒童在這個學年所有的出席資料
+'Student History_myChildren': 學生歷史_我的兒童
+'A report for bulk creation of student ID cards.': '一份大量裝作學生身分證的報告。'
+'Student ID Cards': 學生身分證
+'Allows students to self register as Present, provided they are within a certain range of IP addresses.': 'Allows students to self register as Present, provided they are within a certain range of IP addresses.'
+'Student Self Registration': 'Student Self Registration'
+'Shows student transport details': 觀看學生交通資料
+'Student Transport': 學生交通工具
+'View a report of student houses by year group.': 'View a report of student houses by year group.'
+'Students by House': 'Students by House'
+'Print student roll group lists': 印出學生班級的名單
+'Students by Roll Group': 用班級找學生
+'Print a report of students who are not physically on the school campus on a given day': '印出所有在指定日期時個人沒有在學校的學生名單'
+'Students Not Onsite': '學生不在學校'
+'Print a report of students who are not present on a given day': 印出所有在指定日期沒有上學的學生名單
+'Students Not Present': 學生不在
+'Allows users to view the availability of subs by date.': 'Allows users to view the availability of subs by date.'
+'Substitute Availability': 'Substitute Availability'
+'Allows users to map enrolments from homerooms to classes.': 'Allows users to map enrolments from homerooms to classes.'
+'Sync Course Enrolment': 'Sync Course Enrolment'
+'Check system versions and extensions installed.': 'Check system versions and extensions installed.'
+'System Check': 'System Check'
+'Main system settings': 系統主要設定
+'System Settings': 系統設置
+'Allows administrators to configure and make use of third party services.': 允許管理員配置和運用第三者的服務。
+'Third Party Settings': 第三者設定
+'Allows admins to place timetable days into the school calendar': '允許管理員放時間表日期進學校的月曆。'
+'Tie Days To Dates': 天連繫到日期
+'Allows a user to manage settings for the Tracking module.': 'Allows a user to manage settings for the Tracking module.'
+'Tracking Settings': 跟蹤設定
+'Manage all units within the school': '管理在學校中所有的單元'
+'Unit Planner_all': 'Unit Planner_all'
+'Manage all units within the learning areas I have appropriate permission': 管理我有權限的學習區域的所有黨員。
+'Unit Planner_learningAreas': 'Unit Planner_learningAreas'
+'Create family data update request for any user': 創作給任何用戶的更新家庭資料的要求
+'Update Family Data_any': 更新家庭資料_任何
+'Allows adults in a family to create data update request for their family.': '允許在家庭中的行人創造更新家庭資料的要求。'
+'Update Family Data_family': 更新家庭資料_家庭
+'Create finance data update request for any user': 創作給任何用戶的更新經濟資料的要求
+'Update Finance Data_any': 更新財政資料_任何
+'Allows adults in a family to create finance data update request for their family.': '允許在家庭中的行人創造更新家庭經濟資料的要求。'
+'Update Finance Data_family': 更新財政資料_家庭
+'Create medical data update request for any user': 創作給任何用戶的更新醫療資料的要求
+'Update Medical Data_any': 更新醫療資料_任何
+'Allows users to update medical information for themselves and their family members': 允許用戶更新他們自己和家庭成員的醫療資料
+'Update Medical Form_family': 更新醫療治療_家庭
+'Create personal data update request for any user': 創作給任何用戶的更新私人資料的要求
+'Update Personal Data_any': 更新個人資料_任何
+'Allows users to update personal information for themselves and their family members': 允許用戶更新他們自己和家庭成員的個人資料
+'Update Personal Data_family': 更新個人資料_家庭
+'Configure options for the Data Updater module': 資料更新的模塊的配置選擇
+'Provides an overview of staff absences for the selected user.': 'Provides an overview of staff absences for the selected user.'
+'View Absences_any': 'View Absences_any'
+'View Absences_mine': 'View Absences_mine'
+'Allows students to view activities and register': 允許學生觀看和申請活動。
+'View Activities_studentRegister': 觀看活動_學生登記
+'Allows parents to register their children for activities': 允許家長幫他們的孩子登記活動
+'View Activities_studentRegisterByParent': 觀看活動_由家長做學生登記
+'Allows users to view activities': 允許用戶觀看活動
+'View Activities_view': 觀看_觀看
+'View unassigned rooms by timetable.': 觀看時間表中的沒分配的房間
+'View Available Facilities': 'View Available Facilities'
+'View unassigned teachers by timetable.': 觀看時間表中的沒分配的老師
+'View Available Teachers': 觀看有的老師
+'Allows a user to view automated behaviour letters sent out by the system.': 'Allows a user to view automated behaviour letters sent out by the system.'
+'View Behaviour Letters': 觀看行為信件
+'View behaviour records by student': 用行為紀錄找學生
+'View Behaviour Records_all': 'View Behaviour Records_all'
+'View behaviour records for students within a family.': 'View behaviour records for students within a family.'
+'View Behaviour Records_myChildren': 'View Behaviour Records_myChildren'
+'View attendance, by roll group and class': 'View attendance, by roll group and class'
+'View Daily Attendance': 'View Daily Attendance'
+'Allows users to view all department details.': 'Allows users to view all department details.'
+'View Departments': 觀看部門
+'Allows a student to view their own external assessment records.': 'Allows a student to view their own external assessment records.'
+'View External Assessments_mine': 'View External Assessments_mine'
+'Allows a parent to view external assessment records for their children.': 'Allows a parent to view external assessment records for their children.'
+'View External Assessments_myChildrens': 'View External Assessments_myChildrens'
+'Allows parents to view individual needs plans for members of their family.': 'Allows parents to view individual needs plans for members of their family.'
+'View Individual Education Plans_myChildren': 'View Individual Education Plans_myChildren'
+'Allows staff to see Internal Assessment results for all children.': 'Allows staff to see Internal Assessment results for all children.'
+'View Internal Assessments_all': 'View Internal Assessments_all'
+'Allows students to view their own Internal Assessment results.': 'Allows students to view their own Internal Assessment results.'
+'View Internal Assessments_mine': 'View Internal Assessments_mine'
+'Allows parents to view their childrens'' Internal Assessment results.': 'Allows parents to view their childrens'' Internal Assessment results.'
+'View Internal Assessments_myChildrens': 'View Internal Assessments_myChildrens'
+'Allows a student to view their own invoices.': 'Allows a student to view their own invoices.'
+'View Invoices_mine': 'View Invoices_mine'
+'Allows parents to view invoices issued to members of their family.': 'Allows parents to view invoices issued to members of their family.'
+'View Invoices_myChildren': 'View Invoices_myChildren'
+'View all markbook information for all users': 觀看所有用戶的成績表資料
+'View Markbook_allClassesAllData': '觀看成績表_所有課堂所有資料'
+'Allows teachers to view their own markbook information': 'Allows teachers to view their own markbook information'
+'View Markbook_myClasses': 'View Markbook_myClasses'
+'View your own marks': '遠看個人的分數'
+'View Markbook_myMarks': 觀看成績表_我的分數
+'View Markbook_viewMyChildrensClasses': 'View Markbook_viewMyChildrensClasses'
+'Allows a user to see all days, periods, teachers and rooms in a timetable.': 'Allows a user to see all days, periods, teachers and rooms in a timetable.'
+'View Master Timetable': 觀看主時間表
+'Allows users to view all messages posted on their message wall.': 允許用戶觀看在他們信息牆上的所有信息。
+'View Message Wall': 觀看留言牆
+'View items which are on loan and have exceeded their due date.': '觀看正在借出和過期的項目'
+'View Overdue Items': 觀看過期物品
+'View resources': 觀看資源
+'View Resources': 觀看資源
+'View a brief profile of roll groups in school.': '觀看在學校中的班級的檔案'
+'View Roll Groups': 觀看班級
+'View all rubrics in the school, except students who can only view those for own year group.': '觀看學校中所有的評分表，除了知識可以觀看自己年級的學生。'
+'View Rubrics': 觀看評分表
+'View brief profile of any staff member in the school.': '觀看在任何學校的員工的基本檔案'
+'View Staff Profile_brief': 觀看員工資料_簡介
+'View full profile of any staff member in the school.': '觀看在任何學校的員工的完整檔案'
+'View Staff Profile_full': 觀看員工資料_
+'View brief profile of any student in the school.': '觀看在任何學校的學生的基本檔案'
+'View Student Profile_brief': 觀看學生檔案_基本
+'View full profile of any student in the school.': '觀看在任何學校的學生的完整檔案'
+'View Student Profile_full': 觀看學生檔案_完整
+'View full profile of any student in the school, without access to Notes.': 'View full profile of any student in the school, without access to Notes.'
+'View Student Profile_fullNoNotes': 'View Student Profile_fullNoNotes'
+'Allows students to view their own information': 'Allows students to view their own information'
+'View Student Profile_my': 'View Student Profile_my'
+'Allows parents to view their student''s information': 允許家長觀看他們孩子的資料
+'View Student Profile_myChildren': 觀看學生檔案_我的兒童
+'View space usage according to the timetable': '觀看根據時間表的地方運用。'
+'View Timetable by Facility': 'View Timetable by Facility'
+'Allows users to view timetables': 允許用戶觀看時間表
+'View Timetable by Person': 觀看個人時間表
+'Allows users to view timetables in all school years.': 允許用戶觀看所有學年的時間表。
+'View Timetable by Person_allYears': 'View Timetable by Person_allYears'
+'Allows users to view their own timetable': 'Allows users to view their own timetable'
+'View Timetable by Person_my': 'View Timetable by Person_my'
+'Allows parents to view their children''s timetable': 'Allows parents to view their children''s timetable'
+'View Timetable by Person_myChildren': 'View Timetable by Person_myChildren'
+'A week-by-week overview of staff absences.': 'A week-by-week overview of staff absences.'
+'Weekly Absences': 'Weekly Absences'
+'Print work summary statistical data by roll group': 印出班級的工作總結資料。
+'Work Summary by Roll Group': 班級的工作結論
+'Allows privileged users to enter Internal Assessment assessment data to columns in all classes.': 'Allows privileged users to enter Internal Assessment assessment data to columns in all classes.'
+'Write Internal Assessments_all': 'Write Internal Assessments_all'
+'Allows teachers to enter Internal Assessment assessment data to columns in their classes.': 'Allows teachers to enter Internal Assessment assessment data to columns in their classes.'
+'Write Internal Assessments_myClasses': 'Write Internal Assessments_myClasses'
+'General Information': 基本資料
+'Family Name': 姓
+'Relationship Status': 'Relationship Status'
+'Home Language - Primary': 'Home Language - Primary'
+'Home Language - Secondary': 'Home Language - Secondary'
+'Formal Family Name': 'Formal Family Name'
+'Used to address correspondence sent to the parents/guardians of this family.': 'Used to address correspondence sent to the parents/guardians of this family.'
+'Residential Address': 'Residential Address'
+'Unit, Building & Street': 'Unit, Building & Street'
+'Residential Address (District)': 'Residential Address (District)'
+'Suburb, Town, City, State (Postcode)': 'Suburb, Town, City, State (Postcode)'
+'Residential Address (Country)': 'Residential Address (Country)'
+'Edit Family': '編輯家庭 '
+'Please refresh the family data before attempting to change family relationships.': 'Please refresh the family data before attempting to change family relationships.'
+Married: 已婚
+Separated: 分居
+Divorced: 離婚
+'de Facto': 'de Facto'
+Relationships: 關係
+Adults: 成人
+'Roll Group': 班級
+Comment: 評論
+'Child''s Name': 孩子的名字
+'View Children': 觀看兒童
+'Add Student': '加入學生'
+'Remove Child from Family': 'Remove Child from Family'
+'Remove adult from family': 'Remove adult from family'
+'Data Access': 進接數據
+'Contact Priority': 聯絡優先
+'Contact by Phone': 'Contact by Phone'
+'Contact by SMS': 'Contact by SMS'
+'Contact by Email': 'Contact by Email'
+'Contact by Mail': 'Contact by Mail'
+'Data Access?': '進接數據?'
+'Access data on family members?': 'Access data on family members?'
+'The order in which school should contact family members.': '學校應該順序聯絡家庭，'
+'Contact by phone call?': 'Contact by phone call?'
+'Receive non-emergency phone calls from school?': '有沒有從學校收到非緊急的電話？'
+'Contact by SMS?': 'Contact by SMS?'
+'Receive non-emergency SMS messages from school?': '有沒有從學校收到非緊急的短信？'
+'Contact by Email?': 'Contact by Email?'
+'Receive non-emergency emails from school?': '有沒有從學校收到非緊急的郵件？'
+'Contact by Mail?': 'Contact by Mail?'
+'Receive postage mail from school?': '有沒有從學校收到郵資的郵件？'
+'View Adults': 觀看大人
+'Add Adult / Guardian': 'Add Adult / Guardian'
+'{name} is the': '{name} is the'
+'of {name}': 'of {name}'
+General: 一般
+Students: 學生
+'Search for Family Name': 'Search for Family Name'
+Children: 兒童
+contact_priority_logic: contact_priority_logic
+'{name}': '{name}'
+'There are not enough people in this family to form relationships.': '這個家庭有不足夠的人去形式關係.'
+'Change Password': 更改密碼
+'Student''s Name': 'Student''s Name'
+'Adult''s Name': 成人的名字
+'Edit Adult': 編輯成人
+'This value cannot be changed': 'This value cannot be changed'
+'Edit Student': 'Edit Student'
+'Edit District': 編輯地區
+'Add District': '加入地區'
+'State, Province, County, et.al.': 'State, Province, County, et.al.'
+'Post / Zip Code': 'Post / Zip Code'
+Territory: Territory
+'Post Code': 'Post Code'
+'Create District': 'Create District'
+'Field Type': 'Field Type'
+personfield:
+    type:
+        varchar: 'Short Text (max 255 characters)'
+        text: 'Long Text'
+        date: 日期
+        url: '網頁'
+        select: Dropdown
+    options:
+        help: 'Short Text: number of characters, up to 255.<br />Long Text: number of rows for field.<br />Dropdown: comma separated list of options.: Short Text: number of characters, up to 255.'
+        error:
+            text: 'The height in lines for the form text box must be defined.'
+            varchar: 'The length of the short text (max 255) must be defined.'
+            select: 'Provide a comma separated list of valid values for this dropdown.'
+Options: 選擇
+'Is the field compulsory?': 'Is the field compulsory?'
+'Role Categories': 角色類型
+'Include in Data Updater?': 'Include in Data Updater?'
+'Include in Public Registration Form?': 'Include in Public Registration Form?'
+'Include in Application Form?': 'Include in Application Form?'
+'Edit Custom Field': '編輯自訂領域'
+'Current Password': 現在密碼
+'Personal Google Calendar ID': 個人Google月曆編號
+'Google Calendar ID for your personal calendar.<br/>Only enables timetable integration when logging in via Google.': 'Google Calendar ID for your personal calendar.<br/>Only enables timetable integration when logging in via Google.'
+'Set your own custom background image.<br/>Please provide URL to image.': 'Set your own custom background image.<br/>Please provide URL to image.'
+'Personal Theme': 個人主題
+'Override the system theme.': 替代系統主題
+'System Default': 'System Default'
+'Personal Language': 個人語言
+'Override the system default language.': 替代系統內定的語言
+'Receive Email Notifications?': '接受電郵通知?'
+'Notifications can always be viewed on screen.': 總值可以在螢幕上觀看
+'Enable Smart Workflow Help?': 'Enable Smart Workflow Help?'
+'General Options': '基本選項'
+Introduction: 簡介
+'Information to display before the form': '在表格前可觀看的資料'
+'Application Form Referee Link': 'Application Form Referee Link'
+'Link to an external form that will be emailed to a referee of the applicant''s choosing.': 'Link to an external form that will be emailed to a referee of the applicant''s choosing.'
+Postscript: 附筆
+'Information to display at the end of the form': '在表格的結尾可觀看的資料'
+Agreement: 合約
+'Without this text, which is displayed above the agreement, users will not be asked to agree to anything': 如果沒有在協議以上顯示這一段文字，用戶不會被要求
+'Application Fee': '報名費用'
+'The cost of applying to the school.': '申請學校的費用'
+'Public Applications?': '公眾應用程式?'
+'If yes, members of the public can submit applications': 如果是，那公眾人士可以提交申請表
+Milestones: 里程碑
+'Comma-separated list of the major steps in the application process. Applicants can be tracked through the various stages.': 一份關於在申請的過程中的主要部分的用逗號分開的名單。申請人可以用這些階段中跟蹤。
+'How Did Your Hear?': '你這麼樣聽到？'
+'Comma-separated list': 用逗號分開的名單
+'Enable Limited Years of Entry': 'Enable Limited Years of Entry'
+'If yes, applicants choices for Year of Entry can be limited to specific school years.': 'If yes, applicants choices for Year of Entry can be limited to specific school years.'
+'Available Years of Entry': 'Available Years of Entry'
+'Which school years should be available to apply to?': 'Which school years should be available to apply to?'
+2019-2020: 2019-2020
+2020-2021: 2020-2021
+'Required Document Options': 'Required Document Options'
+'Required Documents': 需要的文件
+'Comma-separated list of documents which must be submitted electronically with the application form.': 和申請表一起電子提交的文件用逗號分開的列表
+'Internal Documents': 'Internal Documents'
+'Comma-separated list of documents for internal upload and use.': 'Comma-separated list of documents for internal upload and use.'
+'Required Documents Text': 需要的文件的文字
+'Explanatory text to appear with the required documents?': '和需要的文件一起顯示的解釋文字?'
+'Required Documents Compulsory?': '必須要需要的文件？'
+'Are the required documents compulsory?': '這些需要的文件必須嗎?'
+'Language Learning Options': '學習語言的選項'
+'Language Options Active': 語言選擇開動
+'Should the Language Options section be turned on?': '語言選擇應該開嗎?'
+'Language Options Blurb': 語言選擇簡介
+'Introductory text if Language Options section is turned on.': '如果開了語言選項的介紹文字'
+'Language Options Language List': 語言選擇語言表
+'Comma-separated list of available language selections if Language Options section is turned on.': 如果語言部分開了，那會有用逗號分開的可用語言列表。
+Sections: Sections
+'Special Education Needs Active': 'Special Education Needs Active'
+'Should the Special Education Needs section be turned on?': 'Should the Special Education Needs section be turned on?'
+'Application Form SEN Text': 'Application Form SEN Text'
+'Text to appear with the Special Educational Needs section of the student application form.': 'Text to appear with the Special Educational Needs section of the student application form.'
+'Scholarship Options Active': 'Scholarship Options Active'
+'Should the Scholarship Options section be turned on?': 'Should the Scholarship Options section be turned on?'
+Scholarships: 獎學金
+'Information to display before the scholarship options': 顯示獎學金前的資料
+'Payment Options Active': 'Payment Options Active'
+'Should the Payment section be turned on?': 'Should the Payment section be turned on?'
+'Acceptance Options': '接受選項'
+'Username Format': 'Username Format'
+'How should usernames be formated? Choose from [preferredName], [preferredNameInitial], [surname].': 'How should usernames be formated? Choose from [preferredName], [preferredNameInitial], [surname].'
+'Student Notification Message': 學生通知信息
+'A custom message to add to the standard email to students on acceptance.': '加入給學生的承認電郵的獨特信息'
+'Student Notification Default': 自動學生通知
+'Should student acceptance email be turned on or off by default.': '學生承認電郵應該自動開關?'
+'Parents Notification Message': 家長通知留言
+'A custom message to add to the standard email to parents on acceptance.': '加入給家長的承認電郵的獨特信息'
+'Parents Notification Default': 自動家長通知
+'Should parent acceptance email be turned on or off by default.': '家長承認電郵應該自動開關?'
+'Student Default Email': 學生自動電郵
+'Set default email for students on acceptance, using [username] to insert username.': '在承認的時候自動定學生的電郵，用[用戶名稱] 加入用戶名稱。'
+'Student Default Website': 學生自動網站
+'Set default website for students on acceptance, using [username] to insert username.': '在承認的時候自動定學生的網頁，用[用戶名稱] 加入用戶名稱。'
+'Auto House Assign': 自動分配社
+'Attempt to automatically place student in a house?': 'Attempt to automatically place student in a house?'
+'Language Learning': 'Language Learning'
+Acceptance: Acceptance
+All: 全部
+'Active: Yes': 'Active: Yes'
+'Active: No': 'Active: No'
+'Role: Other': 'Role: Other'
+'Account Details': 帳戶詳情
+date_format: date_format
+'Other Information': 其他資料
+'Privacy Statement': 私人聲明
+'Your registration was successfully submitted and is now pending approval. Our team will review your registration and be in touch in due course.': '成功得提交了你的註冊而現在在等待贊同。我們的團隊會檢閱你的註冊後會在這個過程中聯絡你.'
+'Your registration was successfully submitted, and you may now log into the system using your new username and password.': '成功得提交了你的註冊，現在您可以使用你的新用戶名後密碼登入系統裡'
+'By registering for this site you are giving permission for your personal data to be used and shared within this organisation and its websites. We will not share your personal data outside our organisation.': 'By registering for this site you are giving permission for your personal data to be used and shared within this organisation and its websites. We will not share your personal data outside our organisation.'
+'Do you agree to the above?': 同意以上的嗎？
+'{name} Public Registration': '{name} Public Registration'
+'Pending Approval': 待決批准
+'Import People Photos': 'Import People Photos'
+'Select Import File': 'Select Import File'
+'People Photos': 'People Photos'
+'Ensure that you have taken note of the notes below.': 'Ensure that you have taken note of the notes below.'
+Notes: 筆記
+'You can only submit ZIP files.': 'You can only submit ZIP files.'
+'Files in the import directory will be overwritten by files with the same name.': 'Files in the import directory will be overwritten by files with the same name.'
+'Please note the following requirements for images in preparing your ZIP file': 'Please note the following requirements for images in preparing your ZIP file'
+'File Name - The system modifies the filename when linked to the correct person.': 'File Name - The system modifies the filename when linked to the correct person.'
+'Folder * - The ZIP file must not contain any folders, only files.': 'Folder * - The ZIP file must not contain any folders, only files.'
+'File Type * - Images must be formatted as JPG or PNG.': 'File Type * - Images must be formatted as JPG or PNG.'
+'Image Size * - Displayed at 240px by 320px.': 'Image Size * - Displayed at 240px by 320px.'
+'Size Range * - Accepts images up to 360px by 480px.': 'Size Range * - Accepts images up to 360px by 480px.'
+'Aspect Ratio Range * - Accepts aspect ratio between 0.7:1 and 0.84:1.': 'Aspect Ratio Range * - Accepts aspect ratio between 0.7:1 and 0.84:1.'
+Date: 日期
+'Name, Adults & Students': 'Name, Adults & Students'
+'Import Images': 'Import Images'
+'Drop Image Here': 'Drop Image Here'
+'Target Person': 'Target Person'
+'Select the person and then drag the image from your computer to set the image for this person.': 'Select the person and then drag the image from your computer to set the image for this person.'
+'Remove Photo': 'Remove Photo'
+'The image must ratio of {ratio}:1 is outside the allowed limits of 0.7:1 to 0.84:1.': 'The image must ratio of {ratio}:1 is outside the allowed limits of 0.7:1 to 0.84:1.'
+'The height and width maximum is 480 x 360px. The image supplied was {height} x {width}px.': 'The height and width maximum is 480 x 360px. The image supplied was {height} x {width}px.'
+'The file is too big. Max 350k. File size given is {size}.': 'The file is too big. Max 350k. File size given is {size}.'
+'{name} upload failed...': '{name} upload failed...'
+'Target this person...': 'Target this person...'
+'Replace this image': 'Replace this image'
+'Images [.jpg, .png, .jpeg] only': 'Images [.jpg, .png, .jpeg] only'
+'Use this page to drag and drop images from your computer to the site for the targeted individual. Existing images are replaced.': 'Use this page to drag and drop images from your computer to the site for the targeted individual. Existing images are replaced.'
+Import: 導入
+'People Management': 'People Management'
+'People Settings': 'People Settings'
+'Staff Management': 'Staff Management'
+'Student Management': 'Student Management'
+'Module Menu': 程式組件選單
+'Staff Type: Teaching': 'Staff Type: Teaching'
+'Staff Type: Support': 'Staff Type: Support'
+'Staff Role: Administrator': 'Staff Role: Administrator'
+'Staff Role: Librarian': 'Staff Role: Librarian'
+'Staff Role: Support Staff': 'Staff Role: Support Staff'
+'Staff Role: Teacher': 'Staff Role: Teacher'
+'Application Questions': 'Application Questions'
+'HTML text that will appear as questions for the applicant to answer.': 'HTML text that will appear as questions for the applicant to answer.'
+'If yes, members of the public can submit staff applications': 'If yes, members of the public can submit staff applications'
+'Submit All Panels': 'Submit All Panels'
+'Application Form Referee Links': 'Application Form Referee Links'
+'Required Documents Options': '所需文件選項'
+'Notification Message': 'Notification Message'
+'A custom message to add to the standard email on acceptance.': 'A custom message to add to the standard email on acceptance.'
+'Notification Default': 'Notification Default'
+'Should acceptance email be turned on or off by default.': 'Should acceptance email be turned on or off by default.'
+'Default Email': 'Default Email'
+'Set default email on acceptance, using [username] to insert username.': 'Set default email on acceptance, using [username] to insert username.'
+'Default Website': 'Default Website'
+'Set default website on acceptance, using [username] to insert username.': 'Set default website on acceptance, using [username] to insert username.'
+'Referee Links': 'Referee Links'
+'General Settings': 設定
+'Enable Public Registration': 啟用公開註冊
+'Allows members of the public to register to use the system.': 為了使用系統，允許公眾的成員註冊
+'Public Registration Minimum Age': 公開註冊最低年齡
+'The minimum age, in years, permitted to register.': 極少年齡，在年獲准才能註冊
+'Public Registration Default Status': '公開註冊預設狀態'
+'Should new users be ''Full'' or ''Pending Approval''?': '新用戶應不應該是 ''滿'' 或 ''待決批准''?'
+'Public Registration Default Role': 公開註冊的自動角色
+'System role to be assigned to registering members of the public.': 系統角色要分配為公眾的註冊成員
+'Interface Options': '界面選項'
+'Public Registration Introductory Text': 公開註冊介紹文字
+'HTML text that will appear above the public registration form.': 'HTML 文件會在公眾註冊表格以上出現'
+'Public Registration Postscript': 公開註冊後記
+'HTML text that will appear underneath the public registration form.': 'HTML 文件會在公眾註冊以下出現.'
+'Public Registration Privacy Statement': 公開註冊隱私聲明
+'HTML text that will appear above the Submit button, explaining privacy policy.': 'HTML 文件會在提交安啾以上出現，說明隱私政策'
+'Public Registration Agreement': 公開註冊協議
+'Agreement that user must confirm before joining. Blank for no agreement.': '用戶加入前一定要確認協議。沒有協議就空白'
+Interface: Interface
+Login: 登錄
+'Username or email': 'Username or email'
+Password: 密碼
+'Forgot Password': 'Forgot Password'
+'Login with Google': '使用 Google 登錄'
+Language: 語言
+'User Admin': 用戶管理員

@@ -1,0 +1,1204 @@
+'Basic Information': ข้อมูลเบื้องต้น
+Title: คำนำหน้า
+person:
+    title:
+        ms: Ms
+        miss: นางสาว
+        mr: Mr
+        mrs: Mrs
+        dr: Dr
+    gender:
+        f: หญิง
+        m: ชาย
+        other: อื่นๆ
+        unspecified: ยังไม่ระบุ
+    status:
+        full: Full
+        expected: Expected
+        left: Left
+        'pending approval': 'Pending Approval'
+    address:
+        warning: '<div class="warning">Address information for an individual only needs to be set under the following conditions:</div><ol><li>If the person is not in a family.</li><li>If the person`s family does not have a home address set.</li><li>If the person needs an address in addition to their family`s home address.</li></ol>'
+    phonetypelist:
+        '': ''
+        mobile: มือถือ
+        home: Home
+        work: ทำงาน
+        fax: Facsimile
+        pager: เพจเจอร์
+        other: อื่นๆ
+Surname: นามสกุล
+'Family name as shown in ID documents.': นามสกุลที่แสดงในเอกสารประจำตัวประชาชน
+'Given Names': 'Given Names'
+'Given names as shown in ID documents.': 'Given names as shown in ID documents.'
+'Preferred Name': ชื่อที่ต้องการ
+'Most common name, alias, nickname, etc.': 'ชื่อทั่วไปนามแฝงชื่อเล่น ฯลฯ'
+'Official Name': ชื่ออย่างเป็นทางการ
+'Full name as shown in ID documents.': ชื่อเต็มตามเอกสารหลักฐาน
+'Name In Characters': 'ชื่อเป็นตัวอักษร เช่น ภาษาจีน'
+'Chinese or other character-based name.': 'ชื่อตัวอักษรจีนหรืออื่น ๆ'
+Gender: เพศ
+'Date of Birth': วันเกิด
+'Personal Photo': 'Personal Photo'
+"Displayed at 240px by 320px.\nAccepts images up to 360px by 480px.\nAccepts aspect ratio between 1:1.2 and 1:1.4.": "Displayed at 240px by 320px.\nAccepts images up to 360px by 480px.\nAccepts aspect ratio between 1:1.2 and 1:1.4."
+'System Access': การเข้าถึงระบบ
+'Contact Information': ข้อมูลติดต่อ
+Actions: แอ็กชั่น
+Add: เพิ่ม
+Delete: ลบ
+'Close Message': 'Close Message'
+'There are no records to display.': ไม่มีรายการในการแสดงผล
+Basic: ขั้นพื้นฐาน
+System: System
+Contact: ติดต่อ
+UserAdmin: UserAdmin
+'People Admin': 'People Admin'
+'Manage People': 'Manage People'
+'Edit Person': 'Edit Person'
+'Primary Role': บทบาทหลัก
+'Controls what a user can do and see.': ควบคุมสิ่งที่ผู้ใช้สามารถทำและดูได้
+'All Roles': บทบาททั้งหมด
+'Controls what a user can do and see. Use Control, Command and/or Shift to select multiple.': 'Controls what a user can do and see. Use Control, Command and/or Shift to select multiple.'
+Username: ชื่อผู้ใช้งาน
+'System login name.': ชื่อล็อกอินระบบ
+Status: สถานะ
+'This determines visibility within the system.': 'ซึ่งจะกำหนดการมองเห็นข้อมูลภายในระบบ'
+family:
+    relationship:
+        mother: แม่
+        father: พ่อ
+        step-mother: 'Step Mother'
+        step-father: 'Step Father'
+        'adoptive parent': ผู้ปกครองที่รับเป็นบุตรบุญธรรม
+        guardian: ผู้ปกครอง
+        grandmother: ยาย
+        grandfather: ตา
+        aunt: ป้า
+        uncle: ลุง
+        nanny/helper: 'พี่เลี้ยง / ผู้ช่วย'
+        other: อื่นๆ
+    status:
+        married: สมรส
+        separated: แยกทาง
+        divorced: หย่า
+        'de facto': 'de Facto'
+        other: อื่นๆ
+'System Access: {name}': 'System Access: {name}'
+'Can Login?': 'สามารถเข้าระบบได้หรือไม่?'
+'Force Password Reset': 'Force Password Reset'
+'User will be prompted on next login.': ผู้ใช้จะได้รับแจ้งเมื่อเข้าสู่ระบบครั้งต่อไป
+'Contact Information: {name}': 'Contact Information: {name}'
+Email: อีเมล์
+'Alternate Email': อีเมล์อื่น
+'Enter Personal Address': 'Enter Personal Address'
+'Address 1': 'ที่อยู่ 1'
+'Unit, Building, Street': 'บ้านเลขที่ อาคาร ถนน'
+'Address 1 Locality': 'Address 1 Locality'
+'City, Suburb or Town, State, Postcode (ZIP)': 'City, Suburb or Town, State, Postcode (ZIP)'
+'Address 1 Country': 'ประเทศ ที่อยู่ 1'
+'Address 2': 'ที่อยู่ 2'
+'Address 2 Locality': 'Address 2 Locality'
+'Address 2 Country': 'ประเทศ ที่อยู่ 2'
+'Phone 1': 'หมายเลขโทรศัพท์ 1'
+'Type, country code, number.': 'ประเภท รหัสประเทศ หมายเลข'
+' ': ' '
+Mobile: มือถือ
+Home: Home
+Work: ทำงาน
+Facsimile: Facsimile
+Pager: เพจเจอร์
+Other: อื่นๆ
+'Phone 2': 'โทรศัพท์ 2'
+'Phone 3': 'โทรศัพท์ 3'
+'Phone 4': 'โทรศัพท์ 4'
+Website: เว็บไซต์
+'School Information: {name}': 'School Information: {name}'
+'Last School': โรงเรียนก่อนหน้านี้
+'Start Date': วันที่เริ่มต้น
+'The first day at school for this person.': 'The first day at school for this person.'
+'End Date': วันที่สิ้นสุด
+'The last day at school for this person.': 'The last day at school for this person.'
+'Class of': 'Class of'
+'When is the student expected to graduate?': 'นักศึกษาคาดว่าจะจบการศึกษาเมื่อไหร่?'
+'Next School': โรงเรียนถัดไป
+'Departure Reason': เหตุผลในการออก
+'Background Information: {name}': 'Background Information: {name}'
+'First Language': 'ภาษาแรก'
+'Second Language': 'ภาษาที่สอง'
+'Third Language': 'ภาษาที่สาม'
+'Country of Birth': ประเทศที่เกิด
+'Birth Certificate Scan': สแกนใบรับรองเกิด
+'Less than 2M,  Accepts PDF and image files only.': 'Less than 2M,  Accepts PDF and image files only.'
+Ethnicity: เชื้อชาติ
+'Ethnicity selection can be altered at {anchor}People Settings{endAnchor}': 'Ethnicity selection can be altered at {anchor}People Settings{endAnchor}'
+Religion: ศาสนา
+'Religion selection can be altered at {anchor}People Settings{endAnchor}': 'Religion selection can be altered at {anchor}People Settings{endAnchor}'
+'Citizenship 1': 'สัญชาติ 1'
+'Citizenship 1 Passport Number': 'หมายเลขหนังสือเดินทางของพลเมือง 1'
+'Citizenship 1 Passport Scan': 'สแกนหนังสือเดินทางสัญชาติ 1'
+'Citizenship 2': 'สัญชาติ 2'
+'Citizenship 2 Passport Number': 'หมายเลขหนังสือเดินทางของพลเมือง 2'
+'{name} ID Card Number': '{name} ID Card Number'
+'{name} ID Card Scan': '{name} ID Card Scan'
+'{name} Residency/Visa Type': '{name} Residency/Visa Type'
+'{name} Visa Expiry Date': '{name} Visa Expiry Date'
+'If relevant': 'If relevant'
+'Emergency Contacts: {name}': 'Emergency Contacts: {name}'
+'These details are used when immediate family members (e.g. parent, spouse) cannot be reached first. Please try to avoid listing immediate family members.': 'รายละเอียดเหล่านี้จะใช้เมื่อสมาชิกในครอบครัว (เช่น พ่อแม่ คู่สมรส) ไม่สามารถเข้าถึงได้ก่อน โปรดพยายามหลีกเลี่ยงการแสดงรายชื่อสมาชิกในครอบครัวได้ทันที'
+'Contact 1 Name': 'ติดต่อ 1 ชื่อ'
+'Contact 1 Relationship': 'ติดต่อ 1 ความสัมพันธ์'
+'Contact 1 Number 1': 'ติดต่อ 1 หมายเลข 1'
+'Contact 1 Number 2': 'ติดต่อ 1 หมายเลข 2'
+'Contact 2 Name': 'ติดต่อ 1 ชื่อ'
+'Contact 2 Relationship': 'ติดต่อ 2 ความสัมพันธ์'
+Mother: แม่
+Father: พ่อ
+'Step Mother': 'Step Mother'
+'Step Father': 'Step Father'
+'Adoptive Parent': ผู้ปกครองที่รับเป็นบุตรบุญธรรม
+Guardian: ผู้ปกครอง
+Grandmother: ยาย
+Grandfather: ตา
+Aunt: ป้า
+Uncle: ลุง
+Nanny/Helper: 'พี่เลี้ยง / ผู้ช่วย'
+'Contact 2 Number 1': 'ติดต่อ 2 หมายเลข 1'
+'Contact 2 Number 2': 'ติดต่อ 2 หมายเลข 2'
+Submit: Submit
+'Miscellaneous: {name}': 'Miscellaneous: {name}'
+House: บ้าน
+'Student Identifier': 'Student Identifier'
+'Must be unique if set.': ต้องไม่ซ้ำกันในกลุ่ม
+Transport: การเดินทาง
+'Transport Notes': หมายเหตุการเดินทาง
+'Locker Number': หมายเลขล็อคเกอร์
+'Vehicle Registration': ทะเบียนยานพาหนะ
+School: โรงเรียน
+Background: 'ภูมิหลัง'
+Emergency: Emergency
+Miscellaneous: เบ็ดเตล็ด
+Full: Full
+Left: Left
+Photo: รูป
+Name: ชื่อ
+Family: ครอบครัว
+'Records {start}-{end} of {total}': 'Records {start}-{end} of {total}'
+'First Page': หน้าแรก
+'Previous Page': 'Previous Page'
+'Next Page': 'Next Page'
+'Last Page': หน้าสุดท้าย
+'Are you sure you want to delete this record?': คุณแน่ใจหรือไม่ว่าต้องการลบระเบียนนี้
+'This operation cannot be undone, and may lead to loss of vital data in your system. PROCEED WITH CAUTION!': 'การดำเนินการนี้ไม่สามารถยกเลิกได้และอาจทำให้ข้อมูลสำคัญหายไปในระบบของคุณ ดำเนินการด้วยความระมัดระวัง!'
+Close: ปิด
+'Yes': ใช่
+Search: ค้นหา
+'Search for': 'Search for'
+'Preferred, surname, username, role, student ID, email, phone number, vehicle registration': 'Preferred, surname, username, role, student ID, email, phone number, vehicle registration'
+'Filter by': 'Filter by'
+'Preset filters with your search.': 'Preset filters with your search.'
+Filters: ฟิลเตอร์
+'Role: Student': 'Role: Student'
+'Role: Parent': 'Role: Parent'
+'Role: Staff': 'Role: Staff'
+'Status: Full': 'Status: Full'
+'Status: Left': 'Status: Left'
+'Status: Expected': 'Status: Expected'
+'Before Start Date': ก่อนวันที่เริ่มต้น
+'After End Date': หลังจากวันที่สิ้นสุด
+View: ดู
+'Add Person': 'Add Person'
+'': ''
+return:
+    fail:
+        1: 'Incorrect username or password.'
+        2: คุณไม่ได้รับสิทธิเพียงพอต่อการเข้าสู่ระบบ
+        9: บทบาทหลักของคุณไม่สนับสนุนความสามารถในการเข้าสู่ปีที่ระบุ
+    success:
+        a: 'บัญชีของคุณได้รับการอัปเดตเรียบร้อยแล้ว ขณะนี้คุณสามารถใช้ระบบต่อไปได้ตามปกติ'
+Active: แอ็กทีฟ
+Alerts: การแจ้งเตือน
+'Manage Student Settings': 'Manage Student Settings'
+Settings: ตั้งค่า
+'Student Note Categories': หมวดหมู่หมายเหตุนักศึกษา
+'Student Notes': หมายเหตุของนักศึกษา
+'This section allows you to manage the categories which can be associated with student notes. Categories can be given templates, which will pre-populate the student note on selection.': 'ส่วนนี้จะช่วยให้คุณจัดการหมวดหมู่ที่สามารถเชื่อมโยงกับบันทึกของนักศึกษาได้ หมวดหมู่สามารถใช้เทมเพลตที่มีหมายเหตุนักศึกษาที่กำหนดไว้ล่วงหน้าแล้ว'
+Edit: แก้ไข
+'Day-Type Options': 'ตัวเลือก ประเภทวัน'
+'Field Values': ค่าฟิลด์
+'Manage People Settings': 'Manage People Settings'
+'PRIVACY OPTIONS': 'PRIVACY OPTIONS'
+'People Data Options': 'People Data Options'
+'Must be unique': ต้องไม่ซ้ำกัน
+Template: เทมเพลต
+'HTML code to be inserted into blank note.': 'โค้ด HTML จะแทรกลงในบันทึกเปล่า'
+'Edit Note Category': แก้ไขหมวดหมู่หมายเหตุ
+student:
+    note_notification:
+        tutors: ติวเตอร์
+        'tutors and teachers': 'ติวเตอร์ และ ครู'
+'Enable Student Notes': เปิดใช้งานบันทึกของนักศึกษา
+'Extended Brief Profile': รายละเอียดเพิ่มเติม
+'High Academic Alert Threshold': เกณฑ์การแจ้งเตือนการศึกษาสูง
+'High Behaviour Alert Threshold': เกณฑ์การแจ้งเตือนพฤติกรรมสูง
+'Low Academic Alert Threshold': เกณฑ์การแจ้งเตือนการศึกษาต่ำ
+'Low Behaviour Alert Threshold': เกณฑ์การแจ้งเตือนพฤติกรรมต่ำ
+'Medium Academic Alert Threshold': เกณฑ์การแจ้งเตือนการศึกษาระดับกลาง
+'Medium Behaviour Alert Threshold': เกณฑ์การแจ้งเตือนพฤติกรรมพฤติกรรมปานกลาง
+'Note Creation Notification': การเตือนการสร้างหมายเหตุ
+'Should student notes be turned on?': 'ควรเปิดบันทึกของนักศึกษาหรือไม่?'
+'Student Agreement Options': ตัวเลือกข้อตกลงสำหรับนักศึกษา
+'The extended version of the brief student profile includes contact information of parents.': 'รุ่นรายละเอียดของนักศึกษาที่มีรายละเอียดสั้น ๆ ประกอบด้วยข้อมูลการติดต่อของบิดามารดา'
+'The number of Behaviour concerns needed in the past 60 days to raise a high level alert on a student.': 'จำนวนความกังวลเกี่ยวกับพฤติกรรมที่จำเป็นในช่วง 60 วันที่ผ่านมาเพื่อเพิ่มการแจ้งเตือนในระดับสูงสำหรับนักศึกษา'
+'The number of Behaviour concerns needed in the past 60 days to raise a low level alert on a student.': 'จำนวนความกังวลเกี่ยวกับพฤติกรรมที่จำเป็นใน 60 วันที่ผ่านมาเพื่อเพิ่มการแจ้งเตือนในระดับต่ำสุดสำหรับนักศึกษา'
+'The number of Behaviour concerns needed in the past 60 days to raise a medium level alert on a student.': 'จำนวนความกังวลด้านพฤติกรรมที่จำเป็นในช่วง 60 วันที่ผ่านมาเพื่อเพิ่มการแจ้งเตือนระดับปานกลางสำหรับนักศึกษา'
+'The number of Markbook concerns needed in the past 60 days to raise a high level academic alert on a student.': 'จำนวนความกังวลเกี่ยวกับ Markbook ใน 60 วันที่ผ่านมาเพื่อเพิ่มการแจ้งเตือนทางวิชาการระดับสูงให้กับนักศึกษา'
+'The number of Markbook concerns needed in the past 60 days to raise a low level academic alert on a student.': 'จำนวนความกังวลเกี่ยวกับ Markbook ใน 60 วันที่ผ่านมาเพื่อเพิ่มการแจ้งเตือนทางวิชาการในระดับต่ำสุดสำหรับนักศึกษา'
+'The number of Markbook concerns needed in the past 60 days to raise a medium level academic alert on a student.': 'จำนวนความกังวลเกี่ยวกับ Markbook ในช่วง 60 วันที่ผ่านมาเพื่อเพิ่มการแจ้งเตือนทางวิชาการในระดับปานกลางให้กับนักศึกษา'
+'Determines who to notify when a new student note is created.': กำหนดผู้ที่จะแจ้งเมื่อมีการสร้างโน้ตนักศึกษาใหม่
+'Comma-separated list of agreements that students might be asked to sign in school (e.g. ICT Policy).': 'รายชื่อข้อตกลงที่คั่นด้วยเครื่องหมายจุลภาคที่นักศึกษาอาจถูกขอให้ลงชื่อเข้าใช้ในโรงเรียน (เช่นนโยบาย ICT)'
+Nationality: สัญชาติ
+Privacy: ความเป็นส่วนตัว
+'Privacy Blurb': การประกาศแจ้งความเป็นส่วนตัว
+'Privacy Options': ตัวเลือกความเป็นส่วนตัว
+Religions: ศาสนา
+'Should privacy options be turned on across the system?': 'ตัวเลือกความเป็นส่วนตัวควรเปิดใช้ในระบบหรือไม่?'
+'Should users be allowed to set their own personal backgrounds?': 'ผู้ใช้ควรได้รับอนุญาตให้ตั้งค่าประวัติส่วนตัวของตนเองหรือไม่?'
+'Unique Email Address': ที่อยู่อีเมลที่ไม่ซ้ำ
+'Comma-separated list of ethnicities available in system': 'รายการที่คั่นด้วยจุลภาคของเชื้อชาติในระบบ'
+'Comma-separated list of nationalities available in system. If blank, system will default to list of countries': 'รายชื่อที่คั่นด้วยจุลภาคของเชื้อชาติในระบบ หากว่าง ระบบจะกำหนดค่าเริ่มต้นโดยรายการของประเทศ'
+'Comma-separated list of options to make available (e.g. half-day, full-day). If blank, this field will not show up in the application form.': 'Comma-separated list of options to make available (e.g. half-day, full-day). If blank, this field will not show up in the application form.'
+'Comma-separated list of reasons for departure from school. If blank, user can enter any text.': 'รายชื่อเหตุผลที่ออกจากโรงเรียน หากว่างผู้ใช้สามารถป้อนข้อความใดก็ได้'
+'Comma-separated list of residency status available in system. If blank, system will allow text input': 'รายการการคั่นด้วยเครื่องหมายจุลภาคของสถานะที่อยู่อาศัยที่มีในระบบ ถ้าว่างระบบจะอนุญาตให้ป้อนข้อความ'
+'Day-Type Text': 'ข้อความประเภทวัน'
+'Departure Reasons': เหตุผลที่ออกไป
+'Descriptive text to accompany image privacy option when shown to users.': 'ข้อความอธิบายที่มาพร้อมกับตัวเลือกความเป็นส่วนตัวของรูปภาพเมื่อแสดงต่อผู้ใช้'
+'Explanatory text to include with Day-Type Options.': 'Explanatory text to include with Day-Type Options.'
+'Residency Status': สถานะการอยู่อาศัย
+'Are primary email addresses required to be unique?': 'ที่อยู่อีเมลหลักต้องเป็นเอกลักษณ์หรือไม่?'
+'Comma-separated list of choices to make available if privacy options are turned on. If blank, privacy fields will not be displayed.': 'รายการตัวเลือกที่คั่นด้วยจุลภาคเพื่อให้พร้อมใช้งานหากเปิดใช้ตัวเลือกความเป็นส่วนตัว หากว่างข้อมูลส่วนบุคคลจะไม่ปรากฏขึ้น'
+'Personal Background': ข้อมูลพื้นฐานส่วนตัว
+'Delete Person': 'Delete Person'
+'Reset Password': รีเซ็ตรหัสผ่าน
+'Please select...': โปรดเลือก...
+'Employment Details: {name}': 'Employment Details: {name}'
+Profession: อาชีพ
+Employer: ผู้จ้าง
+'Job Title': ตำแหน่งงาน
+Employment: การจ้างงาน
+'New Password': รหัสผ่านใหม่
+'Confirm New Password': ยืนยันรหัสผ่าน
+'Force Reset Password?': 'บังคับให้ตั้งรหัสผ่านใหม่หรือไม่?'
+'The person will need to change their password at the next attempt to sign in.': 'The person will need to change their password at the next attempt to sign in.'
+'The password policy stipulates that passwords must:': 'นโยบายรหัสผ่านกำหนดว่ารหัสผ่านต้อง:'
+'Contain at least one lowercase letter, and one uppercase letter.': ประกอบด้วยอักษรตัวพิมพ์เล็กอย่างน้อยหนึ่งตัวและอักษรตัวพิมพ์ใหญ่หนึ่งตัว
+'Contain at least one number.': ประกอบด้วยตัวเลขอย่างน้อยหนึ่งตัว
+'Must be at least {oneString} characters in length.': 'Must be at least {oneString} characters in length.'
+'Contain at least one non-alphanumeric character (e.g. a punctuation mark or space).': 'ประกอบด้วยอักขระที่ไม่ใช่ตัวอักษรและตัวเลขอย่างน้อยหนึ่งตัว (เช่นเครื่องหมายวรรคตอนหรือช่องว่าง)'
+'Required Updates?': 'Required Updates?'
+'Should the data updater highlight updates that are required?': 'Should the data updater highlight updates that are required?'
+'Required Update Types': 'Required Update Types'
+'Which type of data updates should be required.': 'ต้องปรับปรุงข้อมูลประเภทใด'
+updater:
+    bytype:
+        family: ครอบครัว
+        personal: ส่วนบุคคล
+        medical: ทางการแพทย์
+        finance: การเงิน
+'Cutoff Date': วันที่สิ้นสุด
+'Earliest acceptable date when checking if data updates are required.': วันที่ยอมรับได้เร็วที่สุดเมื่อตรวจสอบว่ามีการปรับปรุงข้อมูลที่จะต้องการ
+'Data Updater Redirect': 'Data Updater Redirect'
+'Which types of users should be redirected to the Data Updater if updates are required.': 'ผู้ใช้ประเภทใดที่ควรเปลี่ยนเส้นทางไปยัง Data Updater หากจำเป็นต้องมีการอัปเดต'
+Parent: ผู้ปกครอง
+Staff: เจ้าหน้าที่
+Student: นักศึกษา
+'Updater Settings': 'Updater Settings'
+'REQUIRED FIELDS FOR PERSONAL UPDATES': 'REQUIRED FIELDS FOR PERSONAL UPDATES'
+'These required field settings apply to all users, except those who hold the ability to submit a data update request for all users in the system (generally just admins).': 'การตั้งค่าฟิลด์ที่จำเป็นต้องใช้กับผู้ใช้ทั้งหมดยกเว้นผู้ที่มีความสามารถในการส่งคำขออัปเดตข้อมูลสำหรับผู้ใช้ทั้งหมดในระบบ (โดยทั่วไปคือผู้ดูแลระบบ)'
+Field: ฟิลด์
+Required: ต้องการ
+'Read Only': อ่านเท่านั้น
+Hidden: ซ่อน
+'First Name': ชื่อจริง
+'This field cannot be required': 'ฟิลด์นี้ไม่สามารถกำหนดเป็น ต้องการ ได้'
+'Address 1 District': 'เขต ที่อยู่ 1'
+'Address 2 District': 'เขต ที่อยู่ 2'
+'Citizenship 1 Passport': 'หนังสือเดินทาง สัญชาติ 1'
+'Citizenship 2 Passport': 'หนังสือเดินทาง สัญชาติ 2'
+'National ID Card Number': หมายเลขบัตรประจำตัวประชาชน
+'Visa Expiry Date': วันหมดอายุวีซ่า
+'Emergency 1 Name': 'ชื่อเหตุฉุกเฉิน 1'
+'Emergency 1 Number 1': 'ฉุกเฉิน 1 หมายเลข 1'
+'Emergency 1 Number 2': 'ฉุกเฉิน 1 หมายเลข 2'
+'Emergency 1 Relationship': 'ความสัมพันธ์ ฉุกเฉิน 1'
+'Emergency 2 Name': 'ชื่อเหตุฉุกเฉิน 2'
+'Emergency 2 Number 1': 'ฉุกเฉิน 2 หมายเลข 1'
+'Emergency 2 Number 2': 'ฉุกเฉิน 2 หมายเลข 1'
+'Emergency 2 Relationship': 'ความสัมพันธ์ ฉุกเฉิน 2'
+Category: 'ประเภท'
+role:
+    category:
+        staff: เจ้าหน้าที่
+        student: นักศึกษา
+        parent: ผู้ปกครอง
+        other: อื่นๆ
+    restriction:
+        none: ไม่มี
+        'same role': 'People with the same role'
+        'admin only': ผู้ดูแลระบบเท่านั้น
+Abbreviation: Abbreviation
+Description: คำอธิบาย
+Type: 'ประเภท'
+'This value cannot be changed.': ไม่สามารถเปลี่ยนค่านี้ได้
+'Are users with this primary role able to login?': 'ผู้ใช้ที่มีบทบาทหลักนี้สามารถเข้าสู่ระบบได้หรือไม่?'
+'Login To Past Years': เข้าสู่ปีที่ผ่านมา
+'Login To Future Years': เข้าสู่ปีอนาคต
+Restriction: ข้อจำกัด
+'Determines who can grant or remove this role in Manage Users.': 'Determines who can grant or remove this role in Manage Users.'
+'Manage Roles': จัดการบทบาท
+'Edit Role': แก้ไขบทบาท
+None: ไม่มี
+'All years': ทุกปี
+'Current year only': ปีปัจจุบันเท่านั้น
+'Current/past years only': 'ปีปัจจุบัน / ที่ผ่านมาเท่านั้น'
+'Current/future years only': 'ปีปัจจุบัน / อนาคตเท่านั้น'
+Duplicate: ทำซ้ำ
+'Short Name': ชื่อย่อ
+'Login Years': ปีที่เข้าระบบ
+'Manage Permissions': จัดการสิทธิ์
+Filter: ฟิลเตอร์
+Module: โมดูล
+Role: บทบาท
+'Clear Search': ยกเลิกคำค้น
+'Action Permissions': 'Action Permissions'
+Administrator: ผู้ดูแลระบบ
+Librarian: Librarian
+'Support Staff': เจ้าหน้าที่ฝ่ายสนับสนุน
+Teacher: ครู
+'Record student attendance for activities.': บันทึกการเข้าเรียนของนักศึกษาสำหรับกิจกรรม
+'Activity Attendance by Date': การเข้าร่วมกิจกรรมตามวันที่
+'Toggle Permission': 'Toggle Permission'
+'View all student activity choices in the current year for a given roll group.': 'ดูตัวเลือกกิจกรรมนักเรียนทั้งหมดในปีปัจจุบันสำหรับกลุ่ม roll group'
+'Activity Choices by Roll Group': 'ตัวเลือกกิจกรรมโดยกลุ่ม Roll Group'
+'View all student activity choices in the current year for a given student': ดูตัวเลือกกิจกรรมนักศึกษาทั้งหมดในปีปัจจุบันสำหรับนักศึกษาที่ระบุ
+'Activity Choices by Student': ทางเลือกกิจกรรมของนักศึกษา
+'View summary enrolment information for all activities in the current year.': ดูข้อมูลการลงทะเบียนสรุปสำหรับกิจกรรมทั้งหมดในปีปัจจุบัน
+'Activity Enrolment Summary': สรุปการลงทะเบียนกิจกรรม
+'View spread of enrolment over terms and days by roll group': 'ดูการกระจายของการลงทะเบียนทั้งภาคการศึกษาและวันตาม Roll Group'
+'Activity Spread by Roll Group': 'กิจกรรมที่กระจายตาม Roll Group'
+'Print roll group lists showing count of various activity types': 'พิมพ์รายการ Roll Group ที่แสดงจำนวนประเภทกิจกรรมต่างๆ'
+'Activity Type by Roll Group': 'ประเภทกิจกรรมตาม Roll Group'
+'Summarises gender, age and school year': 'สรุป เพศ อายุและปีการศึกษา'
+'Age & Gender Summary': สรุปอายุและเพศ
+'Allows users, with or without an account, to apply for student place.': 'อนุญาตให้ผู้ใช้ โดยมีหรือไม่มีบัญชีเพื่อสมัครสถานศึกษา'
+'Application Form': แบบฟอร์มใบสมัคร
+'Allows prospective staff to apply for job openings.': อนุญาตให้พนักงานหวังไว้สมัครงานที่กำลังเปิดรับได้
+'Allows admins to control the application form': อนุญาตให้ผู้ดูแลระบบควบคุมฟอร์มใบสมัคร
+'Application Form Settings': ตั้งค่าฟอร์มใบสมัคร
+'Allows users to approve or decline staff absences.': อนุญาติให้ผู้ใช้งานอนุมัติหรือยกเลิกการขาดลาของพนักงาน
+'Approve Staff Absences': อนุมัติการขาดงานของพนักงาน
+'Allows for current records to be archived for viewing in the future.': อนุญาตให้เก็บบันทึกรายการปัจจุบันเพื่อดูในอนาคต
+'Archive Records': บันทึกที่เก็บถาวร
+'Allows users to assess each other''s work': อนุญาตให้ผู้ใช้ประเมินผลงานของกันและกัน
+Assess: ประเมินผล
+'Take attendance, one class at a time': 'เข้าร่วมชั้นเรียน ชั้นเรียนละหนึ่งครั้ง'
+'Attendance By Class': การเข้าชั้นเรียนตามชั้นเรียน
+'Take attendance, one person at a time': 'เข้าร่วม หนึ่งคนต่อครั้ง'
+'Attendance By Person': การเข้าร่วมโดยบุคคล
+'Take attendance, one roll group at a time': 'เข้าร่วม กลุ่มละครั้ง'
+'Attendance By Roll Group_all': 'Attendance By Roll Group_all'
+'Take attendance for a teacher''s own roll groups': 'Take attendance for a teacher''s own roll groups'
+'Attendance By Roll Group_myGroups': 'Attendance By Roll Group_myGroups'
+'Print attendance lists': พิมพ์รายการการเข้าเรียน
+'Attendance History by Activity': ประวัติการเข้าร่วมกิจกรรม
+'Print a report of student attendace in a given date range': พิมพ์รายงานการเข้าเรียนของนักศึกษาในช่วงวันที่ที่ระบุ
+'Attendance Summary by Date': สรุปการเข้าร่วมตามวันที่
+'Display a graph of student attendance types over time': 'แสดงกราฟประเภทการเข้าร่วมของนักศึกษาตามช่วงเวลา'
+'Attendance Trends': เทรนด์ผู้เข้าร่วม
+'View items borrowed by an individual.': 'View items borrowed by an individual.'
+'Borrowing Record': 'Borrowing Record'
+'Search and view all borrowable items maintained by the library.': 'Search and view all borrowable items maintained by the library.'
+'Browse The Library': เรียกค้นห้องสมุด
+'Search and view all borrowable items maintained by the library': ค้นหาและดูรายการยืมทั้งหมดที่จัดทำโดยห้องสมุด
+'Allows for the creation of message templates.': อนุญาติให้สามารถสร้างเทมเพลตข้อความได้
+'Canned Response': การตอบสนองสำเร็จรูป
+'Shows the number of classes students are enroled in, organised by roll group': 'แสดงจำนวนชั้นเรียนที่นักศึกษาลงทะเบียนเรียนโดย Roll Group'
+'Class Enrolment by Roll Group': 'การลงทะเบียนเรียนโดย Roll Group'
+'Print a report of classes who have not been registered on a given day': พิมพ์รายงานชั้นเรียนที่ยังไม่ได้ลงทะเบียนในวันที่กำหนด
+'Classes Not Registered': คลาสที่ไม่ได้ลงทะเบียน
+'Allows users to browse and explore concepts and keywords, based on the Unit Planner.': 'ช่วยให้ผู้ใช้สามารถเรียกดูและสำรวจแนวคิดและคำหลักโดยอิงจาก Unit Planner'
+'Concept Explorer': 'Explorer แนวคิด'
+'Course Enrolment by Class': การลงทะเบียนเรียนตามชั้นเรียน
+'Manage course enrolment for a single user': จัดการการลงทะเบียนหลักสูตรสำหรับผู้ใช้รายเดียว
+'Course Enrolment by Person': การลงทะเบียนเรียนตามบุคคล
+'Allows privileged users to move enrolments from the current year to the next year.': อนุญาตให้ผู้ใช้ที่มีสิทธิพิเศษสามารถย้ายการลงทะเบียนเรียนจากปีปัจจุบันไปถึงปีถัดไป
+'Course Enrolment Rollover': 'การ rollover การลงทะเบียนหลักสูตร'
+'Allows a user to export certain key assessment data points to a spreadsheet.': อนุญาตให้ผู้ใช้สามารถส่งออกจุดข้อมูลการประเมินที่สำคัญบางอย่างไปยังสเปรดชีตได้
+'Data Points': จุดข้อมูล
+'Allows administrators to configure the system display settings.': อนุญาตให้ผู้ดูแลระบบกำหนดการตั้งค่าการแสดงผลระบบ
+'Display Settings': การตั้งค่าการแสดงผล
+'Allows editing of any column in any class.': อนุญาตแก้ไขคอลัมน์ในทุกชั้นเรียนได้
+'Edit Markbook_everything': 'แก้ไข Markbook_ everything'
+'Edit columns and grades for a single class belonging to the user, or multiple classes across the whole school.': 'แก้ไขคอลัมน์และเกรดสำหรับชั้นเรียนที่เป็นของผู้ใช้งานแต่ละคน หรือหลายๆ ชั้นเรียนของทั้งโรงเรียน'
+'Edit Markbook_multipleClassesAcrossSchool': 'แก้ไข Markbook_multipleClassesAcrossSchool'
+'Edit columns and grades for a single class belonging to the user, or multiple classes within departments.': 'แก้ไขคอลัมน์และเกรดสำหรับชั้นเรียนที่เป็นของผู้ใช้งาน หรือหลายๆ ชั้นเรียนในหน่วยงานเดียวกัน'
+'Edit Markbook_multipleClassesInDepartment': 'แก้ไข Markbook_multipleClassesInDepartment'
+'Edit columns and grades for a single class at a time.': แก้ไขคอลัมน์และเกรดสำหรับแต่ละชั้นเรียนในแต่ละครั้ง
+'Edit Markbook_singleClass': 'แก้ไข Markbook_singleClass'
+'Allows users to show a summary of emergency contact data for a group of students.': อนุญาตให้ผู้ใช้สามารถสรุปข้อมูลการติดต่อในกรณีฉุกเฉินสำหรับกลุ่มนักศึกษาได้
+'Emergency Data Summary': สรุปข้อมูลฉุกเฉิน
+'Show SMS emergency details by transport route': 'แสดง SMS รายละเอียดฉุกเฉินโดยเส้นทางการเดินทาง'
+'Emergency SMS by Transport': 'SMS ฉุกเฉินตามการเดินทาง'
+'Output all parental first mobile numbers by year group: if there are no details, then show emergency details.': 'แสดงหมายเลขโทรศัพท์มือถือสำหรับผู้ปกครองรายแรกทั้งหมดตามกลุ่มปี: หากไม่มีรายละเอียดแสดงรายละเอียดในกรณีฉุกเฉิน'
+'Emergency SMS by Year Group': 'SMS ฉุกเฉินตามกลุ่มปี'
+'Enter Activity Attendance': ป้อนการเข้าร่วมกิจกรรม
+'Record student attendance for activities you organise, coach or assist in.': 'บันทึกการเข้าเรียนของนักศึกษาสำหรับกิจกรรมที่คุณจัดระเบียบ โค้ชหรือช่วยเหลือ'
+'Enter Activity Attendance_leader': 'Enter Activity Attendance_leader'
+'Allows users to manage external assessment data': 'อนุญาตให้ผู้ใช้สามารถจัดการข้อมูลการประเมินภายนอกได้'
+'External Assessment Data_manage': 'ประเมินภายนอก Data_manage'
+'Allow users to view assessment data for all students': อนุญาตให้ผู้ใช้ดูข้อมูลการประเมินสำหรับนักศึกษาทุกคน
+'External Assessment Data_view': 'ประเมินภายนอก Data_view'
+'View family addresses by student': ดูที่อยู่ของครอบครัวโดยนักศึกษา
+'Family Address by Student': ที่อยู่สำหรับครอบครัวตามนักศึกษา
+'Allows users to check, for active families, how recently they have been updated.': 'อนุญาตให้ผู้ใช้ตรวจสอบ การอัพเดตเมื่อเร็ว ๆ นี้ สำหรับครอบครัวที่แอ็กทีฟอยู่ '
+'Family Data Updater History': ประวัติการอัพเดตข้อมูลครอบครัว
+'Manage requests for updates to family data.': จัดการคำขออัปเดตข้อมูลครอบครัว
+'Family Data Updates': การอัปเดตข้อมูลครอบครัว
+'Manage requests for updates to finance data.': จัดการคำขออัปเดตข้อมูลทางการเงิน
+'Finance Data Updates': การปรับปรุงข้อมูลทางการเงิน
+'Allows user to spot students who are repeat or regular offenders.': อนุญาตให้ผู้ใช้สามารถมองเห็นนักศึกษาที่เป็นผู้กระทำผิดซ้ำหรือผิดปกติ
+'Find Behaviour Patterns': ค้นหารูปแบบพฤติกรรม
+'Allows user to record first aid visits and actions.': อนุญาตให้ผู้ใช้บันทึกการเข้ารับการปฐมพยาบาลและแอ็กชั่น
+'First Aid Record': บันทึกการปฐมพยาบาล
+'Configure External Assessment module options': 'กำหนดค่าตัวเลือกโมดูลการประเมินภายนอก'
+'Formal Assessment Settings': ตั้งค่าหลักการการประเมิน
+'Print payment list': พิมพ์รายชื่อการชำระเงิน
+'Generate Invoices': สร้างใบแจ้งหนี้
+'Allows a user to see progress tracking graphs for all students in school.': ช่วยให้ผู้ใช้ดูกราฟการติดตามความคืบหน้าสำหรับนักศึกษาทุกคนในโรงเรียน
+Graphing_all: Graphing_all
+'Allows a user to view and run available imports.': อนุญาตให้ผู้ใช้ดูและเรียกใช้การนำเข้าที่มีอยู่
+'Import From File': นำเข้าจากไฟล์
+'Allows bulk import of user photos based on a ZIP file.': 'อนุญาตให้มีการนำเข้ารูปภาพของผู้ใช้จำนวนมากโดยใช้ไฟล์ ZIP'
+'Import User Photos': 'นำเข้ารูปภาพผู้ใช้'
+'Provides a visual graph of individual needs school-wide.': 'จัดทำกราฟแสดงภาพของความต้องการส่วนบุคคลทั่วโรงเรียน'
+'Individual Needs Overview': 'ภาพรวมความต้องการส่วนบุคคล'
+'Allows user to view IN records for all students': 'อนุญาตให้ผู้ใช้ดูระเบียน ความต้องการส่วนบุคคบ สำหรับนักศึกษาทุกคน'
+'Individual Needs Records_view': 'ความต้องการส่วนบุคคล Records_view'
+'Allows users to contribute teaching strategies to IN records for all students': 'Allows users to contribute teaching strategies to IN records for all students'
+'Individual Needs Records_viewContribute': 'ความต้องการส่วนบุคคล Records_viewContribute'
+'Allows users to edit IN records for all students': 'Allows users to edit IN records for all students'
+'Individual Needs Records_viewEdit': 'ความต้องการส่วนบุคคล Records_viewEdit'
+'Allows user to see a flexible summary of IN data.': 'อนุญาตให้ผู้ใช้เห็นข้อมูลสรุปที่ยืดหยุ่นของข้อมูล ความต้องการส่วนบุคคล'
+'Individual Needs Summary': สรุปความต้องการส่วนบุคคล
+'Allows for the creation of job openings, which can be used in the job application form.': อนุญาตให้สามารถสร้างงานที่เปิดรับซึ่งสามารถใช้ในใบสมัครงานได้
+'Job Openings': งานที่กำลังเปิดรับ
+'A report showing all the students who have left within a specified date range.': 'รายงานที่แสดงนักศึกษาทุกคนที่ออกภายในช่วงวันที่ที่ระบุ'
+'Left Students': นักศึกษาออก
+'Manage lending, returns, reservations, repairs, decommissioning, etc.': 'จัดการการให้ยืม การส่งคืน การจอง การซ่อมแซมการรื้อถอน ฯลฯ'
+'View all planner information and edit all planner information for classes user is in': ดูข้อมูลวางแผนทั้งหมดและแก้ไขข้อมูลการวางแผนทั้งหมดสำหรับผู้ใช้ที่เป็นผู้เรียน
+'Lesson Planner_viewAllEditMyClasses': 'บทเรียน Planner_viewAllEditMyClasses'
+'View and edit all planner information for all classes': ดูและแก้ไขข้อมูลการวางแผนทั้งหมดสำหรับทุกชั้นเรียน
+'Lesson Planner_viewEditAllClasses': 'บทเรียน Planner_viewEditAllClasses'
+'Allows parents to view their children''s classes': อนุญาตให้ผู้ปกครองสามารถดูชั้นเรียนของบุตรหลานได้
+'Lesson Planner_viewMyChildrensClasses': 'บทเรียน Planner_viewMyChildrensChasses'
+'View all planner information for classes user is in': ดูข้อมูลการวางแผนทั้งหมดสำหรับผู้ใช้ชั้นเรียน
+'Lesson Planner_viewMyClasses': 'บทเรียน Planner_viewMyClasses'
+'Show students in roll group, less those with an older sibling, so that letters can be carried home by oldest in family.': 'แสดงนักศึกษาใน Roll Group ผู้ที่มีพี่น้องที่มีอายุมากกว่า เพื่อที่จะนำจดหมายกลับบ้านโดยผู้ที่อายุมากที่สุดในครอบครัว'
+'Letters Home by Roll Group': 'จดหมายจากบ้านโดย Roll Group'
+'Change the core settings of a library.': 'Change the core settings of a library.'
+'Library Settings': 'Library Settings'
+'Lend and return items using a bar-code scanner.': 'Lend and return items using a bar-code scanner.'
+'Loan / Return Manager': 'Loan / Return Manager'
+'Allows managers to build activity program': อนุญาตให้ผู้จัดการสร้างโปรแกรมกิจกรรม
+'Manage Activities': จัดการกิจกรรม
+'Control activity settings': ควบคุมการตั้งค่ากิจกรรม
+'Manage Activity Settings': 'Manage Activity Settings'
+'Manage the alert levels which are used throughout the school to flag problems.': จัดการระดับการแจ้งเตือนที่ใช้ทั่วทั้งโรงเรียนเพื่อระบุปัญหา
+'Manage Alert Levels': จัดการระดับการแจ้งเตือน
+'Allows administrators to view and action staff applications.': อนุญาตให้ผู้ดูแลระบบดูและดำเนินการกับใบสมัครของพนักงาน
+'Manage Applications': จัดการการสมัคร
+'Allows admins to view and action applications, but not to delete them': 'อนุญาตให้ผู้ดูแลระบบดูและดำเนินการการสมัคร แต่ไม่สามารถลบได้'
+'Manage Applications_edit': 'Manage Applications_edit'
+'Allows admins to view and action applications': อนุญาตให้ผู้ดูแลระบบดูและดำเนินการใบสมัคร
+'Manage Applications_editDelete': 'Manage Applications_editDelete'
+'Edit student attendance logs.': แก้ไขบันทึกการเข้าร่วมของนักศึกษา
+'Manage Attendance Logs': จัดการบันทึกการเข้าร่วม
+'Allows administrators to configure the attendance module.': อนุญาตให้ผู้ดูแลระบบกำหนดค่าโมดูลการเข้าร่วม
+'Manage Attendance Settings': 'Manage Attendance Settings'
+'Manage all behaviour records': จัดการบันทึกพฤติกรรมทั้งหมด
+'Manage Behaviour Records_all': 'จัดการพฤติกรรม Records_all'
+'Manage behaviour records create by the user': จัดการระเบียนพฤติกรรมที่สร้างขึ้นโดยผู้ใช้
+'Manage Behaviour Records_my': 'จัดการพฤติกรรม Records_my'
+'Manage settings for the Behaviour module': จัดการการตั้งค่าสำหรับโมดูลพฤติกรรม
+'Manage Behaviour Settings': 'Manage Behaviour Settings'
+'Allows users to create, view and edit billing windows.': 'อนุญาตให้ผู้ใช้สร้าง ดูและแก้ไขช่วงการเรียกเก็บเงิน'
+'Manage Billing Schedule': จัดการตารางเวลาการเรียกเก็บเงิน
+'Allows a sufficiently priviledged user to create and manage budget cycles.': อนุญาตให้ผู้ใช้ที่ได้รับการสิทธิในการสร้างและจัดการรอบบัญชีงบประมาณ
+'Manage Budget Cycles': จัดการวงจรงบประมาณ
+'Allows users to create, edit and delete budgets.': อนุญาตให้ผู้ใช้สร้างแก้ไขและลบงบประมาณ
+'Manage Budgets': จัดการงบประมาณ
+'Control all items in the school library catalog': ควบคุมรายการทั้งหมดในแค็ตตาล็อกห้องสมุดของโรงเรียน
+'Manage Catalog': จัดการแคตตาล็อก
+'Control all items in the school library catalogue': 'Control all items in the school library catalogue'
+'Manage Catalogue': 'Manage Catalogue'
+'Allow admins to manage timetable columns': อนุญาตให้ผู้ดูแลระบบจัดการคอลัมน์ตารางเวลา
+'Manage Columns': จัดการคอลัมน์
+'Manage Courses & Classes': จัดการหลักสูตรและชั้นเรียน
+'Allows a user to create, edit and delete custom fields for users.': อนุญาตให้ผู้ใช้สร้างแก้ไขและลบฟิลด์ที่กำหนดเองสำหรับผู้ใช้
+'Manage Custom Fields': จัดการฟิลด์ที่กำหนดเอง
+'Manage settings that control Staff, Student and Parent dashboards.': 'จัดการการตั้งค่าที่ควบคุมหน้าแดชบอร์ดของ Staff, Student และ Parent'
+'Manage Dashboard Settings': จัดการการตั้งค่าหน้าแดชบอร์ด
+'Manage Days of the Week': จัดการวันของสัปดาห์
+'Allows admins to create learning areas and administrative groups.': อนุญาตให้ผู้ดูแลระบบสร้างพื้นที่การเรียนรู้และกลุ่มผู้ดูแลระบบ
+'Manage Departments': จัดการหน่วยงาน
+'Manage a list of districts for address autocomplete.': จัดการรายการเขตสำหรับการเติมข้อความอัตโนมัติที่อยู่
+'Manage Districts': จัดการเขต
+'Determines who can approve expense requests, in accordance to the Expense Approval Type setting in School Admin.': 'กำหนดผู้ที่สามารถอนุมัติคำขอค่าใช้จ่ายตามการตั้งค่าประเภทอนุมัติค่าใช้จ่ายในผู้ดูแลระบบโรงเรียน'
+'Manage Expense Approvers': จัดการผู้อนุมัติค่าใช้จ่าย
+'Gives access to full control all expenses across all budgets.': ให้สิทธิ์ในการควบคุมค่าใช้จ่ายทั้งหมดในงบประมาณทั้งหมด
+'Manage Expenses_all': 'Manage Expenses_all'
+'Gives access to control expenses, according to budget-level access rights.': ให้สิทธิ์การเข้าถึงค่าใช้จ่ายในการควบคุมตามสิทธิ์การเข้าถึงระดับงบประมาณ
+'Manage Expenses_myBudgets': 'Manage Expenses_myBudgets'
+'Add, edit and delete external assessments.': 'เพิ่มแก้ไขและลบการประเมินภายนอก'
+'Manage External Assessments': 'จัดการการประเมินภายนอก'
+'Allows users to create a list of spaces and rooms in the school': อนุญาตให้ผู้ใช้สร้างรายการของพื้นที่และห้องพักในโรงเรียน
+'Manage Facilities': จัดการสิ่งอำนวยความสะดวก
+'Allows a user to book a room for on-off use, and manage bookings made by all other users.': 'อนุญาตให้ผู้ใช้จองห้องพักสำหรับการเปิดใช้งานและจัดการการจองที่ทำโดยผู้ใช้รายอื่น ๆ'
+'Manage Facility Bookings_allBookings': 'Manage Facility Bookings_allBookings'
+'Allows a user to book a room for on-off use, and manage their own bookings.': อนุญาตให้ผู้ใช้จองห้องพักสำหรับการเปิดใช้งานและจัดการการจองห้องพักของตนเอง
+'Manage Facility Bookings_myBookings': 'Manage Facility Bookings_myBookings'
+'Allows a user to create and manage one-off location changes for all classes within the timetable.': 'อนุญาตให้ผู้ใช้สร้างและจัดการการเปลี่ยนแปลงตำแหน่งหนึ่งครั้งสำหรับทุกชั้นเรียนภายในตารางเวลา'
+'Manage Facility Changes_allClasses': 'Manage Facility Changes_allClasses'
+'Allows a user to create and manage one-off location changes for their own classes within the timetable.': 'อนุญาตให้ผู้ใช้สร้างและจัดการการเปลี่ยนแปลงสถานที่เพียงครั้งเดียวสำหรับชั้นเรียนของตนเองภายในตารางเวลา'
+'Manage Facility Changes_myClasses': 'Manage Facility Changes_myClasses'
+'Allows a department coordinator to manage changes for all classes in their department.': อนุญาตให้ผู้ประสานงานแผนกสามารถจัดการการเปลี่ยนแปลงสำหรับทุกชั้นเรียนในแผนกของตนได้
+'Manage Facility Changes_myDepartment': 'Manage Facility Changes_myDepartment'
+'Allows privileged users to manage settings for spaces.': อนุญาตให้ผู้ใช้ที่มีสิทธิพิเศษสามารถจัดการการตั้งค่าสำหรับพื้นที่ได้
+'Manage Facility Settings': 'Manage Facility Settings'
+'Manage Families': จัดการครอบครัว
+'Allows users to create, edit and delete fee categories.': 'อนุญาตให้ผู้ใช้สร้าง แก้ไขและลบหมวดค่าธรรมเนียม'
+'Manage Fee Categories': จัดการหมวดค่าธรรมเนียม
+'Allows users to create, view and edit fees.': 'อนุญาตให้ผู้ใช้สร้าง ดูและแก้ไขค่าธรรมเนียม'
+'Manage Fees': จัดการค่าธรรมเนียม
+'Manage file extensions allowed across the system': จัดการนามสกุลของไฟล์ที่อนุญาตในระบบ
+'Manage File Extensions': จัดการนามสกุลไฟล์
+'Allows users to edit the text that appears in invoices and receipts.': อนุญาตให้ผู้ใช้แก้ไขข้อความที่ปรากฏในใบแจ้งหนี้และใบเสร็จรับเงิน
+'Manage Finance Settings': 'Manage Finance Settings'
+'Manage all aspects of grade scales, which are used throughout ARR to control grade input.': 'จัดการทุกด้านของระดับเกรดซึ่งใช้ตลอด ARR เพื่อควบคุมการป้อนข้อมูลเกรด'
+'Manage Grade Scales': จัดการระดับเกรด
+'Allows management of custom groups for message targetting': อนุญาตการจัดการกลุ่มที่กำหนดเองสำหรับการกำหนดเป้าหมายข้อความ
+'Manage Groups_all': 'Manage Groups_all'
+'Manage Groups_my': 'Manage Groups_my'
+'Manage Houses': จัดการที่พัก
+'Allows admins to control the descriptors available for use in the Individual Needs module.': 'อนุญาตให้ผู้ดูแลระบบควบคุม descriptors ที่สามารถใช้งานได้ในโมดูล Individual Needs'
+'Manage IN Settings': 'Manage IN Settings'
+'Allows privileged users to create and manage Internal Assessment columns.': 'อนุญาตให้ผู้ใช้ที่มีสิทธิพิเศษสามารถสร้างและจัดการคอลัมน์การประเมินภายใน'
+'Manage Internal Assessments': 'จัดการการประเมินภายใน'
+'Allows users to view and edit invoice recipients.': อนุญาตให้ผู้ใช้ดูและแก้ไขผู้รับใบแจ้งหนี้
+'Manage Invoicees': จัดการการแจ้งหนี้
+'Allows users to generate, view, delete and edit invoices.': 'อนุญาตให้ผู้ใช้สร้าง ดู ลบและแก้ไขใบแจ้งหนี้'
+'Manage Invoices': จัดการใบแจ้งหนี้
+'Allows administrators to control system-wide language and localisation settings.': 'อนุญาตให้ผู้ดูแลระบบควบคุมการตั้งค่าภาษาและการแปลภาษาทั่วทั้งระบบ'
+'Manage Languages': 'จัดการภาษา'
+'Manage medical form information for users': จัดการข้อมูลแบบฟอร์มการแพทย์สำหรับผู้ใช้
+'Manage Medical Forms': จัดการฟอร์มทางการแพทย์
+'Edit all messages': แก้ไขข้อความทั้งหมด
+'Manage Messages_all': 'จัดการ Messages_all'
+'Edit all messages created by the user': แก้ไขข้อความทั้งหมดที่สร้างขึ้นโดยผู้ใช้
+'Manage Messages_my': 'จัดการ Messages_my'
+'Manage gateway settings for outgoing SMS messages.': 'จัดการการตั้งค่าเกตเวย์สำหรับข้อความ SMS ขาออก'
+'Manage Messenger Settings': 'Manage Messenger Settings'
+'Manage Modules': จัดการโมดูล
+'View all outcomes in the school': ดูผลลัพธ์ทั้งหมดในโรงเรียน
+'Manage Outcomes_viewAll': 'จัดการ Outcomes_viewAll'
+'View all outcomes in the school, edit any from Learning Areas where you are Coordinator or Teacher (Curriculum)': 'ดูผลลัพธ์ทั้งหมดในโรงเรียน แก้ไขจากส่วนการเรียนรู้ที่คุณเป็นผู้ประสานงานหรือครู (หลักสูตร)'
+'Manage Outcomes_viewAllEditLearningArea': 'จัดการ Outcomes_viewAllEditLearningArea'
+'Manage all outcomes in the school': จัดการผลลัพธ์ทั้งหมดในโรงเรียน
+'Manage Outcomes_viewEditAll': 'จัดการ Outcomes_viewEditAll'
+'Configure settings relating to people management.': 'Configure settings relating to people management.'
+'Allows admin to edit any user within the system, but not to delete them.': 'อนุญาตให้ผู้ดูแลระบบแก้ไขผู้ใช้ภายในระบบ แต่ไม่สามารถลบได้'
+'Manage People_edit': 'Manage People_edit'
+'Edit any user within the system': 'แก้ไขผู้ใช้ภายในระบบ'
+'Manage People_editDelete': 'Manage People_editDelete'
+'Edit settings for the planner': แก้ไขการตั้งค่าสำหรับการวางแผน
+'Manage Planner Settings': จัดการการตั้งค่าวางแผน
+'Manage settings for the resources module': จัดการการตั้งค่าสำหรับโมดูลรีซอร์ส
+'Manage Resource Settings': 'Manage Resource Settings'
+'Manage all resources': จัดการรีซอร์สทั้งหมด
+'Manage Resources_all': 'จัดการ Resources_all'
+'Manage resources created by the user': จัดการรีซอร์สที่สร้างขึ้นโดยผู้ใช้
+'Manage Resources_my': 'จัดการ Resources_my'
+'Manage Roll Groups': 'จัดการ Roll Group'
+'View all rubrics in the school, edit any from Learning Areas where you are Coordinator or Teacher (Curriculum)': 'ดูรูบริกทั้งหมดในโรงเรียน แก้ไขพื้นที่เรียนรู้ที่คุณเป็นผู้ประสานงานหรือครู (หลักสูตร)'
+'Manage Rubrics_viewAllEditLearningArea': 'จัดการ Rebrics_viewAllEditLearningArea'
+'Manage all rubrics in the school': จัดการรูบริกทั้งหมดในโรงเรียน
+'Manage Rubrics_viewEditAll': 'จัดการ Rubrics_viewEditAll'
+'Allows user to control the definition of academic years within the system': 'อนุญาตให้ผู้ใช้ควบคุมนิยามของปีการศึกษาภายในระบบได้'
+'Manage Academic Years': 'Manage Academic Years'
+'Manage Special Days': จัดการวันพิเศษเฉพาะ
+'Allows administrators to edit and delete staff absences.': อนุญาตให้ผู้ดูแลระบบแก้ไขและลบการขาดงานของพนักงาน
+'Manage Staff Absences': จัดการการขาดงานพนักงาน
+'Allows administrators to manage coverage requests.': 'อนุญาติให้ผู้ดูแลระบบจัดการ coverage requests'
+'Manage Staff Coverage': จัดการความคุ้มครองพนักงาน
+'Controls settings for users with role category Staff.': 'ควบคุมการตั้งค่าสำหรับผู้ใช้ที่มีประเภทบทบาทพนักงาน'
+'Manage Staff Settings': 'Manage Staff Settings'
+'Edit general and confidential information on members of staff.': แก้ไขข้อมูลทั่วไปและข้อมูลลับเกี่ยวกับพนักงาน
+'Manage Staff_confidential': 'Manage Staff_confidential'
+'Edit general information on members of staff.': แก้ไขข้อมูลทั่วไปเกี่ยวกับสมาชิกของพนักงาน
+'Manage Staff_general': 'Manage Staff_general'
+'Allows a departmental Coordinator or Assistant Coordinator to manage student enrolment within their department.': 'อนุญาตให้ผู้ประสานงานแผนกหรือผู้ช่วยผู้ประสานงานจัดการการลงทะเบียนเรียนภายในแผนกของตน'
+'Manage Student Enrolment': จัดการการสมัครนักศึกษา
+'Manage settings for the Student module': 'จัดการการตั้งค่าสำหรับโมดูล Student'
+'Manage Students Settings': 'Manage Students Settings'
+'Edit information for users who can provide staff coverage.': 'แก้ไขข้อมูลสำหรับผู้ใช้ที่สามารถให้ coverage ของพนักงาน'
+'Manage Substitutes': จัดการการสับเปลี่ยน
+'Manage Terms': 'จัดการภาคการศึกษา'
+'Allow admins to create and manage timetables': อนุญาตให้ผู้ดูแลระบบสร้างและจัดการตารางเวลา
+'Manage Timetables': จัดการตารางเวลา
+'Manage markbook weightings for any class.': 'จัดการสัดส่วนของ Markbook สำหรับชั้นเรียนใด ๆ'
+'Manage Weightings_everything': 'Manage Weightings_everything'
+'Manage markbook weightings for a single class at a time.': 'จัดการสัดส่วนของ Markbook สำหรับชั้นเรียนเดียวในแต่ละครั้ง'
+'Manage Weightings_singleClass': 'Manage Weightings_singleClass'
+'Manage Year Groups': จัดการกลุ่มปี
+'Configure options for the Markbook module': 'กำหนดค่าตัวเลือกสำหรับโมดูล Markbook'
+'Markbook Settings': 'ตั้งค่า Markbook'
+'Allows users to show a summary of medical data for a group of students.': อนุญาตให้ผู้ใช้แสดงข้อมูลสรุปทางการแพทย์สำหรับกลุ่มนักศึกษา
+'Medical Data Summary': สรุปข้อมูลทางการแพทย์
+'Allows admins to process data update requests for medical data': อนุญาตให้ผู้ดูแลระบบประมวลผลคำขออัปเดตข้อมูลข้อมูลทางการแพทย์
+'Medical Form Updates': 'Medical Form Updates'
+'Allows a user to view the activities they are involved in': ช่วยให้ผู้ใช้สามารถดูกิจกรรมที่พวกเขามีส่วนร่วมได้
+'My Activities': กิจกรรมของฉัน
+'Allows an activity organizer to manage enrolment for their activities.': อนุญาตให้ผู้จัดกิจกรรมจัดการการลงทะเบียนสำหรับกิจกรรมของตนเอง
+'My Activities_viewEditEnrolment': 'My Activities_viewEditEnrolment'
+'Provides an overview of coverage for staff absences.': 'ให้ภาพรวมของ coverage สำหรับการขาดงานของพนักงาน'
+'My Coverage': การสับเปลี่ยนของฉัน
+'Provides an overview of any required data updates for a user, including family data if applicable.': 'ให้ภาพรวมของการอัปเดตข้อมูลที่จำเป็นสำหรับผู้ใช้รวมถึงข้อมูลครอบครัวถ้ามี'
+'My Data Updates': การอัปเดตข้อมูลของฉัน
+'Allows a user to request expenses from budgets they have access to.': อนุญาตให้ผู้ใช้ร้องขอค่าใช้จ่ายจากงบประมาณที่พวกเขาเข้าถึงได้
+'My Expense Requests': คำขอค่าใช้จ่ายของฉัน
+'Submit staff absences for any user.': 'Submit staff absences for any user.'
+'New Absence_any': 'New Absence_any'
+'Allows a user to submit their own staff absences.': อนุญาตให้ผู้ใช้ส่งการขาดพนักงานของตนเอง
+'New Absence_mine': 'New Absence_mine'
+'Bulk email to any activity': 'อีเมลไปยังกลุ่มกิจกรรมใด ๆ'
+'New Message_activities_any': 'New Message_activities_any'
+'Bulk email to any of my activities': อีเมลไปยังกลุ่มกิจกรรมทุกกิจกรรมของฉัน
+'New Message_activities_my': 'New Message_activities_my'
+'Include parents in messages posted to activities': รวมผู้ปกครองในข้อความที่โพสต์ไปยังกิจกรรมต่างๆ
+'New Message_activities_parents': 'New Message_activities_parents'
+'Bulk email to applicants by intended school year of entry': อีเมล์ไปยังกลุ่มที่สมัครตามปีการศึกษาที่ต้องการ
+'New Message_applicants': 'New Message_applicants'
+'Bulk email by student attendance.': ส่งอีเมลตามการเข้าร่วมของนักศึกษา
+'New Message_attendance': 'New Message_attendance'
+'Send messages by email.': ส่งข้อความทางอีเมล
+'New Message_byEmail': 'New Message_byEmail'
+'Send messages by message wall.': 'ส่งข้อความตาม message wall'
+'New Message_byMessageWall': 'New Message_byMessageWall'
+'Send messages by SMS.': 'ส่งข้อความทาง SMS'
+'New Message_bySMS': 'New Message_bySMS'
+'Allows user to use pre-defined Canned Responses.': อนุญาตให้ผู้ใช้ใช้การตอบกลับสำเร็จรูปที่กำหนดไว้ล่วงหน้า
+'New Message_cannedResponse': 'New Message_cannedResponse'
+'Bulk email to any class': อีเมลไปยังกลุ่มชั้นเรียนใดก็ได้
+'New Message_classes_any': 'New Message_classes_any'
+'Bulk email to any of my classes': อีเมลไปยังกลุ่มชั้นเรียนของฉัน
+'New Message_classes_my': 'New Message_classes_my'
+'Include parents in messages posted to classes': รวมผู้ปกครองในข้อความที่โพสต์ไว้ในชั้นเรียน
+'New Message_classes_parents': 'New Message_classes_parents'
+'Bulk email to any courses': อีเมลไปยังกลุ่มหลักสูตรใดๆ
+'New Message_courses_any': 'New Message_courses_any'
+'Bulk email to any of my courses': อีเมลไปยังกลุ่มของหลักสูตรของฉัน
+'New Message_courses_my': 'New Message_courses_my'
+'Include parents in messages posted to courses': รวมผู้ปกครองไว้ในข้อความที่โพสต์ไว้ในหลักสูตร
+'New Message_courses_parents': 'New Message_courses_parents'
+'Bulk email from the school''s email address': อีเมลกลุ่มจากที่อยู่อีเมลของโรงเรียน
+'New Message_fromSchool': 'New Message_fromSchool'
+'Bulk email to any group': 'อีเมลไปยังกลุ่มใด ๆ'
+'New Message_groups_any': 'New Message_groups_any'
+'Bulk email to any group a user owns or is a member of': 'กลุ่มอีเมล์ให้กับกลุ่มใด ๆ ที่ผู้ใช้หรือเจ้าของเป็นสมาชิกของ'
+'New Message_groups_my': 'New Message_groups_my'
+'Include parents in messages posted to groups': รวมผู้ปกครองในข้อความที่โพสต์ไปยังกลุ่ม
+'New Message_groups_parents': 'New Message_groups_parents'
+'Bulk email to members of all houses': อีเมลไปยังกลุ่มของสมาชิกของทุกบ้าน
+'New Message_houses_all': 'New Message_houses_all'
+'Bulk email to members of my house': อีเมลไปยังกลุ่มสมาชิกบ้านของฉัน
+'New Message_houses_my': 'New Message_houses_my'
+'Bulk email to indvidual users': อีเมลไปยังกลุ่มของผู้ใช้งานเฉพาะ
+'New Message_individuals': 'New Message_individuals'
+'Allows users to include read receipts in emails.': อนุญาตให้ผู้ใช้ระบุความต้องการทราบการอ่านในอีเมล
+'New Message_readReceipts': 'New Message_readReceipts'
+'Bulk email to a particular role': อีเมล์ถึงกลุ่มบทบาทเฉพาะ
+'New Message_role': 'New Message_role'
+'Bulk email to any roll group': 'อีเมลไปยังกลุ่มของ Roll Group ใด ๆ'
+'New Message_rollGroups_any': 'New Message_rollGroups_any'
+'Bulk email to any of my roll groups': 'อีเมลไปยัง Roll Group ของฉัน'
+'New Message_rollGroups_my': 'New Message_rollGroups_my'
+'Include parents in messages posted to parents': รวมผู้ปกครองในข้อความที่โพสต์ไปยังผู้ปกครอง
+'New Message_rollGroups_parents': 'New Message_rollGroups_parents'
+'Send messages users by transport field.': ส่งข้อความผู้ใช้ตามเขตข้อมูลการเดินทาง
+'New Message_transport_any': 'New Message_transport_any'
+'Send messages parents of users by transport field.': ส่งข้อความผู้ปกครองของผู้ใช้ตามเขตข้อมูลการเดินทาง
+'New Message_transport_parents': 'New Message_transport_parents'
+'Bulk email to any year group': 'อีเมลไปยังกลุ่มของกลุ่มปีใด ๆ'
+'New Message_yearGroups_any': 'New Message_yearGroups_any'
+'Include parents in messages posted to year group': รวมผู้ปกครองในข้อความที่โพสต์ไว้ในกลุ่มปี
+'New Message_yearGroups_parents': 'New Message_yearGroups_parents'
+'Allows for the quick posting of a Message Wall message to all users.': 'อนุญาตให้สามารถโพสต์ข้อความ Wall Message ไปยังผู้ใช้ทุกคนได้อย่างรวดเร็ว'
+'New Quick Wall Message': 'message wall ใหม่'
+'A report showing all new students in the current school year.': รายงานที่แสดงนักศึกษาใหม่ทั้งหมดในปีการศึกษาปัจจุบัน
+'New Students': นักศึกษาใหม่
+'Manage settings for system notifications.': จัดการการตั้งค่าสำหรับการแจ้งเตือนของระบบ
+'Notification Settings': การตั้งค่าการแจ้งเตือน
+'Users can view and accept any available coverage requests.': 'Users can view and accept any available coverage requests.'
+'Open Requests': 'Open Requests'
+'This view gives an overview of which whole school and learning area outcomes are covered by classes in a given course, allowing for curriculum mapping by outcome and course.': 'มุมมองนี้จะให้ภาพรวมของผลการเรียนทั้งโรงเรียนและในพื้นที่เรียนที่ครอบคลุมโดยชั้นเรียนในหลักสูตรที่กำหนด เพื่อให้สามารถจัดทำหลักสูตรตามผลลัพธ์และหลักสูตร'
+'Outcomes By Course': ผลลัพธ์ตามหลักสูตร
+'This report shows responses to the weekly summary email, organised by calendar week and role group.': รายงานนี้แสดงการตอบสนองต่ออีเมลสรุปรายสัปดาห์ซึ่งจัดตามสัปดาห์ปฏิทินและกลุ่มบทบาท
+'Parent Weekly Email Summary': อีเมลข้อมูลสรุปรายสัปดาห์สำหรับผู้ปกครอง
+'Print participant lists': พิมพ์รายชื่อผู้เข้าร่วม
+'Participants by Activity': ผู้เข้าร่วมกิจกรรม
+'Allows admins to process data update requests for personal data': อนุญาตให้ผู้ดูแลระบบประมวลผลคำขออัปเดตข้อมูลสำหรับข้อมูลส่วนบุคคล
+'Personal Data Updates': 'Personal Data Updates'
+'Allows you to set your own preferences for background, theme, et.al. Change your password.': 'Allows you to set your own preferences for background, theme, et.al. Change your password.'
+'Personal Preferences': 'Personal Preferences'
+'Generate a printable attendance sheet for activities.': สร้างแผ่นงานสำหรับเข้าร่วมกิจกรรมที่สามารถพิมพ์ได้
+'Printable Attendance Sheet': บันทึกการเข้าร่วมที่พิมพ์ได้
+'Shows privacy options selected, for those students with a selection made.': แสดงตัวเลือกความเป็นส่วนตัวที่เลือกไว้สำหรับนักศึกษาที่ได้เลือกไว้
+'Privacy Choices by Student': ทางเลือกด้านความเป็นส่วนตัวโดยนักศึกษา
+'Gives access to enable and configure public registration.': ให้สิทธิ์การเข้าถึงเพื่อกำหนดค่าการลงทะเบียนสาธารณะ
+'Public Registration Settings': การตั้งค่าการลงทะเบียนสาธารณะ
+'Allows a staff member to request coverage for their absences.': 'ช่วยให้พนักงานสามารถร้องขอ coverage สำหรับการขาดงานของพวกเขา'
+'Request Coverage': 'Request Coverage'
+'Summarises gender and number of students across all roll groups.': 'สรุปเพศและจำนวนนักศึกษาในทุก Roll Group'
+'Roll Group Summary': 'สรุป Roll Group'
+'Print a report of roll groups who have not been registered on a given day': 'พิมพ์รายงานของ Roll Group ที่ยังไม่ได้ลงทะเบียนในวันที่กำหนด'
+'Roll Groups Not Registered': 'Roll Group ไม่ได้ลงทะเบียน'
+'Allows admins to kick the school forward one year': ช่วยให้ผู้ดูแลระบบสามารถบังคับโรงเรียนไปข้างหน้าได้หนึ่งปี
+Rollover: Rollover
+'Allows users to generate scope and sequence documentation for individual courses, based on the Unit Planner.': 'ช่วยให้ผู้ใช้สามารถสร้างขอบเขตและเอกสารลำดับสำหรับแต่ละหลักสูตรโดยอิงจาก Unit Planner'
+'Scope & Sequence': ขอบเขตและลำดับ
+'Set future absences one student at a time': กำหนดการขาดเรียนในอนาคตของนักศึกษา
+'Set Future Absence': ตั้งการลาล่วงหน้า
+'Provides an overview of staff absences for the school year.': 'ภาพรวมของการขาดพนักงานสำหรับปีการศึกษา'
+'Staff Absence Summary': สรุปการขาดพนักงาน
+'Allows admins to control the staff application form.': อนุญาตให้ผู้ดูแลระบบสามารถควบคุมฟอร์มใบสมัครพนักงานได้
+'Staff Application Form Settings': การตั้งค่าฟอร์มใบสมัครพนักงาน
+'Allows for interface strings to be replaced with custom values.': อนุญาตให้ข้อความอินเตอร์เฟสถูกแทนที่ด้วยค่าที่กำหนดเอง
+'String Replacement': การแทนที่ข้อความ
+'View items borrowed by an individual student.': ดูรายการยืมโดยนักศึกษาแต่ละคน
+'Student Borrowing Record': บันทึกการยืมนักศึกษา
+'Allows users to check, for a group of students, how recently they have been updated': 'อนุญาตให้ผู้ใช้ตรวจสอบกลุ่มนักศึกษาว่าพวกเขาได้รับการอัปเดตเมื่อเร็ว ๆ นี้อย่างไร'
+'Student Data Updater History': ประวัติข้อมูลการอัพเดตของนักศึกษา
+'Allows user to control student enrolment in the current year': อนุญาตให้ผู้ใช้ควบคุมการลงทะเบียนเรียนของนักศึกษาในปีปัจจุบัน
+'Student Enrolment': การลงทะเบียนนักศึกษา
+'Provides a visual graph of student enrolment over a range of time.': แสดงกราฟการลงทะเบียนเรียนของนักศึกษาในช่วงเวลาหนึ่ง
+'Student Enrolment Trends': แนวโน้มการลงทะเบียนเรียนของนักศึกษา
+'Print a report of all attendance data in the current school year for a student': พิมพ์รายงานข้อมูลการเข้าเรียนทั้งหมดในปีการศึกษาปัจจุบันสำหรับนักศึกษา
+'Student History_all': 'Student History_all'
+'Allows a student to print a report of their attendance data in the current school year.': อนุญาตให้นักเรียนพิมพ์รายงานข้อมูลการเข้าชั้นเรียนในปีการศึกษาปัจจุบัน
+'Student History_my': 'Student History_my'
+'Print a report of all attendance data in the current school yearfor my children': พิมพ์รายงานข้อมูลการเข้าเรียนทั้งหมดในปีการศึกษาปัจจุบันสำหรับบุตรหลานของฉัน
+'Student History_myChildren': 'Student History_myChildren'
+'A report for bulk creation of student ID cards.': รายงานการสร้างบัตรประจำตัวนักศึกษาจำนวนมาก
+'Student ID Cards': บัตรประจำตัวนักศึกษา
+'Allows students to self register as Present, provided they are within a certain range of IP addresses.': 'อนุญาตให้นักศึกษาลงทะเบียนด้วยตนเองเป็นปัจจุบันได้ หากอยู่ในช่วงที่อยู่ IP ที่กำหนด'
+'Student Self Registration': การลงทะเบียนด้วยตนเองสำหรับนักศึกษา
+'Shows student transport details': แสดงรายละเอียดการเดินทางนักศึกษา
+'Student Transport': การเดินทางของนักศึกษา
+'View a report of student houses by year group.': ดูรายงานของบ้านพักนักศึกษาแยกตามปี
+'Students by House': นักศึกษาแยกตามที่พัก
+'Print student roll group lists': 'พิมพ์รายการ Roll Group นักศึกษา'
+'Students by Roll Group': 'นักศึกษาตาม Roll Group'
+'Print a report of students who are not physically on the school campus on a given day': พิมพ์รายงานของนักศึกษาที่ไม่ได้อยู่ในเขตของโรงเรียนในวันที่ระบุ
+'Students Not Onsite': นักศึกษาไม่ได้อยู่ในสถานที่
+'Print a report of students who are not present on a given day': พิมพ์รายงานของนักศึกษาที่ไม่ได้อยู่ในวันที่กำหนด
+'Students Not Present': นักศึกษาไม่ได้อยู่
+'Allows users to view the availability of subs by date.': 'Allows users to view the availability of subs by date.'
+'Substitute Availability': 'Substitute Availability'
+'Allows users to map enrolments from homerooms to classes.': 'ช่วยให้ผู้ใช้สามารถจับคู่การลงทะเบียนจาก Homerooms ไปยังชั้นเรียนได้'
+'Sync Course Enrolment': ซิงค์การลงทะเบียนหลักสูตร
+'Check system versions and extensions installed.': ตรวจสอบเวอร์ชันระบบและส่วนขยายที่ติดตั้งไว้
+'System Check': ตรวจสอบระบบ
+'Main system settings': การตั้งค่าระบบหลัก
+'System Settings': การตั้งค่าระบบ
+'Allows administrators to configure and make use of third party services.': 'อนุญาตให้ผู้ดูแลระบบสามารถกำหนดค่าและใช้บริการจากบุคคลที่ 3 ได้'
+'Third Party Settings': การตั้งค่าระบบของบุคคลที่สาม
+'Allows admins to place timetable days into the school calendar': 'ช่วยให้ผู้ดูแลระบบสามารถกำหนดวันตารางเรียนได้ภายในปฏิทินของโรงเรียน'
+'Tie Days To Dates': เชื่อมโยงวันไปยังวันที่
+'Allows a user to manage settings for the Tracking module.': อนุญาตให้ผู้ใช้จัดการการตั้งค่าสำหรับโมดูลติดตาม
+'Tracking Settings': ตั้งค่าการติดตาม
+'Manage all units within the school': 'จัดการทุกยูนิตภายในโรงเรียน'
+'Unit Planner_all': 'Unit Planner_all'
+'Manage all units within the learning areas I have appropriate permission': 'จัดการยูนิตทั้งหมดภายในพื้นที่การเรียนรู้ที่ฉันได้รับอนุญาตอย่างเหมาะสม'
+'Unit Planner_learningAreas': 'nit Planner_learningAreas'
+'Create family data update request for any user': สร้างคำขออัปเดตข้อมูลครอบครัวสำหรับผู้ใช้
+'Update Family Data_any': 'Update Family Data_any'
+'Allows adults in a family to create data update request for their family.': อนุญาตให้ผู้ใหญ่ในครอบครัวสร้างคำขออัปเดตข้อมูลสำหรับครอบครัวได้
+'Update Family Data_family': 'Update Family Data_family'
+'Create finance data update request for any user': สร้างคำขออัปเดตข้อมูลทางการเงินสำหรับผู้ใช้ร
+'Update Finance Data_any': 'Update Finance Data_any'
+'Allows adults in a family to create finance data update request for their family.': อนุญาตให้ผู้ใหญ่ในครอบครัวสร้างคำขออัปเดตข้อมูลทางการเงินสำหรับครอบครัวได้
+'Update Finance Data_family': 'Update Finance Data_family'
+'Create medical data update request for any user': สร้างคำขออัปเดตข้อมูลทางการแพทย์สำหรับผู้ใช้
+'Update Medical Data_any': 'Update Medical Data_any'
+'Allows users to update medical information for themselves and their family members': อนุญาตให้ผู้ใช้สามารถอัปเดตข้อมูลทางการแพทย์สำหรับตัวเองและสมาชิกในครอบครัวได้
+'Update Medical Form_family': 'Update Medical Form_family'
+'Create personal data update request for any user': สร้างคำขออัปเดตข้อมูลส่วนบุคคลสำหรับผู้ใช้
+'Update Personal Data_any': 'Update Personal Data_any'
+'Allows users to update personal information for themselves and their family members': อนุญาตให้ผู้ใช้สามารถอัปเดตข้อมูลส่วนบุคคลสำหรับตัวเองและสมาชิกในครอบครัวได้
+'Update Personal Data_family': 'Update Personal Data_family'
+'Configure options for the Data Updater module': 'กำหนดค่าตัวเลือกสำหรับโมดูล Data Updater'
+'Provides an overview of staff absences for the selected user.': 'ภาพรวมของการขาดพนักงานสำหรับผู้ใช้ที่เลือก'
+'View Absences_any': 'View Absences_any'
+'View Absences_mine': 'View Absences_mine'
+'Allows students to view activities and register': อนุญาตให้นักศึกษาสามารถดูกิจกรรมและลงทะเบียนได้
+'View Activities_studentRegister': 'View Activities_studentRegister'
+'Allows parents to register their children for activities': อนุญาตให้ผู้ปกครองลงทะเบียนบุตรหลานของตนเพื่อทำกิจกรรม
+'View Activities_studentRegisterByParent': 'View Activities_studentRegisterByParent'
+'Allows users to view activities': 'Allows users to view activities'
+'View Activities_view': 'View Activities_view'
+'View unassigned rooms by timetable.': ดูห้องที่ไม่ได้กำหนดตามตารางเวลา
+'View Available Facilities': ดูสิ่งอำนวยความสะดวกที่มี
+'View unassigned teachers by timetable.': ดูครูที่ยังไม่ได้กำหนดตามตารางเวลา
+'View Available Teachers': ดูครูที่มี
+'Allows a user to view automated behaviour letters sent out by the system.': อนุญาตให้ผู้ใช้ดูจดหมายพฤติกรรมที่ส่งออกอัตโนมัติโดยระบบ
+'View Behaviour Letters': ดูจดหมายพฤติกรรม
+'View behaviour records by student': ดูบันทึกพฤติกรรมโดยนักศึกษา
+'View Behaviour Records_all': 'View Behaviour Records_all'
+'View behaviour records for students within a family.': 'ดูบันทึกพฤติกรรมสำหรับนักศึกษาภายในครอบครัว'
+'View Behaviour Records_myChildren': 'View Behaviour Records_myChildren'
+'View attendance, by roll group and class': 'ดูการเข้าร่วมโดย Roll Group และชั้นเรียน'
+'View Daily Attendance': ดูการเข้าร่วมรายวัน
+'Allows users to view all department details.': 'Allows users to view all department details.'
+'View Departments': ดูหน่วยงาน
+'Allows a student to view their own external assessment records.': 'อนุญาตให้นักศึกษาดูบันทึกการประเมินภายนอกของตนเอง'
+'View External Assessments_mine': 'View External Assessments_mine'
+'Allows a parent to view external assessment records for their children.': 'อนุญาตให้ผู้ปกครองดูบันทึกการประเมินภายนอกสำหรับบุตรหลานของตน'
+'View External Assessments_myChildrens': 'View External Assessments_myChildrens'
+'Allows parents to view individual needs plans for members of their family.': อนุญาติให้ผู้ปกครองสามารถดูแผนความต้องการส่วนบุคคลสำหรับสมาชิกในครอบครัวได้
+'View Individual Education Plans_myChildren': 'View Individual Education Plans_myChildren'
+'Allows staff to see Internal Assessment results for all children.': 'อนุญาตให้พนักงานดูผลการประเมินภายในสำหรับเด็กทุกคน'
+'View Internal Assessments_all': 'View Internal Assessments_all'
+'Allows students to view their own Internal Assessment results.': 'อนุญาตให้นักศึกษาสามารถดูผลการประเมินภายในของตนเองได้'
+'View Internal Assessments_mine': 'View Internal Assessments_mine'
+'Allows parents to view their childrens'' Internal Assessment results.': 'อนุญาตให้ผู้ปกครองสามารถดูผลการประเมินภายในของบุตรหลานได้'
+'View Internal Assessments_myChildrens': 'View Internal Assessments_myChildrens'
+'Allows a student to view their own invoices.': อนุญาตให้นักศึกษาดูใบแจ้งหนี้ของตนเอง
+'View Invoices_mine': 'View Invoices_mine'
+'Allows parents to view invoices issued to members of their family.': อนุญาตให้ผู้ปกครองดูใบแจ้งหนี้ที่ออกให้แก่สมาชิกในครอบครัว
+'View Invoices_myChildren': 'View Invoices_myChildren'
+'View all markbook information for all users': 'ดูข้อมูล Markbook ทั้งหมดสำหรับผู้ใช้ทั้งหมด'
+'View Markbook_allClassesAllData': 'View Markbook_allClassesAllData'
+'Allows teachers to view their own markbook information': อนุญาตให้ครูสามารถดูข้อมูลคะแนนของตนเองได้
+'View Markbook_myClasses': 'View Markbook_myClasses'
+'View your own marks': ดูคะแนนของคุณเอง
+'View Markbook_myMarks': 'View Markbook_myMarks'
+'View Markbook_viewMyChildrensClasses': 'View Markbook_viewMyChildrensClasses'
+'Allows a user to see all days, periods, teachers and rooms in a timetable.': 'อนุญาตให้ผู้ใช้เห็น วัน ช่วงเวลา ครู และห้อง ในตารางเรียน'
+'View Master Timetable': ดูกำหนดการหลัก
+'Allows users to view all messages posted on their message wall.': 'อนุญาตให้ผู้ใช้ดูข้อความทั้งหมดที่โพสต์ไว้ใน message wall ของตน'
+'View Message Wall': ดูข้อความแบบส่งทุกคน
+'View items which are on loan and have exceeded their due date.': ดูรายการที่มีการยืมและเกินวันครบกำหนด
+'View Overdue Items': ดูรายการค้างชำระ
+'View resources': ดูรีซอร์ส
+'View Resources': ดูสื่อเรียนรู้
+'View a brief profile of roll groups in school.': 'ดูโปรไฟล์ย่อของ Roll Group ในโรงเรียน'
+'View Roll Groups': 'ดู Roll Group'
+'View all rubrics in the school, except students who can only view those for own year group.': 'ดูรูบริกทั้งหมดในโรงเรียน ยกเว้นนักศึกษาที่ดูได้เฉพาะกลุ่มสำหรับปีของตนเองเท่านั้น'
+'View Rubrics': ดูเกณฑ์
+'View brief profile of any staff member in the school.': ดูประวัติย่อของพนักงานในโรงเรียน
+'View Staff Profile_brief': 'View Staff Profile_brief'
+'View full profile of any staff member in the school.': ดูประวัติส่วนตัวของพนักงานในโรงเรียน
+'View Staff Profile_full': 'View Staff Profile_full'
+'View brief profile of any student in the school.': ดูรายละเอียดโดยย่อของนักศึกษาในโรงเรียน
+'View Student Profile_brief': 'View Student Profile_brief'
+'View full profile of any student in the school.': ดูโปรไฟล์แบบเต็มของนักศึกษาในโรงเรียน
+'View Student Profile_full': 'View Student Profile_full'
+'View full profile of any student in the school, without access to Notes.': 'ดูรายละเอียดทั้งหมดของนักศึกษาคนใดในโรงเรียนโดยไม่ต้องเข้าถึง Notes'
+'View Student Profile_fullNoNotes': 'View Student Profile_fullNoNotes'
+'Allows students to view their own information': อนุญาตให้นักศึกษาสามารถดูข้อมูลของตนเองได้
+'View Student Profile_my': 'View Student Profile_my'
+'Allows parents to view their student''s information': อนุญาตให้ผู้ปกครองสามารถดูข้อมูลของนักศึกษาได้
+'View Student Profile_myChildren': 'View Student Profile_myChildren'
+'View space usage according to the timetable': ดูการใช้พื้นที่ตามตารางเวลา
+'View Timetable by Facility': ดูตารางเวลาตามสิ่งอำนวยความสะดวก
+'Allows users to view timetables': อนุญาตให้ผู้ใช้ดูตารางเวลา
+'View Timetable by Person': ดูตารางเวลาโดยบุคคล
+'Allows users to view timetables in all school years.': อนุญาตให้ผู้ใช้ดูตารางเวลาในทุกปีการศึกษา
+'View Timetable by Person_allYears': 'View Timetable by Person_allYears'
+'Allows users to view their own timetable': อนุญาตให้ผู้ใช้ดูตารางเวลาของตนเอง
+'View Timetable by Person_my': 'View Timetable by Person_my'
+'Allows parents to view their children''s timetable': อนุญาตให้ผู้ปกครองดูตารางเรียนของบุตรหลานได้
+'View Timetable by Person_myChildren': 'View Timetable by Person_myChildren'
+'A week-by-week overview of staff absences.': 'ภาพรวมรายสัปดาห์ของพนักงานขาดงาน'
+'Weekly Absences': 'Weekly Absences'
+'Print work summary statistical data by roll group': 'พิมพ์สรุปข้อมูลสถิติการทำงานตาม Roll Group'
+'Work Summary by Roll Group': 'สรุปงานตาม Roll Group'
+'Allows privileged users to enter Internal Assessment assessment data to columns in all classes.': 'อนุญาตให้ผู้ใช้ที่ได้รับสิทธิพิเศษป้อนข้อมูลการประเมินผลการประเมินภายในไปยังคอลัมน์ในทุกชั้นเรียน'
+'Write Internal Assessments_all': 'Write Internal Assessments_all'
+'Allows teachers to enter Internal Assessment assessment data to columns in their classes.': 'อนุญาตให้ครูป้อนข้อมูลการประเมินผลภายในไปยังคอลัมน์ในชั้นเรียน'
+'Write Internal Assessments_myClasses': 'Write Internal Assessments_myClasses'
+'General Information': ข้อมูลทั่วไป
+'Family Name': ชื่อครอบครัว
+'Relationship Status': 'Relationship Status'
+'Home Language - Primary': 'ภาษาที่บ้าน - อันดับแรก'
+'Home Language - Secondary': 'ภาษาที่บ้าน - อันดับที่สอง'
+'Formal Family Name': 'Formal Family Name'
+'Used to address correspondence sent to the parents/guardians of this family.': 'Used to address correspondence sent to the parents/guardians of this family.'
+'Residential Address': 'Residential Address'
+'Unit, Building & Street': 'Unit, Building & Street'
+'Residential Address (District)': 'Residential Address (District)'
+'Suburb, Town, City, State (Postcode)': 'Suburb, Town, City, State (Postcode)'
+'Residential Address (Country)': 'Residential Address (Country)'
+'Edit Family': แก้ไขครอบครัว
+'Please refresh the family data before attempting to change family relationships.': 'Please refresh the family data before attempting to change family relationships.'
+Married: สมรส
+Separated: แยกทาง
+Divorced: หย่า
+'de Facto': 'de Facto'
+Relationships: ความสัมพันธ์
+Adults: ผู้ใหญ่
+'Roll Group': 'Roll Group'
+Comment: คอมเม้นท์
+'Child''s Name': ชื่อเด็ก
+'View Children': 'ดูเด็ก ๆ'
+'Add Student': เพิ่มนักศึกษา
+'Remove Child from Family': 'Remove Child from Family'
+'Remove adult from family': 'Remove adult from family'
+'Data Access': การเข้าถึงข้อมูล
+'Contact Priority': ลำดับความสำคัญในการติดต่อ
+'Contact by Phone': 'Contact by Phone'
+'Contact by SMS': 'Contact by SMS'
+'Contact by Email': 'Contact by Email'
+'Contact by Mail': 'Contact by Mail'
+'Data Access?': 'การเข้าถึงข้อมูล?'
+'Access data on family members?': 'Access data on family members?'
+'The order in which school should contact family members.': ลำดับที่โรงเรียนควรติดต่อสมาชิกในครอบครัว
+'Contact by phone call?': 'Contact by phone call?'
+'Receive non-emergency phone calls from school?': 'รับสายโทรศัพท์ที่ไม่ฉุกเฉินจากโรงเรียนหรือไม่?'
+'Contact by SMS?': 'Contact by SMS?'
+'Receive non-emergency SMS messages from school?': 'รับข้อความ SMS ที่ไม่ฉุกเฉินจากโรงเรียนหรือไม่?'
+'Contact by Email?': 'Contact by Email?'
+'Receive non-emergency emails from school?': 'รับอีเมลที่ไม่ฉุกเฉินจากโรงเรียนหรือไม่?'
+'Contact by Mail?': 'Contact by Mail?'
+'Receive postage mail from school?': 'รับจดหมายไปรษณีย์จากโรงเรียนหรือไม่?'
+'View Adults': ดูผู้ใหญ่
+'Add Adult / Guardian': 'Add Adult / Guardian'
+'{name} is the': '{name} is the'
+'of {name}': 'of {name}'
+General: ทั่วไป
+Students: นักศึกษา
+'Search for Family Name': 'Search for Family Name'
+Children: เด็กๆ
+contact_priority_logic: contact_priority_logic
+'{name}': '{name}'
+'There are not enough people in this family to form relationships.': มีครอบครัวไม่มากพอที่จะสร้างความสัมพันธ์
+'Change Password': เปลี่ยนรหัสผ่าน
+'Student''s Name': 'Student''s Name'
+'Adult''s Name': ชื่อผู้ใหญ่
+'Edit Adult': แก้ไขผู้ใหญ่
+'This value cannot be changed': 'This value cannot be changed'
+'Edit Student': 'Edit Student'
+'Edit District': แก้ไขเขต
+'Add District': เพิ่มเขต
+'State, Province, County, et.al.': 'State, Province, County, et.al.'
+'Post / Zip Code': 'Post / Zip Code'
+Territory: Territory
+'Post Code': 'Post Code'
+'Create District': 'Create District'
+'Field Type': 'Field Type'
+personfield:
+    type:
+        varchar: 'ข้อความสั้น (ไม่เกิน 255 ตัวอักษร)'
+        text: ข้อความยาว
+        date: วันที่
+        url: ลิงค์
+        select: Dropdown
+    options:
+        help: 'Short Text: number of characters, up to 255.<br />Long Text: number of rows for field.<br />Dropdown: comma separated list of options.: Short Text: number of characters, up to 255.'
+        error:
+            text: 'The height in lines for the form text box must be defined.'
+            varchar: 'The length of the short text (max 255) must be defined.'
+            select: 'Provide a comma separated list of valid values for this dropdown.'
+Options: ออปชั่น
+'Is the field compulsory?': 'Is the field compulsory?'
+'Role Categories': หมวดหมู่บทบาท
+'Include in Data Updater?': 'Include in Data Updater?'
+'Include in Public Registration Form?': 'Include in Public Registration Form?'
+'Include in Application Form?': 'Include in Application Form?'
+'Edit Custom Field': แก้ไขฟิลด์ที่กำหนดเอง
+'Current Password': รหัสผ่านปัจจุบัน
+'Personal Google Calendar ID': 'รหัสปฏิทิน Google ส่วนบุคคล'
+'Google Calendar ID for your personal calendar.<br/>Only enables timetable integration when logging in via Google.': 'Google Calendar ID for your personal calendar.<br/>Only enables timetable integration when logging in via Google.'
+'Set your own custom background image.<br/>Please provide URL to image.': 'Set your own custom background image.<br/>Please provide URL to image.'
+'Personal Theme': ธีมส่วนตัว
+'Override the system theme.': แทนที่ธีมระบบ
+'System Default': เริ่มต้นระบบ
+'Personal Language': 'ภาษาส่วนตัว'
+'Override the system default language.': 'แทนที่ภาษาเริ่มต้นของระบบ'
+'Receive Email Notifications?': 'รับการแจ้งเตือนทางอีเมลหรือไม่?'
+'Notifications can always be viewed on screen.': คุณสามารถดูการแจ้งเตือนบนหน้าจอได้ตลอดเวลา
+'Enable Smart Workflow Help?': 'เปิดใช้งานสมาร์ทเวิร์กโฟลว์?'
+'General Options': ตัวเลือกทั่วไป
+Introduction: บทนำ
+'Information to display before the form': ข้อมูลที่จะแสดงก่อนแบบฟอร์ม
+'Application Form Referee Link': ลิงค์ผู้อ้างอิงแบบฟอร์มการสมัคร
+'Link to an external form that will be emailed to a referee of the applicant''s choosing.': 'ลิงก์ไปยังแบบฟอร์มภายนอกที่จะส่งทางอีเมลไปยังผู้อ้างอิงของผู้สมัครที่เลือกไว้'
+Postscript: สคริปต์ตอนท้าย
+'Information to display at the end of the form': ข้อมูลที่จะแสดงในตอนท้ายของแบบฟอร์ม
+Agreement: ข้อตกลง
+'Without this text, which is displayed above the agreement, users will not be asked to agree to anything': 'หากไม่มีข้อความนี้ซึ่งแสดงอยู่เหนือข้อตกลง ผู้ใช้จะไม่ถูกขอให้ยอมรับอะไร'
+'Application Fee': ค่าธรรมเนียมการสมัคร
+'The cost of applying to the school.': ค่าสมัครเข้าโรงเรียน
+'Public Applications?': 'การใช้งานสาธารณะ?'
+'If yes, members of the public can submit applications': 'ถ้าใช่ สาธารณชนสามารถยื่นใบสมัครได้'
+Milestones: Milestones
+'Comma-separated list of the major steps in the application process. Applicants can be tracked through the various stages.': 'รายการที่คั่นด้วยจุลภาคของขั้นตอนที่สำคัญในกระบวนการสมัคร ผู้สมัครสามารถติดตามผ่านขั้นตอนต่างๆ'
+'How Did Your Hear?': 'คุณทราบได้อย่างไร?'
+'Comma-separated list': 'รายการที่คั่นด้วยจุลภาค'
+'Enable Limited Years of Entry': เปิดปีที่จำกัดการเข้าศึกษา
+'If yes, applicants choices for Year of Entry can be limited to specific school years.': 'ถ้าใช่ มีทางเลือกให้ผู้สมัครปีการศึกษา จำกัดเฉพาะปีการศึกษา'
+'Available Years of Entry': ปีที่มีการเข้าศึกษา
+'Which school years should be available to apply to?': 'ปีการศึกษาไหนควรมีการเปิดรับสมัคร?'
+2019-2020: 2019-2020
+2020-2021: 2020-2021
+'Required Document Options': 'Required Document Options'
+'Required Documents': เอกสารที่ต้องใช้
+'Comma-separated list of documents which must be submitted electronically with the application form.': 'รายการที่คั่นด้วยเครื่องหมายจุลภาคของเอกสารซึ่งต้องส่งทางอิเล็กทรอนิกส์พร้อมกับแบบฟอร์มใบสมัคร'
+'Internal Documents': 'เอกสารภายใน'
+'Comma-separated list of documents for internal upload and use.': 'รายการเอกสารที่คั่นด้วยเครื่องหมายจุลภาคสำหรับการอัพโหลดและใช้งานภายใน'
+'Required Documents Text': ข้อความเอกสารที่ต้องการ
+'Explanatory text to appear with the required documents?': 'ข้อความอธิบายให้ปรากฏพร้อมกับเอกสารที่จำเป็น?'
+'Required Documents Compulsory?': 'เอกสารที่จำเป็นบังคับ?'
+'Are the required documents compulsory?': 'บังคับเอกสารที่ต้องการหรือไม่?'
+'Language Learning Options': 'ตัวเลือกภาษาที่เรียน'
+'Language Options Active': 'ใช้งานตัวเลือกภาษา'
+'Should the Language Options section be turned on?': 'ควรเปิดส่วนตัวเลือกภาษาหรือไม่?'
+'Language Options Blurb': 'ตัวเลือกภาษาการประกาศ'
+'Introductory text if Language Options section is turned on.': 'ข้อความแนะนำถ้ามีการเปิดใช้ตัวเลือกภาษา'
+'Language Options Language List': 'รายชื่อภาษาของตัวเลือกภาษา'
+'Comma-separated list of available language selections if Language Options section is turned on.': 'รายการที่เลือกด้วยจุลภาคของการเลือกภาษาที่ใช้ได้หากเปิดส่วนตัวเลือกภาษา'
+Sections: ส่วน
+'Special Education Needs Active': ความต้องการการศึกษาพิเศษ
+'Should the Special Education Needs section be turned on?': 'ควรเปิดส่วนความต้องการการศึกษาพิเศษหรือไม่?'
+'Application Form SEN Text': 'ข้อความแบบฟอร์มใบสมัคร SEN'
+'Text to appear with the Special Educational Needs section of the student application form.': ข้อความที่จะปรากฏพร้อมกับส่วนความต้องการพิเศษทางการศึกษาของแบบฟอร์มใบสมัครนักศึกษา
+'Scholarship Options Active': ตัวเลือกทุนการศึกษา
+'Should the Scholarship Options section be turned on?': 'ควรเปิดส่วนตัวเลือกทุนการศึกษาหรือไม่?'
+Scholarships: ทุนการศึกษา
+'Information to display before the scholarship options': ข้อมูลที่จะแสดงก่อนตัวเลือกทุนการศึกษา
+'Payment Options Active': ตัวเลือกการชำระเงิน
+'Should the Payment section be turned on?': ควรเปิดส่วนการชำระเงินหรือไม่
+'Acceptance Options': ตัวเลือกการยอมรับ
+'Username Format': รูปแบบชื่อผู้ใช้
+'How should usernames be formated? Choose from [preferredName], [preferredNameInitial], [surname].': 'ชื่อผู้ใช้ควรได้รับการจัดรูปแบบอย่างไร? เลือกจาก [ชื่อ], [ชื่อย่อ], [ชื่อสกุล]'
+'Student Notification Message': ข้อความแจ้งเตือนนักศึกษา
+'A custom message to add to the standard email to students on acceptance.': ข้อความที่กำหนดเองเพื่อเพิ่มลงในอีเมลมาตรฐานเพื่อให้นักศึกษาได้รับการยอมรับ
+'Student Notification Default': ค่าเริ่มต้นของการแจ้งเตือนสำหรับนักศึกษา
+'Should student acceptance email be turned on or off by default.': อีเมลการยอมรับของนักศึกษาควรเปิดหรือปิดเป็นค่าเริ่มต้น
+'Parents Notification Message': ข้อความแจ้งเตือนสำหรับพ่อแม่
+'A custom message to add to the standard email to parents on acceptance.': ข้อความที่กำหนดเองเพื่อเพิ่มลงในอีเมลมาตรฐานสำหรับผู้ปกครองในการยอมรับ
+'Parents Notification Default': เริ่มต้นการแจ้งเตือนสำหรับพ่อแม่
+'Should parent acceptance email be turned on or off by default.': 'อีเมลการยอมรับของพ่อแม่ จะเปิดหรือปิด เป็นค่าเริ่มต้น'
+'Student Default Email': อีเมลเริ่มต้นของนักศึกษา
+'Set default email for students on acceptance, using [username] to insert username.': 'ตั้งค่าอีเมลเริ่มต้นสำหรับนักศึกษาในการยอมรับโดยใช้ [ชื่อผู้ใช้] เพื่อใส่ชื่อผู้ใช้'
+'Student Default Website': เว็บไซต์เริ่มต้นของนักศึกษา
+'Set default website for students on acceptance, using [username] to insert username.': 'ตั้งค่าเว็บไซต์เริ่มต้นสำหรับนักศึกษาที่ยอมรับโดยใช้ [ชื่อผู้ใช้] เพื่อใส่ชื่อผู้ใช้'
+'Auto House Assign': 'กำหนด Auto House'
+'Attempt to automatically place student in a house?': 'พยายามจัดบ้านให้นักศึกษาโดยอัตโนมัติหรือไม่?'
+'Language Learning': 'Language Learning'
+Acceptance: Acceptance
+All: ทั้งหมด
+'Active: Yes': 'Active: Yes'
+'Active: No': 'Active: No'
+'Role: Other': 'Role: Other'
+'Account Details': รายละเอียดบัญชี
+date_format: date_format
+'Other Information': 'ข้อมูลอื่น ๆ'
+'Privacy Statement': คำชี้แจงสิทธิ์ส่วนบุคคล
+'Your registration was successfully submitted and is now pending approval. Our team will review your registration and be in touch in due course.': 'การลงทะเบียนของคุณได้รับการส่งเรียบร้อยแล้วและกำลังรอการอนุมัติ ทีมงานของเราจะตรวจสอบการลงทะเบียนของคุณและติดต่อกลับโดยเร็ว'
+'Your registration was successfully submitted, and you may now log into the system using your new username and password.': การลงทะเบียนของคุณได้รับการส่งเรียบร้อยแล้วและคุณอาจเข้าสู่ระบบโดยใช้ชื่อผู้ใช้และรหัสผ่านใหม่ของคุณ
+'By registering for this site you are giving permission for your personal data to be used and shared within this organisation and its websites. We will not share your personal data outside our organisation.': 'By registering for this site you are giving permission for your personal data to be used and shared within this organisation and its websites. We will not share your personal data outside our organisation.'
+'Do you agree to the above?': 'คุณเห็นด้วยหรือไม่?'
+'{name} Public Registration': '{name} Public Registration'
+'Pending Approval': 'Pending Approval'
+'Import People Photos': 'Import People Photos'
+'Select Import File': 'Select Import File'
+'People Photos': 'People Photos'
+'Ensure that you have taken note of the notes below.': 'Ensure that you have taken note of the notes below.'
+Notes: หมายเหตุ
+'You can only submit ZIP files.': 'You can only submit ZIP files.'
+'Files in the import directory will be overwritten by files with the same name.': 'Files in the import directory will be overwritten by files with the same name.'
+'Please note the following requirements for images in preparing your ZIP file': 'Please note the following requirements for images in preparing your ZIP file'
+'File Name - The system modifies the filename when linked to the correct person.': 'File Name - The system modifies the filename when linked to the correct person.'
+'Folder * - The ZIP file must not contain any folders, only files.': 'Folder * - The ZIP file must not contain any folders, only files.'
+'File Type * - Images must be formatted as JPG or PNG.': 'File Type * - Images must be formatted as JPG or PNG.'
+'Image Size * - Displayed at 240px by 320px.': 'Image Size * - Displayed at 240px by 320px.'
+'Size Range * - Accepts images up to 360px by 480px.': 'Size Range * - Accepts images up to 360px by 480px.'
+'Aspect Ratio Range * - Accepts aspect ratio between 0.7:1 and 0.84:1.': 'Aspect Ratio Range * - Accepts aspect ratio between 0.7:1 and 0.84:1.'
+Date: วันที่
+'Name, Adults & Students': 'Name, Adults & Students'
+'Import Images': 'Import Images'
+'Drop Image Here': 'Drop Image Here'
+'Target Person': 'Target Person'
+'Select the person and then drag the image from your computer to set the image for this person.': 'Select the person and then drag the image from your computer to set the image for this person.'
+'Remove Photo': 'Remove Photo'
+'The image must ratio of {ratio}:1 is outside the allowed limits of 0.7:1 to 0.84:1.': 'The image must ratio of {ratio}:1 is outside the allowed limits of 0.7:1 to 0.84:1.'
+'The height and width maximum is 480 x 360px. The image supplied was {height} x {width}px.': 'The height and width maximum is 480 x 360px. The image supplied was {height} x {width}px.'
+'The file is too big. Max 350k. File size given is {size}.': 'The file is too big. Max 350k. File size given is {size}.'
+'{name} upload failed...': '{name} upload failed...'
+'Target this person...': 'Target this person...'
+'Replace this image': 'Replace this image'
+'Images [.jpg, .png, .jpeg] only': 'Images [.jpg, .png, .jpeg] only'
+'Use this page to drag and drop images from your computer to the site for the targeted individual. Existing images are replaced.': 'Use this page to drag and drop images from your computer to the site for the targeted individual. Existing images are replaced.'
+Import: นำเข้า
+'People Management': 'People Management'
+'People Settings': 'People Settings'
+'Staff Management': การจัดการพนักงาน
+'Student Management': การจัดการนักศึกษา
+'Module Menu': รายการโมดูล
+'Staff Type: Teaching': 'Staff Type: Teaching'
+'Staff Type: Support': 'Staff Type: Support'
+'Staff Role: Administrator': 'Staff Role: Administrator'
+'Staff Role: Librarian': 'Staff Role: Librarian'
+'Staff Role: Support Staff': 'Staff Role: Support Staff'
+'Staff Role: Teacher': 'Staff Role: Teacher'
+'Application Questions': คำถามในการสมัคร
+'HTML text that will appear as questions for the applicant to answer.': 'ข้อความ HTML ที่จะปรากฏเป็นคำถามสำหรับผู้สมัครที่จะตอบ'
+'If yes, members of the public can submit staff applications': ถ้าใช่สมาชิกในที่สาธารณะสามารถส่งใบสมัครพนักงานได้
+'Submit All Panels': 'Submit All Panels'
+'Application Form Referee Links': 'Application Form Referee Links'
+'Required Documents Options': ตัวเลือกเอกสารที่ต้องการ
+'Notification Message': ข้อความแจ้งเตือน
+'A custom message to add to the standard email on acceptance.': ข้อความที่กำหนดเองเพื่อเพิ่มลงในอีเมลมาตรฐานในการยอมรับ
+'Notification Default': การแจ้งเตือนเริ่มต้น
+'Should acceptance email be turned on or off by default.': ควรเปิดหรือปิดอีเมลยอมรับโดยค่าเริ่มต้น
+'Default Email': อีเมลเริ่มต้น
+'Set default email on acceptance, using [username] to insert username.': 'ตั้งค่าอีเมลดีฟอลต์ในการยอมรับโดยใช้ [ชื่อผู้ใช้] เพื่อใส่ชื่อผู้ใช้'
+'Default Website': เว็บไซต์เริ่มต้น
+'Set default website on acceptance, using [username] to insert username.': 'ตั้งค่าเว็บไซต์ดีฟอลต์ในการยอมรับโดยใช้ [ชื่อผู้ใช้] เพื่อใส่ชื่อผู้ใช้'
+'Referee Links': 'Referee Links'
+'General Settings': การตั้งค่าทั่วไป
+'Enable Public Registration': เปิดใช้การลงทะเบียนสาธารณะ
+'Allows members of the public to register to use the system.': อนุญาตให้สมาชิกสาธารณชนลงทะเบียนเพื่อใช้ระบบ
+'Public Registration Minimum Age': อายุขั้นต่ำการลงทะเบียนสาธารณะ
+'The minimum age, in years, permitted to register.': อายุที่น้อยที่สุดในปีที่ได้รับอนุญาตให้ลงทะเบียน
+'Public Registration Default Status': สถานะเริ่มต้นการลงทะเบียนสาธารณะ
+'Should new users be ''Full'' or ''Pending Approval''?': 'ผู้ใช้ใหม่ควร ''Full'' หรือ ''Pending Approval?'
+'Public Registration Default Role': บทบาทเริ่มต้นของการจดทะเบียนสาธารณะ
+'System role to be assigned to registering members of the public.': บทบาทระบบที่จะมอบหมายให้สมาชิกที่ลงทะเบียนสาธารณะ
+'Interface Options': ตัวเลือกอินเทอร์เฟซ
+'Public Registration Introductory Text': ข้อความแนะนำการลงทะเบียนสาธารณะ
+'HTML text that will appear above the public registration form.': 'ข้อความ HTML ที่จะปรากฏเหนือฟอร์มการลงทะเบียนสาธารณะ'
+'Public Registration Postscript': 'Public Registration Postscript'
+'HTML text that will appear underneath the public registration form.': 'ข้อความ HTML ที่จะปรากฏใต้ฟอร์มการลงทะเบียนสาธารณะ'
+'Public Registration Privacy Statement': คำชี้แจงสิทธิส่วนบุคคลในการลงทะเบียนสาธารณะ
+'HTML text that will appear above the Submit button, explaining privacy policy.': 'ข้อความ HTML ที่จะปรากฏเหนือปุ่ม "ส่ง" อธิบายนโยบายส่วนบุคคล'
+'Public Registration Agreement': ข้อตกลงการลงทะเบียนสาธารณะ
+'Agreement that user must confirm before joining. Blank for no agreement.': 'ข้อตกลงที่ผู้ใช้ต้องยืนยันก่อนเข้าร่วม ว่างเปล่าไว้สำหรับไม่มีข้อตกลง'
+Interface: อินเตอร์เฟซ
+Login: เข้าสู่ระบบ
+'Username or email': ชื่อผู้ใช้หรืออีเมล
+Password: รหัสผ่าน
+'Forgot Password': 'Forgot Password'
+'Login with Google': 'เข้าระบบด้วย Google'
+Language: 'ภาษา'
+'User Admin': ตั้งค่าผู้ใช้งาน
