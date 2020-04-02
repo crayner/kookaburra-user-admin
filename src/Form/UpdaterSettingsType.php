@@ -18,7 +18,7 @@ namespace Kookaburra\UserAdmin\Form;
 
 use App\Form\Type\DateSettingType;
 use App\Form\Type\ReactFormType;
-use App\Form\Type\SettingsType;
+use Kookaburra\SystemAdmin\Form\SettingsType;
 use App\Form\Type\ToggleType;
 use App\Provider\ProviderFactory;
 use Kookaburra\SystemAdmin\Entity\Role;

@@ -17,7 +17,7 @@ namespace Kookaburra\UserAdmin\Form;
 
 use App\Form\Type\HeaderType;
 use App\Form\Type\ReactFormType;
-use App\Form\Type\SettingsType;
+use Kookaburra\SystemAdmin\Form\SettingsType;
 use App\Form\Type\ToggleType;
 use App\Validator\SimpleArray;
 use Symfony\Component\Form\AbstractType;
