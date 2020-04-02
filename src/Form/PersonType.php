@@ -27,7 +27,7 @@ use App\Form\Type\ReactDateType;
 use App\Form\Type\ReactFormType;
 use App\Form\Type\ToggleType;
 use App\Provider\ProviderFactory;
-use App\Util\LocaleHelper;
+use Kookaburra\SystemAdmin\Util\LocaleHelper;
 use Doctrine\ORM\EntityRepository;
 use Kookaburra\SchoolAdmin\Entity\House;
 use Kookaburra\SystemAdmin\Entity\Role;

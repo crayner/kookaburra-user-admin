@@ -3,7 +3,7 @@ namespace Kookaburra\UserAdmin\Manager;
 
 use Kookaburra\SchoolAdmin\Entity\AcademicYear;
 use App\Provider\ProviderFactory;
-use App\Util\LocaleHelper;
+use Kookaburra\SystemAdmin\Util\LocaleHelper;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

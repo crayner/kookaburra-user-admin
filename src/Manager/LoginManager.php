@@ -15,7 +15,7 @@ namespace Kookaburra\UserAdmin\Manager;
 use Kookaburra\SystemAdmin\Entity\Setting;
 use App\Provider\ProviderFactory;
 use Kookaburra\SystemAdmin\Provider\SettingProvider;
-use App\Util\LocaleHelper;
+use Kookaburra\SystemAdmin\Util\LocaleHelper;
 
 /**
  * Class LoginManager
