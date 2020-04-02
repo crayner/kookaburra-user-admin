@@ -16,7 +16,7 @@
 namespace Kookaburra\UserAdmin\Controller;
 
 use App\Container\ContainerManager;
-use App\Entity\Setting;
+use Kookaburra\SystemAdmin\Entity\Setting;
 use App\Mailer\NotificationMailer;
 use App\Provider\ProviderFactory;
 use App\Util\ErrorMessageHelper;

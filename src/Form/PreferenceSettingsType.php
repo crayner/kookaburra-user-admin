@@ -17,7 +17,7 @@ namespace Kookaburra\UserAdmin\Form;
 
 use Kookaburra\SystemAdmin\Entity\I18n;
 use Kookaburra\UserAdmin\Entity\Person;
-use App\Entity\Setting;
+use Kookaburra\SystemAdmin\Entity\Setting;
 use App\Entity\Theme;
 use App\Form\Transform\ToggleTransformer;
 use App\Form\Type\HeaderType;

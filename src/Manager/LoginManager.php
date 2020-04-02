@@ -12,9 +12,9 @@
  */
 namespace Kookaburra\UserAdmin\Manager;
 
-use App\Entity\Setting;
+use Kookaburra\SystemAdmin\Entity\Setting;
 use App\Provider\ProviderFactory;
-use App\Provider\SettingProvider;
+use Kookaburra\SystemAdmin\Provider\SettingProvider;
 use App\Util\LocaleHelper;
 
 /**

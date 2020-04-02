@@ -1,14 +1,14 @@
 <?php
 namespace Kookaburra\UserAdmin\Manager;
 
-use App\Entity\Setting;
+use Kookaburra\SystemAdmin\Entity\Setting;
 use App\Provider\ProviderFactory;
 use Kookaburra\SystemAdmin\Manager\UsernamePasswordToken;
 use Kookaburra\UserAdmin\Entity\Person;
 use App\Manager\GibbonManager;
 use App\Manager\MessageManager;
 use App\Provider\LogProvider;
-use App\Provider\SettingProvider;
+use Kookaburra\SystemAdmin\Provider\SettingProvider;
 use App\Util\EntityHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;

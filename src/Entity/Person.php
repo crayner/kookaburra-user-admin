@@ -18,7 +18,7 @@ namespace Kookaburra\UserAdmin\Entity;
 use App\Entity\ApplicationForm;
 use Kookaburra\SystemAdmin\Entity\I18n;
 use Kookaburra\SchoolAdmin\Entity\AcademicYear;
-use App\Entity\Setting;
+use Kookaburra\SystemAdmin\Entity\Setting;
 use App\Entity\Staff;
 use App\Entity\StudentEnrolment;
 use App\Entity\Theme;

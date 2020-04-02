@@ -16,7 +16,7 @@ namespace Kookaburra\UserAdmin\Manager;
 use Doctrine\DBAL\Driver\PDOException;
 use Kookaburra\UserAdmin\Entity\Person;
 use Kookaburra\SystemAdmin\Entity\Role;
-use App\Entity\Setting;
+use Kookaburra\SystemAdmin\Entity\Setting;
 use App\Exception\MissingClassException;
 use App\Provider\ProviderFactory;
 use App\Util\EntityHelper;

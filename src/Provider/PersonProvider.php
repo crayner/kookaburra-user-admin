@@ -26,7 +26,7 @@ use Kookaburra\SchoolAdmin\Entity\House;
 use Kookaburra\UserAdmin\Entity\Person;
 use App\Entity\PersonMedical;
 use Kookaburra\SystemAdmin\Entity\Role;
-use App\Entity\Setting;
+use Kookaburra\SystemAdmin\Entity\Setting;
 use App\Entity\StudentEnrolment;
 use App\Manager\Traits\EntityTrait;
 use Kookaburra\UserAdmin\Manager\SecurityUser;

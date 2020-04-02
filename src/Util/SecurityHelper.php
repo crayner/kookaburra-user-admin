@@ -15,7 +15,7 @@ namespace Kookaburra\UserAdmin\Util;
 use Kookaburra\SystemAdmin\Entity\Action;
 use Kookaburra\SystemAdmin\Entity\Module;
 use Kookaburra\UserAdmin\Entity\Person;
-use App\Entity\Setting;
+use Kookaburra\SystemAdmin\Entity\Setting;
 use App\Exception\RouteConfigurationException;
 use Kookaburra\SystemAdmin\Provider\ActionProvider ;
 use Kookaburra\SystemAdmin\Provider\ModuleProvider ;

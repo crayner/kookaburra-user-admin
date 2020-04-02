@@ -16,7 +16,7 @@
 namespace Kookaburra\UserAdmin\Manager;
 
 
-use App\Entity\Setting;
+use Kookaburra\SystemAdmin\Entity\Setting;
 use App\Provider\ProviderFactory;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;

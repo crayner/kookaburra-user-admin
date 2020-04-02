@@ -16,7 +16,7 @@
 namespace Kookaburra\UserAdmin\Form;
 
 use Kookaburra\SchoolAdmin\Entity\AcademicYear;
-use App\Entity\Setting;
+use Kookaburra\SystemAdmin\Entity\Setting;
 use App\Form\Transform\EntityToStringTransformer;
 use App\Form\Type\EntityType;
 use App\Form\Type\EnumType;

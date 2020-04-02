@@ -18,7 +18,7 @@ namespace Kookaburra\UserAdmin\Controller;
 use App\Container\Container;
 use App\Container\ContainerManager;
 use App\Container\Panel;
-use App\Entity\Setting;
+use Kookaburra\SystemAdmin\Entity\Setting;
 use App\Provider\ProviderFactory;
 use App\Util\TranslationsHelper;
 use Kookaburra\UserAdmin\Form\ApplicationFormType;
