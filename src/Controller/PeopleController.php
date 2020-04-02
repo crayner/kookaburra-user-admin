@@ -18,6 +18,7 @@ namespace Kookaburra\UserAdmin\Controller;
 use App\Container\Container;
 use App\Container\ContainerManager;
 use App\Container\Panel;
+use App\Manager\PageManager;
 use App\Provider\ProviderFactory;
 use App\Twig\Sidebar\Photo;
 use App\Twig\SidebarContent;
@@ -28,7 +29,7 @@ use Kookaburra\UserAdmin\Form\ChangePasswordType;
 use Kookaburra\UserAdmin\Form\ManageSearchType;
 use Kookaburra\UserAdmin\Form\PersonType;
 use Kookaburra\UserAdmin\Manager\SecurityUser;
-use Kookaburra\UserAdmin\Pagination\ManagePagination;
+use Kookaburra\UserAdmin\Pagination\PeoplePagination;
 use Kookaburra\UserAdmin\Util\SecurityHelper;
 use Kookaburra\UserAdmin\Util\UserHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -38,9 +39,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class PeopleController
@@ -51,28 +49,32 @@ class PeopleController extends AbstractController
 {
     /**
      * manage
-     * @param ManagePagination $pagination
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param PeoplePagination $pagination
+     * @param PageManager $pageManager
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/manage/", name="manage")
+     * @Route("/manage/", name="default")
      * @Route("/")
      * @Security("is_granted('ROLE_ROUTE', ['user_admin__manage'])")
      */
-    public function manage(ManagePagination $pagination)
+    public function manage(PeoplePagination $pagination, PageManager $pageManager)
     {
-        $pagination->setContent([])->setPageMax(25)->setContentLoader($this->generateUrl('user_admin__manage_people_content_loader'))
-            ->setPaginationScript();
+        if ($pageManager->isNotReadyForJSON()) return $pageManager->getBaseResponse();
 
-        return $this->render('@KookaburraUserAdmin/manage.html.twig');
+        $pagination->setContent([])->setContentLoader($this->generateUrl('user_admin__manage_people_content_loader'))
+            ->setPaginationScript();
+        
+        return $pageManager->createBreadcrumbs('Manage People')
+            ->render(['pagination' => $pagination->toArray()]);
     }
 
     /**
      * manageContent
-     * @param ManagePagination $pagination
+     * @param PeoplePagination $pagination
      * @Route("/people/content/loader/", name="manage_people_content_loader")
      * @Security("is_granted('ROLE_ROUTE', ['user_admin__manage'])")
      */
-    public function manageContent(ManagePagination $pagination)
+    public function manageContent(PeoplePagination $pagination)
     {
         try {
             $repository = ProviderFactory::getRepository(Person::class);

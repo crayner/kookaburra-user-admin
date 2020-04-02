@@ -27,7 +27,7 @@ use App\Util\TranslationsHelper;
  * Class ManagePagination
  * @package Kookaburra\UserAdmin\Pagination
  */
-class ManagePagination extends AbstractPaginationManager
+class PeoplePagination extends AbstractPaginationManager
 {
     public function execute(): PaginationInterface
     {
@@ -120,7 +120,7 @@ class ManagePagination extends AbstractPaginationManager
         $action->setTitle('Edit Person')
             ->setAClass('')
             ->setColumnClass('column p-2 sm:p-3')
-            ->setSpanClass('fas fa-edit fa-fw fa-1-5x text-gray-700')
+            ->setSpanClass('fas fa-edit fa-fw fa-1-5x text-gray-800 hover:text-purple-500')
             ->setRoute('user_admin__edit')
             ->setRouteParams(['person' => 'id']);
         $row->addAction($action);
@@ -129,7 +129,7 @@ class ManagePagination extends AbstractPaginationManager
         $action->setTitle('Delete Person')
             ->setAClass('')
             ->setColumnClass('column p-2 sm:p-3')
-            ->setSpanClass('far fa-trash-alt fa-fw fa-1-5x text-gray-700')
+            ->setSpanClass('far fa-trash-alt fa-fw fa-1-5x text-gray-800 hover:text-red-500')
             ->setRoute('user_admin__delete')
             ->setDisplayWhen('canDelete')
             ->setOnClick('areYouSure')
@@ -140,7 +140,7 @@ class ManagePagination extends AbstractPaginationManager
         $action->setTitle('Reset Password')
             ->setAClass('')
             ->setColumnClass('column p-2 sm:p-3')
-            ->setSpanClass('fas fa-user-lock fa-fw fa-1-5x text-gray-700')
+            ->setSpanClass('fas fa-user-lock fa-fw fa-1-5x text-gray-800 hover:text-indigo-500')
             ->setRoute('user_admin__reset_password')
             ->setRouteParams(['person' => 'id']);
         $row->addAction($action);
