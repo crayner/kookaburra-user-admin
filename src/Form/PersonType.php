@@ -15,12 +15,12 @@
 
 namespace Kookaburra\UserAdmin\Form;
 
+use App\Form\Type\ReactFileType;
 use Kookaburra\SchoolAdmin\Entity\AcademicYear;
 use Kookaburra\SystemAdmin\Entity\Setting;
 use App\Form\Transform\EntityToStringTransformer;
 use App\Form\Type\EntityType;
 use App\Form\Type\EnumType;
-use App\Form\Type\FilePathType;
 use App\Form\Type\HeaderType;
 use App\Form\Type\ParagraphType;
 use App\Form\Type\ReactDateType;
@@ -129,6 +129,7 @@ class PersonType extends AbstractType
                 [
                     'label' => 'Gender',
                     'panel' => 'Basic',
+                    'placeholder' => 'person.gender.unspecified',
                 ]
             )
             ->add('dob', ReactDateType::class,
@@ -140,32 +141,43 @@ class PersonType extends AbstractType
                     'years' => range(intval(date('Y'))- 120, intval(date('Y')))
                 ]
             )
-            ->add('image240', FilePathType::class,
-                [
-                    'label' => 'Personal Photo',
-                    'help' => "Displayed at 240px by 320px.\nAccepts images up to 360px by 480px.\nAccepts aspect ratio between 1:1.2 and 1:1.4.",
-                    'panel' => 'Basic',
-                    'file_prefix' => 'personal_',
-                ]
-            )
+        ;
+        if ($options['data']->getId() > 0)
+            $builder
+                ->add('image240', ReactFileType::class,
+                    [
+                        'label' => 'Personal Photo',
+                        'help' => "Displayed at 240px by 320px.\nAccepts images up to 360px by 480px.\nAccepts aspect ratio between 1:1.2 and 1:1.4.",
+                        'panel' => 'Basic',
+                        'file_prefix' => 'personal_',
+                        'data' => $options['data']->getImage240(false),
+                        'showThumbnail' => true,
+                        'entity' => $options['data'],
+                        'imageMethod' => 'getImage240',
+                    ]
+                )
+            ;
+        $builder
             ->add('submitBasic', SubmitType::class,
                 [
                     'label' => 'Submit',
-                    'translation_domain' => 'UserAdmin',
+                    'translation_domain' => 'messages',
                     'panel' => 'Basic',
                 ]
             )
         ;
 
         $this->buildSystem($builder, $options);
-        $this->buildContact($builder, $options);
-        $this->buildSchool($builder, $options);
-        $this->buildBackground($builder, $options);
-        if (UserHelper::isParent($options['data']))
-            $this->buildEmployment($builder, $options);
-        if (UserHelper::isStudent($options['data']) || UserHelper::isStaff($options['data']))
-            $this->buildEmergency($builder, $options);
-        $this->buildMiscellaneous($builder, $options);
+        if ($options['data']->getId() > 0) {
+            $this->buildContact($builder, $options);
+            $this->buildSchool($builder, $options);
+            $this->buildBackground($builder, $options);
+            if (UserHelper::isParent($options['data']))
+                $this->buildEmployment($builder, $options);
+            if (UserHelper::isStudent($options['data']) || UserHelper::isStaff($options['data']))
+                $this->buildEmergency($builder, $options);
+            $this->buildMiscellaneous($builder, $options);
+        }
     }
 
     /**
@@ -217,7 +229,7 @@ class PersonType extends AbstractType
                     'label' => 'Primary Role',
                     'class' => Role::class,
                     'choice_label' => 'name',
-                    'data' => $options['data']->getPrimaryRole()->getId(),
+                    'data' => $options['data']->getPrimaryRole() ? $options['data']->getPrimaryRole()->getId() : '',
                     'help' => 'Controls what a user can do and see.',
                     'panel' => 'System',
                     'placeholder' => 'Please select...',
@@ -232,6 +244,10 @@ class PersonType extends AbstractType
                     'help' => "Controls what a user can do and see. Use Control, Command and/or Shift to select multiple.",
                     'panel' => 'System',
                     'multiple' => true,
+                    'required' => false,
+                    'attr' => [
+                        'size' => 4,
+                    ],
                 ]
             )
             ->add('username', TextType::class,
@@ -239,6 +255,7 @@ class PersonType extends AbstractType
                     'label' => 'Username',
                     'help' => "System login name.",
                     'panel' => 'System',
+                    'required' => false,
                 ]
             )
             ->add('status', EnumType::class,
@@ -246,6 +263,8 @@ class PersonType extends AbstractType
                     'label' => 'Status',
                     'help' => "This determines visibility within the system.",
                     'panel' => 'System',
+                    'placeholder' => 'Please Select...',
+                    'choice_list_prefix' => 'person.status'
                 ]
             )
             ->add('canLogin', ToggleType::class,
@@ -571,12 +590,13 @@ class PersonType extends AbstractType
                     'placeholder' => ' ',
                 ]
             )
-            ->add('birthCertificateScan', FilePathType::class,
+            ->add('birthCertificateScan', ReactFileType::class,
                 [
                     'label' => 'Birth Certificate Scan',
                     'panel' => 'Background',
                     'help' => 'Less than 2M,  Accepts PDF and image files only.',
                     'required' => false,
+                    'data' => $options['data']->getBirthCertificateScan(),
                     'file_prefix' => 'birth_cert_',
                 ]
             )
@@ -619,12 +639,13 @@ class PersonType extends AbstractType
                     'required' => false,
                 ]
             )
-            ->add('citizenship1PassportScan', FilePathType::class,
+            ->add('citizenship1PassportScan', ReactFileType::class,
                 [
                     'label' => 'Citizenship 1 Passport Scan',
                     'panel' => 'Background',
                     'help' => 'Less than 2M,  Accepts PDF and image files only.',
                     'required' => false,
+                    'data' => $options['data']->getCitizenship1PassportScan(),
                     'file_prefix' => 'passport_',
                 ]
             )
@@ -651,7 +672,7 @@ class PersonType extends AbstractType
                     'required' => false,
                 ]
             )
-            ->add('nationalIDCardScan', FilePathType::class,
+            ->add('nationalIDCardScan', ReactFileType::class,
                 [
                     'label' => '{name} ID Card Scan',
                     'label_translation_parameters' => ['{name}' => LocaleHelper::getCountryName(ProviderFactory::create(Setting::class)->getSettingByScopeAsString('System', 'country'))],
@@ -659,6 +680,7 @@ class PersonType extends AbstractType
                     'help' => 'Less than 2M,  Accepts PDF and image files only.',
                     'required' => false,
                     'file_prefix' => 'national_card_',
+                    'data' => $options['data']->getNationalIDCardScan(),
                 ]
             )
             ->add('residencyStatus', TextType::class,

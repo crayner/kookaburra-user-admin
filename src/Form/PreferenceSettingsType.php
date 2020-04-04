@@ -15,6 +15,7 @@
 
 namespace Kookaburra\UserAdmin\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Kookaburra\SystemAdmin\Entity\I18n;
 use Kookaburra\UserAdmin\Entity\Person;
 use Kookaburra\SystemAdmin\Entity\Setting;
@@ -71,15 +72,14 @@ class PreferenceSettingsType extends AbstractType
                 ->add('personalBackground', ReactFileType::class,
                     [
                         'label' => 'Personal Background',
-                        'help' => 'Set your own custom background image.<br/>Please provide URL to image.',
                         'help_html' => true,
                         'data' => $options['data']->getPersonalBackground(),
                         'required' => false,
                         'file_prefix' => 'personal_bg',
-                        'constraints' => [
-                            new ReactImage(['maxSize' => '750k']),
-                        ],
                         'delete_security' => 'ROLE_USER',
+                        'showThumbnail' => true,
+                        'imageMethod' => 'getPersonalBackground',
+                        'entity' => $options['data'],
                     ]
                 )
             ;
@@ -92,7 +92,13 @@ class PreferenceSettingsType extends AbstractType
                     'choice_label' => 'name',
                     'help' => 'Override the system theme.',
                     'placeholder' => 'System Default',
-                    'choices' => ProviderFactory::getRepository(Theme::class)->findBy(['active' => 'Y'], ['name' => 'ASC']),
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('t')
+                            ->where('t.active = :yes')
+                            ->setParameter('yes', 'Y')
+                            ->orderBy('t.name', 'ASC')
+                            ;
+                    },
                     'required' => false,
                 ]
             )
@@ -103,7 +109,13 @@ class PreferenceSettingsType extends AbstractType
                     'help' => 'Override the system default language.',
                     'placeholder' => 'System Default',
                     'choice_label' => 'name',
-                    'choices' => ProviderFactory::getRepository(I18n::class)->findBy(['active' => 'Y', 'installed' => 'Y'], ['code' => 'ASC']),
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('i')
+                            ->where('i.active = :yes')
+                            ->setParameter('yes', 'Y')
+                            ->orderBy('i.code', 'ASC')
+                        ;
+                    },
                     'required' => false,
                 ]
             )

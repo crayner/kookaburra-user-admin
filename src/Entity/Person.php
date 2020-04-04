@@ -27,6 +27,7 @@ use App\Manager\Traits\BooleanList;
 use App\Provider\ProviderFactory;
 use App\Util\ImageHelper;
 use App\Util\TranslationsHelper;
+use App\Validator as ASSERTLOCAL;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -34,6 +35,8 @@ use Doctrine\ORM\PersistentCollection;
 use Kookaburra\SchoolAdmin\Entity\House;
 use Kookaburra\SystemAdmin\Entity\Role;
 use Kookaburra\UserAdmin\Manager\PersonNameManager;
+use Kookaburra\UserAdmin\Util\UserHelper;
+use Kookaburra\UserAdmin\Validator\Username;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as ASSERT;
 use Symfony\Component\Intl\Languages;
@@ -65,8 +68,10 @@ use Symfony\Component\Intl\Languages;
  * )
  * @UniqueEntity(
  *     fields={"username"},
+ *     ignoreNull=true
  * )
  * @ORM\HasLifecycleCallbacks()
+ * @Username()
  */
 class Person implements EntityInterface
 {
@@ -81,7 +86,7 @@ class Person implements EntityInterface
         $this->courseClassPerson = new ArrayCollection();
         $this->children = new ArrayCollection();
         $this->studentEnrolments = new ArrayCollection();
-        $this->primaryRole = new Role();
+        $this->allRoles = [];
     }
 
     /**
@@ -358,8 +363,7 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=20,unique=true)
-     * @ASSERT\NotBlank()
+     * @ORM\Column(length=75,unique=true,nullable=true)
      */
     private $username;
 
@@ -377,7 +381,7 @@ class Person implements EntityInterface
      */
     public function setUsername(?string $username): Person
     {
-        $this->username = mb_substr($username, 0, 20);
+        $this->username = $username ? mb_substr($username, 0, 75) : null;
         return $this;
     }
 
@@ -534,7 +538,7 @@ class Person implements EntityInterface
 
     /**
      * @var array
-     * @ORM\Column(name="gibbonRoleIDAll",type="simple_array",nullable=true)
+     * @ORM\Column(name="all_roles",type="simple_array",nullable=true,length=191)
      */
     private $allRoles = [];
 
@@ -559,9 +563,9 @@ class Person implements EntityInterface
         foreach($allRoles as $q=>$w)
             if ($w instanceof Role)
                 $allRoles[$q] = $w->getId();
-        if ($this->getPrimaryRole() instanceof Role && ! in_array($this->getPrimaryRole()->getId(), $allRoles)) {
+        if ($this->getPrimaryRole() instanceof Role && ! in_array($this->getPrimaryRole()->getId(), $allRoles))
             $allRoles[] = $this->getPrimaryRole()->getId();
-        }
+
         $this->allRoles = array_unique($allRoles ?: []);
         return $this;
     }
@@ -642,7 +646,13 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, nullable=true)
+     * @ORM\Column(length=191, nullable=true)
+     * @ASSERTLOCAL\ReactImage(
+     *     maxSize = "750k",
+     *     mimeTypes = {"image/jpg","image/gif","image/png","image/jpeg"},
+     *     maxRatio = 1,
+     *     minRatio = 0.7
+     * )
      */
     private $image_240;
 
@@ -653,8 +663,8 @@ class Person implements EntityInterface
      */
     public function getImage240(bool $default = true): ?string
     {
-        if (empty($this->image_240) && $default)
-            return '/build/static/DefaultPerson.png';
+        if ((null === $this->image_240 || '' === $this->image_240) && $default)
+            return ImageHelper::getRelativePath('/build/static/DefaultPerson.png');
         return $this->image_240;
     }
 
@@ -664,6 +674,7 @@ class Person implements EntityInterface
      */
     public function setImage240(?string $image_240): Person
     {
+        dump($image_240);
         $this->setExistingImage();
         $image_240 = ImageHelper::getRelativePath($image_240);
         $this->image_240 = mb_substr($image_240, 0, 75);
@@ -750,7 +761,8 @@ class Person implements EntityInterface
 
     /**
      * isLastFailTimestampTooOld
-     * @param $session
+     * @param int $timeout
+     * @return bool
      */
     public function isLastFailTimestampTooOld(int $timeout = 1200): bool
     {
@@ -838,7 +850,7 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, name="address1District",nullable=true)
+     * @ORM\Column(length=191, name="address1District",nullable=true)
      */
     private $address1District = '';
 
@@ -856,13 +868,13 @@ class Person implements EntityInterface
      */
     public function setAddress1District(?string $address1District): Person
     {
-        $this->address1District = mb_substr($address1District, 0, 255);
+        $this->address1District = mb_substr($address1District, 0, 191);
         return $this;
     }
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, name="address1Country",nullable=true)
+     * @ORM\Column(length=191, name="address1Country",nullable=true)
      */
     private $address1Country = '';
 
@@ -880,7 +892,7 @@ class Person implements EntityInterface
      */
     public function setAddress1Country(?string $address1Country): Person
     {
-        $this->address1Country = mb_substr($address1Country, 0, 255);
+        $this->address1Country = mb_substr($address1Country, 0, 191);
         return $this;
     }
 
@@ -910,7 +922,7 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, name="address2District",nullable=true)
+     * @ORM\Column(length=191, name="address2District",nullable=true)
      */
     private $address2District = '';
 
@@ -928,13 +940,13 @@ class Person implements EntityInterface
      */
     public function setAddress2District(?string $address2District): Person
     {
-        $this->address2District = mb_substr($address2District, 0, 255);
+        $this->address2District = mb_substr($address2District, 0, 191);
         return $this;
     }
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, name="address2Country",nullable=true)
+     * @ORM\Column(length=191, name="address2Country",nullable=true)
      */
     private $address2Country = '';
 
@@ -952,7 +964,7 @@ class Person implements EntityInterface
      */
     public function setAddress2Country(?string $address2Country): Person
     {
-        $this->address2Country = mb_substr($address2Country, 0, 255);
+        $this->address2Country = mb_substr($address2Country, 0, 191);
         return $this;
     }
 
@@ -1259,7 +1271,7 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=255)
+     * @ORM\Column(length=191)
      */
     private $website = '';
 
@@ -1277,7 +1289,7 @@ class Person implements EntityInterface
      */
     public function setWebsite(?string $website): Person
     {
-        $this->website = mb_substr($website, 0, 255);
+        $this->website = mb_substr($website, 0, 191);
         return $this;
     }
 
@@ -1379,8 +1391,8 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, name="birthCertificateScan")
-     * @ASSERT\File(
+     * @ORM\Column(length=191, name="birthCertificateScan")
+     * @ASSERTLOCAL\ReactFile(
      *     maxSize = "2048k",
      *     mimeTypes = {"image/*","application/pdf","application/x-pdf"}
      * )
@@ -1401,13 +1413,13 @@ class Person implements EntityInterface
      */
     public function setBirthCertificateScan(?string $birthCertificateScan): Person
     {
-        $this->birthCertificateScan = mb_substr($birthCertificateScan, 0, 255);
+        $this->birthCertificateScan = mb_substr($birthCertificateScan, 0, 191);
         return $this;
     }
 
     /**
      * @var string|null
-     * @ORM\Column(length=255)
+     * @ORM\Column(length=191)
      */
     private $ethnicity = '';
 
@@ -1471,13 +1483,13 @@ class Person implements EntityInterface
      */
     public function setEthnicity(?string $ethnicity): Person
     {
-        $this->ethnicity = mb_substr($ethnicity, 0, 255);
+        $this->ethnicity = mb_substr($ethnicity, 0, 191);
         return $this;
     }
 
     /**
      * @var string|null
-     * @ORM\Column(length=255)
+     * @ORM\Column(length=191)
      */
     private $citizenship1 = '';
 
@@ -1495,7 +1507,7 @@ class Person implements EntityInterface
      */
     public function setCitizenship1(?string $citizenship1): Person
     {
-        $this->citizenship1 = mb_substr($citizenship1, 0, 255);
+        $this->citizenship1 = mb_substr($citizenship1, 0, 191);
         return $this;
     }
 
@@ -1527,8 +1539,8 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, name="citizenship1PassportScan")
-     * @ASSERT\File(
+     * @ORM\Column(length=191, name="citizenship1PassportScan")
+     * @ASSERTLOCAL\ReactFile(
      *     maxSize = "2048k",
      *     mimeTypes = {"image/*","application/pdf","application/x-pdf"}
      * )
@@ -1549,13 +1561,13 @@ class Person implements EntityInterface
      */
     public function setCitizenship1PassportScan(?string $citizenship1PassportScan): Person
     {
-        $this->citizenship1PassportScan = mb_substr($citizenship1PassportScan, 0, 255);
+        $this->citizenship1PassportScan = mb_substr($citizenship1PassportScan, 0, 191);
         return $this;
     }
 
     /**
      * @var string|null
-     * @ORM\Column(length=255)
+     * @ORM\Column(length=191)
      */
     private $citizenship2 = '';
 
@@ -1573,7 +1585,7 @@ class Person implements EntityInterface
      */
     public function setCitizenship2(?string $citizenship2): Person
     {
-        $this->citizenship2 = mb_substr($citizenship2, 0, 255);
+        $this->citizenship2 = mb_substr($citizenship2, 0, 191);
         return $this;
     }
 
@@ -1660,7 +1672,7 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, name="nationalIDCardScan")
+     * @ORM\Column(length=191, name="nationalIDCardScan")
      */
     private $nationalIDCardScan = '';
 
@@ -1678,13 +1690,13 @@ class Person implements EntityInterface
      */
     public function setNationalIDCardScan(?string $nationalIDCardScan): Person
     {
-        $this->nationalIDCardScan = mb_substr($nationalIDCardScan, 0, 255);
+        $this->nationalIDCardScan = mb_substr($nationalIDCardScan, 0, 191);
         return $this;
     }
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, name="residencyStatus")
+     * @ORM\Column(length=191, name="residencyStatus")
      */
     private $residencyStatus = '';
 
@@ -1702,7 +1714,7 @@ class Person implements EntityInterface
      */
     public function setResidencyStatus(?string $residencyStatus): Person
     {
-        $this->residencyStatus = mb_substr($residencyStatus, 0, 255);
+        $this->residencyStatus = mb_substr($residencyStatus, 0, 191);
         return $this;
     }
 
@@ -2412,7 +2424,14 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, name="personalBackground")
+     * @ORM\Column(length=191, name="personalBackground")
+     * @ASSERTLOCAL\ReactImage(
+     *     mimeTypes = {"image/jpg","image/jpeg","image/png","image/gif"},
+     *     maxSize = "1536k",
+     *     maxRatio = 1.777,
+     *     minRatio = 1.25,
+     * )
+     * 16/9, 800/640
      */
     private $personalBackground = '';
 
@@ -2430,7 +2449,7 @@ class Person implements EntityInterface
      */
     public function setPersonalBackground(?string $personalBackground): Person
     {
-        $this->personalBackground = mb_substr($personalBackground, 0, 255);
+        $this->personalBackground = mb_substr($personalBackground, 0, 191);
         return $this;
     }
 
@@ -2484,7 +2503,7 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, nullable=true, name="dayType", options={"comment": "Student day type, as specified in the application form."})
+     * @ORM\Column(length=191, nullable=true, name="dayType", options={"comment": "Student day type, as specified in the application form."})
      */
     private $dayType;
 
@@ -2502,7 +2521,7 @@ class Person implements EntityInterface
      */
     public function setDayType(?string $dayType): Person
     {
-        $this->dayType = mb_substr($dayType, 0, 255);
+        $this->dayType = mb_substr($dayType, 0, 191);
         return $this;
     }
 
@@ -2582,7 +2601,7 @@ class Person implements EntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(length=255, name="googleAPIRefreshToken")
+     * @ORM\Column(length=191, name="googleAPIRefreshToken")
      */
     private $googleAPIRefreshToken = '';
 
@@ -2600,7 +2619,7 @@ class Person implements EntityInterface
      */
     public function setGoogleAPIRefreshToken(?string $googleAPIRefreshToken): Person
     {
-        $this->googleAPIRefreshToken = mb_substr($googleAPIRefreshToken, 0, 255);
+        $this->googleAPIRefreshToken = mb_substr($googleAPIRefreshToken, 0, 191);
         return $this;
     }
 
@@ -3086,6 +3105,7 @@ class Person implements EntityInterface
             'phone' => trim($this->getPhone1().$this->getPhone2().$this->getPhone3().$this->getPhone4()) ?: '',
             'rego' => $this->getVehicleRegistration() ?: '',
             'name' => $this->getSurname().' '.$this->getFirstName().' '.$this->getPreferredName(),
+            'isNotCurrentUser' => !$this->isEqualTo(UserHelper::getCurrentUser()),
         ];
     }
 

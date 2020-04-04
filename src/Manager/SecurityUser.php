@@ -559,12 +559,12 @@ class SecurityUser implements UserInterface, EncoderAwareInterface, EquatableInt
 
     /**
      * isPasswordValid
-     * @param $raw
+     * @param string|null $raw
      * @return bool
      */
-    public function isPasswordValid($raw): bool
+    public function isPasswordValid(?string $raw): bool
     {
-        return $this->getEncoder()->isPasswordValid($this, $raw);
+        return $raw ? $this->getEncoder()->isPasswordValid($this, $raw) : false;
     }
 
     /**

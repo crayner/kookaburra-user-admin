@@ -116,6 +116,12 @@ class PeoplePagination extends AbstractPaginationManager
             ->setSearch(true);
         $row->addColumn($column);
 
+        $column = new PaginationColumn();
+        $column->setContentKey(['id'])
+            ->setDataOnly(true)
+            ->setSearch(true);
+        $row->addColumn($column);
+
         $action = new PaginationAction();
         $action->setTitle('Edit Person')
             ->setAClass('')
@@ -142,6 +148,7 @@ class PeoplePagination extends AbstractPaginationManager
             ->setColumnClass('column p-2 sm:p-3')
             ->setSpanClass('fas fa-user-lock fa-fw fa-1-5x text-gray-800 hover:text-indigo-500')
             ->setRoute('user_admin__reset_password')
+            ->setDisplayWhen('isNotCurrentUser')
             ->setRouteParams(['person' => 'id']);
         $row->addAction($action);
 

@@ -1,5 +1,6 @@
 Basic Information: Basic Information
 Title: Title
+Installed: Installed
 person:
     title:
         ms: Ms
@@ -27,8 +28,9 @@ person:
         fax: Facsimile
         pager: Pager
         other: Other
+'Please Select...': 'Please Select...'
 Surname: Surname
-Family name as shown in ID documents.: Family name as shown in ID documents.
+Family name as shown in ID documents.: 'Family name as shown in ID documents.'
 Given Names: Given Names
 Given names as shown in ID documents.: Given names as shown in ID documents.
 Preferred Name: Preferred Name
@@ -1204,3 +1206,6 @@ Forgot Password: Forgot Password
 Login with Google: Login with Google
 Language: Language
 User Admin: User Admin
+Generate: Generate
+Copy this password if required: Copy this password if required
+'{name} has been deleted.': '{name} has been deleted.'

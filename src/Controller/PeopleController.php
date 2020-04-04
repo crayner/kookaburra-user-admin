@@ -22,11 +22,11 @@ use App\Manager\PageManager;
 use App\Provider\ProviderFactory;
 use App\Twig\Sidebar\Photo;
 use App\Twig\SidebarContent;
+use App\Util\ErrorMessageHelper;
 use App\Util\TranslationsHelper;
 use Doctrine\DBAL\Driver\PDOException;
 use Kookaburra\UserAdmin\Entity\Person;
 use Kookaburra\UserAdmin\Form\ChangePasswordType;
-use Kookaburra\UserAdmin\Form\ManageSearchType;
 use Kookaburra\UserAdmin\Form\PersonType;
 use Kookaburra\UserAdmin\Manager\SecurityUser;
 use Kookaburra\UserAdmin\Pagination\PeoplePagination;
@@ -36,7 +36,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -61,7 +60,9 @@ class PeopleController extends AbstractController
     {
         if ($pageManager->isNotReadyForJSON()) return $pageManager->getBaseResponse();
 
-        $pagination->setContent([])->setContentLoader($this->generateUrl('user_admin__manage_people_content_loader'))
+        $pagination->setContent([])
+            ->setAddElementRoute($this->generateUrl('user_admin__add'))
+            ->setContentLoader($this->generateUrl('user_admin__manage_people_content_loader'))
             ->setPaginationScript();
         
         return $pageManager->createBreadcrumbs('Manage People')
@@ -73,6 +74,7 @@ class PeopleController extends AbstractController
      * @param PeoplePagination $pagination
      * @Route("/people/content/loader/", name="manage_people_content_loader")
      * @Security("is_granted('ROLE_ROUTE', ['user_admin__manage'])")
+     * @return JsonResponse
      */
     public function manageContent(PeoplePagination $pagination)
     {
@@ -88,22 +90,27 @@ class PeopleController extends AbstractController
 
     /**
      * edit
-     * @param Request $request
+     * @param PageManager $pageManager
      * @param ContainerManager $manager
      * @param SidebarContent $sidebar
      * @param Person|null $person
      * @param string $tabName
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/{person}/edit/{tabName}", name="edit")
-     * @Route("/0/add/{tabName}", name="add")
+     * @Route("/add/{tabName}", name="add")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function edit(Request $request, ContainerManager $manager, SidebarContent $sidebar, ?Person $person = null, string $tabName = 'Basic')
+    public function edit(PageManager $pageManager, ContainerManager $manager, SidebarContent $sidebar, ?Person $person = null, string $tabName = 'Basic')
     {
-        if (is_null($person))
+        if ($pageManager->isNotReadyForJSON()) return $pageManager->getBaseResponse();
+        $request = $pageManager->getRequest();
+
+        if (is_null($person)) {
             $person = new Person();
+            $person->setStatus('Expected')->setCanLogin('N')->setPasswordForceReset('Y');
+        }
         $photo = new Photo($person, 'getImage240', '200', 'user max200');
-        $photo->setTransDomain('UserAdmin')->setTitle($person->formatName(['informal' => true]));
+        $photo->setTransDomain(false)->setTitle($person->formatName(['informal' => true]));
         $sidebar->addContent($photo);
 
         $container = new Container();
@@ -114,7 +121,7 @@ class PeopleController extends AbstractController
             ['action' => $this->generateUrl('user_admin__edit', ['person' => intval($person->getID()), 'tabName' => $tabName])]
         );
 
-        if ($request->getContentType() === 'json') {
+        if ($request->getContent() !== '') {
             $content = json_decode($request->getContent(), true);
             $errors = [];
             $status = 'success';
@@ -131,8 +138,15 @@ class PeopleController extends AbstractController
                     $status = 'redirect';
                     $redirect = $this->generateUrl('user_admin__edit', ['person' => $person->getId(), 'tabName' => $tabName]);
                     $this->addFlash('success', 'return.success.0');
+                } else {
+                    $data = ErrorMessageHelper::getSuccessMessage([], true);
+                    $status = $data['status'];
+                    $errors = $data['errors'];
                 }
-                $errors[] = ['class' => 'success', 'message' => TranslationsHelper::translate('return.success.0', [], 'messages')];
+            } else {
+                $data = ErrorMessageHelper::getInvalidInputsMessage([], true);
+                $status = $data['status'];
+                $errors = $data['errors'];
             }
 
             $panel = new Panel('Basic', 'UserAdmin');
@@ -141,28 +155,29 @@ class PeopleController extends AbstractController
             $panel = new Panel('System', 'UserAdmin');
             $container->addPanel($panel);
 
-            $panel = new Panel('Contact', 'UserAdmin');
-            $container->addPanel($panel);
+            if ($person->getId() > 0) {
+                $panel = new Panel('Contact', 'UserAdmin');
+                $container->addPanel($panel);
 
-            $panel = new Panel('School', 'UserAdmin');
-            $container->addPanel($panel);
+                $panel = new Panel('School', 'UserAdmin');
+                $container->addPanel($panel);
 
-            $panel = new Panel('Background', 'UserAdmin');
-            $container->addPanel($panel);
+                $panel = new Panel('Background', 'UserAdmin');
+                $container->addPanel($panel);
 
-            if (UserHelper::isParent($person)) {
-                $panel = new Panel('Employment', 'UserAdmin');
+                if (UserHelper::isParent($person)) {
+                    $panel = new Panel('Employment', 'UserAdmin');
+                    $container->addPanel($panel);
+                }
+
+                if (UserHelper::isStudent($person) || UserHelper::isStaff($person)) {
+                    $panel = new Panel('Emergency', 'UserAdmin');
+                    $container->addPanel($panel);
+                }
+
+                $panel = new Panel('Miscellaneous', 'UserAdmin');
                 $container->addPanel($panel);
             }
-
-            if (UserHelper::isStudent($person) || UserHelper::isStaff($person)) {
-                $panel = new Panel('Emergency', 'UserAdmin');
-                $container->addPanel($panel);
-            }
-
-
-            $panel = new Panel('Miscellaneous', 'UserAdmin');
-            $container->addPanel($panel);
 
             $manager->addContainer($container)->buildContainers();
 
@@ -182,37 +197,47 @@ class PeopleController extends AbstractController
         $panel = new Panel('System', 'UserAdmin');
         $container->addPanel($panel);
 
-        $panel = new Panel('Contact', 'UserAdmin');
-        $container->addPanel($panel);
+        if ($person->getId() > 0) {
+            $panel = new Panel('Contact', 'UserAdmin');
+            $container->addPanel($panel);
 
-        $panel = new Panel('School', 'UserAdmin');
-        $container->addPanel($panel);
+            $panel = new Panel('School', 'UserAdmin');
+            $container->addPanel($panel);
 
-        $panel = new Panel('Background', 'UserAdmin');
-        $container->addPanel($panel);
+            $panel = new Panel('Background', 'UserAdmin');
+            $container->addPanel($panel);
 
-        if (UserHelper::isParent($person)) {
-            $panel = new Panel('Employment', 'UserAdmin');
+            if (UserHelper::isParent($person)) {
+                $panel = new Panel('Employment', 'UserAdmin');
+                $container->addPanel($panel);
+            }
+
+            if (UserHelper::isStudent($person) || UserHelper::isStaff($person)) {
+                $panel = new Panel('Emergency', 'UserAdmin');
+                $container->addPanel($panel);
+            }
+
+            $panel = new Panel('Miscellaneous', 'UserAdmin');
             $container->addPanel($panel);
         }
 
-        if (UserHelper::isStudent($person) || UserHelper::isStaff($person)) {
-            $panel = new Panel('Emergency', 'UserAdmin');
-            $container->addPanel($panel);
-        }
-
-        $panel = new Panel('Miscellaneous', 'UserAdmin');
-        $container->addPanel($panel);
-
-
+        $manager->setReturnRoute($this->generateUrl('user_admin__manage'));
         $manager->addContainer($container)->buildContainers();
 
-        return $this->render('@KookaburraUserAdmin/edit.html.twig');
+        return $pageManager->createBreadcrumbs($person->getId() > 0 ? 'Edit Person' : 'Add Person')
+            ->render(
+                [
+                    'containers' => $manager->getBuiltContainers(),
+                    'url' => $this->generateUrl('user_admin__manage'),
+                ]
+            );
     }
 
     /**
      * delete
      * @param Person $person
+     * @param FlashBagInterface $flashBag
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/{person}/delete/",name="delete")
      * @IsGranted("ROLE_ROUTE")
      */
@@ -230,7 +255,7 @@ class PeopleController extends AbstractController
         } else {
             $flashBag->add('info', ['{name} is locked in the system and must not be deleted.', ['{name}' => $person->formatName(['informal' => true])], 'UserAdmin']);
         }
-        return $this->forward(PeopleController::class.'::manage');
+        return $this->redirectToRoute('user_admin__manage');
     }
 
     /**
@@ -238,14 +263,15 @@ class PeopleController extends AbstractController
      * @param Person $person
      * @param FlashBagInterface $flashBag
      * @param ContainerManager $manager
-     * @param Request $request
+     * @param PageManager $pageManager
      * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \App\Exception\MissingClassException
      * @Route("/password/{person}/reset/",name="reset_password")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function resetPassword(Person $person, FlashBagInterface $flashBag, ContainerManager $manager, Request $request)
+    public function resetPassword(Person $person, FlashBagInterface $flashBag, ContainerManager $manager, PageManager $pageManager)
     {
+        if ($pageManager->isNotReadyForJSON()) return $pageManager->getBaseResponse();
+        $request = $pageManager->getRequest();
 
         if ($this->getUser()->getPerson()->isEqualto($person)) {
             $flashBag->add('info', ['Use the {anchor}preferences{endAnchor} details to change your own password.', ['{endAnchor}' => '</a>', '{anchor}' => '<a href="'.$this->generateUrl('user_admin__preferences', ['tabName' => 'Reset Password']).'">'], 'UserAdmin']);
@@ -259,7 +285,7 @@ class PeopleController extends AbstractController
             ]
         );
 
-        if ($request->getContentType() === 'json')
+        if ($request->getContent() !== '')
         {
             $content = json_decode($request->getContent(), true);
             $form->submit($content);
@@ -267,7 +293,7 @@ class PeopleController extends AbstractController
             if ($form->isValid()) {
                 $user = new SecurityUser($person);
                 $user->changePassword($content['raw']['first']);
-                $data['errors'][] = ['class' => 'success', 'message' => TranslationsHelper::translate('Your account has been successfully updated. You can now continue to use the system as per normal.')];
+                $data['errors'][] = ['class' => 'success', 'message' => TranslationsHelper::translate('Your account has been successfully updated. You can now continue to use the system as per normal.', [], 'UserAdmin')];
                 $manager->singlePanel($form->createView());
                 $person->setPasswordForceReset($content['passwordForceReset']);
                 $this->getDoctrine()->getManager()->persist($person);
@@ -285,7 +311,10 @@ class PeopleController extends AbstractController
 
         }
 
+        $manager->setReturnRoute($this->generateUrl('user_admin__manage'));
         $manager->singlePanel($form->createView());
-        return $this->render('@KookaburraUserAdmin/reset_password.html.twig');
+
+        return $pageManager->createBreadcrumbs('Reset Password')
+            ->render(['containers' => $manager->getBuiltContainers()]);
     }
 }

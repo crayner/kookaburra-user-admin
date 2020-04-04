@@ -18,6 +18,8 @@ namespace Kookaburra\UserAdmin\Controller;
 use App\Container\Container;
 use App\Container\ContainerManager;
 use App\Container\Panel;
+use App\Manager\PageManager;
+use App\Util\ErrorMessageHelper;
 use Kookaburra\UserAdmin\Form\Entity\ResetPassword;
 use Kookaburra\UserAdmin\Util\SecurityHelper;
 use Kookaburra\UserAdmin\Form\PreferenceSettingsType;
@@ -41,7 +43,7 @@ class PreferenceController extends AbstractController
 {
     /**
      * preference
-     * @param Request $request
+     * @param PageManager $pageManager
      * @param ContainerManager $manager
      * @param PasswordManager $passwordManager
      * @param TranslatorInterface $translator
@@ -50,8 +52,11 @@ class PreferenceController extends AbstractController
      * @Route("/preferences/{tabName}", name="preferences")
      * @IsGranted("ROLE_USER")
      */
-    public function preferences(Request $request, ContainerManager $manager, PasswordManager $passwordManager, TranslatorInterface $translator, string $tabName = 'Settings')
+    public function preferences(PageManager $pageManager, ContainerManager $manager, PasswordManager $passwordManager, TranslatorInterface $translator, string $tabName = 'Settings')
     {
+        if ($pageManager->isNotReadyForJSON()) return $pageManager->getBaseResponse();
+        $request = $pageManager->getRequest();
+
         $rp = new ResetPassword();
         $passwordForm = $this->createForm(ResetPasswordType::class, $rp,
             [
@@ -60,7 +65,7 @@ class PreferenceController extends AbstractController
             ]
         );
 
-        if ($request->getContentType() === 'json' && $tabName === 'Reset Password')
+        if ($request->getContent() !== '' && $tabName === 'Reset Password')
         {
             $passwordForm->submit(json_decode($request->getContent(), true));
             if ($passwordForm->isValid()) {
@@ -76,8 +81,7 @@ class PreferenceController extends AbstractController
                 return new JsonResponse($data, 200);
             } else {
                 $manager->singlePanel($passwordForm->createView());
-                $data = [];
-                $data['errors'][] = ['class' => 'error', 'message' => $translator->trans('return.error.1', [], 'messages')];
+                $data = ErrorMessageHelper::getInvalidInputsMessage([], true);
                 $data['form'] = $manager->getFormFromContainer('formContent', 'single');
                 return new JsonResponse($data, 200);
             }
@@ -93,8 +97,7 @@ class PreferenceController extends AbstractController
         $person = $this->getUser()->getPerson();
         $settingsForm = $this->createForm(PreferenceSettingsType::class, $person, ['action' => $this->generateUrl('user_admin__preferences', ['tabName' => 'Settings'])]);
 
-
-        if ($request->getContentType() === 'json' && $tabName === 'Settings') {
+        if ($request->getContent() !== '' && $tabName === 'Settings') {
             $settingsForm->submit(json_decode($request->getContent(), true));
             $data = [];
             if ($settingsForm->isValid()) {
@@ -102,13 +105,13 @@ class PreferenceController extends AbstractController
                 $em->persist($person);
                 $em->flush();
                 $em->refresh($person);
-                $data['errors'][] = ['class' => 'success', 'message' => $translator->trans('return.success.0')];
+                $data = ErrorMessageHelper::getSuccessMessage($data, true);
                 $settingsForm = $this->createForm(PreferenceSettingsType::class, $person, ['action' => $this->generateUrl('user_admin__preferences', ['tabName' => 'Settings'])]);
                 $manager->singlePanel($settingsForm->createView());
                 $data['form'] = $manager->getFormFromContainer('formContent', 'single');
                 return new JsonResponse($data, 200);
             } else {
-                $data['errors'][] = ['class' => 'error', 'message' => $translator->trans('Your request failed because your inputs were invalid.')];
+                $data = ErrorMessageHelper::getInvalidInputsMessage($data, true);
                 $manager->singlePanel($settingsForm->createView());
                 $data['form'] = $manager->getFormFromContainer('formContent', 'single');
                 return new JsonResponse($data, 200);
@@ -122,7 +125,8 @@ class PreferenceController extends AbstractController
 
         $manager->addContainer($container)->buildContainers();
 
-        return $this->render('modules/core/preferences.html.twig');
+        return $pageManager->createBreadcrumbs('Preferences')
+            ->render(['containers' => $manager->getBuiltContainers()]);
     }
 
     /**

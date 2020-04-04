@@ -18,11 +18,10 @@ namespace Kookaburra\UserAdmin\Form;
 use Kookaburra\SystemAdmin\Entity\Setting;
 use App\Form\Type\HeaderType;
 use App\Form\Type\ParagraphType;
-use App\Form\Type\PasswordGeneratorType;
 use App\Form\Type\ReactFormType;
 use App\Form\Type\ToggleType;
 use App\Provider\ProviderFactory;
-use App\Validator\Password;
+use Kookaburra\UserAdmin\Validator\Password;
 use Kookaburra\UserAdmin\Entity\Person;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -54,6 +53,7 @@ class ChangePasswordType extends AbstractType
                 [
                     'help' => $options['policy'],
                     'wrapper_class' => 'warning',
+                    'translation_domain' => false,
                 ]
             )
             ->add('raw', RepeatedType::class,
