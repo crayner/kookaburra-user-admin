@@ -128,7 +128,7 @@ class PhotoImporter implements SpecialInterface
         $tx['aborted'] = TranslationsHelper::translate('{name} upload failed...');
         $tx['Target this person...'] = TranslationsHelper::translate('Target this person...');
         $tx['Replace this image'] = TranslationsHelper::translate('Replace this image');
-        $tx['Images [.jpg, .png, .jpeg] only'] = TranslationsHelper::translate('Images [.jpg, .png, .jpeg] only');
+        $tx['Images [.jpg, .png, .jpeg, .gif] only'] = TranslationsHelper::translate('Images [.jpg, .png, .jpeg, .gif] only');
         $tx['Import Images'] = TranslationsHelper::translate('Import Images');
         $tx['Notes'] = TranslationsHelper::translate('Notes');
         $tx['drag_drop_page'] = TranslationsHelper::translate('Use this page to drag and drop images from your computer to the site for the targeted individual. Existing images are replaced.');
@@ -137,6 +137,7 @@ class PhotoImporter implements SpecialInterface
         $tx['Image Size * - Displayed at 240px by 320px.'] = TranslationsHelper::translate('Image Size * - Displayed at 240px by 320px.');
         $tx['Size Range * - Accepts images up to 360px by 480px.'] = TranslationsHelper::translate('Size Range * - Accepts images up to 360px by 480px.');
         $tx['Aspect Ratio Range * - Accepts aspect ratio between 0.7:1 and 0.84:1.'] = TranslationsHelper::translate('Aspect Ratio Range * - Accepts aspect ratio between 0.7:1 and 0.84:1.');
+        TranslationsHelper::setDomain('messages');
         return $tx;
     }
 

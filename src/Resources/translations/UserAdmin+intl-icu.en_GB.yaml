@@ -1209,3 +1209,12 @@ User Admin: User Admin
 Generate: Generate
 Copy this password if required: Copy this password if required
 '{name} has been deleted.': '{name} has been deleted.'
+Admin: Admin
+Created under the: Created under the
+Expected: Expected
+Kookaburra: Kookaburra
+Learn: Learn
+People: People
+Powered by: Powered by
+The height and width minimum is 320 x 240px. The image supplied was {height} x {width}px.: The height and width minimum is 320 x 240px. The image supplied was {height} x {width}px.
+The value must be set.: The value must be set.

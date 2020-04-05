@@ -654,8 +654,8 @@ class Person implements EntityInterface
      *     minRatio = 0.7,
      *     minWidth = 240,
      *     maxWidth = 360,
-     *     maxHeight = 320,
-     *     minHeight = 480
+     *     maxHeight = 480,
+     *     minHeight = 320
      * )
      */
     private $image_240;
