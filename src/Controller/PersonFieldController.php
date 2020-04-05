@@ -15,12 +15,10 @@
 
 namespace Kookaburra\UserAdmin\Controller;
 
-
 use App\Provider\ProviderFactory;
 use App\Util\ErrorMessageHelper;
 use Kookaburra\UserAdmin\Entity\District;
 use Kookaburra\UserAdmin\Entity\PersonField;
-use Kookaburra\UserAdmin\Form\DistrictType;
 use Kookaburra\UserAdmin\Form\PersonFieldType;
 use Kookaburra\UserAdmin\Pagination\PersonFieldPagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -32,8 +30,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class PersonFieldController
  * @package Kookaburra\UserAdmin\Controller
- * @Route("/user/admin", name="user_admin__")
- */
+*/
 class PersonFieldController extends AbstractController
 {
     /**

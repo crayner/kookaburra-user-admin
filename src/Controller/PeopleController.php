@@ -42,7 +42,6 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class PeopleController
  * @package Kookaburra\UserAdmin\Controller
- * @Route("/user/admin", name="user_admin__")
  */
 class PeopleController extends AbstractController
 {
@@ -228,7 +227,6 @@ class PeopleController extends AbstractController
             ->render(
                 [
                     'containers' => $manager->getBuiltContainers(),
-                    'url' => $this->generateUrl('user_admin__manage'),
                 ]
             );
     }

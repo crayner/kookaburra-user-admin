@@ -31,8 +31,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class StudentController
  * @package Kookaburra\UserAdmin\Controller
- * @Route("/user/admin", name="user_admin__")
- */
+*/
 class StudentController extends AbstractController
 {
     /**

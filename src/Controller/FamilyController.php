@@ -26,12 +26,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Kookaburra\UserAdmin\Entity\Family;
 use Kookaburra\UserAdmin\Entity\FamilyAdult;
 use Kookaburra\UserAdmin\Entity\FamilyChild;
-use Kookaburra\UserAdmin\Entity\Person;
 use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
 use Kookaburra\UserAdmin\Form\FamilyAdultType;
 use Kookaburra\UserAdmin\Form\FamilyChildType;
 use Kookaburra\UserAdmin\Form\FamilyGeneralType;
-use Kookaburra\UserAdmin\Form\FamilySearchType;
 use Kookaburra\UserAdmin\Form\RelationshipsType;
 use Kookaburra\UserAdmin\Manager\FamilyManager;
 use Kookaburra\UserAdmin\Manager\FamilyRelationshipManager;
@@ -42,7 +40,6 @@ use Kookaburra\UserAdmin\Pagination\ManagePagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\ErrorHandler\Error\UndefinedMethodError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -50,7 +47,6 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class FamilyController
  * @package Kookaburra\UserAdmin\Controller
- * @Route("/user/admin", name="user_admin__")
  */
 class FamilyController extends AbstractController
 {
@@ -96,30 +92,35 @@ class FamilyController extends AbstractController
 
     /**
      * familyEdit
-     * @param Request $request
+     * @param PageManager $pageManager
      * @param FamilyChildrenPagination $childrenPagination
      * @param FamilyAdultsPagination $adultsPagination
      * @param ContainerManager $manager
+     * @param FamilyRelationshipManager $relationshipManager
      * @param Family|null $family
+     * @param string $tabName
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/family/{family}/edit/{tabName}",name="family_edit")
-     * @Route("/family/add/",name="family_add")
+     * @Route("/family/add/{tabName}",name="family_add")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function familyEdit(Request $request, FamilyChildrenPagination $childrenPagination, FamilyAdultsPagination $adultsPagination, ContainerManager $manager, FamilyRelationshipManager $relationshipManager, ?Family $family = null, string $tabName = 'General')
+    public function familyEdit(PageManager $pageManager, FamilyChildrenPagination $childrenPagination, FamilyAdultsPagination $adultsPagination, ContainerManager $manager, FamilyRelationshipManager $relationshipManager, ?Family $family = null, string $tabName = 'General')
     {
+        if ($pageManager->isNotReadyForJSON()) return $pageManager->getBaseResponse();
+        $request = $pageManager->getRequest();
+        
         TranslationsHelper::setDomain('UserAdmin');
 
         $family = $family ?: new Family();
-        $action = intval($family->getId()) > 0 ? $this->generateUrl('user_admin__family_edit', ['family' => $family->getId(), 'tabName' => $tabName]) : $this->generateUrl('user_admin__family_manage_add', ['tabName' => $tabName]);
+        $action = intval($family->getId()) > 0 ? $this->generateUrl('user_admin__family_edit', ['family' => $family->getId(), 'tabName' => $tabName]) : $this->generateUrl('user_admin__family_add', ['tabName' => $tabName]);
         $form = $this->createForm(FamilyGeneralType::class, $family,
             ['action' => $action]
         );
         $provider = ProviderFactory::create(Family::class);
 
-        $content = $request->getContentType() === 'json' ? json_decode($request->getContent(), true) : null;
+        $content = $request->getContent() !== '' ? json_decode($request->getContent(), true) : null;
 
-        if ($request->getContentType() === 'json' && $content['panelName'] === 'General')
+        if ($request->getContent() !== '' && $content['panelName'] === 'General')
         {
             $form->submit($content);
             if ($form->isValid()) {
@@ -174,9 +175,16 @@ class FamilyController extends AbstractController
         ]);
         $container->addPanel($panel->setDisabled(intval($family->getId()) === 0)->setContent($content));
 
-        $manager->addContainer($container)->buildContainer();
+        $manager->setReturnRoute($this->generateUrl('user_admin__family_manage'));
+        $manager->addContainer($container)->buildContainers();
 
-        return $this->render('@KookaburraUserAdmin/family/edit.html.twig');
+        return $pageManager->createBreadcrumbs($family->getId() > 0 ? 'Edit Family' : 'Add Family')
+            ->render(
+                [
+                    'containers' => $manager->getBuiltContainers(),
+                ]
+            );
+
     }
 
     /**
@@ -240,7 +248,7 @@ class FamilyController extends AbstractController
 
         $content = json_decode($request->getContent(), true);
 
-        if ($request->getContentType() === 'json' && $content['panelName'] === 'Students')
+        if ($request->getContent() !== '' && $content['panelName'] === 'Students')
         {
             $addChild->submit($content);
             $data = [];
@@ -321,7 +329,7 @@ class FamilyController extends AbstractController
 
         $content = json_decode($request->getContent(), true);
 
-        if ($request->getContentType() === 'json' && $content['panelName'] === 'Adults')
+        if ($request->getContent() !== '' && $content['panelName'] === 'Adults')
         {
             $adults = new ArrayCollection(FamilyManager::getAdults($family));
             $addAdult->submit($content);
@@ -394,7 +402,7 @@ class FamilyController extends AbstractController
     {
         $form = $this->createForm(FamilyChildType::class, $student, ['action' => $this->generateUrl('user_admin__family_student_edit', ['family' => $family->getId(), 'student' => $student->getId()])]);
 
-        if ($request->getContentType() === 'json')
+        if ($request->getContent() !== '')
         {
             $data = [];
             $data['status'] = 'success';
@@ -442,7 +450,7 @@ class FamilyController extends AbstractController
     {
         $form = $this->createForm(FamilyAdultType::class, $adult, ['action' => $this->generateUrl('user_admin__family_adult_edit', ['family' => $family->getId(), 'adult' => $adult->getId()])]);
 
-        if ($request->getContentType() === 'json')
+        if ($request->getContent() !== '')
         {
             $data = [];
             $data['status'] = 'success';

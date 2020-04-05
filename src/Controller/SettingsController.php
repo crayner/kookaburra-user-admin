@@ -42,8 +42,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Class SettingsController
  * @package Kookaburra\UserAdmin\Controller
- * @Route("/user/admin", name="user_admin__")
- */
+*/
 class SettingsController extends AbstractController
 {
     /**

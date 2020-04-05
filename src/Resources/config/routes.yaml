@@ -2,3 +2,11 @@ controllers:
     resource: '@KookaburraUserAdminBundle/Controller/'
     type: annotation
     schemes: [ 'https' ]
+    # this is added to the beginning of all imported route URLs
+    prefix: '/user/admin'
+    # this is added to the beginning of all imported route names
+    name_prefix: 'user_admin__'
+controllers_noprefix:
+    resource: '@KookaburraUserAdminBundle/ControllerNoPrefix/'
+    type: annotation
+    schemes: [ 'https' ]

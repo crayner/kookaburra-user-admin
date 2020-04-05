@@ -37,7 +37,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Class PreferenceController
  * @package App\Controller
- * @Route("/user/admin",name="user_admin__")
  */
 class PreferenceController extends AbstractController
 {

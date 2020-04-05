@@ -32,8 +32,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class DistrictController
  * @package Kookaburra\UserAdmin\Controller
- * @Route("/user/admin", name="user_admin__")
- */
+*/
 
 class DistrictController extends AbstractController
 {

@@ -36,7 +36,6 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class RoleController
  * @package Kookaburra\UserAdmin\Controller
- * @Route("/user/admin",name="user_admin__")
  */
 class RoleController extends AbstractController
 {

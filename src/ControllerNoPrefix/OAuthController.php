@@ -1,11 +1,15 @@
 <?php
-namespace Kookaburra\UserAdmin\Controller;
+namespace Kookaburra\UserAdmin\ControllerNoPrefix;
 
 use Kookaburra\UserAdmin\Manager\GoogleAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class OAuthController
+ * @package Kookaburra\UserAdmin\Controller
+ */
 class OAuthController extends AbstractController
 {
     /**

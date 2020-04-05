@@ -1,6 +1,6 @@
 <?php
 
-namespace Kookaburra\UserAdmin\Controller;
+namespace Kookaburra\UserAdmin\ControllerNoPrefix;
 
 use Kookaburra\UserAdmin\Entity\Person;
 use App\Provider\ProviderFactory;

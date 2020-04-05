@@ -37,8 +37,7 @@ use Symfony\Component\Validator\Validation;
 /**
  * Class PhotoImportController
  * @package Kookaburra\UserAdmin\Controller
- * @Route("/user/admin", name="user_admin__")
- */
+*/
 class PhotoImportController extends AbstractController
 {
     /**

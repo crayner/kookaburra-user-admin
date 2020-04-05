@@ -33,7 +33,6 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class RegistrationController
  * @package App\Controller
- * @Route("/user/admin",name="user_admin__")
  */
 class RegistrationController extends AbstractController
 {
