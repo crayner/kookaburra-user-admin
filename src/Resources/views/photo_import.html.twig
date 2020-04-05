@@ -1,24 +1,15 @@
 {% trans_default_domain 'UserAdmin' %}
-
-{% extends 'kookaburra.html.twig' %}
-
-{% set module = {'baseURL': 'user_admin', 'crumbs': [{uri: 'user_admin__manage', name: 'People Admin'}], title: 'Import People Photos', domain: 'UserAdmin'} %}
-{% set breadcrumbs = 'new' %}
-{% set moduleName = 'UserAdmin' %}
-
-{% block content %}
-    <h3>{{ 'Import Images'|trans }}</button>
-    </h3>
-    <div id="photo_loader" style="min-height: 100px"></div>
-    <div class="info" style="clear: both;">
-        <h4 class="info">{{ 'Notes'|trans }}</h4>
-        <p>{{ 'Use this page to drag and drop images from your computer to the site for the targeted individual. Existing images are replaced.'|trans }}</p>
-        <ol>
-            <li>{{ 'File Name - The system modifies the filename when linked to the correct person.'|trans }}</li>
-            <li>{{ 'File Type * - Images must be formatted as JPG or PNG.'|trans }}</li>
-            <li>{{ 'Image Size * - Displayed at 240px by 320px.'|trans }}</li>
-            <li>{{ 'Size Range * - Accepts images up to 360px by 480px.'|trans }}</li>
-            <li>{{ 'Aspect Ratio Range * - Accepts aspect ratio between 0.7:1 and 0.84:1.'|trans }}</li>
-        </ol>
-    </div>
-{% endblock content %}
+<h3>{{ 'Import Images'|trans }}</button>
+</h3>
+<div id="photo_loader" style="min-height: 100px"></div>
+<div class="info" style="clear: both;">
+    <h4 class="info">{{ 'Notes'|trans }}</h4>
+    <p>{{ 'Use this page to drag and drop images from your computer to the site for the targeted individual. Existing images are replaced.'|trans }}</p>
+    <ol>
+        <li>{{ 'File Name - The system modifies the filename when linked to the correct person.'|trans }}</li>
+        <li>{{ 'File Type * - Images must be formatted as JPG or PNG.'|trans }}</li>
+        <li>{{ 'Image Size * - Displayed at 240px by 320px.'|trans }}</li>
+        <li>{{ 'Size Range * - Accepts images up to 360px by 480px.'|trans }}</li>
+        <li>{{ 'Aspect Ratio Range * - Accepts aspect ratio between 0.7:1 and 0.84:1.'|trans }}</li>
+    </ol>
+</div>

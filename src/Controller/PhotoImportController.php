@@ -15,6 +15,7 @@
 
 namespace Kookaburra\UserAdmin\Controller;
 
+use App\Manager\PageManager;
 use App\Util\ImageHelper;
 use App\Util\StringHelper;
 use App\Util\TranslationsHelper;
@@ -42,21 +43,28 @@ class PhotoImportController extends AbstractController
 {
     /**
      * import
-     * @param Request $request
+     * @param PhotoImporter $importer
+     * @param PageManager $pageManager
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/photo/import/",name="import_photos")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function import(PhotoImporter $importer)
+    public function import(PhotoImporter $importer, PageManager $pageManager)
     {
         $importer->setPhotoLoaderScript();
+        if ($pageManager->isNotReadyForJSON()) return $pageManager->getBaseResponse();
 
-        return $this->render('@KookaburraUserAdmin/photo_import.html.twig');
+       return $pageManager->createBreadcrumbs('Import People Photos')
+           ->render(['special' => $importer->toArray()]);
     }
 
     /**
      * uploadPhoto
      * @Route("/personal/photo/{person}/upload/",name="upload_photos")
      * @Security("is_granted('ROLE_ROUTE', ['user_admin__import_photos'])")
+     * @param Request $request
+     * @param Person $person
+     * @return JsonResponse
      */
     public function uploadPhoto(Request $request, Person $person)
     {
@@ -64,7 +72,7 @@ class PhotoImportController extends AbstractController
 
         $validator = Validation::createValidator();
         $constraints = [
-            new Image(['maxHeight' => 480, 'maxWidth' => 360, 'mimeTypes' => ['image/jpeg', 'image/png'], 'mimeTypesMessage' => 'The image is not a JPG/JPEG/PNG file type.', 'maxRatio' => 0.84, 'minRatio' => 0.7, 'minHeight' => 240]),
+            new Image(['maxHeight' => 480, 'maxWidth' => 360, 'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif', 'image/jpeg'], 'mimeTypesMessage' => 'The image is not a JPG/JPEG/GIF/PNG file type.', 'maxRatio' => 0.84, 'minRatio' => 0.7, 'minHeight' => 320, 'minWidth' => 240]),
         ];
         $violations = $validator->validate($file, $constraints);
 

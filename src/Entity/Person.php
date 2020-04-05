@@ -650,8 +650,12 @@ class Person implements EntityInterface
      * @ASSERTLOCAL\ReactImage(
      *     maxSize = "750k",
      *     mimeTypes = {"image/jpg","image/gif","image/png","image/jpeg"},
-     *     maxRatio = 1,
-     *     minRatio = 0.7
+     *     maxRatio = 0.84,
+     *     minRatio = 0.7,
+     *     minWidth = 240,
+     *     maxWidth = 360,
+     *     maxHeight = 320,
+     *     minHeight = 480
      * )
      */
     private $image_240;
