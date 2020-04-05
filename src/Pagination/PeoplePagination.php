@@ -73,7 +73,7 @@ class PeoplePagination extends AbstractPaginationManager
             ->setContentKey(['family'])
             ->setContentType('link')
             ->setSort(true)
-            ->setOptions(['route' => 'user_admin__family_manage_edit', 'route_options' => ['family' => 'family_id']])
+            ->setOptions(['route' => 'user_admin__family_edit', 'route_options' => ['family' => 'family_id']])
             ->setSearch(true)
             ->setClass('column hidden sm:table-cell relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);
@@ -124,7 +124,7 @@ class PeoplePagination extends AbstractPaginationManager
 
         $action = new PaginationAction();
         $action->setTitle('Edit Person')
-            ->setAClass('')
+            ->setAClass('thickbox p-3 sm:p-0')
             ->setColumnClass('column p-2 sm:p-3')
             ->setSpanClass('fas fa-edit fa-fw fa-1-5x text-gray-800 hover:text-purple-500')
             ->setRoute('user_admin__edit')
@@ -133,7 +133,7 @@ class PeoplePagination extends AbstractPaginationManager
 
         $action = new PaginationAction();
         $action->setTitle('Delete Person')
-            ->setAClass('')
+            ->setAClass('thickbox p-3 sm:p-0')
             ->setColumnClass('column p-2 sm:p-3')
             ->setSpanClass('far fa-trash-alt fa-fw fa-1-5x text-gray-800 hover:text-red-500')
             ->setRoute('user_admin__delete')
@@ -144,7 +144,7 @@ class PeoplePagination extends AbstractPaginationManager
 
         $action = new PaginationAction();
         $action->setTitle('Reset Password')
-            ->setAClass('')
+            ->setAClass('thickbox p-3 sm:p-0')
             ->setColumnClass('column p-2 sm:p-3')
             ->setSpanClass('fas fa-user-lock fa-fw fa-1-5x text-gray-800 hover:text-indigo-500')
             ->setRoute('user_admin__reset_password')

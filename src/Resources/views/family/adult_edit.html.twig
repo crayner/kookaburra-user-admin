@@ -5,7 +5,7 @@
 {% set module = {'baseURL': 'user_admin', 'crumbs': [
     {uri: 'user_admin__manage', name: 'People Admin'},
     {uri: 'user_admin__family_manage', name: 'Manage Families'},
-    {uri: 'user_admin__family_manage_edit', uri_params: {family: family.id, tabName: 'Students'} , name: 'Edit Family'}
+    {uri: 'user_admin__family_edit', uri_params: {family: family.id, tabName: 'Students'} , name: 'Edit Family'}
 ], title: 'Edit Adult', domain: 'UserAdmin'} %}
 {% set breadcrumbs = 'new' %}
 {% set moduleName = 'UserAdmin' %}

@@ -18,6 +18,7 @@ namespace Kookaburra\UserAdmin\Controller;
 use App\Container\Container;
 use App\Container\ContainerManager;
 use App\Container\Panel;
+use App\Manager\PageManager;
 use App\Provider\ProviderFactory;
 use App\Util\ErrorMessageHelper;
 use App\Util\TranslationsHelper;
@@ -57,24 +58,29 @@ class FamilyController extends AbstractController
      * familyManage
      * @Route("/family/manage/",name="family_manage")
      * @IsGranted("ROLE_ROUTE")
-     * @param Request $request
      * @param FamilyPagination $pagination
-     * @param FamilyManager $manager
+     * @param PageManager $pageManager
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function familyManage(FamilyPagination $pagination)
+    public function familyManage(FamilyPagination $pagination, PageManager $pageManager)
     {
-        $pagination->setContent([])->setPageMax(25)->setContentLoader($this->generateUrl('user_admin__family_content_loader'))
+        if ($pageManager->isNotReadyForJSON()) return $pageManager->getBaseResponse();
+
+        $pagination->setContent([])
+            ->setAddElementRoute($this->generateUrl('user_admin__family_add'))
+            ->setContentLoader($this->generateUrl('user_admin__family_content_loader'))
             ->setPaginationScript();
 
-        return $this->render('@KookaburraUserAdmin/family/manage.html.twig');
+        return $pageManager->createBreadcrumbs('Manage Families')
+            ->render(['pagination' => $pagination->toArray()]);
     }
 
     /**
      * manageContent
      * @Route("/family/content/loader/", name="family_content_loader")
-     * @Security("is_granted('ROLE_ROUTE', ['user_admin__family_manage'])")
+     * @IsGranted("ROLE_ROUTE")
      * @param FamilyPagination $pagination
+     * @param FamilyManager $manager
      * @return JsonResponse
      */
     public function manageContent(FamilyPagination $pagination, FamilyManager $manager)
@@ -96,8 +102,8 @@ class FamilyController extends AbstractController
      * @param ContainerManager $manager
      * @param Family|null $family
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/family/{family}/edit/{tabName}",name="family_manage_edit")
-     * @Route("/family/add/",name="family_manage_add")
+     * @Route("/family/{family}/edit/{tabName}",name="family_edit")
+     * @Route("/family/add/",name="family_add")
      * @IsGranted("ROLE_ROUTE")
      */
     public function familyEdit(Request $request, FamilyChildrenPagination $childrenPagination, FamilyAdultsPagination $adultsPagination, ContainerManager $manager, FamilyRelationshipManager $relationshipManager, ?Family $family = null, string $tabName = 'General')
@@ -105,7 +111,7 @@ class FamilyController extends AbstractController
         TranslationsHelper::setDomain('UserAdmin');
 
         $family = $family ?: new Family();
-        $action = intval($family->getId()) > 0 ? $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => $tabName]) : $this->generateUrl('user_admin__family_manage_add', ['tabName' => $tabName]);
+        $action = intval($family->getId()) > 0 ? $this->generateUrl('user_admin__family_edit', ['family' => $family->getId(), 'tabName' => $tabName]) : $this->generateUrl('user_admin__family_manage_add', ['tabName' => $tabName]);
         $form = $this->createForm(FamilyGeneralType::class, $family,
             ['action' => $action]
         );
@@ -124,7 +130,7 @@ class FamilyController extends AbstractController
                 if ($data['status'] === 'success' && $id !== $family->getId())
                 {
                     $form = $this->createForm(FamilyGeneralType::class, $family,
-                        ['action' => $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), $tabName => 'General'])]
+                        ['action' => $this->generateUrl('user_admin__family_edit', ['family' => $family->getId(), $tabName => 'General'])]
                     );
                 }
                 $manager->singlePanel($form->createView());
@@ -168,14 +174,14 @@ class FamilyController extends AbstractController
         ]);
         $container->addPanel($panel->setDisabled(intval($family->getId()) === 0)->setContent($content));
 
-        $manager->addContainer($container)->buildContainers();
+        $manager->addContainer($container)->buildContainer();
 
         return $this->render('@KookaburraUserAdmin/family/edit.html.twig');
     }
 
     /**
      * familyDelete
-     * @Route("/family/{family}/delete/",name="family_manage_delete")
+     * @Route("/family/{family}/delete/",name="family_delete")
      * @IsGranted("ROLE_ROUTE")
      * @param Family $family
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -213,7 +219,7 @@ class FamilyController extends AbstractController
             $request->getSession()->getBag('flashes')->add('error', ['return.error.1',[],'messages']);
         }
 
-        return $this->redirectToRoute('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => 'Students']);
+        return $this->redirectToRoute('user_admin__family_edit', ['family' => $family->getId(), 'tabName' => 'Students']);
     }
 
     /**
@@ -224,7 +230,7 @@ class FamilyController extends AbstractController
      * @param FamilyChildrenPagination $childrenPagination
      * @return JsonResponse
      * @Route("/family/{family}/add/child/",name="family_child_add",methods={"POST"})
-     * @Security("is_granted('ROLE_ROUTE', ['user_admin__family_manage_edit'])")
+     * @Security("is_granted('ROLE_ROUTE', ['user_admin__family_edit'])")
      */
     public function familyChildAdd(Request $request, Family $family, ContainerManager $manager, FamilyChildrenPagination $childrenPagination)
     {
@@ -246,7 +252,7 @@ class FamilyController extends AbstractController
                 $data = $provider->persistFlush($child, $data);
 
                 if ($data['status'] === 'success') {
-                    $data['redirect'] =  $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => 'Students']);
+                    $data['redirect'] =  $this->generateUrl('user_admin__family_edit', ['family' => $family->getId(), 'tabName' => 'Students']);
                     $data['status'] = 'redirect';
                     $this->addFlash('success', 'return.success.0');
                 }
@@ -294,7 +300,7 @@ class FamilyController extends AbstractController
             $request->getSession()->getBag('flashes')->add('error', ['return.error.1',[],'messages']);
         }
 
-        return $this->redirectToRoute('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => 'Adults']);
+        return $this->redirectToRoute('user_admin__family_edit', ['family' => $family->getId(), 'tabName' => 'Adults']);
     }
 
     /**
@@ -305,7 +311,7 @@ class FamilyController extends AbstractController
      * @param FamilyAdultsPagination $adultsPagination
      * @return JsonResponse
      * @Route("/family/{family}/add/adult/",name="family_adult_add",methods={"POST"})
-     * @Security("is_granted('ROLE_ROUTE', ['user_admin__family_manage_edit'])")
+     * @Security("is_granted('ROLE_ROUTE', ['user_admin__family_edit'])")
      */
     public function familyAdultAdd(Request $request, Family $family, ContainerManager $manager, FamilyAdultsPagination $adultsPagination)
     {
@@ -328,7 +334,7 @@ class FamilyController extends AbstractController
 
                 $data['errors'] = array_unique($data['errors'], SORT_REGULAR);
                 if ($data['status'] === 'success') {
-                    $data['redirect'] =  $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => 'Adults']);
+                    $data['redirect'] =  $this->generateUrl('user_admin__family_edit', ['family' => $family->getId(), 'tabName' => 'Adults']);
                     $data['status'] = 'redirect';
                     $this->addFlash('success', 'return.success.0');
                     $priority = 1;
@@ -361,7 +367,7 @@ class FamilyController extends AbstractController
     /**
      * familyManage
      * @Route("/family/{family}/relationships/",name="family_relationships", methods={"POST"})
-     * @Security("is_granted('ROLE_ROUTE', ['user_admin__family_manage_edit'])")
+     * @Security("is_granted('ROLE_ROUTE', ['user_admin__family_edit'])")
      * @param Request $request
      * @param Family $family
      * @param FamilyRelationshipManager $manager
@@ -371,7 +377,7 @@ class FamilyController extends AbstractController
     {
         $manager->handleRequest($request, $family);
 
-        return $this->redirectToRoute('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => 'Relationships']);
+        return $this->redirectToRoute('user_admin__family_edit', ['family' => $family->getId(), 'tabName' => 'Relationships']);
     }
 
     /**
@@ -403,7 +409,7 @@ class FamilyController extends AbstractController
                 $data['form'] = $manager->getFormFromContainer('formContent', 'single');
                 if ($data['status'] === 'success') {
                     $data['status'] = 'redirect';
-                    $data['redirect'] = $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => 'Students']);
+                    $data['redirect'] = $this->generateUrl('user_admin__family_edit', ['family' => $family->getId(), 'tabName' => 'Students']);
                     $this->addFlash('success', 'return.success.0');
                 }
                 return new JsonResponse($data, 200);
@@ -451,7 +457,7 @@ class FamilyController extends AbstractController
                 $data['form'] = $manager->getFormFromContainer('formContent', 'single');
                 if ($data['status'] === 'success') {
                     $data['status'] = 'redirect';
-                    $data['redirect'] = $this->generateUrl('user_admin__family_manage_edit', ['family' => $family->getId(), 'tabName' => 'Adults']);
+                    $data['redirect'] = $this->generateUrl('user_admin__family_edit', ['family' => $family->getId(), 'tabName' => 'Adults']);
                     $this->addFlash('success', 'return.success.0');
                 }
                 return new JsonResponse($data, 200);

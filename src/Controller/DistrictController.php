@@ -139,7 +139,7 @@ class DistrictController extends AbstractController
     /**
      * refreshDistrictList
      * @Route("/district/refresh/",name="district_refresh")
-     * @Security("is_granted('ROLE_ANY_ROUTE', ['user_admin__edit','user_admin__family_manage_edit'])")
+     * @Security("is_granted('ROLE_ANY_ROUTE', ['user_admin__edit','user_admin__family_edit'])")
      */
     public function refreshDistrictList()
     {

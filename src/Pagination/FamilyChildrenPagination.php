@@ -74,7 +74,7 @@ class FamilyChildrenPagination extends AbstractPaginationManager
 
         $action = new PaginationAction();
         $action->setTitle('Edit')
-            ->setAClass('')
+            ->setAClass('thickbox p-3 sm:p-0')
             ->setColumnClass('column p-2 sm:p-3')
             ->setSpanClass('fas fa-edit fa-fw fa-1-5x text-gray-700')
             ->setRoute('user_admin__family_student_edit')
@@ -83,7 +83,7 @@ class FamilyChildrenPagination extends AbstractPaginationManager
 
         $action = new PaginationAction();
         $action->setTitle('Remove Child from Family')
-            ->setAClass('')
+            ->setAClass('thickbox p-3 sm:p-0')
             ->setColumnClass('column p-2 sm:p-3')
             ->setSpanClass('fas fa-eraser fa-fw fa-1-5x text-gray-700')
             ->setRoute('user_admin__family_child_remove')
@@ -93,7 +93,7 @@ class FamilyChildrenPagination extends AbstractPaginationManager
 
         $action = new PaginationAction();
         $action->setTitle('Change Password')
-            ->setAClass('')
+            ->setAClass('thickbox p-3 sm:p-0')
             ->setColumnClass('column p-2 sm:p-3')
             ->setSpanClass('fas fa-user-lock fa-fw fa-1-5x text-gray-700')
             ->setRoute('user_admin__reset_password')
