@@ -1,5 +1,6 @@
 'Basic Information': 'Thông tin cơ bản'
 Title: 'Tiêu đề'
+Installed: 'Đã cài đặt'
 person:
     title:
         ms: Ms
@@ -27,6 +28,7 @@ person:
         fax: Facsimile
         pager: 'Máy nhắn tin'
         other: Khác
+'Please Select...': 'Please Select...'
 Surname: Họ
 'Family name as shown in ID documents.': 'Tên của gia đình như ở trong thẻ ID(CMND).'
 'Given Names': 'Given Names'
@@ -1130,7 +1132,7 @@ Notes: 'Ghi chú'
 'Please note the following requirements for images in preparing your ZIP file': 'Please note the following requirements for images in preparing your ZIP file'
 'File Name - The system modifies the filename when linked to the correct person.': 'File Name - The system modifies the filename when linked to the correct person.'
 'Folder * - The ZIP file must not contain any folders, only files.': 'Folder * - The ZIP file must not contain any folders, only files.'
-'File Type * - Images must be formatted as JPG or PNG.': 'File Type * - Images must be formatted as JPG or PNG.'
+'File Type * - Images must be formatted as JPG, GIF or PNG.': 'File Type * - Images must be formatted as JPG, GIF or PNG.'
 'Image Size * - Displayed at 240px by 320px.': 'Image Size * - Displayed at 240px by 320px.'
 'Size Range * - Accepts images up to 360px by 480px.': 'Size Range * - Accepts images up to 360px by 480px.'
 'Aspect Ratio Range * - Accepts aspect ratio between 0.7:1 and 0.84:1.': 'Aspect Ratio Range * - Accepts aspect ratio between 0.7:1 and 0.84:1.'
@@ -1147,7 +1149,7 @@ Date: 'Ngày'
 '{name} upload failed...': '{name} upload failed...'
 'Target this person...': 'Target this person...'
 'Replace this image': 'Replace this image'
-'Images [.jpg, .png, .jpeg] only': 'Images [.jpg, .png, .jpeg] only'
+'Images [.jpg, .png, .jpeg, .gif] only': 'Images [.jpg, .png, .jpeg, .gif] only'
 'Use this page to drag and drop images from your computer to the site for the targeted individual. Existing images are replaced.': 'Use this page to drag and drop images from your computer to the site for the targeted individual. Existing images are replaced.'
 Import: 'Nhập vào'
 'People Management': 'People Management'
@@ -1202,3 +1204,15 @@ Password: 'Mật khẩu'
 'Login with Google': 'Truy cập cùng Google'
 Language: 'Ngôn Ngữ'
 'User Admin': 'Quản trị Người dùng'
+Generate: Tạo
+'Copy this password if required': 'Copy this password if required'
+'{name} has been deleted.': '{name} has been deleted.'
+Admin: "Quản\_trị"
+'Created under the': 'Được tạo ra dưới'
+Expected: 'Kỳ vọng'
+Kookaburra: Kookaburra
+Learn: 'Học tập'
+People: 'Con Người'
+'Powered by': 'Phát triển bởi'
+'The height and width minimum is 320 x 240px. The image supplied was {height} x {width}px.': 'The height and width minimum is 320 x 240px. The image supplied was {height} x {width}px.'
+'The value must be set.': 'The value must be set.'

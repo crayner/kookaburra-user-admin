@@ -1,5 +1,6 @@
 'Basic Information': 'Informazioni di Base'
 Title: Titolo
+Installed: Installato
 person:
     title:
         ms: Ms
@@ -27,6 +28,7 @@ person:
         fax: Facsimile
         pager: Pager
         other: Altro
+'Please Select...': 'Please Select...'
 Surname: Cognome
 'Family name as shown in ID documents.': 'Cognome come indicato nei documenti d''identit&agrave.'
 'Given Names': 'Given Names'
@@ -1009,7 +1011,7 @@ personfield:
     type:
         varchar: 'Testo breve (max 255 caratteri)'
         text: 'Testo Lungo'
-        date: Data
+        date: Dati
         url: Link
         select: Dropdown
     options:
@@ -1130,7 +1132,7 @@ Notes: Note
 'Please note the following requirements for images in preparing your ZIP file': 'Please note the following requirements for images in preparing your ZIP file'
 'File Name - The system modifies the filename when linked to the correct person.': 'File Name - The system modifies the filename when linked to the correct person.'
 'Folder * - The ZIP file must not contain any folders, only files.': 'Folder * - The ZIP file must not contain any folders, only files.'
-'File Type * - Images must be formatted as JPG or PNG.': 'File Type * - Images must be formatted as JPG or PNG.'
+'File Type * - Images must be formatted as JPG, GIF or PNG.': 'File Type * - Images must be formatted as JPG, GIF or PNG.'
 'Image Size * - Displayed at 240px by 320px.': 'Image Size * - Displayed at 240px by 320px.'
 'Size Range * - Accepts images up to 360px by 480px.': 'Size Range * - Accepts images up to 360px by 480px.'
 'Aspect Ratio Range * - Accepts aspect ratio between 0.7:1 and 0.84:1.': 'Aspect Ratio Range * - Accepts aspect ratio between 0.7:1 and 0.84:1.'
@@ -1147,7 +1149,7 @@ Date: Data
 '{name} upload failed...': '{name} upload failed...'
 'Target this person...': 'Target this person...'
 'Replace this image': 'Replace this image'
-'Images [.jpg, .png, .jpeg] only': 'Images [.jpg, .png, .jpeg] only'
+'Images [.jpg, .png, .jpeg, .gif] only': 'Images [.jpg, .png, .jpeg, .gif] only'
 'Use this page to drag and drop images from your computer to the site for the targeted individual. Existing images are replaced.': 'Use this page to drag and drop images from your computer to the site for the targeted individual. Existing images are replaced.'
 Import: Importa
 'People Management': 'People Management'
@@ -1202,3 +1204,15 @@ Password: Password
 'Login with Google': 'Login con Google'
 Language: Lingua
 'User Admin': 'Amministrazione Utenti'
+Generate: Crea
+'Copy this password if required': 'Copy this password if required'
+'{name} has been deleted.': '{name} has been deleted.'
+Admin: Admin
+'Created under the': 'Creato sotto la'
+Expected: Previsto
+Kookaburra: Kookaburra
+Learn: Apprendimento
+People: Persone
+'Powered by': 'Creato da'
+'The height and width minimum is 320 x 240px. The image supplied was {height} x {width}px.': 'The height and width minimum is 320 x 240px. The image supplied was {height} x {width}px.'
+'The value must be set.': 'The value must be set.'
