@@ -35,7 +35,7 @@ class FamilyAdultsPagination extends AbstractPaginationManager
             ->setContentKey(['fullName'])
             ->setContentType('link')
             ->setOptions(['route' => 'user_admin__edit', 'route_options' => ['person' => 'person']])
-            ->setClass('column relative pr-4 cursor-pointer widthAuto');
+            ->setClass('column relative pr-4 cursor-pointer');
         $row->addColumn($column);
 
         $column = new PaginationColumn();

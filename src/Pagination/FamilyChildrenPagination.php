@@ -37,7 +37,7 @@ class FamilyChildrenPagination extends AbstractPaginationManager
         $column->setLabel('Photo')
             ->setContentKey('photo')
             ->setContentType('image')
-            ->setClass('column relative pr-4 cursor-pointer widthAuto text-centre')
+            ->setClass('column relative pr-4 cursor-pointer widthAuto text-center')
             ->setOptions(['class' => 'max75 user'])
         ;
         $row->addColumn($column);
@@ -46,7 +46,7 @@ class FamilyChildrenPagination extends AbstractPaginationManager
         $column->setLabel('Name')
             ->setContentKey(['fullName'])
             ->setContentType('link')
-            ->setOptions(['route' => 'user_admin__edit', 'route_options' => ['person' => 'child_id']])
+            ->setOptions(['route' => 'user_admin__edit', 'route_options' => ['person' => 'person']])
             ->setSort(true)
             ->setClass('column relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);

@@ -194,6 +194,8 @@ class FamilyChild implements EntityInterface
             'comment' => $this->getComment(),
             'family_id' => $this->getFamily()->getId(),
             'child_id' => $this->getId(),
+            'person_id' => $this->getPerson()->getId(),
+            'id' => $this->getId(),
         ];
     }
 

@@ -67,7 +67,7 @@ class FamilyAdult implements EntityInterface
      * @ORM\Column(length=1, name="childDataAccess")
      * @Assert\Choice({"Y","N"})
      */
-    private $childDataAccess;
+    private $childDataAccess = 'N';
 
     /**
      * @var int|null
@@ -82,28 +82,28 @@ class FamilyAdult implements EntityInterface
      * @ORM\Column(length=1, name="contactCall")
      * @Assert\Choice({"Y","N"})
      */
-    private $contactCall;
+    private $contactCall = 'N';
 
     /**
      * @var string|null
      * @ORM\Column(length=1, name="contactSMS")
      * @Assert\Choice({"Y","N"})
      */
-    private $contactSMS;
+    private $contactSMS = 'N';
 
     /**
      * @var string|null
      * @ORM\Column(length=1, name="contactEmail")
      * @Assert\Choice({"Y","N"})
      */
-    private $contactEmail;
+    private $contactEmail = 'N';
 
     /**
      * @var string|null
      * @ORM\Column(length=1, name="contactMail")
      * @Assert\Choice({"Y","N"})
      */
-    private $contactMail;
+    private $contactMail = 'N';
 
     /**
      * @var Collection|FamilyRelationship[]
@@ -193,11 +193,20 @@ class FamilyAdult implements EntityInterface
     }
 
     /**
+     * isChildDataAccess
+     * @return bool
+     */
+    public function isChildDataAccess(): bool
+    {
+        return $this->getChildDataAccess() === 'Y';
+    }
+
+    /**
      * @return string|null
      */
     public function getChildDataAccess(): ?string
     {
-        return $this->childDataAccess;
+        return self::checkBoolean($this->childDataAccess);
     }
 
     /**
@@ -229,11 +238,21 @@ class FamilyAdult implements EntityInterface
     }
 
     /**
-     * @return string|null
+     * isContactCall
+     * @return bool
      */
-    public function getContactCall(): ?string
+    public function isContactCall(): bool
     {
-        return $this->contactCall;
+        return $this->getContactCall() === 'Y';
+    }
+
+    /**
+     * getContactCall
+     * @return string
+     */
+    public function getContactCall(): string
+    {
+        return self::checkBoolean($this->contactCall);
     }
 
     /**
@@ -247,11 +266,20 @@ class FamilyAdult implements EntityInterface
     }
 
     /**
-     * @return string|null
+     * isContactSMS
+     * @return bool
      */
-    public function getContactSMS(): ?string
+    public function isContactSMS(): bool
     {
-        return $this->contactSMS;
+        return $this->getContactSMS() === 'Y';
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactSMS(): string
+    {
+        return self::checkBoolean($this->contactSMS);
     }
 
     /**
@@ -265,11 +293,20 @@ class FamilyAdult implements EntityInterface
     }
 
     /**
-     * @return string|null
+     * isContactEmail
+     * @return bool
      */
-    public function getContactEmail(): ?string
+    public function isContactEmail(): bool
     {
-        return $this->contactEmail;
+        return $this->getContactEmail() === 'Y';
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactEmail(): string
+    {
+        return self::checkBoolean($this->contactEmail);
     }
 
     /**
@@ -283,11 +320,20 @@ class FamilyAdult implements EntityInterface
     }
 
     /**
-     * @return string|null
+     * isContactMail
+     * @return bool
      */
-    public function getContactMail(): ?string
+    public function isContactMail(): bool
     {
-        return $this->contactMail;
+        return $this->getContactMail() === 'Y';
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactMail(): string
+    {
+        return self::checkBoolean($this->contactMail);
     }
 
     /**
@@ -342,14 +388,16 @@ class FamilyAdult implements EntityInterface
             'fullName' => $person->formatName(['style' => 'formal']),
             'status' => TranslationsHelper::translate($person->getStatus(), [], 'UserAdmin'),
             'comment' => $this->getComment(),
+            'person_id' => $this->getPerson()->getId(),
             'adult_id' => $this->getId(),
             'family_id' => $this->getFamily()->getId(),
-            'childDataAccess' => TranslationsHelper::translate(($this->getChildDataAccess() === 'Y' ? 'Yes' : 'No'), [], 'messages'),
-            'phone' => TranslationsHelper::translate(($this->getContactCall() === 'Y' ? 'Yes' : 'No'), [], 'messages'),
-            'sms' => TranslationsHelper::translate(($this->getContactSMS() === 'Y' ? 'Yes' : 'No'), [], 'messages'),
-            'email' => TranslationsHelper::translate(($this->getContactEmail() === 'Y' ? 'Yes' : 'No'), [], 'messages'),
-            'mail' => TranslationsHelper::translate(($this->getContactMail() === 'Y' ? 'Yes' : 'No'), [], 'messages'),
+            'childDataAccess' => TranslationsHelper::translate(($this->isChildDataAccess() ? 'Yes' : 'No'), [], 'messages'),
+            'phone' => TranslationsHelper::translate(($this->isContactCall() ? 'Yes' : 'No'), [], 'messages'),
+            'sms' => TranslationsHelper::translate(($this->isContactSMS() ? 'Yes' : 'No'), [], 'messages'),
+            'email' => TranslationsHelper::translate(($this->isContactEmail() ? 'Yes' : 'No'), [], 'messages'),
+            'mail' => TranslationsHelper::translate(($this->isContactMail() ? 'Yes' : 'No'), [], 'messages'),
             'contactPriority' => $this->getContactPriority(),
+            'id' => $this->getId(),
         ];
     }
 

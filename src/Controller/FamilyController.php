@@ -22,21 +22,19 @@ use App\Manager\PageManager;
 use App\Provider\ProviderFactory;
 use App\Util\ErrorMessageHelper;
 use App\Util\TranslationsHelper;
-use Doctrine\Common\Collections\ArrayCollection;
 use Kookaburra\UserAdmin\Entity\Family;
 use Kookaburra\UserAdmin\Entity\FamilyAdult;
 use Kookaburra\UserAdmin\Entity\FamilyChild;
-use Kookaburra\UserAdmin\Form\Entity\ManageSearch;
 use Kookaburra\UserAdmin\Form\FamilyAdultType;
 use Kookaburra\UserAdmin\Form\FamilyChildType;
 use Kookaburra\UserAdmin\Form\FamilyGeneralType;
 use Kookaburra\UserAdmin\Form\RelationshipsType;
 use Kookaburra\UserAdmin\Manager\FamilyManager;
 use Kookaburra\UserAdmin\Manager\FamilyRelationshipManager;
+use Kookaburra\UserAdmin\Manager\Hidden\FamilyAdultSort;
 use Kookaburra\UserAdmin\Pagination\FamilyAdultsPagination;
 use Kookaburra\UserAdmin\Pagination\FamilyChildrenPagination;
 use Kookaburra\UserAdmin\Pagination\FamilyPagination;
-use Kookaburra\UserAdmin\Pagination\ManagePagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -158,7 +156,11 @@ class FamilyController extends AbstractController
         $panel = new Panel('Students', 'UserAdmin');
         $container->addPanel($panel->setDisabled(intval($family->getId()) === 0))->addForm('Students', $addChild->createView());
 
-        $adultsPagination->setContent(FamilyManager::getAdults($family, true))->setPageMax(25)->setTargetElement('pagination');
+        $adultsPagination->setDraggableSort()
+            ->setDraggableRoute('user_admin__family_adult_sort')
+            ->setContent(FamilyManager::getAdults($family, true))
+            ->setPageMax(25)
+            ->setTargetElement('pagination');
         $adult = new FamilyAdult($family);
         $addAdult = $this->createForm(FamilyAdultType::class, $adult, ['action' => $this->generateUrl('user_admin__family_adult_add', ['family' => $family->getId() ?: 0]), 'postFormContent' => $adultsPagination->toArray()]);
 
@@ -197,7 +199,6 @@ class FamilyController extends AbstractController
     public function familyDelete(Family $family, FamilyManager $manager, Request $request)
     {
         $manager->deleteFamily($family, $request->getSession()->getBag('flashes'));
-        dump($family);
 
         return $this->redirectToRoute('user_admin__family_manage');
     }
@@ -272,6 +273,9 @@ class FamilyController extends AbstractController
                 return new JsonResponse($data,200);
             }
         }
+
+        $manager->singlePanel($addChild->createView());
+        $data['form'] = $manager->getFormFromContainer('formContent', 'single');
         return new JsonResponse(ErrorMessageHelper::getInvalidInputsMessage([], true),400);
     }
 
@@ -324,14 +328,13 @@ class FamilyController extends AbstractController
     public function familyAdultAdd(Request $request, Family $family, ContainerManager $manager, FamilyAdultsPagination $adultsPagination)
     {
         $adult = new FamilyAdult($family);
-        $adultsPagination->setContent(FamilyManager::getAdults($family, true))->setPageMax(25)->setTargetElement('pagination');
+        $adultsPagination->setContent(FamilyManager::getAdults($family, true))->setTargetElement('pagination');
         $addAdult = $this->createForm(FamilyAdultType::class, $adult, ['action' => $this->generateUrl('user_admin__family_adult_add', ['family' => $family->getId()]), 'postFormContent' => $adultsPagination->toArray()]);
 
         $content = json_decode($request->getContent(), true);
 
         if ($request->getContent() !== '' && $content['panelName'] === 'Adults')
         {
-            $adults = new ArrayCollection(FamilyManager::getAdults($family));
             $addAdult->submit($content);
             if ($addAdult->isValid()) {
                 $data = [];
@@ -351,24 +354,16 @@ class FamilyController extends AbstractController
                         $result[$q] = $adult;
                     }
                     ProviderFactory::create(FamilyAdult::class)->persistFlush($adult);
-                } else {
-                    $errors = [];
-                    foreach($data['errors'] as $error)
-                        $errors[] = ['class' => $error['class'], 'message' => TranslationsHelper::translate($error['message'])];
-                    $data['errors'] = $errors;
                 }
-                return new JsonResponse($data,200);
             } else {
-                $data['status'] = 'error';
-                $data['errors'][] = ['class' => 'error', 'message' => TranslationsHelper::translate('return.error.1',[],'messages')];
-                $manager->singlePanel($addAdult->createView());
-                $data['form'] = $manager->getFormFromContainer('formContent', 'single');
-                return new JsonResponse($data,200);
+                $data = ErrorMessageHelper::getInvalidInputsMessage([], true);
             }
+
+            $manager->singlePanel($addAdult->createView());
+            $data['form'] = $manager->getFormFromContainer();
+            return new JsonResponse($data,200);
         }
-        $data = [];
-        $data['errors'][] = ['class' => 'error', 'message' => TranslationsHelper::translate('return.error.1',[],'messages')];
-        $data['status'] = 'error';
+        $data = ErrorMessageHelper::getDatabaseErrorMessage([], true);
         return new JsonResponse($data,400);
     }
 
@@ -392,14 +387,17 @@ class FamilyController extends AbstractController
      * familyStudentEdit
      * @param Family $family
      * @param FamilyChild $student
-     * @param Request $request
+     * @param PageManager $pageManager
      * @param ContainerManager $manager
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/family/{family}/student/{student}/edit/",name="family_student_edit")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function familyStudentEdit(Family $family, FamilyChild $student, Request $request, ContainerManager $manager)
+    public function familyStudentEdit(Family $family, FamilyChild $student, PageManager $pageManager, ContainerManager $manager)
     {
+        if ($pageManager->isNotReadyForJSON()) return $pageManager->getBaseResponse();
+        $request = $pageManager->getRequest();
+
         $form = $this->createForm(FamilyChildType::class, $student, ['action' => $this->generateUrl('user_admin__family_student_edit', ['family' => $family->getId(), 'student' => $student->getId()])]);
 
         if ($request->getContent() !== '')
@@ -428,26 +426,36 @@ class FamilyController extends AbstractController
                 return new JsonResponse($data, 200);
             }
         }
-        $manager->singlePanel($form->createView());
+        $manager->setReturnRoute($this->generateUrl('user_admin__family_edit', ['family' => $family->getId(), 'tabName' => 'Students']))->singlePanel($form->createView());
 
-        return $this->render('@KookaburraUserAdmin/family/student_edit.html.twig',
-            [
-                'family' => $family,
-            ]);
+        return $pageManager->createBreadcrumbs('Edit Student',
+                [
+                    ['uri' => 'user_admin__family_manage', 'name' => 'Manage Families'],
+                    ['uri' => 'user_admin__family_edit', 'uri_params' => ['family' => $family->getId(), 'tabName' => 'Students'] , 'name' => 'Edit Family']
+                ]
+            )
+            ->render(
+                [
+                    'containers' => $manager->getBuiltContainers(),
+                ]
+            );
     }
 
     /**
      * familyAdultEdit
      * @param Family $family
-     * @param FamilyChild $student
-     * @param Request $request
+     * @param FamilyAdult $adult
+     * @param PageManager $pageManager
      * @param ContainerManager $manager
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/family/{family}/adult/{adult}/edit/",name="family_adult_edit")
      * @IsGranted("ROLE_ROUTE")
      */
-    public function familyAdultEdit(Family $family, FamilyAdult $adult, Request $request, ContainerManager $manager)
+    public function familyAdultEdit(Family $family, FamilyAdult $adult, PageManager $pageManager, ContainerManager $manager)
     {
+        if ($pageManager->isNotReadyForJSON()) return $pageManager->getBaseResponse();
+        $request = $pageManager->getRequest();
+
         $form = $this->createForm(FamilyAdultType::class, $adult, ['action' => $this->generateUrl('user_admin__family_adult_edit', ['family' => $family->getId(), 'adult' => $adult->getId()])]);
 
         if ($request->getContent() !== '')
@@ -476,11 +484,36 @@ class FamilyController extends AbstractController
                 return new JsonResponse($data, 200);
             }
         }
-        $manager->singlePanel($form->createView());
+        $manager->setReturnRoute($this->generateUrl('user_admin__family_edit', ['family' => $family->getId(), 'tabName' => 'Adults']))->singlePanel($form->createView());
 
-        return $this->render('@KookaburraUserAdmin/family/adult_edit.html.twig',
-            [
-                'family' => $family,
-            ]);
+        return $pageManager->createBreadcrumbs('Edit Adult',
+                [
+                    ['uri' => 'user_admin__family_manage', 'name' => 'Manage Families'],
+                    ['uri' => 'user_admin__family_edit', 'uri_params' => ['family' => $family->getId(), 'tabName' => 'Adults'] , 'name' => 'Edit Family']
+                ]
+            )
+            ->render(
+                [
+                    'containers' => $manager->getBuiltContainers(),
+                ]
+            );
+    }
+
+    /**
+     * familyAdultSort
+     * @param FamilyAdult $source
+     * @param FamilyAdult $target
+     * @param FamilyAdultsPagination $pagination
+     * @param FamilyManager $familyManager
+     * @return JsonResponse
+     * @Route("/family/adult/{source}/{target}/sort/", name="family_adult_sort")
+     * @IsGranted("ROLE_ROUTE")
+     */
+    public function familyAdultSort(FamilyAdult $source, FamilyAdult $target, FamilyAdultsPagination $pagination, FamilyManager $familyManager)
+    {
+        $manager = new FamilyAdultSort($source, $target, $pagination);
+        $manager->setContent($familyManager::getAdults($source->getFamily(), true));
+
+        return new JsonResponse($manager->getDetails());
     }
 }

@@ -121,9 +121,10 @@ class FamilyManager
     /**
      * getAdults
      * @param Family $family
+     * @param bool $asArray
      * @return array
      */
-    public static function getAdults($family, bool $asArray = false): array
+    public static function getAdults(Family $family, bool $asArray = false): array
     {
         $result = ProviderFactory::getRepository(FamilyAdult::class)->findByFamily($family, $asArray);
         if ($asArray) {
@@ -140,6 +141,7 @@ class FamilyManager
     /**
      * getAdults
      * @param Family $family
+     * @param bool $asArray
      * @return array
      */
     public static function getChildren($family, bool $asArray = false): array

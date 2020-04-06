@@ -72,7 +72,7 @@ class FamilyChildRepository extends ServiceEntityRepository
             ->addOrderBy('p.firstName', 'ASC');
 
         if ($asArray)
-            return $query->select(['p.title','p.surname','p.firstName AS first','p.preferredName AS preferred','p.image_240 AS photo','p.status','c.id AS child_id','c.comment','f.id AS family_id','p.id AS person'])
+            return $query->select(['p.title','p.surname','p.firstName AS first','p.preferredName AS preferred','p.image_240 AS photo','p.status','c.id AS child_id','c.comment','f.id AS family_id','p.id AS person','c.id'])
                 ->getQuery()
                 ->getResult();
         return $query->select(['p', 'c'])

@@ -55,7 +55,7 @@ There are no records to display.: There are no records to display.
 Basic: Basic
 System: System
 Contact: Contact
-UserAdmin: User Admin
+UserAdmin: People Admin
 People Admin: People Admin
 Manage People: Manage People
 Edit Person: Edit Person
@@ -1205,7 +1205,7 @@ Password: Password
 Forgot Password: Forgot Password
 Login with Google: Login with Google
 Language: Language
-User Admin: User Admin
+User Admin: People Admin
 Generate: Generate
 Copy this password if required: Copy this password if required
 '{name} has been deleted.': '{name} has been deleted.'
@@ -1218,3 +1218,5 @@ People: People
 Powered by: Powered by
 The height and width minimum is 320 x 240px. The image supplied was {height} x {width}px.: The height and width minimum is 320 x 240px. The image supplied was {height} x {width}px.
 The value must be set.: The value must be set.
+Add Family: Add Family
+Remove Student from Family: Remove Student from Family

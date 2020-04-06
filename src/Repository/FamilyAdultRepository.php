@@ -116,7 +116,7 @@ class FamilyAdultRepository extends ServiceEntityRepository
      * @param Family|integer $family
      * @return array
      */
-    public function findByFamily($family, bool $asArray = false): array
+    public function findByFamily(Family $family, bool $asArray = false): array
     {
         $query = $this->createQueryBuilder('a')
             ->join('a.family', 'f')
@@ -126,7 +126,7 @@ class FamilyAdultRepository extends ServiceEntityRepository
             ->orderBy('a.contactPriority', 'ASC');
 
         if ($asArray)
-            return $query->select(['a.comment','a.contactPriority','a.contactSMS AS sms','a.contactMail AS mail','a.contactEmail AS email','a.contactCall AS phone','a.id AS adult_id','a.childDataAccess', 'p.status', 'p.title','p.firstName AS first', 'p.preferredName AS preferred', 'p.surname', 'f.id AS family_id', 'p.id AS person'])
+            return $query->select(['a.comment','a.contactPriority','a.contactSMS AS sms','a.contactMail AS mail','a.contactEmail AS email','a.contactCall AS phone','a.id AS adult_id','a.childDataAccess', 'p.status', 'p.title','p.firstName AS first', 'p.preferredName AS preferred', 'p.surname', 'f.id AS family_id', 'p.id AS person', 'a.id'])
                 ->getQuery()
                 ->getResult();
         return $query->select(['a','p', 's'])
