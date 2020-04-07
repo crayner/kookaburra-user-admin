@@ -41,21 +41,24 @@ class DistrictPagination extends AbstractPaginationManager
         $column = new PaginationColumn();
         $column->setLabel('Name')
             ->setContentKey(['name'])
-            ->setSort(true)
+            ->setSort()
+            ->setSearch()
             ->setClass('column relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);
 
         $column = new PaginationColumn();
         $column->setLabel('Territory')
             ->setContentKey(['territory'])
-            ->setSort(true)
+            ->setSort()
+            ->setSearch()
             ->setClass('column relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);
 
         $column = new PaginationColumn();
         $column->setLabel('Post Code')
             ->setContentKey(['postCode'])
-            ->setSort(true)
+            ->setSort()
+            ->setSearch()
             ->setClass('column relative pr-4 cursor-pointer widthAuto');
         $row->addColumn($column);
 
@@ -63,7 +66,7 @@ class DistrictPagination extends AbstractPaginationManager
         $action->setTitle('Edit')
             ->setAClass('thickbox p-3 sm:p-0')
             ->setColumnClass('column p-2 sm:p-3')
-            ->setSpanClass('fas fa-edit fa-fw fa-1-5x text-gray-700')
+            ->setSpanClass('fas fa-edit fa-fw fa-1-5x text-gray-800 hover:text-purple-500')
             ->setRoute('user_admin__district_edit')
             ->setRouteParams(['district' => 'id']);
         $row->addAction($action);
@@ -72,7 +75,7 @@ class DistrictPagination extends AbstractPaginationManager
         $action->setTitle('Delete')
             ->setAClass('thickbox p-3 sm:p-0')
             ->setColumnClass('column p-2 sm:p-3')
-            ->setSpanClass('far fa-trash-alt fa-fw fa-1-5x text-gray-700')
+            ->setSpanClass('far fa-trash-alt fa-fw fa-1-5x text-gray-800 hover:text-red-500')
             ->setRoute('user_admin__district_delete')
             ->setOnClick('areYouSure')
             ->setDisplayWhen('canDelete')

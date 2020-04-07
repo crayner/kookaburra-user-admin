@@ -47,4 +47,16 @@ class DistrictProvider implements EntityProviderInterface
         $result += $this->getRepository(Family::class)->countDistrictUsage($district);
         return $result;
     }
+
+    /**
+     * canDelete
+     * @param District|null $district
+     * @return bool
+     */
+    public function canDelete(?District $district = null): bool
+    {
+        $district = $district ?: $this->getEntity();
+        return $this->countUsage($district) === 0;
+    }
 }
+

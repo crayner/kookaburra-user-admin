@@ -148,7 +148,7 @@ class District implements EntityInterface
             'id' => $this->getId(),
             'territory' => $this->getTerritory(),
             'postCode' => $this->getPostCode(),
-            'canDelete' => ProviderFactory::create(District::class)->countUsage($this) === 0,
+            'canDelete' => ProviderFactory::create(District::class)->canDelete($this) === 0,
         ];
     }
 

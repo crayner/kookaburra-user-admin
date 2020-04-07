@@ -15,6 +15,8 @@
 
 namespace Kookaburra\UserAdmin\Controller;
 
+use App\Container\ContainerManager;
+use App\Manager\PageManager;
 use App\Provider\ProviderFactory;
 use App\Util\ErrorMessageHelper;
 use Kookaburra\UserAdmin\Entity\District;
@@ -25,7 +27,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\ChoiceList\View\ChoiceView;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -38,82 +39,77 @@ class DistrictController extends AbstractController
 {
     /**
      * manage
-     * @Route("/district/manage/",name="district_manage")
+     * @Route("/district/manage/", name="district_manage")
      * @IsGranted("ROLE_ROUTE")
+     * @param DistrictPagination $pagination
+     * @param PageManager $pageManager
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function manage(DistrictPagination $pagination)
+    public function manage(DistrictPagination $pagination, PageManager $pageManager)
     {
+        if ($pageManager->isNotReadyForJSON()) return $pageManager->getBaseResponse();
+
         $content = ProviderFactory::getRepository(District::class)->findBy([], ['territory' => 'ASC', 'name' => 'ASC']);
-        $pagination->setContent($content)->setPageMax(25)
+        $pagination->setContent($content)
+            ->setAddElementRoute($this->generateUrl('user_admin__district_add'))
             ->setPaginationScript();
+
+        return $pageManager->createBreadcrumbs('Manage Districts')
+            ->render(['pagination' => $pagination->toArray()]);
         return $this->render('@KookaburraUserAdmin/district/manage.html.twig');
     }
 
     /**
      * add
+     * @Route("/district/{district}/edit/{popup}",name="district_edit")
      * @Route("/district/add/{popup}",name="district_add")
      * @IsGranted("ROLE_ROUTE")
-     * @param Request $request
+     * @param PageManager $pageManager
+     * @param ContainerManager $manager
+     * @param District|null $district
      * @param string $popup
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function add(Request $request, string $popup = '')
+    public function edit(PageManager $pageManager, ContainerManager $manager, ?District $district = null, string $popup = '')
     {
-        $district = new District();
+        if ($pageManager->isNotReadyForJSON()) return $pageManager->setPopup($popup !== '')->getBaseResponse();
+        $request = $pageManager->getRequest();
 
-        $form = $this->createForm(DistrictType::class, $district);
+        if ($district === null)
+            $district = new District();
 
-        $form->handleRequest($request);
+        $form = $this->createForm(DistrictType::class, $district, ['action' => $district->getId() > 0 ? $this->generateUrl('user_admin__district_edit', ['popup' => $popup, 'district' => $district->getId()]) : $this->generateUrl('user_admin__district_add', ['popup' => $popup])]);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = ProviderFactory::create(District::class)->persistFlush($district, []);
-            ErrorMessageHelper::convertToFlash($data, $request->getSession()->getBag('flashes'));
-            if ($data['status'] === 'success') {
-                if ($popup === 'popup')
-                    return $this->render('components/closeWindow.html.twig');
-                else
-                    return $this->redirectToRoute('user_admin__district_manage');
+        if ($request->getContent() !== '') {
+            $form->submit(json_decode($request->getContent(), true));
+            if ($form->isValid()) {
+                $id = $district->getId();
+                $data = ProviderFactory::create(District::class)->persistFlush($district, []);
+                if ($district->getId() !== $id) {
+                    $data['redirect'] = $this->generateUrl('user_admin__district_edit', ['popup' => $popup, 'district' => $district->getId()]);
+                    $data['status'] = 'redirect';
+                    $request->getSession()->getBag('flashes')->add('success', 'return.success.0');
+                }
+            } else {
+                $data = ErrorMessageHelper::getInvalidInputsMessage([], true);
             }
+            $manager->singlePanel($form->createView());
+            $data['form'] = $manager->getFormFromContainer();
+            return new JsonResponse($data);
         }
 
-        return $this->render('@KookaburraUserAdmin/district/edit.html.twig',
-            [
-                'form' => $form->createView(),
-                'district' => $district,
-                'popup' => $popup === 'popup',
-            ]
-        );
-    }
+        if ($popup === '')
+            $manager->setReturnRoute($this->generateUrl('user_admin__district_manage'));
+        if ($district->getId() > 0)
+            $manager->setAddElementRoute($this->generateUrl('user_admin__district_add', ['popup' => $popup]));
+        $manager->singlePanel($form->createView());
 
-    /**
-     * edit
-     * @Route("/district/{district}/edit/",name="district_edit")
-     * @IsGranted("ROLE_ROUTE")
-     * @param District $district
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function edit(District $district, Request $request)
-    {
-        $form = $this->createForm(DistrictType::class, $district);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = ProviderFactory::create(District::class)->persistFlush($district, []);
-            ErrorMessageHelper::convertToFlash($data, $request->getSession()->getBag('flashes'));
-            if ($data['status'] === 'success') {
-                return $this->redirectToRoute('user_admin__district_manage');
-            }
-        }
-
-        return $this->render('@KookaburraUserAdmin/district/edit.html.twig',
-            [
-                'form' => $form->createView(),
-                'district' => $district,
-                'popup' => false,
-            ]
-        );
+        return $pageManager->setPopup(true)->createBreadcrumbs($district->getId() > 0 ? 'Edit District' : 'Add District')
+            ->render(
+                [
+                    'containers' => $manager->getBuiltContainers(),
+                ]
+            );
     }
 
     /**
@@ -130,7 +126,7 @@ class DistrictController extends AbstractController
         if ($provider->countUsage($district) === 0) {
             ErrorMessageHelper::convertToFlash($provider->remove($district, []), $flashBag);
         } else {
-            $this->addFlash('error', 'return.error.8');
+            $this->addFlash('error', 'return.error.0');
         }
         return $this->redirectToRoute('user_admin__district_manage');
     }
