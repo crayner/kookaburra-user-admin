@@ -17,6 +17,7 @@ namespace Kookaburra\UserAdmin\Controller;
 
 use App\Manager\PageManager;
 use App\Provider\ProviderFactory;
+use App\Util\ErrorMessageHelper;
 use Doctrine\DBAL\Driver\PDOException;
 use Kookaburra\SystemAdmin\Entity\Action;
 use Kookaburra\SystemAdmin\Entity\Permission;
@@ -76,18 +77,23 @@ class PermissionController extends AbstractController
     public function permissionToggle(Action $act, Role $role, PermissionManager $manager)
     {
         $em = $this->getDoctrine()->getManager();
-        if ($act->getRoles()->contains($role)) {
-            //remove the role from Action.
-            $act->removeRole($role);
-            $em->persist($act);
-            $em->flush();
-        } else {
-            // add Role to Action.
-            $act->addRole($role);
-            $em->persist($act);
-            $em->flush();
+        $data = ErrorMessageHelper::getSuccessMessage([], true);
+        try {
+            if ($act->getRoles()->contains($role)) {
+                //remove the role from Action.
+                $act->removeRole($role);
+                $em->persist($act);
+                $em->flush();
+            } else {
+                // add Role to Action.
+                $act->addRole($role);
+                $em->persist($act);
+                $em->flush();
+            }
+        } catch (\PDOException | PDOException | \Exception $e) {
+            $data = ErrorMessageHelper::getDatabaseErrorMessage([], true);
         }
 
-        return new JsonResponse($manager->getContent());
+        return new JsonResponse(array_merge($manager->getContent(), $data));
     }
 }

@@ -1220,3 +1220,4 @@ The height and width minimum is 320 x 240px. The image supplied was {height} x {
 The value must be set.: The value must be set.
 Add Family: Add Family
 Remove Student from Family: Remove Student from Family
+permission_help: 'Changes made to permissions are saved immediately. Changes are shown on success.  A warning is given on failure.'

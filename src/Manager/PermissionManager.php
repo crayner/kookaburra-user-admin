@@ -67,6 +67,8 @@ class PermissionManager implements SpecialInterface
         $tx['Filter Select'] = TranslationsHelper::translate('Filter Select', [], 'messages');
         $tx['Search for'] = TranslationsHelper::translate('Search For', [], 'messages');
         $tx['No results matched your search.'] = TranslationsHelper::translate('No results matched your search.', [], 'messages');
+        $tx['Manage Permissions'] = TranslationsHelper::translate('Manage Permissions');
+        $tx['permission_help'] = TranslationsHelper::translate('permission_help');
         return $tx;
     }
 }
