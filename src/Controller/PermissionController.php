@@ -15,17 +15,17 @@
 
 namespace Kookaburra\UserAdmin\Controller;
 
+use App\Manager\PageManager;
 use App\Provider\ProviderFactory;
 use Doctrine\DBAL\Driver\PDOException;
 use Kookaburra\SystemAdmin\Entity\Action;
-use Kookaburra\SystemAdmin\Entity\Module;
 use Kookaburra\SystemAdmin\Entity\Permission;
 use Kookaburra\SystemAdmin\Entity\Role;
-use Kookaburra\UserAdmin\Entity\PermissionSearch;
-use Kookaburra\UserAdmin\Form\PermissionSearchType;
+use Kookaburra\UserAdmin\Manager\PermissionManager;
+use Kookaburra\UserAdmin\Pagination\PermissionPagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -38,38 +38,20 @@ class PermissionController extends AbstractController
      * permissionManage
      * @Route("/permission/manage/", name="permission_manage")
      * @IsGranted("ROLE_ROUTE")
+     * @param PageManager $pageManager
+     * @param PermissionManager $manager
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function permissionManage(Request $request)
+    public function permissionManage(PageManager $pageManager, PermissionManager $manager)
     {
-        $search = $request->getSession()->exists('permission_search') ? $request->getSession()->get('permission_search') : new PermissionSearch();
-        if ($search->getRole() || $search->getModule())
-        {
-            if ($search->getRole())
-                $search->setRole(ProviderFactory::getRepository(Role::class)->find($search->getRole()->getId()));
-            if ($search->getModule())
-                $search->setModule(ProviderFactory::getRepository(Module::class)->find($search->getModule()->getId()));
-        }
-        $form = $this->createForm(PermissionSearchType::class, $search);
+        if ($pageManager->isNotReadyForJSON()) return $pageManager->getBaseResponse();
 
-        $form->handleRequest($request);
-        if ($form->get('clear')->isClicked()) {
-            $search = new PermissionSearch();
-            $form = $this->createForm(PermissionSearchType::class, $search);
-        }
-
-        $provider = ProviderFactory::create(Permission::class);
-        $permissions = $provider->searchPermissions($search);
-
-        $request->getSession()->set('permission_search', $search);
-
-        return $this->render('@KookaburraUserAdmin/permission/permission_manage.html.twig',
-            [
-                'form' => $form->createView(),
-                'permissions' => $permissions,
-                'roles' => ProviderFactory::getRepository(Role::class)->findBy([],['name'=>'ASC']),
-                'search' => $search,
-            ]
-        );
+        return $pageManager->createBreadCrumbs('Manage Permissions')
+            ->render(
+                [
+                    'special' => $manager->getContent(),
+                ]
+            );
     }
 
     /**
@@ -86,31 +68,26 @@ class PermissionController extends AbstractController
      * permissionManage
      * @Route("/permission/{act}/{role}/toggle/", name="permission_toggle")
      * @IsGranted("ROLE_ROUTE")
+     * @param Action $act
+     * @param Role $role
+     * @param PermissionManager $manager
+     * @return JsonResponse
      */
-    public function permissionToggle(Action $act, Role $role)
+    public function permissionToggle(Action $act, Role $role, PermissionManager $manager)
     {
-        $perm = ProviderFactory::getRepository(Permission::class)->findOneBy(['role' => $role, 'action' => $act]);
-        $em = ProviderFactory::getEntityManager();
-
-        if (is_null($perm))
-        {
-            $perm = new Permission();
-            try {
-                $em->persist($perm->setRole($role)->setAction($act));
-                $em->flush();
-                $this->addFlash('success', 'return.success.0');
-            } catch (PDOException | \PDOException $e) {
-                $this->addFlash('error', 'return.error.1');
-            }
+        $em = $this->getDoctrine()->getManager();
+        if ($act->getRoles()->contains($role)) {
+            //remove the role from Action.
+            $act->removeRole($role);
+            $em->persist($act);
+            $em->flush();
         } else {
-            try {
-                $em->remove($perm);
-                $em->flush();
-                $this->addFlash('success', 'return.success.0');
-            } catch (PDOException | \PDOException $e) {
-                $this->addFlash('error', 'return.error.1');
-            }
+            // add Role to Action.
+            $act->addRole($role);
+            $em->persist($act);
+            $em->flush();
         }
-        return $this->redirectToRoute('user_admin__permission_manage');
+
+        return new JsonResponse($manager->getContent());
     }
 }
