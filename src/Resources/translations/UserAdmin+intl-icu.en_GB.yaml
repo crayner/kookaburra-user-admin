@@ -363,13 +363,15 @@ Edit Role: Edit Role
 None: None
 All years: All years
 Current year only: Current year only
-Current/past years only: Current/past years only
-Current/future years only: Current/future years only
+Current/past years only: Current / Past years only
+Current/future years only: Current / Future years only
 Duplicate: Duplicate
 Short Name: Short Name
 Login Years: Login Years
 Manage Permissions: Manage Permissions
 Filter: Filter
+Core: Core
+Additional: Additional
 Module: Module
 Role: Role
 Clear Search: Clear Search
@@ -378,6 +380,8 @@ Administrator: Administrator
 Librarian: Librarian
 Support Staff: Support Staff
 Teacher: Teacher
+Are users with this primary role able to login? This value cannot be changed.: Are users with this primary role able to login? This value cannot be changed.
+Determines who can grant or remove this role in Manage Users. This value cannot be changed.: Determines who can grant or remove this role in Manage Users. This value cannot be changed.
 Record student attendance for activities.: Record student attendance for activities.
 Activity Attendance by Date: Activity Attendance by Date
 Toggle Permission: Toggle Permission

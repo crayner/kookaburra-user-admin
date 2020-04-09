@@ -57,16 +57,6 @@ class PermissionController extends AbstractController
 
     /**
      * permissionManage
-     * @Route("/permission/edit/", name="permission_edit")
-     * @IsGranted("ROLE_ROUTE")
-     */
-    public function permissionEdit()
-    {
-
-    }
-
-    /**
-     * permissionManage
      * @Route("/permission/{act}/{role}/toggle/", name="permission_toggle")
      * @IsGranted("ROLE_ROUTE")
      * @param Action $act

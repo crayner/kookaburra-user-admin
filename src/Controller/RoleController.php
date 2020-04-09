@@ -16,21 +16,19 @@
 namespace Kookaburra\UserAdmin\Controller;
 
 use App\Container\ContainerManager;
+use App\Manager\PageManager;
 use App\Provider\ProviderFactory;
-use App\Util\TranslationsHelper;
+use App\Util\ErrorMessageHelper;
 use Doctrine\DBAL\Driver\PDOException;
-use Kookaburra\SystemAdmin\Entity\Permission;
+use Kookaburra\SystemAdmin\Entity\Action;
 use Kookaburra\SystemAdmin\Entity\Role;
-use Kookaburra\UserAdmin\Entity\StudentNoteCategory;
-use Kookaburra\UserAdmin\Form\NoteCategoryType;
 use Kookaburra\UserAdmin\Form\RoleDuplicateType;
 use Kookaburra\UserAdmin\Form\RoleType;
-use Kookaburra\UserAdmin\Form\StudentSettingsType;
 use Kookaburra\UserAdmin\Pagination\RoleManagePagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -40,35 +38,52 @@ use Symfony\Component\Routing\Annotation\Route;
 class RoleController extends AbstractController
 {
     /**
-     * roleManage
+     * role Manage
      * @Route("/role/manage/", name="role_manage")
      * @IsGranted("ROLE_ROUTE")
+     * @param RoleManagePagination $pagination
+     * @param PageManager $pageManager
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function roleManage(RoleManagePagination $pagination)
+    public function roleManage(RoleManagePagination $pagination, PageManager $pageManager)
     {
-        $repository = ProviderFactory::getRepository(Role::class);
-        $content = $repository->findBy([],['name' => 'ASC']);
-        $pagination->setContent($content)->setPageMax(25)
+        if ($pageManager->isNotReadyForJSON()) return $pageManager->getBaseResponse();
+
+        $content = ProviderFactory::getRepository(Role::class)->findBy([],['name' => 'ASC']);
+        $pagination->setContent($content)
+            ->setAddElementRoute($this->generateUrl('user_admin__role_add'))
             ->setPaginationScript();
 
-        return $this->render('@KookaburraUserAdmin/role/role_manage.html.twig');
+        return $pageManager->createBreadCrumbs('Manage Roles')
+            ->render(
+                [
+                    'pagination' => $pagination->toArray(),
+                ]
+            );
     }
 
     /**
-     * roleManage
+     * role Edit
      * @Route("/role/{role}/edit/", name="role_edit")
      * @Route("/role/add/", name="role_add")
      * @IsGranted("ROLE_ROUTE")
+     * @param PageManager $pageManager
+     * @param ContainerManager $manager
+     * @param Role|null $role
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function roleEdit(Request $request, ContainerManager $manager, ?Role $role = null)
+    public function roleEdit(PageManager $pageManager, ContainerManager $manager, ?Role $role = null)
     {
+        if ($pageManager->isNotReadyForJSON()) return $pageManager->getBaseResponse();
+        $request = $pageManager->getRequest();
+
         $role = $role ?: new Role();
 
         $action = intval($role->getId()) > 0 ? $this->generateUrl('user_admin__role_edit', ['role' => $role->getId()]) : $this->generateUrl('user_admin__role_add') ;
 
         $form = $this->createForm(RoleType::class, $role, ['action' => $action]);
 
-        if ($request->getContentType() === 'json') {
+        if ($request->getContent() !== '') {
             $content = json_decode($request->getContent(), true);
             $form->submit($content);
             $data = [];
@@ -80,37 +95,52 @@ class RoleController extends AbstractController
                 if ($id !== $role->getId() && $data['status'] === 'success')
                     $form = $this->createForm(RoleType::class, $role, ['action' => $this->generateUrl('user_admin__role_edit', ['role' => $role->getId()])]);
             } else {
-                $data['errors'][] = ['class' => 'error', 'message' => TranslationsHelper::translate('return.error.1', [], 'messages')];
-                $data['status'] = 'error';
+                $data = ErrorMessageHelper::getInvalidInputsMessage([], true);
             }
 
             $manager->singlePanel($form->createView());
-            $data['form'] = $manager->getFormFromContainer('formContent', 'single');
+            $data['form'] = $manager->getFormFromContainer();
 
             return new JsonResponse($data, 200);
         }
 
-        $manager->singlePanel($form->createView());
+        if ($role->getId() > 0)
+            $manager->setAddElementRoute($this->generateUrl('user_admin__role_add'));
+        $manager->setReturnRoute($this->generateUrl('user_admin__role_manage'))
+            ->singlePanel($form->createView());
 
-        return $this->render('@KookaburraUserAdmin/role/role_edit.html.twig');
+        return $pageManager->createBreadCrumbs($role->getId() > 0 ? 'Edit Role' : 'Add Role',
+            [
+                ['uri' => 'user_admin__role_manage', 'name' => 'Manage Roles'],
+            ]
+        )
+            ->render(
+                [
+                    'containers' => $manager->getBuiltContainers(),
+                ]
+            );
     }
 
     /**
-     * roleManage
+     * Role Delete
      * @Route("/role/{role}/delete/", name="role_delete")
      * @IsGranted("ROLE_ROUTE")
+     * @param Role $role
+     * @param FlashBagInterface $flashBag
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function roleDelete(Role $role)
+    public function roleDelete(Role $role, FlashBagInterface $flashBag)
     {
         $em = $this->getDoctrine()->getManager();
         try {
             $em->remove($role);
             $em->flush();
-            $this->addFlash('success','return.success.0');
+            $data = ErrorMessageHelper::getSuccessMessage([], true);
         } catch (\PDOException | PDOException $e) {
-            $this->addFlash('error','return.error.2');
+            $data = ErrorMessageHelper::getDatabaseErrorMessage([], true);
         }
 
+        ErrorMessageHelper::convertToFlash($data, $flashBag);
         return $this->redirectToRoute('user_admin__role_manage');
     }
 
@@ -118,28 +148,39 @@ class RoleController extends AbstractController
      * roleManage
      * @Route("/role/{role}/duplicate/", name="role_duplicate")
      * @IsGranted("ROLE_ROUTE")
+     * @param PageManager $pageManager
+     * @param ContainerManager $manager
+     * @param Role $role
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function roleDuplicate(Request $request, ContainerManager $manager, Role $role)
+    public function roleDuplicate(PageManager $pageManager, ContainerManager $manager, Role $role)
     {
+        if ($pageManager->isNotReadyForJSON()) return $pageManager->getBaseResponse();
+        $request = $pageManager->getRequest();
+
         $parent = $role;
         $role = clone $parent;
-        $role->setId(null)->setName('')->setNameShort('')->setDescription('')->setType('Additional');
+        $role->setId(null)->setName('')->setNameShort('')->setDescription('')->setType('Additional')->setActions(null);
 
         $action = $this->generateUrl('user_admin__role_duplicate', ['role' => $parent->getId()]);
 
         $form = $this->createForm(RoleDuplicateType::class, $role, ['action' => $action]);
 
-        if ($request->getContentType() === 'json') {
+        if ($request->getContent() !== '') {
             $content = json_decode($request->getContent(), true);
             $form->submit($content);
             $data = [];
             $data['status'] = 'success';
             if ($form->isValid()) {
                 $id = $role->getId();
-                $provider = ProviderFactory::create(Role::class);
-                $data = $provider->persistFlush($role, $data);
-                $provider = ProviderFactory::create(Permission::class);
-                $data = $provider->duplicatePermissions($parent, $role, $data);
+                $data = ProviderFactory::create(Role::class)->persistFlush($role, $data);
+                foreach($parent->getActions() as $action)
+                {
+                    $action->addRole($role);
+                    $data = ProviderFactory::create(Action::class)->persistFlush($action, $data, false);
+                }
+                $data = ProviderFactory::create(Action::class)->flush($data);
+
                 if ($id !== $role->getId() && $data['status'] === 'success') {
                     $data['status'] = 'redirect';
                     $data['redirect'] = $this->generateUrl('user_admin__role_edit', ['role' => $role->getId()]);
@@ -147,8 +188,7 @@ class RoleController extends AbstractController
                 }
 
             } else {
-                $data['errors'][] = ['class' => 'error', 'message' => TranslationsHelper::translate('return.error.1', [], 'messages')];
-                $data['status'] = 'error';
+                $data = ErrorMessageHelper::getInvalidInputsMessage([],true);
             }
 
             $manager->singlePanel($form->createView());
@@ -157,7 +197,18 @@ class RoleController extends AbstractController
             return new JsonResponse($data, 200);
         }
 
-        $manager->singlePanel($form->createView());
+        $manager->setReturnRoute($this->generateUrl('user_admin__role_manage'))->singlePanel($form->createView());
+
+        return $pageManager->createBreadCrumbs($role->getId() > 0 ? 'Edit Role' : 'Add Role',
+            [
+                ['uri' => 'user_admin__role_manage', 'name' => 'Manage Roles'],
+            ]
+        )
+            ->render(
+                [
+                    'containers' => $manager->getBuiltContainers(),
+                ]
+            );
 
         return $this->render('@KookaburraUserAdmin/role/role_edit.html.twig');
     }
