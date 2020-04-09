@@ -12,6 +12,7 @@
  */
 namespace Kookaburra\UserAdmin\Util;
 
+use Doctrine\DBAL\Exception\DriverException;
 use Kookaburra\SystemAdmin\Entity\Action;
 use Kookaburra\SystemAdmin\Entity\Module;
 use Kookaburra\UserAdmin\Entity\Person;
@@ -127,15 +128,15 @@ class SecurityHelper
 
     /**
      * checkModuleRouteReady
-     * @param string $address
+     * @param string $route
      * @return \App\Manager\EntityInterface|bool
+     * @throws RouteConfigurationException
      */
     public static function checkModuleRouteReady(string $route)
     {
         try {
             return self::getModuleProvider()->findOneBy(['name' => self::getModuleNameFromRoute($route), 'active' => 'Y']);
-        } catch (PDOException $e) {
-        } catch (\PDOException $e) {
+        } catch (PDOException | \PDOException $e) {
         }
 
         return false;
@@ -152,7 +153,11 @@ class SecurityHelper
         if (!self::$module && mb_strpos($route, '__') !== false) {
             $route = explode('__', $route);
             $route = $route[0];
-            self::$module = ProviderFactory::getRepository(Module::class)->findOneBy(['name' => ucwords(str_replace('_', ' ', $route))]);
+            try {
+                self::$module = ProviderFactory::getRepository(Module::class)->findOneBy(['name' => ucwords(str_replace('_', ' ', $route))]);
+            } catch (DriverException $e) {
+                self::$module = null;
+            }
         }
 
         return self::$module ? self::$module->toArray() : [];
