@@ -35,7 +35,7 @@ class FamilyAdult implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id()
-     * @ORM\Column(type="integer",columnDefinition="INT(8) UNSIGNED ZEROFILL")
+     * @ORM\Column(type="integer",columnDefinition="INT(8) UNSIGNED")
      * @ORM\GeneratedValue
      */
     private $id;

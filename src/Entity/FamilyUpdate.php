@@ -27,7 +27,7 @@ class FamilyUpdate
     /**
      * @var integer|null
      * @ORM\Id()
-     * @ORM\Column(type="integer", name="gibbonFamilyUpdateID", columnDefinition="INT(9) UNSIGNED ZEROFILL AUTO_INCREMENT")
+     * @ORM\Column(type="integer", name="gibbonFamilyUpdateID", columnDefinition="INT(9) UNSIGNED AUTO_INCREMENT")
      * @ORM\GeneratedValue
      */
     private $id;

@@ -34,7 +34,7 @@ class PersonField implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id
-     * @ORM\Column(type="smallint", columnDefinition="INT(3) UNSIGNED ZEROFILL AUTO_INCREMENT")
+     * @ORM\Column(type="smallint", columnDefinition="INT(3) UNSIGNED AUTO_INCREMENT")
      * @ORM\GeneratedValue
      */
     private $id;

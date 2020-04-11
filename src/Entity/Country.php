@@ -27,7 +27,7 @@ class Country implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id()
-     * @ORM\Column(type="integer", columnDefinition="INT(4) UNSIGNED ZEROFILL")
+     * @ORM\Column(type="integer", columnDefinition="INT(4) UNSIGNED")
      * @ORM\GeneratedValue
      */
     private $id;

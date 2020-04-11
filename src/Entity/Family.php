@@ -34,7 +34,7 @@ class Family implements EntityInterface
     /**
      * @var integer|null
      * @ORM\Id
-     * @ORM\Column(type="integer", columnDefinition="INT(7) UNSIGNED ZEROFILL")
+     * @ORM\Column(type="integer", columnDefinition="INT(7) UNSIGNED")
      * @ORM\GeneratedValue
      */
     private $id;
